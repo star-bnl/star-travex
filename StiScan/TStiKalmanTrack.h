@@ -6,7 +6,7 @@
 
 #include "TObject.h"
 #include "Sti/StiKalmanTrack.h"
-#include "StHftPool/EventT/TStiKalmanTrackNode.h"
+#include "StiScan/TStiKalmanTrackNode.h"
 
 
 class TStiKalmanTrack : public TObject

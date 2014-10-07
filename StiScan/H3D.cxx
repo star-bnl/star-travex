@@ -1,4 +1,4 @@
-#include "StRoot/StHftPool/EventT/H3D.h"
+#include "StiScan/H3D.h"
 
 #include "TROOT.h"
 #include "TH2D.h"

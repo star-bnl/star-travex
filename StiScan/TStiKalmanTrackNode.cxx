@@ -1,4 +1,4 @@
-#include "StHftPool/EventT/TStiKalmanTrackNode.h"
+#include "StiScan/TStiKalmanTrackNode.h"
 
 #include <boost/regex.hpp>
 

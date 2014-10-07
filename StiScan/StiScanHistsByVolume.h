@@ -5,8 +5,8 @@
 #include <set>
 #include <string>
 
-#include "StHftPool/EventT/StiScanHistContainer.h"
-#include "StHftPool/EventT/StiScanPrgOptions.h"
+#include "StiScan/StiScanHistContainer.h"
+#include "StiScan/StiScanPrgOptions.h"
 
 
 

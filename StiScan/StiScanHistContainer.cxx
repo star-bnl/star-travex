@@ -5,8 +5,8 @@
 #include "TProfile2D.h"
 #include "TVector3.h"
 
-#include "StHftPool/EventT/StiScanHistContainer.h"
-#include "StHftPool/EventT/TStiKalmanTrackNode.h"
+#include "StiScan/StiScanHistContainer.h"
+#include "StiScan/TStiKalmanTrackNode.h"
 
 
 StiScanHistContainer::StiScanHistContainer(StiScanPrgOptions& prgOpts) : TDirectoryFile(),

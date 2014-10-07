@@ -1,4 +1,4 @@
-#include "StRoot/StHftPool/EventT/Profile3D.h"
+#include "StRoot/StiScan/Profile3D.h"
 
 #include <iostream>
 #include <exception>

@@ -6,7 +6,7 @@
 #include "TFile.h"
 #include "TSystem.h"
 
-#include "StHftPool/EventT/StiScanPrgOptions.h"
+#include "StiScan/StiScanPrgOptions.h"
 
 
 StiScanPrgOptions::StiScanPrgOptions() : PrgOptionProcessor(), fDoGeantStepTree(false), fDoAutoHistRange(true),

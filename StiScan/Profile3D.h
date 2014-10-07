@@ -5,8 +5,8 @@
 
 #include "TProfile3D.h"
 #include "TAxis.h"
-#include "StRoot/StHftPool/EventT/H3D.h"
-#include "StRoot/StHftPool/EventT/Profile2D.h"
+#include "StRoot/StiScan/H3D.h"
+#include "StRoot/StiScan/Profile2D.h"
 
 
 class Profile3D : public TProfile3D

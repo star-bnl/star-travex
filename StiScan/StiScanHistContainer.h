@@ -9,11 +9,11 @@
 #include "TProfile2D.h"
 #include "TProfile3D.h"
 
-#include "StHftPool/EventT/EventT.h"
-#include "StHftPool/EventT/StiScanPrgOptions.h"
-#include "StHftPool/EventT/TStiKalmanTrack.h"
-#include "StHftPool/EventT/Profile2D.h"
-#include "StHftPool/EventT/Profile3D.h"
+#include "StiScan/StiScanEvent.h"
+#include "StiScan/StiScanPrgOptions.h"
+#include "StiScan/TStiKalmanTrack.h"
+#include "StiScan/Profile2D.h"
+#include "StiScan/Profile3D.h"
 #include "StarGenerator/STEP/AgUStep.h"
 
 typedef Event EventG;

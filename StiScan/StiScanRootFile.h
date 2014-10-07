@@ -10,7 +10,7 @@
 #include "TFile.h"
 #include "StMaker.h"
 
-#include "StHftPool/EventT/EventT.h"
+#include "StiScan/StiScanEvent.h"
 #include "StarGenerator/STEP/AgUStep.h"
 
 class StiScanPrgOptions;

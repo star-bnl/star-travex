@@ -8,9 +8,9 @@
 #include "TProfile2D.h"
 #include "TSystem.h"
 
-#include "StHftPool/EventT/StiScanHistContainer.h"
-#include "StHftPool/EventT/StiScanHistsByVolume.h"
-#include "StHftPool/EventT/StiScanPrgOptions.h"
+#include "StiScan/StiScanHistContainer.h"
+#include "StiScan/StiScanHistsByVolume.h"
+#include "StiScan/StiScanPrgOptions.h"
 
 
 ClassImp(StiScanRootFile)

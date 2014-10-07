@@ -3,8 +3,8 @@
 #include "TProfile2D.h"
 #include "TVector3.h"
 
-#include "StHftPool/EventT/StiScanHistsByVolume.h"
-#include "StHftPool/EventT/TStiKalmanTrackNode.h"
+#include "StiScan/StiScanHistsByVolume.h"
+#include "StiScan/TStiKalmanTrackNode.h"
 
 
 StiScanHistsByVolume::StiScanHistsByVolume(StiScanPrgOptions& prgOpts) : StiScanHistContainer(prgOpts)
