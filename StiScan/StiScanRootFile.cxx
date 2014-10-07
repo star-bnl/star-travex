@@ -52,7 +52,7 @@ void StiScanRootFile::FindAutoRange() const
    const std::set<std::string> *volumeList = &fPrgOptions.GetVolumeList();
 
    TChain *hftChain = fPrgOptions.GetHftChain();
-   EventT *eventT = new EventT();
+   StiScanEvent *eventT = new StiScanEvent();
 
    hftChain->SetBranchAddress("e.", &eventT);
    hftChain->SetBranchStatus("e.*", false);
@@ -115,7 +115,7 @@ void StiScanRootFile::FindAutoRange() const
 }
 
 
-void StiScanRootFile::FillHists(const EventT &eventT, const std::set<std::string> *volumeList)
+void StiScanRootFile::FillHists(const StiScanEvent &eventT, const std::set<std::string> *volumeList)
 {
    StiScanHistContainer* container;
 

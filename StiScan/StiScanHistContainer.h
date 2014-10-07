@@ -33,7 +33,7 @@ public:
    StiScanHistContainer(StiScanPrgOptions& prgOpts, const char* name, TDirectory* motherDir = 0, bool doProjection=false, Option_t* option = "");
    ~StiScanHistContainer();
 
-   void FillHists(const EventT &eventT, const std::set<std::string> *volumeList=0);
+   void FillHists(const StiScanEvent &eventT, const std::set<std::string> *volumeList=0);
    void FillHists(const EventG &eventG, const std::set<std::string> *volumeList=0);
    void FillDerivedHists();
    void SaveAllAs(std::string prefix="./");

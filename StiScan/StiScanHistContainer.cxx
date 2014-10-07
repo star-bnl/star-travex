@@ -122,7 +122,7 @@ void StiScanHistContainer::BookHists()
 }
 
 
-void StiScanHistContainer::FillHists(const EventT &eventT, const std::set<std::string> *volumeList)
+void StiScanHistContainer::FillHists(const StiScanEvent &eventT, const std::set<std::string> *volumeList)
 {
    std::vector<TStiKalmanTrack>::const_iterator iTStiKTrack = eventT.fTStiKalmanTracks.begin();
 
