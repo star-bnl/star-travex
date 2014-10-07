@@ -77,9 +77,9 @@ void StiScanRootFile::FindAutoRange() const
 
       hftChain->GetEntry(iEvent-1);
 
-      auto iTStiKTrack = eventT->fTStiKalmanTracks.begin();
+      auto iTStiKTrack = eventT->GetTStiKalmanTracks().begin();
 
-      for ( ; iTStiKTrack != eventT->fTStiKalmanTracks.end(); ++iTStiKTrack)
+      for ( ; iTStiKTrack != eventT->GetTStiKalmanTracks().end(); ++iTStiKTrack)
       {
          const TStiKalmanTrack &kalmTrack = *iTStiKTrack;
 
