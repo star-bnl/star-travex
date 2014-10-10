@@ -11,9 +11,9 @@ class StiScanEvent : public EventT
 public:
 
    StiScanEvent();
-   ~StiScanEvent();
 
    Int_t  Fill(StiTrackContainer &stiTrackContainer);
+   virtual void  Clear(Option_t *option = "");
    virtual void  Print(Option_t *opt = "") const;
    const std::vector<TStiKalmanTrack>& GetTStiKalmanTracks() const { return fTStiKalmanTracks; }
 

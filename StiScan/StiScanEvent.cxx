@@ -9,12 +9,6 @@ StiScanEvent::StiScanEvent() : EventT(), fTStiKalmanTracks()
 }
 
 
-StiScanEvent::~StiScanEvent()
-{
-   fTStiKalmanTracks.clear();
-}
-
-
 Int_t StiScanEvent::Fill(StiTrackContainer &stiTrackContainer)
 {
    vector<StiTrack*>::iterator trackIt = stiTrackContainer.begin();
@@ -44,4 +38,12 @@ void StiScanEvent::Print(Option_t *opt) const
    for ( ; iTStiKTrack != fTStiKalmanTracks.end(); ++iTStiKTrack) {
       iTStiKTrack->Print();
    }
+}
+
+
+void StiScanEvent::Clear(Option_t *opt)
+{
+   EventT::Clear(opt);
+
+   fTStiKalmanTracks.clear();
 }
