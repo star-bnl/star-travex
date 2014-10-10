@@ -49,8 +49,9 @@ void PrgOptionProcessor::InitOptions()
    ;
 
    // Set default values for Sti volume name patterns. These are used if the user does not specify any
-   fVolumeList.insert("^.*IDSM_1/IBMO_1/IBAM_[\\d]+/ILSB.*$");
-   fVolumeList.insert("^.*IDSM_1/PXMO_1/PXLA_[\\d]+/LADR_\\d/PXSI_[\\d]+/PLAC.*$");
+   fVolumeList.insert("^.*IDSM_1/PXMO_1/PXLA_[\\d]+/LADR_\\d/PXSI_[\\d]+/PLAC_1$");
+   fVolumeList.insert("^.*IDSM_1/IBMO_1/IBAM_[\\d]+/IBLM_\\d/IBSS_1$");
+   fVolumeList.insert("^.*IDSM_1/SFMO_1/SFLM_[\\d]+/SFDM_1/SFSW_[\\d]+/SFSL_1/SFSD_1$");
 }
 
 
