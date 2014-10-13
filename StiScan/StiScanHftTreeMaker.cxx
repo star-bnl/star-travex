@@ -42,9 +42,14 @@ Int_t StiScanHftTreeMaker::Make()
    StiToolkit *stiToolkit = stiMaker->getToolkit();
    StiTrackContainer *stiTrackContainer = stiToolkit->getTrackContainer();
 
-   fEvent->Clear();
    ((StiScanEvent*) fEvent)->Fill(*stiTrackContainer);
 
    // Fill the rest of event with information from StEvent
    return HftMatchedTree::Make();
+}
+
+
+void StiScanHftTreeMaker::Clear(Option_t *opt)
+{
+   HftMatchedTree::Clear(opt);
 }
