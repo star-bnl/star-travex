@@ -106,7 +106,7 @@ void StiScanRootFile::FindAutoRange() const
       }
    }
 
-   Info("FindAutoRange", "Updated nodeZMin, nodeZMax, nodeRMax: %f, %f, %f", nodeZMin, nodeZMax, nodeRMax);
+   Info("FindAutoRange", "Updated nodeZMin, nodeZMax, nodeRMax: %g, %g, %g", nodeZMin, nodeZMax, nodeRMax);
 
    fPrgOptions.SetHistZRange(nodeZMin, nodeZMax);
    fPrgOptions.SetHistRMax(nodeRMax);
