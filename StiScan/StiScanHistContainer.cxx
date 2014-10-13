@@ -13,6 +13,7 @@ StiScanHistContainer::StiScanHistContainer(StiScanPrgOptions& prgOpts) : TDirect
    fPrgOptions(prgOpts), mHs(), mNodeZMin(-250), mNodeZMax(250),
    mNodeRMin(0), mNodeRMax(30),
    mDoProjection(false),
+   hNStepsVsPhiVsRVsZ(nullptr),
    hELossVsPhiVsRVsZ(nullptr),
    hRelRadLengthVsPhiVsRVsZ(nullptr),
    hNStepsVsPhiVsR_buf(nullptr),
@@ -29,6 +30,7 @@ StiScanHistContainer::StiScanHistContainer(StiScanPrgOptions& prgOpts, const cha
    mHs(), mNodeZMin(-250), mNodeZMax(250),
    mNodeRMin(0), mNodeRMax(30),
    mDoProjection(doProjection),
+   hNStepsVsPhiVsRVsZ(nullptr),
    hELossVsPhiVsRVsZ(nullptr),
    hRelRadLengthVsPhiVsRVsZ(nullptr),
    hNStepsVsPhiVsR_buf(nullptr),
@@ -108,6 +110,9 @@ void StiScanHistContainer::BookHists()
    mHs["hELossVsPhiVsR"]   = h = new TProfile2D("hELossVsPhiVsR", " ; #phi, rad; r, cm; Energy Losses in Select Volumes, keV", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax);
    h->SetOption("colz");
 
+   mHs["hNStepsVsPhiVsRVsZ"] = hNStepsVsPhiVsRVsZ =
+      new Profile3D("hNStepsVsPhiVsRVsZ", "Num. of Steps per Track ; #phi, rad; r, cm; z, cm", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);
+
    mHs["hDensityVsPhiVsR"] = h = new TProfile2D("hDensityVsPhiVsR", " ; #phi, rad; r, cm; Material Density, g/cm^{3}", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax);
    h->SetOption("colz");
    mHs["hELossVsPhiVsRVsZ"] = hELossVsPhiVsRVsZ =
@@ -158,6 +163,20 @@ void StiScanHistContainer::FillDerivedHists()
 
    mHs["hNStepsVsPhiVsR_px"]  = h = prof2D->ProjectionX();
    h->SetTitle(" ; #phi, rad; Num. of Steps (from ProjectionX)");
+
+
+   mHs["hNStepsVsPhiVsRVsZ_pyx"] = profile2D = hNStepsVsPhiVsRVsZ->Project3DProfile("yx");
+   profile2D->SetOption("colz");
+   mHs["hNStepsVsPhiVsRVsZ_pyx_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
+
+   mHs["hNStepsVsPhiVsRVsZ_pyz"] = profile2D = hNStepsVsPhiVsRVsZ->Project3DProfile("yz");
+   profile2D->SetOption("colz");
+   mHs["hNStepsVsPhiVsRVsZ_pyz_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
+
+   mHs["hNStepsVsPhiVsRVsZ_pxz"] = profile2D = hNStepsVsPhiVsRVsZ->Project3DProfile("xz");
+   profile2D->SetOption("colz");
+   mHs["hNStepsVsPhiVsRVsZ_pxz_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
+
 
    mHs["hELossVsPhiVsRVsZ_pyx"] = profile2D = hELossVsPhiVsRVsZ->Project3DProfile("yx");
    profile2D->SetOption("colz");
@@ -228,6 +247,7 @@ void StiScanHistContainer::FillHists(const TStiKalmanTrack &kalmTrack, const std
       if (kalmNode.GetNodeMaterialDensity() <= 0) continue;
 
       hNStepsVsPhiVsR_buf->Fill(kalmNode.GetPosition().Phi(), kalmNode.GetPosition().Perp(), 1);
+      hNStepsVsPhiVsRVsZ->FillAsCumulative(kalmNode.GetPosition().Phi(), kalmNode.GetPosition().Perp(), kalmNode.GetPosition().Z(), 1);
       ((TProfile2D*) mHs["hELossVsEtaVsPhi_trk"])->Fill(kalmNode.GetTrackP().Eta(), kalmNode.GetTrackP().Phi(), kalmNode.GetEnergyLosses());
 
       ((TProfile2D*) mHs["hELossVsEtaVsPhi"])->Fill(kalmNode.GetPosition().Eta(), kalmNode.GetPosition().Phi(),  kalmNode.GetEnergyLosses());
@@ -241,6 +261,7 @@ void StiScanHistContainer::FillHists(const TStiKalmanTrack &kalmTrack, const std
       hRelRadLengthVsPhiVsRVsZ->FillAsCumulative(kalmNode.GetPosition().Phi(), kalmNode.GetPosition().Perp(), kalmNode.GetPosition().Z(), kalmNode.GetNodeRelRadLength());
    }
 
+   hNStepsVsPhiVsRVsZ->ResetBinCumulMode();
    hELossVsPhiVsRVsZ->ResetBinCumulMode();
    hRelRadLengthVsPhiVsRVsZ->ResetBinCumulMode();
 
@@ -264,6 +285,7 @@ void StiScanHistContainer::FillHists(const TrackG &trackG, const std::set<std::s
       if (volumeList && volumeList->size() && !stepG->MatchedVolName(*volumeList) ) continue;
 
       hNStepsVsPhiVsR_buf->Fill(step_pos.Phi(), step_pos.Perp(), 1);
+      hNStepsVsPhiVsRVsZ->FillAsCumulative(step_pos.Phi(), step_pos.Perp(), step_pos.Z(), 1);
 
       ((TProfile2D*) mHs["hELossVsZVsPhi"])->Fill(step_pos.Z(),   step_pos.Phi(),  dEStep);
       ((TProfile2D*) mHs["hELossVsZVsR"])  ->Fill(step_pos.Z(),   step_pos.Perp(), dEStep);
@@ -274,6 +296,7 @@ void StiScanHistContainer::FillHists(const TrackG &trackG, const std::set<std::s
       hRelRadLengthVsPhiVsRVsZ->FillAsCumulative(step_pos.Phi(), step_pos.Perp(), step_pos.Z(), stepG->relRadLength);
    }
 
+   hNStepsVsPhiVsRVsZ->ResetBinCumulMode();
    hELossVsPhiVsRVsZ->ResetBinCumulMode();
    hRelRadLengthVsPhiVsRVsZ->ResetBinCumulMode();
 

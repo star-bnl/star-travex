@@ -59,6 +59,7 @@ protected:
    /** If true will create integral projections of 2D profiles instead of creating 1D profiles with bin averages. */
    bool    mDoProjection;
 
+   Profile3D* hNStepsVsPhiVsRVsZ;
    Profile3D* hELossVsPhiVsRVsZ;
    Profile3D* hRelRadLengthVsPhiVsRVsZ;
 
