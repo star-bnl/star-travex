@@ -67,9 +67,6 @@ protected:
 private:
 
    void InitRange();
-
-   Profile2D* hNStepsVsPhiVsR_buf;
-   Profile2D* hNStepsVsPhiVsR;
 };
 
 #endif
