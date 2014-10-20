@@ -184,15 +184,16 @@ void StiScanHistContainer::FillDerivedHists()
 
 
    mHs["hELossVsPhiVsRVsZ_pyx"] = profile2D = hELossVsPhiVsRVsZ->Project3DProfile("yx");
-   profile2D->SetOption("colz");
+   profile2D->SetOption("colz logZ");
    mHs["hELossVsPhiVsRVsZ_pyx_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
+   mHs["hELossVsPhiVsRVsZ_pyx_px"]->SetOption("logY");
 
    mHs["hELossVsPhiVsRVsZ_pyz"] = profile2D = hELossVsPhiVsRVsZ->Project3DProfile("yz");
-   profile2D->SetOption("colz");
+   profile2D->SetOption("colz logZ");
    mHs["hELossVsPhiVsRVsZ_pyz_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
 
    mHs["hELossVsPhiVsRVsZ_pxz"] = profile2D = hELossVsPhiVsRVsZ->Project3DProfile("xz");
-   profile2D->SetOption("colz");
+   profile2D->SetOption("colz logZ");
    mHs["hELossVsPhiVsRVsZ_pxz_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
 
 
@@ -203,6 +204,7 @@ void StiScanHistContainer::FillDerivedHists()
    mHs["hRelRadLengthVsPhiVsRVsZ_pyx"] = profile2D = hRelRadLengthVsPhiVsRVsZ->Project3DProfile("yx");
    profile2D->SetOption("colz");
    mHs["hRelRadLengthVsPhiVsRVsZ_pyx_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
+   mHs["hRelRadLengthVsPhiVsRVsZ_pyx_px"]->SetOption("logY");
 
    mHs["hRelRadLengthVsPhiVsRVsZ_pyz"] = profile2D = hRelRadLengthVsPhiVsRVsZ->Project3DProfile("yz");
    profile2D->SetOption("colz");
@@ -220,14 +222,14 @@ void StiScanHistContainer::FillDerivedHists()
 
    mHs["hELossVsPhiVsR_px"]  = h = prof2D->ProjectionX();
    h->SetTitle(" ; #phi, rad; Energy Losses in Select Volumes, keV");
-   h->SetOption("XY");
+   h->SetOption("logY");
 
    // Create a projection from hRelRadLengthVsPhiVsR
    prof2D = (TProfile2D*) mHs["hRelRadLengthVsPhiVsR"];
 
    mHs["hRelRadLengthVsPhiVsR_px"] = h = prof2D->ProjectionX();
    h->SetTitle(" ; #phi, rad; Rel. Radiation Length, %");
-   h->SetOption("XY");
+   h->SetOption("logY");
 
    prof2D = (TProfile2D*) mHs["hDensityVsPhiVsR"];
 
@@ -325,7 +327,6 @@ void StiScanHistContainer::SaveAllAs(std::string prefix)
    canvas.UseCurrentStyle();
    canvas.SetGridx(true);
    canvas.SetGridy(true);
-   canvas.SetLogz(true);
 
    HistMapIter iHist = mHs.begin();
 
@@ -340,10 +341,15 @@ void StiScanHistContainer::SaveAllAs(std::string prefix)
       }
 
       char* opts = (char*) obj->GetOption();
-      char* l = strstr(opts, "XY");
 
-      if (l) canvas.SetLogy(true);
-      else   canvas.SetLogy(false);
+      if (strstr(opts, "logX")) canvas.SetLogx(true);
+      else canvas.SetLogx(false);
+
+      if (strstr(opts, "logY")) canvas.SetLogy(true);
+      else canvas.SetLogy(false);
+
+      if (strstr(opts, "logZ")) canvas.SetLogz(true);
+      else canvas.SetLogz(false);
 
       obj->Draw();
 
