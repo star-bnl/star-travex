@@ -17,6 +17,7 @@ public:
    TStiKalmanTrackNode();
    TStiKalmanTrackNode(const StiKalmanTrackNode &stiKTN);
    TStiKalmanTrackNode & operator=(const StiKalmanTrackNode &stiKTN);
+   bool  IsValid() const { return fValid; }
    const TVector3& GetTrackP() const { return fTrackP; }
    const TVector3& GetPosition() const { return fPosition; }
    float GetEnergyLosses() const { return fabs(fEnergyLosses); }
@@ -34,6 +35,7 @@ public:
 
 protected:
 
+   float       fValid;             ///< A flag taken directly from StiKalmanTrackNode
    TVector3    fPosition;          ///< Coordinates of the track state/node position
    TVector3    fTrackP;            ///< Track momentum vector in global CS
    float       fEnergyLosses;      ///< Energy lost in the volume
@@ -44,7 +46,7 @@ protected:
    float       fNodeRelRadLength;     ///< Relative radiation length
    std::string fVolumeName;           ///< Name of Sti volume
 
-   ClassDef(TStiKalmanTrackNode, 4)
+   ClassDef(TStiKalmanTrackNode, 5)
 };
 
 
