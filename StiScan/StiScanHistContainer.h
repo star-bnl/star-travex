@@ -62,6 +62,7 @@ protected:
    Profile3D* hNStepsVsPhiVsRVsZ;
    Profile3D* hELossVsPhiVsRVsZ;
    Profile3D* hELossVsXVsYVsZ;
+   Profile3D* hDensityVsPhiVsRVsZ;
    Profile3D* hRelRadLengthVsPhiVsRVsZ;
 
 private:
