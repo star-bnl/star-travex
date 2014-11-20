@@ -217,13 +217,6 @@ void StiScanHistContainer::FillDerivedHists()
    mHs["hELossVsPhiVsR_px"]  = h = prof2D->ProjectionX();
    h->SetTitle(" ; #phi, rad; Energy Losses in Select Volumes, keV");
    h->SetOption("logY");
-
-   // Create a projection from hRelRadLengthVsPhiVsR
-   prof2D = (TProfile2D*) mHs["hRelRadLengthVsPhiVsR"];
-
-   mHs["hRelRadLengthVsPhiVsR_px"] = h = prof2D->ProjectionX();
-   h->SetTitle(" ; #phi, rad; Rel. Radiation Length, %");
-   h->SetOption("logY");
 }
 
 
@@ -255,8 +248,6 @@ void StiScanHistContainer::FillHists(const TStiKalmanTrack &kalmTrack, const std
       // Record the total energy deposited by this track
       hELossVsPhiVsRVsZ->FillAsCumulative(kalmNode.GetPosition().Phi(), kalmNode.GetPosition().Perp(), kalmNode.GetPosition().Z(), kalmNode.GetEnergyLosses());
       hELossVsXVsYVsZ->FillAsCumulative(kalmNode.GetPosition().X(), kalmNode.GetPosition().Y(), kalmNode.GetPosition().Z(), kalmNode.GetEnergyLosses());
-      ((TProfile2D*) mHs["hDensityVsPhiVsR"])->Fill(kalmNode.GetPosition().Phi(), kalmNode.GetPosition().Perp(), kalmNode.GetNodeMaterialDensity());
-      ((TProfile2D*) mHs["hRelRadLengthVsPhiVsR"])->Fill(kalmNode.GetPosition().Phi(), kalmNode.GetPosition().Perp(), kalmNode.GetNodeRelRadLength());
       hDensityVsPhiVsRVsZ->Fill(kalmNode.GetPosition().Phi(), kalmNode.GetPosition().Perp(), kalmNode.GetPosition().Z(), kalmNode.GetNodeMaterialDensity());
       hRelRadLengthVsPhiVsRVsZ->FillAsCumulative(kalmNode.GetPosition().Phi(), kalmNode.GetPosition().Perp(), kalmNode.GetPosition().Z(), kalmNode.GetNodeRelRadLength());
    }
@@ -287,8 +278,6 @@ void StiScanHistContainer::FillHists(const TrackG &trackG, const std::set<std::s
       ((TProfile2D*) mHs["hELossVsPhiVsR"])->Fill(step_pos.Phi(), step_pos.Perp(), dEStep);
       hELossVsPhiVsRVsZ->FillAsCumulative(step_pos.Phi(), step_pos.Perp(), step_pos.Z(), dEStep);
       hELossVsXVsYVsZ->FillAsCumulative(step_pos.X(), step_pos.Y(), step_pos.Z(), dEStep);
-      ((TProfile2D*) mHs["hDensityVsPhiVsR"])->Fill(step_pos.Phi(), step_pos.Perp(), stepG->dens);
-      ((TProfile2D*) mHs["hRelRadLengthVsPhiVsR"])->Fill(step_pos.Phi(), step_pos.Perp(), stepG->relRadLength);
       hDensityVsPhiVsRVsZ->Fill(step_pos.Phi(), step_pos.Perp(), step_pos.Z(), stepG->dens);
       hRelRadLengthVsPhiVsRVsZ->FillAsCumulative(step_pos.Phi(), step_pos.Perp(), step_pos.Z(), stepG->relRadLength);
    }
