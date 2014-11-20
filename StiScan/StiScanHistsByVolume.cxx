@@ -34,6 +34,7 @@ void StiScanHistsByVolume::FillHists(const TStiKalmanTrack &kalmTrack, const std
 
       if (volumeList && volumeList->size() && !kalmNode.MatchedVolName(*volumeList) ) continue;
 
+      hNStepsVsPhiVsRVsZ->FillAsCumulative(kalmNode.GetNodeCenterRefAngle(), kalmNode.GetNodeRadius(), kalmNode.GetPosition().Z(), 1);
       ((TProfile2D*) mHs["hELossVsEtaVsPhi_trk"])->Fill(kalmNode.GetTrackP().Eta(), kalmNode.GetTrackP().Phi(), kalmNode.GetEnergyLosses());
 
       ((TProfile2D*) mHs["hELossVsEtaVsPhi"])->Fill(kalmNode.GetPosition().Eta(), kalmNode.GetNodeCenterRefAngle(), kalmNode.GetEnergyLosses());
@@ -45,4 +46,9 @@ void StiScanHistsByVolume::FillHists(const TStiKalmanTrack &kalmTrack, const std
       hDensityVsPhiVsRVsZ->Fill(kalmNode.GetNodeCenterRefAngle(), kalmNode.GetNodeRadius(), kalmNode.GetPosition().Z(), kalmNode.GetNodeMaterialDensity());
       hRelRadLengthVsPhiVsRVsZ->FillAsCumulative(kalmNode.GetNodeCenterRefAngle(), kalmNode.GetNodeRadius(), kalmNode.GetPosition().Z(), kalmNode.GetNodeRelRadLength());
    }
+
+   hNStepsVsPhiVsRVsZ->ResetBinCumulMode();
+   hELossVsPhiVsRVsZ->ResetBinCumulMode();
+   hELossVsXVsYVsZ->ResetBinCumulMode();
+   hRelRadLengthVsPhiVsRVsZ->ResetBinCumulMode();
 }
