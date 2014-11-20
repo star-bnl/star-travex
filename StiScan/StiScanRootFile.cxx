@@ -43,7 +43,7 @@ void StiScanRootFile::BookHists()
 {
    mDirs["sti_vol"] = new StiScanHistsByVolume(fPrgOptions, "sti_vol", this);
    mDirs["sti_trk"] = new StiScanHistContainer(fPrgOptions, "sti_trk", this);
-   mDirs["gea"]     = new StiScanHistContainer(fPrgOptions, "gea", this, true); // Will create integral projections from 2D histograms
+   mDirs["gea"]     = new StiScanHistContainer(fPrgOptions, "gea", this); // Will create integral projections from 2D histograms
 }
 
 
