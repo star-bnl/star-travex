@@ -146,8 +146,6 @@ void StiScanHistContainer::FillDerivedHists()
 {
    this->cd();
 
-   TH1* h;
-   TProfile2D* prof2D;
    TProfile2D* profile2D;
 
    mHs["hNStepsVsPhiVsRVsZ_pyx"] = profile2D = hNStepsVsPhiVsRVsZ->Project3DProfile("yx");
@@ -208,15 +206,6 @@ void StiScanHistContainer::FillDerivedHists()
    mHs["hRelRadLengthVsPhiVsRVsZ_pxz"] = profile2D = hRelRadLengthVsPhiVsRVsZ->Project3DProfile("xz");
    profile2D->SetOption("colz");
    mHs["hRelRadLengthVsPhiVsRVsZ_pxz_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
-
-   Profile2D* hProf = (Profile2D*) mHs["hELossVsPhiVsR"];
-
-   // Create a projection from hELossVsPhiVsR
-   prof2D = (TProfile2D*) mHs["hELossVsPhiVsR"];
-
-   mHs["hELossVsPhiVsR_px"]  = h = prof2D->ProjectionX();
-   h->SetTitle(" ; #phi, rad; Energy Losses in Select Volumes, keV");
-   h->SetOption("logY");
 }
 
 
