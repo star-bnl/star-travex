@@ -106,6 +106,13 @@ void StiScanRootFile::FindAutoRange() const
       }
    }
 
+   // In case no entries were found in the tree set some reasonable values
+   if (nodeRMax == 0 && nodeZMin == DBL_MAX && nodeZMax == -DBL_MAX) {
+      nodeRMax = 1;
+      nodeZMin = 0;
+      nodeZMax = 1;
+   }
+
    Info("FindAutoRange", "Updated nodeZMin, nodeZMax, nodeRMax: %g, %g, %g", nodeZMin, nodeZMax, nodeRMax);
 
    fPrgOptions.SetHistZRange(nodeZMin, nodeZMax);
