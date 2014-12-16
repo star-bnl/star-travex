@@ -76,6 +76,8 @@ void StiScanHistContainer::BookHists()
    nRBins = nRBins > 150 ? 150 : nRBins;
    nRBins = nRBins <  50 ?  50 : nRBins;
 
+   int nXYBins = nRBins*floor(mNodeRMax/(mNodeRMax - mNodeRMin));
+
    nZBins = nZBins > 500 ? 500 : nZBins;
 
    this->cd();
@@ -109,7 +111,7 @@ void StiScanHistContainer::BookHists()
       new Profile3D("hELossVsPhiVsRVsZ", "Energy Losses in Select Volumes, keV ; #phi, rad; r, cm; z, cm", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);
 
    mHs["hELossVsXVsYVsZ"] = hELossVsXVsYVsZ =
-      new Profile3D("hELossVsXVsYVsZ", "Energy Losses in Select Volumes, keV ; x, cm; y, cm; z, cm", nRBins, -mNodeRMax, mNodeRMax, nRBins, -mNodeRMax, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);
+      new Profile3D("hELossVsXVsYVsZ", "Energy Losses in Select Volumes, keV ; x, cm; y, cm; z, cm", nXYBins, -mNodeRMax, mNodeRMax, nXYBins, -mNodeRMax, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);
 
    mHs["hDensityVsPhiVsRVsZ"] = hDensityVsPhiVsRVsZ =
       new Profile3D("hDensityVsPhiVsRVsZ", "Material Density, g/cm^{3}; #phi, rad; r, cm; z, cm", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);
