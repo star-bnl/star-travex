@@ -136,6 +136,9 @@ void PrgOptionProcessor::VerifyOptions()
 
       Info("VerifyOptions", "User patterns (fVolumeList) are:");
       std::copy(fVolumeList.begin(), fVolumeList.end(), std::ostream_iterator<std::string>(std::cout, "\n"));
+   } else {
+      Info("VerifyOptions", "Default patterns (fVolumeList) are:");
+      std::copy(fVolumeList.begin(), fVolumeList.end(), std::ostream_iterator<std::string>(std::cout, "\n"));
    }
 
 
