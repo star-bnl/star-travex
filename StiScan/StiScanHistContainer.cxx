@@ -73,8 +73,7 @@ void StiScanHistContainer::BookHists()
    int nZBins = ceil( (mNodeZMax - mNodeZMin) / minZBinWidth );
    int nRBins = ceil( (mNodeRMax - mNodeRMin) / minRBinWidth );
 
-   nRBins = nRBins > 150 ? 150 : nRBins;
-   nRBins = nRBins <  50 ?  50 : nRBins;
+   nRBins = nRBins > 1000 ? 1000 : nRBins;
 
    int nXYBins = nRBins*floor(mNodeRMax/(mNodeRMax - mNodeRMin));
 
