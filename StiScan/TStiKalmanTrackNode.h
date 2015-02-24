@@ -8,6 +8,7 @@
 #include "TVector3.h"
 
 #include "Sti/StiKalmanTrackNode.h"
+#include "StiScan/TStiHit.h"
 
 
 class TStiKalmanTrackNode : public TObject
@@ -45,8 +46,9 @@ protected:
    float       fNodeTrackLength;     ///< Relative radiation length
    float       fNodeRelRadLength;     ///< Relative radiation length
    std::string fVolumeName;           ///< Name of Sti volume
+   const TStiHit  *fStiHit;               ///< A pointer to the hit associated with this node if any
 
-   ClassDef(TStiKalmanTrackNode, 5)
+   ClassDef(TStiKalmanTrackNode, 6)
 };
 
 
