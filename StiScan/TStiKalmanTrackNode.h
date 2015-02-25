@@ -10,13 +10,15 @@
 #include "Sti/StiKalmanTrackNode.h"
 #include "StiScan/TStiHit.h"
 
+class TStiKalmanTrack;
+
 
 class TStiKalmanTrackNode : public TObject
 {
 public:
 
    TStiKalmanTrackNode();
-   TStiKalmanTrackNode(const StiKalmanTrackNode &stiKTN);
+   TStiKalmanTrackNode(TStiKalmanTrack* const track, const StiKalmanTrackNode &stiKTN);
    TStiKalmanTrackNode & operator=(const StiKalmanTrackNode &stiKTN);
    bool  IsValid() const { return fValid; }
    const TVector3& GetTrackP() const { return fTrackP; }
@@ -36,6 +38,7 @@ public:
 
 protected:
 
+   TStiKalmanTrack * const fTrack;   //!< Pointer to parent track containing this node
    float       fValid;             ///< A flag taken directly from StiKalmanTrackNode
    TVector3    fPosition;          ///< Coordinates of the track state/node position
    TVector3    fTrackP;            ///< Track momentum vector in global CS

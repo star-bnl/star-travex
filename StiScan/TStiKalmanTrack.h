@@ -8,13 +8,16 @@
 #include "Sti/StiKalmanTrack.h"
 #include "StiScan/TStiKalmanTrackNode.h"
 
+class StiScanEvent;
+
 
 class TStiKalmanTrack : public TObject
 {
 public:
 
    TStiKalmanTrack();
-   TStiKalmanTrack(const StiKalmanTrack & stiKTrack);
+   TStiKalmanTrack(StiScanEvent* event, const StiKalmanTrack & stiKTrack);
+   const StiScanEvent* GetParentEvent() const { return fEvent; }
    const std::set<TStiKalmanTrackNode>& GetNodes() const;
    const TStiKalmanTrackNode& GetDcaNode() const;
    double GetEnergyLosses() const;
@@ -22,10 +25,11 @@ public:
 
 protected:
 
+   StiScanEvent  *fEvent;   //!< Pointer to mother event containing this track
    std::set<TStiKalmanTrackNode> fNodes;
    double   fEnergyLosses;      ///< Total track energy lost in all volumes
 
-   ClassDef(TStiKalmanTrack, 1)
+   ClassDef(TStiKalmanTrack, 2)
 };
 
 #endif

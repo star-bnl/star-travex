@@ -22,7 +22,7 @@ Int_t StiScanEvent::Fill(StiTrackContainer &stiTrackContainer)
          continue;
       }
 
-      fTStiKalmanTracks.push_back( TStiKalmanTrack(*kalmanTrack) );
+      fTStiKalmanTracks.push_back( TStiKalmanTrack(this, *kalmanTrack) );
    }
 
    return kStOK;

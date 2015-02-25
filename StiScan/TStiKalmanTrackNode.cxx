@@ -4,13 +4,14 @@
 
 #include "StarClassLibrary/StThreeVector.hh"
 #include "Sti/StiPlacement.h"
+#include "StiScan/TStiKalmanTrack.h"
 
 
 ClassImp(TStiKalmanTrackNode)
 
 
 TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
-   fValid(false),
+   fTrack(nullptr), fValid(false),
    fPosition(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(0),
    fNodeRelRadLength(0), fVolumeName(), fStiHit(nullptr)
@@ -18,8 +19,8 @@ TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
 }
 
 
-TStiKalmanTrackNode::TStiKalmanTrackNode(const StiKalmanTrackNode &stiKTN) : TObject(),
-   fValid(stiKTN.isValid()),
+TStiKalmanTrackNode::TStiKalmanTrackNode(TStiKalmanTrack* const track, const StiKalmanTrackNode &stiKTN) : TObject(),
+   fTrack(track), fValid(stiKTN.isValid()),
    fPosition(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(stiKTN.getTrackLength()),
    fNodeRelRadLength(0), fVolumeName(), fStiHit(nullptr)

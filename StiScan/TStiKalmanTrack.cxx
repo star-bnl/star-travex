@@ -2,19 +2,20 @@
 #include "StiScan/TStiKalmanTrack.h"
 
 #include "Sti/StiKalmanTrackNode.h"
+#include "StiScan/StiScanEvent.h"
 
 
 ClassImp(TStiKalmanTrack)
 
 
 TStiKalmanTrack::TStiKalmanTrack() : TObject(),
-   fNodes(), fEnergyLosses(0)
+   fEvent(nullptr), fNodes(), fEnergyLosses(0)
 {
 }
 
 
-TStiKalmanTrack::TStiKalmanTrack(const StiKalmanTrack & stiKTrack) : TObject(),
-   fNodes(), fEnergyLosses(0)
+TStiKalmanTrack::TStiKalmanTrack(StiScanEvent* event, const StiKalmanTrack & stiKTrack) : TObject(),
+   fEvent(event), fNodes(), fEnergyLosses(0)
 {
    // Loop over track nodes
    for (StiKTNIterator it = stiKTrack.begin(); it != stiKTrack.end(); ++it)
