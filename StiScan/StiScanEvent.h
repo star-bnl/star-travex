@@ -14,8 +14,8 @@ public:
    StiScanEvent();
 
    Int_t  Fill(StiTrackContainer &stiTrackContainer);
-   std::pair<std::set<TStiHit>::iterator, bool>   InsertStiHit(const TStiHit &stiHit) { return fStiHits.insert(stiHit); }
-   const std::set<TStiHit>& GetStiHits() const { return fStiHits; }
+   std::pair<std::set<TStiHit>::iterator, bool>   InsertStiHit(const TStiHit &stiHit) { return fTStiHits.insert(stiHit); }
+   const std::set<TStiHit>& GetStiHits() const { return fTStiHits; }
    virtual void  Clear(Option_t *opt = "");
    virtual void  Print(Option_t *opt = "") const;
    const std::vector<TStiKalmanTrack>& GetTStiKalmanTracks() const { return fTStiKalmanTracks; }
@@ -23,7 +23,7 @@ public:
 private:
 
    std::vector<TStiKalmanTrack>  fTStiKalmanTracks;
-   std::set<TStiHit>             fStiHits;            ///< A collection of all Sti hits in this event
+   std::set<TStiHit>             fTStiHits;           ///< A collection of all Sti hits in this event
 
    ClassDef(StiScanEvent, 2)
 };
