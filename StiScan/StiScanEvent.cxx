@@ -4,7 +4,13 @@
 ClassImp(StiScanEvent);
 
 
-StiScanEvent::StiScanEvent() : EventT(), fTStiKalmanTracks()
+StiScanEvent::StiScanEvent() : EventT(), fDetGroupId(kMaxDetectorId), fTStiKalmanTracks(), fTStiHits()
+{
+}
+
+
+StiScanEvent::StiScanEvent(StDetectorId detGroupId) : EventT(),
+   fDetGroupId(detGroupId), fTStiKalmanTracks(), fTStiHits()
 {
 }
 
@@ -22,7 +28,28 @@ Int_t StiScanEvent::Fill(StiTrackContainer &stiTrackContainer)
          continue;
       }
 
-      fTStiKalmanTracks.push_back( TStiKalmanTrack(this, *kalmanTrack) );
+      if (fDetGroupId == kMaxDetectorId)
+      {
+         // All tracks regardless of detector are accepted
+         fTStiKalmanTracks.push_back( TStiKalmanTrack(this, *stiKTrack) );
+         continue;
+
+      } else {
+         // Accept only tracks having a node associated with the given detector
+         for (StiKTNIterator it = stiKTrack->begin(); it != stiKTrack->end(); ++it)
+         {
+            StiKalmanTrackNode *stiNode = &(*it);
+            if ( !stiNode ) continue;
+
+            StDetectorId stiNodeDetId = stiNode->getDetector() ?
+               static_cast<StDetectorId>( stiNode->getDetector()->getGroupId() ) : kUnknownId;
+
+            if (stiNodeDetId == fDetGroupId) {
+               fTStiKalmanTracks.push_back( TStiKalmanTrack(this, *stiKTrack) );
+               break;
+            }
+         }
+      }
    }
 
    return kStOK;

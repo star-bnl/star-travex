@@ -1,6 +1,7 @@
 #ifndef StiScanEvent_h
 #define StiScanEvent_h
 
+#include "StEvent/StEnumerations.h"
 #include "StHftPool/EventT/EventT.h"
 #include "Sti/StiTrackContainer.h"
 #include "StiScan/TStiKalmanTrack.h"
@@ -12,6 +13,7 @@ class StiScanEvent : public EventT
 public:
 
    StiScanEvent();
+   StiScanEvent(StDetectorId detGroupId);
 
    Int_t  Fill(StiTrackContainer &stiTrackContainer);
    std::pair<std::set<TStiHit>::iterator, bool>   InsertStiHit(const TStiHit &stiHit) { return fTStiHits.insert(stiHit); }
@@ -22,6 +24,7 @@ public:
 
 private:
 
+   static StDetectorId           fDetGroupId;         //!< Detector group id used in this study
    std::vector<TStiKalmanTrack>  fTStiKalmanTracks;
    std::set<TStiHit>             fTStiHits;           ///< A collection of all Sti hits in this event
 
