@@ -73,4 +73,5 @@ void StiScanEvent::Clear(Option_t *opt)
    EventT::Clear(opt);
 
    fTStiKalmanTracks.clear();
+   fTStiHits.clear();
 }
