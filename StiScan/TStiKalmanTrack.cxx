@@ -27,7 +27,7 @@ TStiKalmanTrack::TStiKalmanTrack(StiScanEvent* event, const StiKalmanTrack & sti
          continue;
       }
 
-      fNodes.insert( TStiKalmanTrackNode(*stiNode) );
+      fNodes.insert( TStiKalmanTrackNode(this, *stiNode) );
       fEnergyLosses += stiNode->getEnergyLosses();
    }
 }
