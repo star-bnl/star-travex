@@ -33,6 +33,14 @@ TStiKalmanTrack::TStiKalmanTrack(StiScanEvent* event, const StiKalmanTrack & sti
 }
 
 
+std::pair<std::set<TStiHit>::iterator, bool> TStiKalmanTrack::AddToParentEvent(const TStiHit& stiHit)
+{
+   std::pair<std::set<TStiHit>::iterator, bool> dummy;
+   dummy.second = false;
+
+   return fEvent ? fEvent->InsertStiHit(stiHit) : dummy;
+}
+
 const std::set<TStiKalmanTrackNode>& TStiKalmanTrack::GetNodes() const { return fNodes; }
 
 const TStiKalmanTrackNode& TStiKalmanTrack::GetDcaNode() const { return *fNodes.begin(); }

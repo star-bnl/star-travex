@@ -18,6 +18,7 @@ public:
    TStiKalmanTrack();
    TStiKalmanTrack(StiScanEvent* event, const StiKalmanTrack & stiKTrack);
    const StiScanEvent* GetParentEvent() const { return fEvent; }
+   std::pair<std::set<TStiHit>::iterator, bool> AddToParentEvent(const TStiHit& stiHit);
    const std::set<TStiKalmanTrackNode>& GetNodes() const;
    const TStiKalmanTrackNode& GetDcaNode() const;
    double GetEnergyLosses() const;
