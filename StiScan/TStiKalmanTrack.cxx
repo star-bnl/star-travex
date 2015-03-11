@@ -14,7 +14,8 @@ TStiKalmanTrack::TStiKalmanTrack() : TObject(),
 }
 
 
-TStiKalmanTrack::TStiKalmanTrack(StiScanEvent* event, const StiKalmanTrack & stiKTrack) : TObject(),
+TStiKalmanTrack::TStiKalmanTrack(StiScanEvent* event, const StiKalmanTrack& stiKTrack, StDetectorId detGroupId) :
+   TObject(),
    fEvent(event), fNodes(), fEnergyLosses(0)
 {
    // Loop over track nodes
@@ -27,7 +28,12 @@ TStiKalmanTrack::TStiKalmanTrack(StiScanEvent* event, const StiKalmanTrack & sti
          continue;
       }
 
-      fNodes.insert( TStiKalmanTrackNode(this, *stiNode) );
+      StDetectorId stiNodeDetId = stiNode->getDetector() ?
+         static_cast<StDetectorId>( stiNode->getDetector()->getGroupId() ) : kUnknownId;
+
+      if (stiNodeDetId == detGroupId)
+         fNodes.insert( TStiKalmanTrackNode(this, *stiNode) );
+
       fEnergyLosses += stiNode->getEnergyLosses();
    }
 }

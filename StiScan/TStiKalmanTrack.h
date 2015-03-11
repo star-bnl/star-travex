@@ -5,6 +5,8 @@
 #include <set>
 
 #include "TObject.h"
+
+#include "StEvent/StEnumerations.h"
 #include "Sti/StiKalmanTrack.h"
 #include "StiScan/TStiKalmanTrackNode.h"
 
@@ -16,7 +18,7 @@ class TStiKalmanTrack : public TObject
 public:
 
    TStiKalmanTrack();
-   TStiKalmanTrack(StiScanEvent* event, const StiKalmanTrack & stiKTrack);
+   TStiKalmanTrack(StiScanEvent* event, const StiKalmanTrack& stiKTrack, StDetectorId detGroupId = kMaxDetectorId);
    const StiScanEvent* GetParentEvent() const { return fEvent; }
    std::pair<std::set<TStiHit>::iterator, bool> AddToParentEvent(const TStiHit& stiHit);
    const std::set<TStiKalmanTrackNode>& GetNodes() const;
