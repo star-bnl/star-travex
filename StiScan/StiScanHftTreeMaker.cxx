@@ -1,31 +1,22 @@
-#include <stdlib.h>
-
 #include "StiScan/StiScanHftTreeMaker.h"
 
-#include "TFile.h"
-#include "TTree.h"
 #include "TBranch.h"
-#include "StEvent.h"
-#include "StBFChain.h"
 
 #include "Sti/StiToolkit.h"
 #include "Sti/StiTrackContainer.h"
-#include "Sti/StiKalmanTrack.h"
 #include "StiMaker/StiMaker.h"
 
 #include "StiScan/StiScanEvent.h"
-#include "StIstDbMaker/StIstDb.h"
-#include "StPxlDbMaker/StPxlDb.h"
 
 ClassImp(StiScanHftTreeMaker)
 
 
-StiScanHftTreeMaker::StiScanHftTreeMaker(const Char_t *name) : HftMatchedTree(name)
+StiScanHftTreeMaker::StiScanHftTreeMaker(const Char_t *name) : StiTreeMaker(name)
 {
 }
 
 
-void StiScanHftTreeMaker::SetTree()
+void StiScanHftTreeMaker::SetEventTree()
 {
    fEvent = new StiScanEvent();
    TBranch *branch = fTree->Branch("e.", "StiScanEvent", &fEvent, 64000, 99);
@@ -42,14 +33,5 @@ Int_t StiScanHftTreeMaker::Make()
    StiToolkit *stiToolkit = stiMaker->getToolkit();
    StiTrackContainer *stiTrackContainer = stiToolkit->getTrackContainer();
 
-   ((StiScanEvent*) fEvent)->Fill(*stiTrackContainer);
-
-   // Fill the rest of event with information from StEvent
-   return HftMatchedTree::Make();
-}
-
-
-void StiScanHftTreeMaker::Clear(Option_t *opt)
-{
-   HftMatchedTree::Clear(opt);
+   return fEvent->Fill(*stiTrackContainer);
 }
