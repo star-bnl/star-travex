@@ -24,7 +24,7 @@ public:
 
 private:
 
-   static StDetectorId           fDetGroupId;         //!< Detector group id used in this study
+   static StDetectorId           fgDetGroupId;        //!< Detector group id used in this study
    std::vector<TStiKalmanTrack>  fTStiKalmanTracks;
    std::set<TStiHit>             fTStiHits;           ///< A collection of all Sti hits in this event
 
