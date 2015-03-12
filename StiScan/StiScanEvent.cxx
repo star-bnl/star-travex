@@ -4,14 +4,20 @@
 ClassImp(StiScanEvent);
 
 
-StiScanEvent::StiScanEvent() : EventT(), fDetGroupId(kMaxDetectorId), fTStiKalmanTracks(), fTStiHits()
+/// By default, we set no constraints on tracks w.r.t. their association with
+/// a specific detector group
+StDetectorId StiScanEvent::fDetGroupId = kMaxDetectorId;
+
+
+StiScanEvent::StiScanEvent() : EventT(), fTStiKalmanTracks(), fTStiHits()
 {
 }
 
 
 StiScanEvent::StiScanEvent(StDetectorId detGroupId) : EventT(),
-   fDetGroupId(detGroupId), fTStiKalmanTracks(), fTStiHits()
+   fTStiKalmanTracks(), fTStiHits()
 {
+   fDetGroupId = detGroupId;
 }
 
 
