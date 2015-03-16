@@ -1,8 +1,8 @@
 
-#include "StiScan/TStiKalmanTrack.h"
+#include "StiRootIO/TStiKalmanTrack.h"
 
 #include "Sti/StiKalmanTrackNode.h"
-#include "StiScan/StiScanEvent.h"
+#include "StiRootIO/TStiEvent.h"
 
 
 ClassImp(TStiKalmanTrack)

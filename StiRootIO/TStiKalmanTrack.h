@@ -8,7 +8,7 @@
 
 #include "StEvent/StEnumerations.h"
 #include "Sti/StiKalmanTrack.h"
-#include "StiScan/TStiKalmanTrackNode.h"
+#include "StiRootIO/TStiKalmanTrackNode.h"
 
 class StiScanEvent;
 

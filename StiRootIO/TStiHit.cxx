@@ -1,11 +1,11 @@
-#include "StiScan/TStiHit.h"
+#include "StiRootIO/TStiHit.h"
 
 #include <boost/regex.hpp>
 
 #include "StarClassLibrary/StThreeVector.hh"
 #include "Sti/StiPlacement.h"
-#include "StiScan/TStiKalmanTrack.h"
 #include "StiScan/StiScanEvent.h"
+#include "StiRootIO/TStiKalmanTrack.h"
 
 
 ClassImp(TStiHit)

@@ -1,10 +1,10 @@
-#include "StiScan/TStiKalmanTrackNode.h"
+#include "StiRootIO/TStiKalmanTrackNode.h"
 
 #include <boost/regex.hpp>
 
 #include "StarClassLibrary/StThreeVector.hh"
 #include "Sti/StiPlacement.h"
-#include "StiScan/TStiKalmanTrack.h"
+#include "StiRootIO/TStiKalmanTrack.h"
 
 
 ClassImp(TStiKalmanTrackNode)

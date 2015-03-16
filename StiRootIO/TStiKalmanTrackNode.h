@@ -8,7 +8,7 @@
 #include "TVector3.h"
 
 #include "Sti/StiKalmanTrackNode.h"
-#include "StiScan/TStiHit.h"
+#include "StiRootIO/TStiHit.h"
 
 class TStiKalmanTrack;
 
