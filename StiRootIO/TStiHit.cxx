@@ -18,7 +18,7 @@ TStiHit::TStiHit() : TObject(),
 
 
 TStiHit::TStiHit(const StiHit & stiHit) : TObject(),
-   fDetectorId(kUnknownId),
+   fDetectorId( stiHit.detector() ? static_cast<StDetectorId>(stiHit.detector()->getGroupId()) : kUnknownId ),
    fPosition(stiHit.x_g(), stiHit.y_g(), stiHit.z_g()),
    fTimesUsed(stiHit.timesUsed())
 {
