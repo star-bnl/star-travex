@@ -4,7 +4,7 @@
 #include "TVector3.h"
 
 #include "StiScan/StiScanHistsByVolume.h"
-#include "StiScan/TStiKalmanTrackNode.h"
+#include "StiRootIO/TStiKalmanTrackNode.h"
 
 
 StiScanHistsByVolume::StiScanHistsByVolume(StiScanPrgOptions& prgOpts) : StiScanHistContainer(prgOpts)

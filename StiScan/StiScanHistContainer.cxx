@@ -6,7 +6,7 @@
 #include "TVector3.h"
 
 #include "StiScan/StiScanHistContainer.h"
-#include "StiScan/TStiKalmanTrackNode.h"
+#include "StiRootIO/TStiKalmanTrackNode.h"
 
 
 StiScanHistContainer::StiScanHistContainer(StiScanPrgOptions& prgOpts) : TDirectoryFile(),

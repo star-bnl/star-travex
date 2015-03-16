@@ -11,9 +11,9 @@
 
 #include "StiScan/StiScanEvent.h"
 #include "StiScan/StiScanPrgOptions.h"
-#include "StiScan/TStiKalmanTrack.h"
 #include "StiScan/Profile2D.h"
 #include "StiScan/Profile3D.h"
+#include "StiRootIO/TStiKalmanTrack.h"
 #include "StarGenerator/STEP/AgUStep.h"
 
 typedef Event EventG;
