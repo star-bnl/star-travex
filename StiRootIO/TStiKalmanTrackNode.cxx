@@ -47,6 +47,15 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(TStiKalmanTrack* const track, const Sti
       fNodeMaterialDensity = stiMaterial->getDensity();
    }
 
+   if (stiKTN.getHit())
+   {
+      auto resultPair = fTrack->AddToParentEvent( TStiHit(*stiKTN.getHit()) );
+      // If hit was successfully added to the parent event save a pointer to it
+      if (resultPair.second) {
+         fStiHit = &(*resultPair.first);
+      }
+   }
+
    const StiNodeInf* prefitKTNParams = stiKTN.getInfo();
 
    fTrackProjErr = prefitKTNParams ? prefitKTNParams->mPE.getDelta() : -1;
