@@ -1,7 +1,6 @@
 #ifndef TStiKalmanTrack_h
 #define TStiKalmanTrack_h
 
-#include <string>
 #include <set>
 
 #include "TObject.h"

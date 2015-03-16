@@ -4,7 +4,6 @@
 
 #include "StarClassLibrary/StThreeVector.hh"
 #include "Sti/StiPlacement.h"
-#include "StiScan/StiScanEvent.h"
 #include "StiRootIO/TStiKalmanTrack.h"
 
 

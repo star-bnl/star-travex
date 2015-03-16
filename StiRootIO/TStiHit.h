@@ -2,6 +2,7 @@
 #define TStiSti_h
 
 #include "TObject.h"
+
 #include "Sti/StiHit.h"
 #include "StEvent/StEnumerations.h"
 
