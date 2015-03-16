@@ -14,7 +14,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
    fTrack(nullptr), fValid(false),
    fPosition(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(0),
-   fNodeRelRadLength(0), fVolumeName(), fStiHit(nullptr)
+   fNodeRelRadLength(0), fVolumeName(), fStiHit(nullptr), fTrackProjErr(-1)
 {
 }
 
@@ -23,7 +23,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(TStiKalmanTrack* const track, const Sti
    fTrack(track), fValid(stiKTN.isValid()),
    fPosition(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(stiKTN.getTrackLength()),
-   fNodeRelRadLength(0), fVolumeName(), fStiHit(nullptr)
+   fNodeRelRadLength(0), fVolumeName(), fStiHit(nullptr), fTrackProjErr(-1)
 {
    // Access node parameters
    fPosition.SetXYZ(stiKTN.x_g(), stiKTN.y_g(), stiKTN.z_g());
@@ -47,6 +47,9 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(TStiKalmanTrack* const track, const Sti
       fNodeMaterialDensity = stiMaterial->getDensity();
    }
 
+   const StiNodeInf* prefitKTNParams = stiKTN.getInfo();
+
+   fTrackProjErr = prefitKTNParams ? prefitKTNParams->mPE.getDelta() : -1;
 }
 
 
