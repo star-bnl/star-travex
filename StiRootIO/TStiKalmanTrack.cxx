@@ -1,6 +1,7 @@
 
 #include "StiRootIO/TStiKalmanTrack.h"
 
+#include "StEvent/StEnumerations.h"
 #include "Sti/StiKalmanTrackNode.h"
 #include "StiRootIO/TStiEvent.h"
 
@@ -31,7 +32,7 @@ TStiKalmanTrack::TStiKalmanTrack(StiScanEvent* event, const StiKalmanTrack& stiK
       StDetectorId stiNodeDetId = stiNode->getDetector() ?
          static_cast<StDetectorId>( stiNode->getDetector()->getGroupId() ) : kUnknownId;
 
-      if (stiNodeDetId == detGroupId)
+      if (stiNodeDetId == detGroupId || detGroupId == kMaxDetectorId)
          fNodes.insert( TStiKalmanTrackNode(this, *stiNode) );
 
       fEnergyLosses += stiNode->getEnergyLosses();
