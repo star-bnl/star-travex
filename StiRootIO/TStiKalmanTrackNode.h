@@ -19,7 +19,6 @@ public:
 
    TStiKalmanTrackNode();
    TStiKalmanTrackNode(TStiKalmanTrack* const track, const StiKalmanTrackNode &stiKTN);
-   TStiKalmanTrackNode & operator=(const StiKalmanTrackNode &stiKTN);
    bool  IsValid() const { return fValid; }
    const TVector3& GetTrackP() const { return fTrackP; }
    const TVector3& GetPosition() const { return fPosition; }

@@ -46,16 +46,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(TStiKalmanTrack* const track, const Sti
 
       fNodeMaterialDensity = stiMaterial->getDensity();
    }
-}
 
-
-TStiKalmanTrackNode & TStiKalmanTrackNode::operator=(const StiKalmanTrackNode &stiKTN)
-{
-   TStiKalmanTrackNode tmpNode(stiKTN);
-
-   fVolumeName = tmpNode.fVolumeName;
-
-   return *this;
 }
 
 
