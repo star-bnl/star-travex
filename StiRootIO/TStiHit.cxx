@@ -12,15 +12,16 @@ ClassImp(TStiHit)
 
 
 TStiHit::TStiHit() : TObject(),
-   fPosition()
+   fDetectorId(kUnknownId), fPosition(), fTimesUsed(0)
 {
 }
 
 
 TStiHit::TStiHit(const StiHit & stiHit) : TObject(),
-   fPosition()
+   fDetectorId(kUnknownId),
+   fPosition(stiHit.x_g(), stiHit.y_g(), stiHit.z_g()),
+   fTimesUsed(stiHit.timesUsed())
 {
-   fPosition.SetXYZ(stiHit.x_g(), stiHit.y_g(), stiHit.z_g());
 }
 
 
