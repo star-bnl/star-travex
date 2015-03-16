@@ -15,7 +15,7 @@ TStiKalmanTrack::TStiKalmanTrack() : TObject(),
 }
 
 
-TStiKalmanTrack::TStiKalmanTrack(StiScanEvent* event, const StiKalmanTrack& stiKTrack, StDetectorId detGroupId) :
+TStiKalmanTrack::TStiKalmanTrack(TStiEvent* event, const StiKalmanTrack& stiKTrack, StDetectorId detGroupId) :
    TObject(),
    fEvent(event), fNodes(), fEnergyLosses(0)
 {

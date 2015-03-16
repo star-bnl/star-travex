@@ -10,7 +10,7 @@
 #include "Sti/StiKalmanTrack.h"
 #include "StiRootIO/TStiKalmanTrackNode.h"
 
-class StiScanEvent;
+class TStiEvent;
 
 
 class TStiKalmanTrack : public TObject
@@ -18,8 +18,8 @@ class TStiKalmanTrack : public TObject
 public:
 
    TStiKalmanTrack();
-   TStiKalmanTrack(StiScanEvent* event, const StiKalmanTrack& stiKTrack, StDetectorId detGroupId = kMaxDetectorId);
-   const StiScanEvent* GetParentEvent() const { return fEvent; }
+   TStiKalmanTrack(TStiEvent* event, const StiKalmanTrack& stiKTrack, StDetectorId detGroupId = kMaxDetectorId);
+   const TStiEvent* GetParentEvent() const { return fEvent; }
    std::pair<std::set<TStiHit>::iterator, bool> AddToParentEvent(const TStiHit& stiHit);
    const std::set<TStiKalmanTrackNode>& GetNodes() const;
    const TStiKalmanTrackNode& GetDcaNode() const;
@@ -28,7 +28,7 @@ public:
 
 protected:
 
-   StiScanEvent  *fEvent;   //!< Pointer to mother event containing this track
+   TStiEvent  *fEvent;   //!< Pointer to mother event containing this track
    std::set<TStiKalmanTrackNode> fNodes;
    double   fEnergyLosses;      ///< Total track energy lost in all volumes
 
