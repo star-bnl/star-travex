@@ -24,7 +24,7 @@ TStiEvent::TStiEvent(StDetectorId detGroupId) : TObject(), fTStiKalmanTracks(), 
 }
 
 
-Int_t TStiEvent::Fill(StiTrackContainer &stiTrackContainer)
+EReturnCodes TStiEvent::Fill(const StiTrackContainer &stiTrackContainer)
 {
    for (auto trackIt = stiTrackContainer.begin(); trackIt != stiTrackContainer.end(); ++trackIt)
    {
@@ -58,6 +58,17 @@ Int_t TStiEvent::Fill(StiTrackContainer &stiTrackContainer)
          }
       }
    }
+
+   return kStOK;
+}
+
+
+EReturnCodes TStiEvent::Fill(StiHitContainer &stiHitContainer)
+{
+   std::vector<StiHit*>& selectedHits = stiHitContainer.getHits(fgDetGroupId);
+
+   for (auto iStiHit = selectedHits.begin(); iStiHit != selectedHits.end(); ++iStiHit)
+      InsertStiHit(**iStiHit);
 
    return kStOK;
 }

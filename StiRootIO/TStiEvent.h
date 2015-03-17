@@ -7,8 +7,10 @@
 
 #include "TObject.h"
 
+#include "St_base/Stypes.h"
 #include "StEvent/StEnumerations.h"
 #include "Sti/StiTrackContainer.h"
+#include "Sti/StiHitContainer.h"
 #include "StiRootIO/TStiKalmanTrack.h"
 #include "StiRootIO/TStiHit.h"
 
@@ -20,7 +22,8 @@ public:
    TStiEvent();
    TStiEvent(StDetectorId detGroupId);
 
-   Int_t  Fill(StiTrackContainer &stiTrackContainer);
+   virtual EReturnCodes  Fill(const StiTrackContainer &stiTrackContainer);
+   virtual EReturnCodes  Fill(StiHitContainer &stiHitContainer);
    std::pair<std::set<TStiHit>::iterator, bool>   InsertStiHit(const TStiHit &stiHit) { return fTStiHits.insert(stiHit); }
    const std::set<TStiHit>& GetStiHits() const { return fTStiHits; }
    virtual void  Clear(Option_t *opt = "");
