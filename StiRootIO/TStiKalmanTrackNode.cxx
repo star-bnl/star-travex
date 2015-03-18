@@ -34,14 +34,17 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(TStiKalmanTrack* const track, const Sti
    fEnergyLosses = stiKTN.getEnergyLosses() * 1e6; // Get losses in volume material and convert GeV to keV
    fNodeRelRadLength = stiKTN.getRelRadLength();
 
-   if (stiKTN.getDetector()) {
-      fVolumeName = stiKTN.getDetector()->getName();
-      StiPlacement* stiPlacement = stiKTN.getDetector()->getPlacement();
+   const StiDetector* stiKTNDet = stiKTN.getDetector();
+
+   if (stiKTNDet)
+   {
+      fVolumeName = stiKTNDet->getName();
+      StiPlacement* stiPlacement = stiKTNDet->getPlacement();
       assert(stiPlacement);
       fNodeRadius = stiPlacement->getLayerRadius();
       fNodeCenterRefAngle = stiPlacement->getCenterRefAngle();
 
-      StiMaterial* stiMaterial = stiKTN.getDetector()->getMaterial();
+      StiMaterial* stiMaterial = stiKTNDet->getMaterial();
       assert(stiMaterial);
 
       fNodeMaterialDensity = stiMaterial->getDensity();
