@@ -1,6 +1,7 @@
 #include <cmath>
 
 #include "TCanvas.h"
+#include "TClonesArray.h"
 #include "TH2S.h"
 #include "TProfile2D.h"
 #include "TVector3.h"
