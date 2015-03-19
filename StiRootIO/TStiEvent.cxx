@@ -7,6 +7,7 @@ ClassImp(TStiEvent);
 /// By default, we set no constraints on tracks w.r.t. their association with
 /// a specific detector group
 StDetectorId TStiEvent::fgDetGroupId = kMaxDetectorId;
+bool TStiEvent::fgDetActiveOnly = false;
 
 
 TStiEvent::TStiEvent() : TObject(), fTStiKalmanTracks(), fTStiHits()
@@ -18,9 +19,11 @@ TStiEvent::TStiEvent() : TObject(), fTStiKalmanTracks(), fTStiHits()
  * Constructs event in which track nodes will be constrained by the provided
  * detector Id.
  * */
-TStiEvent::TStiEvent(StDetectorId detGroupId) : TObject(), fTStiKalmanTracks(), fTStiHits()
+TStiEvent::TStiEvent(StDetectorId detGroupId, bool detActiveOnly) :
+   TObject(), fTStiKalmanTracks(), fTStiHits()
 {
    fgDetGroupId = detGroupId;
+   fgDetActiveOnly = detActiveOnly;
 }
 
 
