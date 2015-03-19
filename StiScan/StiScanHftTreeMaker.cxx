@@ -2,6 +2,7 @@
 
 #include "TBranch.h"
 
+#include "StEvent/StEnumerations.h"
 #include "Sti/StiToolkit.h"
 #include "Sti/StiTrackContainer.h"
 #include "StiMaker/StiMaker.h"
@@ -33,5 +34,9 @@ Int_t StiScanHftTreeMaker::Make()
    StiToolkit *stiToolkit = stiMaker->getToolkit();
    StiTrackContainer *stiTrackContainer = stiToolkit->getTrackContainer();
 
-   return fEvent->Fill(*stiTrackContainer);
+   EReturnCodes retCode = fEvent->Fill(*stiTrackContainer);
+
+   fTree->Fill();
+
+   return retCode;
 }
