@@ -61,7 +61,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(TStiKalmanTrack* const track, const Sti
 
    const StiNodeInf* prefitKTNParams = stiKTN.getInfo();
 
-   fTrackProjErr = prefitKTNParams ? prefitKTNParams->mPE.getDelta() : -1;
+   fTrackProjErr = prefitKTNParams ? prefitKTNParams->mPE.getDelta() : -2;
 }
 
 
