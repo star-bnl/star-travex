@@ -29,8 +29,15 @@ TStiKalmanTrack::TStiKalmanTrack(TStiEvent* event, const StiKalmanTrack& stiKTra
          continue;
       }
 
-      StDetectorId stiNodeDetId = stiNode->getDetector() ?
-         static_cast<StDetectorId>( stiNode->getDetector()->getGroupId() ) : kUnknownId;
+      const StiDetector* stiKTNDet = stiNode->getDetector();
+
+      if (!stiKTNDet) {
+         Warning("TStiKalmanTrack", "No detector found associated with the node. Skipping to next one...");
+         continue;
+      }
+
+      StDetectorId stiNodeDetId = stiKTNDet ?
+         static_cast<StDetectorId>( stiKTNDet->getGroupId() ) : kUnknownId;
 
       if (stiNodeDetId == detGroupId || detGroupId == kMaxDetectorId)
          fNodes.insert( TStiKalmanTrackNode(this, *stiNode) );
