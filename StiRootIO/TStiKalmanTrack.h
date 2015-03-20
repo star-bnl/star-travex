@@ -17,7 +17,7 @@ class TStiKalmanTrack : public TObject
 public:
 
    TStiKalmanTrack();
-   TStiKalmanTrack(TStiEvent* event, const StiKalmanTrack& stiKTrack, StDetectorId detGroupId = kMaxDetectorId);
+   TStiKalmanTrack(TStiEvent* event, const StiKalmanTrack& stiKTrack);
    const TStiEvent* GetParentEvent() const { return fEvent; }
    std::pair<std::set<TStiHit>::iterator, bool> AddToParentEvent(const TStiHit& stiHit);
    const std::set<TStiKalmanTrackNode>& GetNodes() const;

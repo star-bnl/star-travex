@@ -15,7 +15,7 @@ TStiKalmanTrack::TStiKalmanTrack() : TObject(),
 }
 
 
-TStiKalmanTrack::TStiKalmanTrack(TStiEvent* event, const StiKalmanTrack& stiKTrack, StDetectorId detGroupId) :
+TStiKalmanTrack::TStiKalmanTrack(TStiEvent* event, const StiKalmanTrack& stiKTrack) :
    TObject(),
    fEvent(event), fNodes(), fEnergyLosses(0)
 {
@@ -39,8 +39,12 @@ TStiKalmanTrack::TStiKalmanTrack(TStiEvent* event, const StiKalmanTrack& stiKTra
       StDetectorId stiNodeDetId = stiKTNDet ?
          static_cast<StDetectorId>( stiKTNDet->getGroupId() ) : kUnknownId;
 
-      if (stiNodeDetId == detGroupId || detGroupId == kMaxDetectorId)
+      if ( ( TStiEvent::fgDetGroupId == stiNodeDetId || TStiEvent::fgDetGroupId == kMaxDetectorId ) &&
+           ( (TStiEvent::fgDetActiveOnly && stiKTNDet->isActive()) || !TStiEvent::fgDetActiveOnly )
+         )
+      {
          fNodes.insert( TStiKalmanTrackNode(this, *stiNode) );
+      }
 
       fEnergyLosses += stiNode->getEnergyLosses();
    }
