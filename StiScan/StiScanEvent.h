@@ -10,7 +10,6 @@ class StiScanEvent : public TStiEvent
 public:
 
    StiScanEvent();
-   StiScanEvent(StDetectorId detGroupId);
 
    ClassDef(StiScanEvent, 3)
 };
