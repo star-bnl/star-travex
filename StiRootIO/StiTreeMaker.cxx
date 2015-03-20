@@ -10,7 +10,7 @@
 ClassImp(StiTreeMaker)
 
 
-StiTreeMaker::StiTreeMaker(const Char_t *name) : StMaker(name),
+StiTreeMaker::StiTreeMaker(const std::string name) : StMaker(name.c_str()),
    fFile(nullptr),
    fTree(new TTree("t", "TTree with HFT hits and tracks")),
    fEvent(nullptr)

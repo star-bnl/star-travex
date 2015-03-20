@@ -1,6 +1,8 @@
 #ifndef StiTreeMaker_h
 #define StiTreeMaker_h
 
+#include <string>
+
 #include "TFile.h"
 #include "TTree.h"
 
@@ -12,7 +14,7 @@ class StiTreeMaker : public StMaker
 {
 public:
 
-   StiTreeMaker(const Char_t *name = "StiTreeMaker");
+   StiTreeMaker(const std::string name = "StiTreeMaker");
    virtual ~StiTreeMaker();
    virtual Int_t Init();
    virtual Int_t Make() = 0;
