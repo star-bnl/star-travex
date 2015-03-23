@@ -27,6 +27,7 @@ public:
 
    virtual EReturnCodes  Fill(const StiTrackContainer &stiTrackContainer);
    virtual EReturnCodes  Fill(StiHitContainer &stiHitContainer);
+   virtual EReturnCodes  PostFill();
    std::pair<std::set<TStiHit>::iterator, bool>   InsertStiHit(const TStiHit &stiHit) { return fTStiHits.insert(stiHit); }
    const std::set<TStiHit>& GetStiHits() const { return fTStiHits; }
    virtual void  Clear(Option_t *opt = "");

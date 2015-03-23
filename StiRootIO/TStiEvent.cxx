@@ -77,6 +77,17 @@ EReturnCodes TStiEvent::Fill(StiHitContainer &stiHitContainer)
 }
 
 
+EReturnCodes TStiEvent::PostFill()
+{
+   for (auto iTrack = fTStiKalmanTracks.begin(); iTrack != fTStiKalmanTracks.end(); ++iTrack)
+   {
+      iTrack->AssignClosestHits(fTStiHits);
+   }
+
+   return kStOk;
+}
+
+
 void TStiEvent::Print(Option_t *opt) const
 {
    for (auto iTStiKTrack = fTStiKalmanTracks.begin(); iTStiKTrack != fTStiKalmanTracks.end(); ++iTStiKTrack) {
