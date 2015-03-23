@@ -4,6 +4,7 @@
 
 #include "StEvent/StEnumerations.h"
 #include "Sti/StiToolkit.h"
+#include "Sti/StiHitContainer.h"
 #include "Sti/StiTrackContainer.h"
 #include "StiMaker/StiMaker.h"
 
@@ -38,6 +39,9 @@ Int_t StiHifyTreeMaker::Make()
 
    StiHitContainer *stiHitContainer = stiToolkit->getHitContainer();
    fEvent->Fill(*stiHitContainer);
+
+   // Fill other quantities which depend on already filled track and hit containers
+   fEvent->PostFill();
 
    fTree->Fill();
 
