@@ -29,6 +29,7 @@ public:
    float GetNodeRelRadLength() const { return fNodeRelRadLength; }
    float GetNodeTrackLength() const { return fNodeTrackLength; }
    std::string GetVolumeName() const { return fVolumeName; }
+   void   AssignClosestHit(const std::set<TStiHit>& stiHits);
    bool   MatchedVolName(const std::string & pattern) const;
    bool   MatchedVolName(const std::set<std::string> & patterns) const;
    virtual void Print(Option_t *opt = "") const;
@@ -49,9 +50,10 @@ protected:
    float       fNodeRelRadLength;     ///< Relative radiation length
    std::string fVolumeName;           ///< Name of Sti volume
    const TStiHit  *fStiHit;               ///< A pointer to the hit associated with this node if any
+   const TStiHit  *fClosestStiHit;    ///< A pointer to the hit associated with this node if any
    double      fTrackProjErr;         ///< The projection error to the node before the fit
 
-   ClassDef(TStiKalmanTrackNode, 7)
+   ClassDef(TStiKalmanTrackNode, 8)
 };
 
 

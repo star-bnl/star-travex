@@ -14,7 +14,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
    fTrack(nullptr), fValid(false),
    fPosition(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(0),
-   fNodeRelRadLength(0), fVolumeName(), fStiHit(nullptr), fTrackProjErr(-1)
+   fNodeRelRadLength(0), fVolumeName(), fStiHit(nullptr), fClosestStiHit(nullptr), fTrackProjErr(-1)
 {
 }
 
@@ -23,7 +23,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(TStiKalmanTrack* const track, const Sti
    fTrack(track), fValid(stiKTN.isValid()),
    fPosition(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(stiKTN.getTrackLength()),
-   fNodeRelRadLength(0), fVolumeName(), fStiHit(nullptr), fTrackProjErr(-1)
+   fNodeRelRadLength(0), fVolumeName(), fStiHit(nullptr), fClosestStiHit(nullptr), fTrackProjErr(-1)
 {
    // Access node parameters
    fPosition.SetXYZ(stiKTN.x_g(), stiKTN.y_g(), stiKTN.z_g());
@@ -110,4 +110,22 @@ void TStiKalmanTrackNode::Print(Option_t *opt) const
 bool operator< (const TStiKalmanTrackNode& lhs, const TStiKalmanTrackNode& rhs)
 {
    return lhs.fNodeRadius < rhs.fNodeRadius;
+}
+
+
+void TStiKalmanTrackNode::AssignClosestHit(const std::set<TStiHit>& stiHits)
+{
+   TVector3 distVec;
+   double max_dist = DBL_MAX;
+
+   for (auto iHit = stiHits.begin(); iHit != stiHits.end(); ++iHit)
+   {
+      distVec = GetPosition() - iHit->GetPosition();
+
+      double dist = distVec.Mag();
+      if (dist < max_dist) {
+         max_dist = dist;
+         fClosestStiHit = &*iHit;
+      }
+   }
 }
