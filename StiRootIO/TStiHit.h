@@ -13,6 +13,7 @@ public:
 
    TStiHit();
    TStiHit(const StiHit & stiHit);
+   const TVector3& GetPosition() const { return fPosition; }
    virtual void Print(Option_t *opt = "") const;
 
    friend bool operator< (const TStiHit& lhs, const TStiHit& rhs);
