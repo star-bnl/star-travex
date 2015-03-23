@@ -20,7 +20,7 @@ public:
    TStiKalmanTrack(TStiEvent* event, const StiKalmanTrack& stiKTrack);
    const TStiEvent* GetParentEvent() const { return fEvent; }
    std::pair<std::set<TStiHit>::iterator, bool> AddToParentEvent(const TStiHit& stiHit);
-   const std::set<TStiKalmanTrackNode>& GetNodes() const;
+   const std::set<TStiKalmanTrackNode>& GetNodes() const { return fNodes; }
    const TStiKalmanTrackNode& GetDcaNode() const;
    double GetEnergyLosses() const;
    virtual void Print(Option_t *opt = "") const;

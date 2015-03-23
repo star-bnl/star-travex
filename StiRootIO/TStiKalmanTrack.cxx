@@ -59,7 +59,6 @@ std::pair<std::set<TStiHit>::iterator, bool> TStiKalmanTrack::AddToParentEvent(c
    return fEvent ? fEvent->InsertStiHit(stiHit) : dummy;
 }
 
-const std::set<TStiKalmanTrackNode>& TStiKalmanTrack::GetNodes() const { return fNodes; }
 
 const TStiKalmanTrackNode& TStiKalmanTrack::GetDcaNode() const { return *fNodes.begin(); }
 
