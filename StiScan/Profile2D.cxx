@@ -1,4 +1,4 @@
-#include "StRoot/StiScan/Profile2D.h"
+#include "StiScan/Profile2D.h"
 
 #include <exception>
 #include "TH1.h"

@@ -14,7 +14,7 @@
 #include "StiScan/Profile2D.h"
 #include "StiScan/Profile3D.h"
 #include "StiRootIO/TStiKalmanTrack.h"
-#include "StarGenerator/STEP/AgUStep.h"
+#include "star-sim/STEP/AgUStep.h"
 
 typedef Event EventG;
 typedef Track TrackG;
