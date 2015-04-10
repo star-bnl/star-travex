@@ -60,6 +60,7 @@ include_directories(
 	${Boost_INCLUDE_DIR}
 	${ROOT_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}
+	contrib
 	contrib/star-sti
 	$ENV{STAR}/StRoot
 	$ENV{STAR}/StRoot/St_base
@@ -68,3 +69,5 @@ include_directories(
 )
 
 add_subdirectory(StiRootIO)
+add_subdirectory(StiHify)
+add_subdirectory(StiScan)
