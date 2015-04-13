@@ -1,3 +1,19 @@
+Installation
+============
+
+The following assumes the common environment available to STAR experiment users.
+
+    git clone git@github.com:plexoos/star-sti-tools.git
+    cd star-sti-tools/
+    git submodule init
+    git submodule update
+    mkdir build
+    cd build/
+    cmake ..
+    make
+    make install
+
+
 Regular expressions matching geometry volumes used at STAR
 ==========================================================
 
