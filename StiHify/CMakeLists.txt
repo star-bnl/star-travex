@@ -10,6 +10,7 @@ add_library(
 	SHARED
 	StiHifyEvent.cxx
 	StiHifyTreeMaker.cxx
+	StiHify_Cint.cxx
 )
 
 install(TARGETS StiHify DESTINATION ".$ENV{STAR_HOST_SYS}/lib")
