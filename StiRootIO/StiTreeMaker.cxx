@@ -10,8 +10,9 @@
 ClassImp(StiTreeMaker)
 
 
-StiTreeMaker::StiTreeMaker(const std::string name) : StMaker(name.c_str()),
+StiTreeMaker::StiTreeMaker(const std::string name, const std::string suffix) : StMaker(name.c_str()),
    fFile(nullptr),
+   fSuffix(suffix),
    fTree(new TTree("t", "TTree with HFT hits and tracks")),
    fEvent(nullptr)
 {
@@ -43,7 +44,7 @@ Int_t StiTreeMaker::Init()
    fileName.ReplaceAll(".daq", "");
    fileName.ReplaceAll(".fz", "");
 
-   fileName += ".hftree.root";
+   fileName += "." + fSuffix + ".root";
 
    fFile = new TFile(fileName, "RECREATE", "TTree with HFT hits and tracks");
    fFile->SetCompressionLevel(1); // Set file compression level
