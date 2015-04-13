@@ -29,6 +29,10 @@ TStiKalmanTrack::TStiKalmanTrack(TStiEvent* event, const StiKalmanTrack& stiKTra
          continue;
       }
 
+      // Silently skip DCA nodes
+      if ( stiNode->isDca() )
+         continue;
+
       const StiDetector* stiKTNDet = stiNode->getDetector();
 
       if (!stiKTNDet) {
