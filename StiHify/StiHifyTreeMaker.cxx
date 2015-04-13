@@ -34,11 +34,11 @@ Int_t StiHifyTreeMaker::Make()
 
    StiToolkit *stiToolkit = stiMaker->getToolkit();
 
-   StiTrackContainer *stiTrackContainer = stiToolkit->getTrackContainer();
-   fEvent->Fill(*stiTrackContainer);
-
    StiHitContainer *stiHitContainer = stiToolkit->getHitContainer();
    fEvent->Fill(*stiHitContainer);
+
+   StiTrackContainer *stiTrackContainer = stiToolkit->getTrackContainer();
+   fEvent->Fill(*stiTrackContainer);
 
    // Fill other quantities which depend on already filled track and hit containers
    fEvent->PostFill();
