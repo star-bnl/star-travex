@@ -21,7 +21,7 @@ StiHifyTreeMaker::StiHifyTreeMaker(const std::string name, const std::string suf
 void StiHifyTreeMaker::SetEventTree()
 {
    // Pass detector Id to event to constrain type of track nodes to save in event
-   fEvent = new StiHifyEvent(kPxlId, true);
+   fEvent = new StiHifyEvent(kIstId, true);
    fTree->Branch("e.", "StiHifyEvent", &fEvent, 64000, 99);
 }
 
