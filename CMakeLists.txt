@@ -72,3 +72,6 @@ include_directories(
 add_subdirectory(StiRootIO)
 add_subdirectory(StiHify)
 add_subdirectory(StiScan)
+
+
+install(DIRECTORY contrib/star-bfchain/ DESTINATION "StRoot/StBFChain" FILES_MATCHING PATTERN "*.h" PATTERN "*.cxx" PATTERN "*.C")
