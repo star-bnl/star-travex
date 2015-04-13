@@ -12,4 +12,4 @@ add_library(
 	StiHifyTreeMaker.cxx
 )
 
-install(TARGETS StiHify DESTINATION ".$ENV{STAR_HOST_SYS}")
+install(TARGETS StiHify DESTINATION ".$ENV{STAR_HOST_SYS}/lib")

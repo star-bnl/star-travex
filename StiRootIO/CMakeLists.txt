@@ -19,4 +19,4 @@ add_library(
 	StiRootIO_Cint.cxx
 )
 
-install(TARGETS StiRootIO DESTINATION ".$ENV{STAR_HOST_SYS}")
+install(TARGETS StiRootIO DESTINATION ".$ENV{STAR_HOST_SYS}/lib")

@@ -23,4 +23,4 @@ add_library(
 	StiScanRootFile.cxx
 )
 
-install(TARGETS StiScan DESTINATION ".$ENV{STAR_HOST_SYS}")
+install(TARGETS StiScan DESTINATION ".$ENV{STAR_HOST_SYS}/lib")
