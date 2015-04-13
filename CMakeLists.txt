@@ -53,6 +53,7 @@ if(NOT ROOT_FOUND)
    message(FATAL_ERROR "Fatal error: ROOT package not found")
 endif()
 
+add_subdirectory(contrib/star-bfchain)
 add_subdirectory(contrib/star-sti)
 add_subdirectory(contrib/star-sim)
 
