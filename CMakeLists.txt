@@ -29,7 +29,7 @@ if(FORCE_32BIT)
    SET_PROPERTY(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS OFF)
 endif()
 
-set(CMAKE_CXX_FLAGS "-std=c++0x")
+set(CMAKE_CXX_FLAGS "-m32 -std=c++0x")
 
 # Find boost headers and library locations
 set(Boost_USE_MULTITHREADED OFF)
