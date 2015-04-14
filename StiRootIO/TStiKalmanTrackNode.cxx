@@ -61,6 +61,8 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(TStiKalmanTrack* const track, const Sti
       fStiHit = &(*resultPair.first);
    }
 
+   // Note (as of now) this info is available for nodes with r < kRMinTpc [= 55 cm]
+   // see node->saveInfo() in StiKalmanTrackFinder.cxx
    const StiNodeInf* prefitKTNParams = stiKTN.getInfo();
 
    if (prefitKTNParams) {

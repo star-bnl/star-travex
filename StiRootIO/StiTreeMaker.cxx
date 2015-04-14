@@ -29,6 +29,12 @@ StiTreeMaker::~StiTreeMaker()
 }
 
 
+/**
+ * Creates an output ROOT file and a ROOT tree with a user defined structure. It
+ * is the user's responsibility to attach a branch to the tree by overriding
+ * SetEventTree(). The name of the output file is formed from the input file
+ * name by adding a suffix string.
+ */
 Int_t StiTreeMaker::Init()
 {
    StBFChain *bfChain = (StBFChain *) StMaker::GetChain();
@@ -40,10 +46,12 @@ Int_t StiTreeMaker::Init()
 
    TString fileName( gSystem->BaseName(bfChain->GetFileIn().Data()) );
 
+   // Removed possible extensions from the file name
    fileName.ReplaceAll(".event", "");
    fileName.ReplaceAll(".daq", "");
    fileName.ReplaceAll(".fz", "");
 
+   // Form a new name for the output file
    fileName += "." + fSuffix + ".root";
 
    fFile = new TFile(fileName, "RECREATE", "TTree with HFT hits and tracks");

@@ -54,8 +54,8 @@ protected:
    float       fNodeTrackLength;      ///< Relative radiation length
    float       fNodeRelRadLength;     ///< Relative radiation length
    std::string fVolumeName;           ///< Name of Sti volume
-   const TStiHit  *fStiHit;           ///< A pointer to the hit associated with this node if any
-   const TStiHit  *fClosestStiHit;    ///< A pointer to the hit associated with this node if any
+   const TStiHit  *fStiHit;           ///< Pointer to the hit associated with this node if any
+   const TStiHit  *fClosestStiHit;    ///< Pointer to the hit closest to this node if any
    std::set<const TStiHit*> fAdjacentStiHits;   ///< Collection of hits in some proximity of mean track projection
    TVector3    fTrackProjErr;         ///< The projection error to the node before the fit
 

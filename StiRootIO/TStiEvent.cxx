@@ -18,7 +18,7 @@ TStiEvent::TStiEvent() : TObject(), fTStiKalmanTracks(), fTStiHits()
 /**
  * Constructs event in which track nodes will be constrained by the provided
  * detector Id.
- * */
+ */
 TStiEvent::TStiEvent(StDetectorId detGroupId, bool detActiveOnly) :
    TObject(), fTStiKalmanTracks(), fTStiHits()
 {
