@@ -15,6 +15,7 @@ add_library(
 	StiScanHistsByVolume.cxx
 	StiScanPrgOptions.cxx
 	StiScanRootFile.cxx
+	StiScan_Cint.cxx
 )
 
 install(TARGETS StiScan DESTINATION ".$ENV{STAR_HOST_SYS}/lib")
