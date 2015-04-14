@@ -60,7 +60,7 @@ protected:
    TChain *fHftChain;
 
 private:
-   
+
    void InitOptions();
    void InitEnvVars();
 };
