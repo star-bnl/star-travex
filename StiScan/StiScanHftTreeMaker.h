@@ -8,7 +8,7 @@ class StiScanHftTreeMaker : public StiTreeMaker
 {
 public:
 
-   StiScanHftTreeMaker(const Char_t *name = "StiScanHftTreeMaker");
+   StiScanHftTreeMaker(const std::string name="StiScanHftTreeMaker");
    virtual Int_t Make();
 
 private:
