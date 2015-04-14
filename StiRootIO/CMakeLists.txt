@@ -1,5 +1,8 @@
 root_generate_dictionary(
 	StiRootIO_Cint
+	H3D.h
+	Profile2D.h
+	Profile3D.h
 	StiTreeMaker.h
 	TStiEvent.h
 	TStiHit.h
@@ -11,6 +14,9 @@ root_generate_dictionary(
 add_library(
 	StiRootIO
 	SHARED
+	H3D.cxx
+	Profile2D.cxx
+	Profile3D.cxx
 	StiTreeMaker.cxx
 	TStiEvent.cxx
 	TStiHit.cxx
