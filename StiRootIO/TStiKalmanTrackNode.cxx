@@ -11,7 +11,7 @@ ClassImp(TStiKalmanTrackNode)
 
 
 TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
-   fTrack(nullptr), fValid(false),
+   fTrack(nullptr), fValid(false), fIsInsideVolume(-1),
    fPosition(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(0),
    fNodeRelRadLength(0), fVolumeName(), fStiHit(nullptr), fClosestStiHit(nullptr), fTrackProjErr(-1)
@@ -20,7 +20,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
 
 
 TStiKalmanTrackNode::TStiKalmanTrackNode(TStiKalmanTrack* const track, const StiKalmanTrackNode &stiKTN) : TObject(),
-   fTrack(track), fValid(stiKTN.isValid()),
+   fTrack(track), fValid(stiKTN.isValid()), fIsInsideVolume(stiKTN.inside(1+2+4)),
    fPosition(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(stiKTN.getTrackLength()),
    fNodeRelRadLength(0), fVolumeName(), fStiHit(nullptr), fClosestStiHit(nullptr), fTrackProjErr(-1)
