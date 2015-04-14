@@ -1,4 +1,4 @@
-#include "StiScan/H3D.h"
+#include "StiRootIO/H3D.h"
 
 #include "TROOT.h"
 #include "TH2D.h"

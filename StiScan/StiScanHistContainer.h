@@ -11,8 +11,8 @@
 
 #include "StiScan/StiScanEvent.h"
 #include "StiScan/StiScanPrgOptions.h"
-#include "StiScan/Profile2D.h"
-#include "StiScan/Profile3D.h"
+#include "StiRootIO/Profile2D.h"
+#include "StiRootIO/Profile3D.h"
 #include "StiRootIO/TStiKalmanTrack.h"
 #include "star-sim/STEP/AgUStep.h"
 
