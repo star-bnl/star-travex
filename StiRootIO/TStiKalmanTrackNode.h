@@ -43,6 +43,7 @@ protected:
    float       fValid;             ///< A flag taken directly from StiKalmanTrackNode
    int         fIsInsideVolume;    ///< A flag taken directly from StiKalmanTrackNode
    TVector3    fPosition;          ///< Coordinates of the track state/node position
+   TVector3    fPositionLocal;     ///< Coordinates of the track state/node position
    TVector3    fTrackP;            ///< Track momentum vector in global CS
    float       fEnergyLosses;      ///< Energy lost in the volume
    float       fNodeRadius;        ///< The nominal radius of the Sti volume associated with this node
