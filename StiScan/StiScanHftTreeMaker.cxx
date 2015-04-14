@@ -12,7 +12,7 @@
 ClassImp(StiScanHftTreeMaker)
 
 
-StiScanHftTreeMaker::StiScanHftTreeMaker(const std::string name) : StiTreeMaker(name)
+StiScanHftTreeMaker::StiScanHftTreeMaker(const std::string name) : StiTreeMaker(name, "stiscan")
 {
 }
 
