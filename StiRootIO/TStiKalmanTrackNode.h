@@ -54,9 +54,9 @@ protected:
    std::string fVolumeName;           ///< Name of Sti volume
    const TStiHit  *fStiHit;               ///< A pointer to the hit associated with this node if any
    const TStiHit  *fClosestStiHit;    ///< A pointer to the hit associated with this node if any
-   double      fTrackProjErr;         ///< The projection error to the node before the fit
+   TVector3    fTrackProjErr;         ///< The projection error to the node before the fit
 
-   ClassDef(TStiKalmanTrackNode, 8)
+   ClassDef(TStiKalmanTrackNode, 9)
 };
 
 
