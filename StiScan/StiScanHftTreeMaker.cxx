@@ -21,7 +21,6 @@ void StiScanHftTreeMaker::SetEventTree()
 {
    fEvent = new StiScanEvent();
    TBranch *branch = fTree->Branch("e.", "StiScanEvent", &fEvent, 64000, 99);
-   branch->SetAutoDelete(kFALSE);
 }
 
 
