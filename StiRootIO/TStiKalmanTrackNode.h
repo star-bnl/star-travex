@@ -39,20 +39,20 @@ public:
 
 protected:
 
-   TStiKalmanTrack * const fTrack;   //!< Pointer to parent track containing this node
-   float       fValid;             ///< A flag taken directly from StiKalmanTrackNode
-   int         fIsInsideVolume;    ///< A flag taken directly from StiKalmanTrackNode
-   TVector3    fPosition;          ///< Coordinates of the track state/node position
-   TVector3    fPositionLocal;     ///< Coordinates of the track state/node position
-   TVector3    fTrackP;            ///< Track momentum vector in global CS
-   float       fEnergyLosses;      ///< Energy lost in the volume
-   float       fNodeRadius;        ///< The nominal radius of the Sti volume associated with this node
+   TStiKalmanTrack * const fTrack;    //!< Pointer to parent track containing this node
+   float       fValid;                ///< A flag taken directly from StiKalmanTrackNode
+   int         fIsInsideVolume;       ///< A flag taken directly from StiKalmanTrackNode
+   TVector3    fPosition;             ///< Coordinates of the track state/node position
+   TVector3    fPositionLocal;        ///< Coordinates of the track state/node position
+   TVector3    fTrackP;               ///< Track momentum vector in global CS
+   float       fEnergyLosses;         ///< Energy lost in the volume
+   float       fNodeRadius;           ///< The nominal radius of the Sti volume associated with this node
    float       fNodeCenterRefAngle;   ///< Angle to the center of the Sti volume associated with this node
    float       fNodeMaterialDensity;  ///< Density of the material of this node/volume
-   float       fNodeTrackLength;     ///< Relative radiation length
+   float       fNodeTrackLength;      ///< Relative radiation length
    float       fNodeRelRadLength;     ///< Relative radiation length
    std::string fVolumeName;           ///< Name of Sti volume
-   const TStiHit  *fStiHit;               ///< A pointer to the hit associated with this node if any
+   const TStiHit  *fStiHit;           ///< A pointer to the hit associated with this node if any
    const TStiHit  *fClosestStiHit;    ///< A pointer to the hit associated with this node if any
    TVector3    fTrackProjErr;         ///< The projection error to the node before the fit
 
