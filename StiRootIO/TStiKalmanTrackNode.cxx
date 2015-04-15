@@ -53,10 +53,8 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(TStiKalmanTrack* const track, const Sti
    if (stiKTN.getHit())
    {
       auto resultPair = fTrack->AddToParentEvent( TStiHit(*stiKTN.getHit()) );
-      // If hit was successfully added to the parent event save a pointer to it
-      if (resultPair.second) {
-         fStiHit = &(*resultPair.first);
-      }
+      // Save the pointer to the hit in the parent event
+      fStiHit = &(*resultPair.first);
    }
 
    const StiNodeInf* prefitKTNParams = stiKTN.getInfo();
