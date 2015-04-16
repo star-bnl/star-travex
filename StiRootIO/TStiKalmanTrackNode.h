@@ -31,6 +31,7 @@ public:
    std::string GetVolumeName() const { return fVolumeName; }
    void   AssignClosestHit(const std::set<TStiHit>& stiHits);
 	double CalcDistanceToClosestHit() { return (fClosestStiHit->GetPosition() - GetPosition()).Mag(); }
+   double CalcDistanceToHit() const { return fStiHit ? (fStiHit->GetPosition() - GetPosition()).Mag() : -1; }
    bool   MatchedVolName(const std::string & pattern) const;
    bool   MatchedVolName(const std::set<std::string> & patterns) const;
    virtual void Print(Option_t *opt = "") const;
