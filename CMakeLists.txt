@@ -70,6 +70,7 @@ include_directories(
 )
 
 add_subdirectory(StiRootIO)
+add_subdirectory(GeaRootIO)
 add_subdirectory(StiHify)
 add_subdirectory(StiScan)
 
