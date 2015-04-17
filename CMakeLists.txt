@@ -76,3 +76,29 @@ add_subdirectory(StiScan)
 
 
 install(DIRECTORY contrib/star-bfchain/ DESTINATION "StRoot/StBFChain" FILES_MATCHING PATTERN "*.h" PATTERN "*.cxx" PATTERN "*.C")
+
+
+link_directories(
+	${Boost_LIBRARY_DIR}
+	${ROOT_LIBRARY_DIR}
+	$ENV{STAR_LIB}
+	$ENV{OPTSTAR}/lib
+)
+
+set(STAR_LIBRARIES
+	St_base
+	StChain
+	StarRoot
+	StarClassLibrary
+)
+
+add_executable(stiscan src-tools/stiscan.cc)
+
+target_link_libraries(stiscan
+	${Boost_LIBRARIES} ${STAR_LIBRARIES} ${ROOT_LIBRARIES}
+	Table Geom Eve StiUtilities Sti StiRootIO GeaRootIO StiScan
+)
+
+if(FORCE_32BIT)
+	set_target_properties(stiscan PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32 -Wl,--warn-unresolved-symbols")
+endif()
