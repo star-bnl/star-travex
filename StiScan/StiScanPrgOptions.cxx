@@ -77,7 +77,7 @@ void StiScanPrgOptions::AddToInputChains(std::string hftTreeRootFileName)
    if (!fDoGeantStepTree) return;
 
    TString geantStepRootFileName(hftTreeRootFileName.c_str());
-   geantStepRootFileName.ReplaceAll("hftree.root", "track_history.root");
+   geantStepRootFileName.ReplaceAll("stiscan.root", "track_history.root");
 
    TFile file( geantStepRootFileName.Data() );
 
