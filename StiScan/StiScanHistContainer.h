@@ -14,11 +14,7 @@
 #include "StiRootIO/Profile2D.h"
 #include "StiRootIO/Profile3D.h"
 #include "StiRootIO/TStiKalmanTrack.h"
-#include "star-sim/STEP/AgUStep.h"
-
-typedef Event EventG;
-typedef Track TrackG;
-typedef Step  StepG;
+#include "GeaRootIO/TGeaEvent.h"
 
 typedef std::map<std::string, TH1*>                    HistMap;
 typedef std::map<std::string, TH1*>::iterator          HistMapIter;
@@ -34,7 +30,7 @@ public:
    ~StiScanHistContainer();
 
    void FillHists(const StiScanEvent &eventT, const std::set<std::string> *volumeList=0);
-   void FillHists(const EventG &eventG, const std::set<std::string> *volumeList=0);
+   void FillHists(const TGeaEvent &eventG, const std::set<std::string> *volumeList=0);
    void FillDerivedHists();
    void SaveAllAs(std::string prefix="./");
    void SetZRange(double minZ, double maxZ) { mNodeZMin = minZ; mNodeZMax = maxZ; }
@@ -48,7 +44,7 @@ protected:
 
    void BookHists();
    virtual void FillHists(const TStiKalmanTrack &kalmTrack, const std::set<std::string> *volumeList=0);
-   void FillHists(const TrackG &trackG, const std::set<std::string> *volumeList=0);
+   void FillHists(const TGeaTrack &trackG, const std::set<std::string> *volumeList=0);
 
    StiScanPrgOptions& fPrgOptions; ///< Command line arguments and options requested by the user
    HistMap mHs;

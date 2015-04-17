@@ -133,11 +133,11 @@ void StiScanHistContainer::FillHists(const StiScanEvent &eventT, const std::set<
 }
 
 
-void StiScanHistContainer::FillHists(const EventG &eventG, const std::set<std::string> *volumeList)
+void StiScanHistContainer::FillHists(const TGeaEvent &eventG, const std::set<std::string> *volumeList)
 {
-   TIter iGeantTrack(eventG.tracks);
+   TIter iGeaTrack(eventG.tracks);
 
-   while (TrackG* trackG = (TrackG*) iGeantTrack())
+   while (TGeaTrack* trackG = (TGeaTrack*) iGeaTrack())
    {
       FillHists(*trackG, volumeList);
    }
@@ -250,11 +250,11 @@ void StiScanHistContainer::FillHists(const TStiKalmanTrack &kalmTrack, const std
 }
 
 
-void StiScanHistContainer::FillHists(const TrackG &trackG, const std::set<std::string> *volumeList)
+void StiScanHistContainer::FillHists(const TGeaTrack &trackG, const std::set<std::string> *volumeList)
 {
-   TIter iGeantStep(&trackG.steps);
+   TIter iGeaStep(&trackG.steps);
 
-   while (StepG* stepG = (StepG*) iGeantStep())
+   while (TGeaStep* stepG = (TGeaStep*) iGeaStep())
    {
       double dEStep = stepG->dEstep * 1e6; // convert GeV to keV
 

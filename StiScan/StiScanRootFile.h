@@ -11,10 +11,9 @@
 #include "StMaker.h"
 
 #include "StiScan/StiScanEvent.h"
-#include "StarGenerator/STEP/AgUStep.h"
+#include "GeaRootIO/TGeaEvent.h"
 
 class StiScanPrgOptions;
-typedef Event EventG;
 
 typedef std::map<std::string, TDirectoryFile*>                   TDirMap;
 typedef std::map<std::string, TDirectoryFile*>::iterator         TDirMapIter;
@@ -29,7 +28,7 @@ public:
    StiScanRootFile(StiScanPrgOptions& prgOpts, const char* fname, Option_t* option="", const char* ftitle="", Int_t compress=1);
 
    void FillHists(const StiScanEvent &eventT, const std::set<std::string> *volumeList=0);
-   void FillHists(const EventG &eventG, const std::set<std::string> *volumeList=0);
+   void FillHists(const TGeaEvent &eventG, const std::set<std::string> *volumeList=0);
    void FillDerivedHists();
    virtual Int_t Write(const char* name = 0, Int_t opt = 0, Int_t bufsiz = 0);
    virtual Int_t Write(const char* name = 0, Int_t opt = 0, Int_t bufsiz = 0) const;
