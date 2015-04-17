@@ -55,7 +55,6 @@ endif()
 
 add_subdirectory(contrib/star-bfchain)
 add_subdirectory(contrib/star-sti)
-add_subdirectory(contrib/star-sim)
 
 include_directories(
 	${Boost_INCLUDE_DIR}
