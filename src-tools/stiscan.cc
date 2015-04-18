@@ -24,7 +24,7 @@ typedef std::unordered_map<size_t, std::string> Hash2StringMap;
 TGeoManager *gGeoManager = 0;
 
 
-void loop_hftree(StiScanPrgOptions &poProc);
+void loop_over_tree(StiScanPrgOptions &prgOpts);
 void make_geometry(std::string geoTag="y2014a");
 void create_volume_hash_map(TGeoNavigator &geoNav, Hash2StringMap &hash2PathMap);
 
@@ -34,8 +34,8 @@ int main(int argc, char **argv)
    const std::string hftTreeName = "t";
    const std::string geantStepTreeName = "stepping";
 
-   StiScanPrgOptions poProc(argc, argv, hftTreeName, geantStepTreeName);
-   poProc.ProcessOptions();
+   StiScanPrgOptions prgOpts(argc, argv, hftTreeName, geantStepTreeName);
+   prgOpts.ProcessOptions();
 
    // Initialize gGeoManager with geometry from a ROOT file
    make_geometry("y2014a");
@@ -49,36 +49,36 @@ int main(int argc, char **argv)
 
    TGeaEvent::fgHash2PathMap = &hash2PathMap;
 
-   loop_hftree(poProc);
+   loop_over_tree(prgOpts);
 
    return EXIT_SUCCESS;
 }
 
 
-void loop_hftree(StiScanPrgOptions &poProc)
+void loop_over_tree(StiScanPrgOptions &prgOpts)
 {
-   TChain *hftChain       = poProc.GetHftChain();
-   TChain *geantStepChain = poProc.GetGeantStepChain();
+   TChain *hftChain       = prgOpts.GetHftChain();
+   TChain *geantStepChain = prgOpts.GetGeantStepChain();
 
    // Create a new output file
-   std::string outFileName = poProc.GetHftreeFile();
+   std::string outFileName = prgOpts.GetHftreeFile();
 
-   std::string postfix("stiscan.root");
-   std::size_t postfix_pos = outFileName.find(postfix);
+   std::string suffix("stiscan.root");
+   std::size_t suffix_pos = outFileName.find(suffix);
 
-   if (postfix_pos != std::string::npos)
+   if (suffix_pos != std::string::npos)
    {
-      outFileName.replace( postfix_pos, postfix.length(), "stiscan.hist.root");
+      outFileName.replace( suffix_pos, suffix.length(), "stiscan.hist.root");
    } else {
       outFileName += "_stiscan.root";
    }
 
-   StiScanRootFile outRootFile(poProc, outFileName.c_str(), "recreate");
+   StiScanRootFile outRootFile(prgOpts, outFileName.c_str(), "recreate");
 
    int nTreeEvents = hftChain->GetEntries();
    int nProcEvents = 0;
 
-   Info("loop_hftree", "Found tree/chain with N entries: %d", nTreeEvents);
+   Info("loop_over_tree", "Found tree/chain with N entries: %d", nTreeEvents);
 
    StiScanEvent *stiScanEvent = new StiScanEvent();
    hftChain->SetBranchAddress("e.", &stiScanEvent);
@@ -88,27 +88,27 @@ void loop_hftree(StiScanPrgOptions &poProc)
    // Prepare resources for geant event
    TGeaEvent *geantEvent = new TGeaEvent();
 
-   if (poProc.DoGeantStepTree())
+   if (prgOpts.DoGeantStepTree())
       geantStepChain->SetBranchAddress("TGeaEvent", &geantEvent);
 
    TRandom myRandom;
 
-   Info("loop_hftree", "Loop over tree/chain...");
+   Info("loop_over_tree", "Loop over tree/chain...");
 
    for (int iEvent = 1; iEvent <= nTreeEvents; iEvent++, nProcEvents++)
    {
       if ( nTreeEvents >= 10 && iEvent % int(nTreeEvents*0.1) == 0 )
-         Info("loop_hftree", "Analyzing event %d", iEvent);
+         Info("loop_over_tree", "Analyzing event %d", iEvent);
 
-      if (myRandom.Rndm() > poProc.GetSparsity()) continue;
+      if (myRandom.Rndm() > prgOpts.GetSparsity()) continue;
 
       hftChain->GetEntry(iEvent-1);
 
-      outRootFile.FillHists(*stiScanEvent, &poProc.GetVolumeList());
+      outRootFile.FillHists(*stiScanEvent, &prgOpts.GetVolumeList());
 
-      if (poProc.DoGeantStepTree()) {
+      if (prgOpts.DoGeantStepTree()) {
          geantStepChain->GetEntry(iEvent-1);
-         outRootFile.FillHists(*geantEvent, &poProc.GetVolumeList());
+         outRootFile.FillHists(*geantEvent, &prgOpts.GetVolumeList());
       }
    }
 
@@ -117,9 +117,9 @@ void loop_hftree(StiScanPrgOptions &poProc)
 
    outRootFile.FillDerivedHists();
 
-   if (poProc.SaveGraphics()) {
-      gROOT->Macro(poProc.GetStyleMacro().c_str());
-      outRootFile.SaveAllAs(poProc.GetOutPrefix());
+   if (prgOpts.SaveGraphics()) {
+      gROOT->Macro(prgOpts.GetStyleMacro().c_str());
+      outRootFile.SaveAllAs(prgOpts.GetOutPrefix());
    }
 
    outRootFile.Write();
