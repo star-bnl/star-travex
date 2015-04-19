@@ -10,6 +10,8 @@ add_library(
 	SHARED
 	StiHifyEvent.cxx
 	StiHifyTreeMaker.cxx
+	StiHifyHistContainer.cxx
+	StiHifyRootFile.cxx
 	StiHify_Cint.cxx
 )
 
