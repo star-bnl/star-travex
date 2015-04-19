@@ -16,11 +16,6 @@
 
 typedef std::unordered_map<size_t, std::string> Hash2StringMap;
 
-
-// These globals are not used but required since we link against TGiant3.o
-//int    Margc=0;
-//char** Margv=NULL;
-
 TGeoManager *gGeoManager = 0;
 
 
