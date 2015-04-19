@@ -92,12 +92,19 @@ set(STAR_LIBRARIES
 )
 
 add_executable(stiscan src-tools/stiscan.cc)
+add_executable(stihify src-tools/stihify.cc)
 
 target_link_libraries(stiscan
 	${Boost_LIBRARIES} ${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	Table Geom Eve StiUtilities Sti StiRootIO GeaRootIO StiScan
 )
 
+target_link_libraries(stihify
+	${Boost_LIBRARIES} ${STAR_LIBRARIES} ${ROOT_LIBRARIES}
+	Table Geom Eve StiUtilities Sti StiRootIO StiScan StiHify
+)
+
 if(FORCE_32BIT)
 	set_target_properties(stiscan PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32 -Wl,--warn-unresolved-symbols")
+	set_target_properties(stihify PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32 -Wl,--warn-unresolved-symbols")
 endif()
