@@ -25,8 +25,8 @@ private:
 
    const StiHit*  fStiHit;         //!< Transient pointer to original StiHit to access non-persistent info
    StDetectorId   fDetectorId;
-   TVector3       fPosition;       ///< Coordinates of the hit
    std::string    fVolumeName;     //!< Name of Sti volume
+   TVector3       fPosition;       ///< Global coordinates of the hit in the STAR CS
    TVector3       fPositionLocal;  ///< Local coordinates of the hit in the detector CS
    char           fTimesUsed;      ///< The number of tracks this hit was assigned to
 
