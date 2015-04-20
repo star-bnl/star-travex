@@ -36,7 +36,7 @@ TStiKalmanTrack::TStiKalmanTrack(TStiEvent* event, const StiKalmanTrack& stiKTra
       const StiDetector* stiKTNDet = stiNode->getDetector();
 
       if (!stiKTNDet) {
-         Warning("TStiKalmanTrack", "No detector found associated with the node. Skipping to next one...");
+         Warning("TStiKalmanTrack", "No detector found associated with non-DCA node. Skipping to next one...");
          continue;
       }
 
@@ -71,12 +71,12 @@ double TStiKalmanTrack::GetEnergyLosses() const { return fEnergyLosses; }
 
 void TStiKalmanTrack::Print(Option_t *opt) const
 {
-   printf("fEnergyLosses: %f\n", fEnergyLosses);
+   Info("Print", "fEnergyLosses: %f\n", fEnergyLosses);
 
    std::set<TStiKalmanTrackNode>::const_iterator iTStiKTrackNode = fNodes.begin();
 
    for (int nodeIdx=0; iTStiKTrackNode != fNodes.end(); ++iTStiKTrackNode, ++nodeIdx) {
-      printf("node index: %d\n", nodeIdx);
+      Info("Print", "node index: %d\n", nodeIdx);
       iTStiKTrackNode->Print();
    }
 }
