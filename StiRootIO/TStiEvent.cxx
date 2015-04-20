@@ -86,6 +86,7 @@ EReturnCodes TStiEvent::PostFill()
    for (auto iTrack = fTStiKalmanTracks.begin(); iTrack != fTStiKalmanTracks.end(); ++iTrack)
    {
       iTrack->AssignClosestHits(fTStiHits);
+      iTrack->FindAdjacentHits(fTStiHits);
    }
 
    return kStOk;

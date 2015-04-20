@@ -92,3 +92,19 @@ void TStiKalmanTrack::AssignClosestHits(const std::set<TStiHit>& stiHits)
       tmpNode.AssignClosestHit(stiHits);
    }
 }
+
+
+/**
+ * For each node of this track finds hits in some proximity to the mean track
+ * projection.
+ */
+void TStiKalmanTrack::FindAdjacentHits(const std::set<TStiHit>& stiHits)
+{
+   for (auto iNode = fNodes.begin(); iNode != fNodes.end(); ++iNode)
+   {
+      // The following cast is ugly but we want to update a member which is not
+      // used for ordering of the set elements which is a safe thing to do
+      TStiKalmanTrackNode& tmpNode = const_cast< TStiKalmanTrackNode& >(*iNode);
+      tmpNode.FindAdjacentHits(stiHits);
+   }
+}
