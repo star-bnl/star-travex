@@ -121,15 +121,15 @@ bool operator< (const TStiKalmanTrackNode& lhs, const TStiKalmanTrackNode& rhs)
 void TStiKalmanTrackNode::AssignClosestHit(const std::set<TStiHit>& stiHits)
 {
    TVector3 distVec;
-   double max_dist = DBL_MAX;
+   double min_dist = DBL_MAX;
 
    for (auto iHit = stiHits.begin(); iHit != stiHits.end(); ++iHit)
    {
       distVec = GetPosition() - iHit->GetPosition();
 
       double dist = distVec.Mag();
-      if (dist < max_dist) {
-         max_dist = dist;
+      if (dist < min_dist) {
+         min_dist = dist;
          fClosestStiHit = &*iHit;
       }
    }
