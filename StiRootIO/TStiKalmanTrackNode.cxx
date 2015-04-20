@@ -64,7 +64,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(TStiKalmanTrack* const track, const Sti
    const StiNodeInf* prefitKTNParams = stiKTN.getInfo();
 
    if (prefitKTNParams) {
-      fTrackProjErr.SetXYZ(prefitKTNParams->mPE._cXX, prefitKTNParams->mPE._cYY, prefitKTNParams->mPE._cZZ);
+      fTrackProjErr.SetXYZ(sqrt(prefitKTNParams->mPE._cXX), sqrt(prefitKTNParams->mPE._cYY), sqrt(prefitKTNParams->mPE._cZZ));
       fPositionLocal.SetXYZ(prefitKTNParams->mPP.x(), prefitKTNParams->mPP.y(), prefitKTNParams->mPP.z());
    }
 }
