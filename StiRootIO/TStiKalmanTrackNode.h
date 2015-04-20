@@ -30,6 +30,7 @@ public:
    float GetNodeTrackLength() const { return fNodeTrackLength; }
    std::string GetVolumeName() const { return fVolumeName; }
    void   AssignClosestHit(const std::set<TStiHit>& stiHits);
+   void   FindAdjacentHits(const std::set<TStiHit>& stiHits);
    double CalcDistanceToClosestHit() const { return fClosestStiHit ? (fClosestStiHit->GetPosition() - GetPosition()).Mag() : -1; }
    double CalcDistanceToHit() const { return fStiHit ? (fStiHit->GetPosition() - GetPosition()).Mag() : -1; }
    bool   MatchedVolName(const std::string & pattern) const;
@@ -55,6 +56,7 @@ protected:
    std::string fVolumeName;           ///< Name of Sti volume
    const TStiHit  *fStiHit;           ///< A pointer to the hit associated with this node if any
    const TStiHit  *fClosestStiHit;    ///< A pointer to the hit associated with this node if any
+   std::set<const TStiHit*> fAdjacentStiHits;   ///< Collection of hits in some proximity of mean track projection
    TVector3    fTrackProjErr;         ///< The projection error to the node before the fit
 
    ClassDef(TStiKalmanTrackNode, 9)

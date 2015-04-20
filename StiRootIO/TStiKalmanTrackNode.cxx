@@ -14,7 +14,9 @@ TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
    fTrack(nullptr), fValid(false), fIsInsideVolume(-1),
    fPosition(), fPositionLocal(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(0),
-   fNodeRelRadLength(0), fVolumeName(""), fStiHit(nullptr), fClosestStiHit(nullptr), fTrackProjErr()
+   fNodeRelRadLength(0), fVolumeName(""), fStiHit(nullptr), fClosestStiHit(nullptr),
+   fAdjacentStiHits(),
+   fTrackProjErr()
 {
 }
 
@@ -23,7 +25,9 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(TStiKalmanTrack* const track, const Sti
    fTrack(track), fValid(stiKTN.isValid()), fIsInsideVolume(stiKTN.inside(1+2+4)),
    fPosition(), fPositionLocal(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(stiKTN.getTrackLength()),
-   fNodeRelRadLength(0), fVolumeName(""), fStiHit(nullptr), fClosestStiHit(nullptr), fTrackProjErr()
+   fNodeRelRadLength(0), fVolumeName(""), fStiHit(nullptr), fClosestStiHit(nullptr),
+   fAdjacentStiHits(),
+   fTrackProjErr()
 {
    // Access node parameters
    fPosition.SetXYZ(stiKTN.x_g(), stiKTN.y_g(), stiKTN.z_g());
@@ -127,6 +131,29 @@ void TStiKalmanTrackNode::AssignClosestHit(const std::set<TStiHit>& stiHits)
       if (dist < max_dist) {
          max_dist = dist;
          fClosestStiHit = &*iHit;
+      }
+   }
+}
+
+
+/**
+ * Finds all hits within a 5x(track_proj_err) vicinity of the track mean
+ * projection and fills this node's fAdjacentStiHits collection with pointers to
+ * the found hits. The hits are selected from the user provided collection
+ * stiHits which is normaly a collection of hits in the parent event to which
+ * the track belongs.
+ */
+void TStiKalmanTrackNode::FindAdjacentHits(const std::set<TStiHit>& stiHits)
+{
+   TVector3 distVec;
+
+   for (auto iHit = stiHits.begin(); iHit != stiHits.end(); ++iHit)
+   {
+      distVec = GetPosition() - iHit->GetPosition();
+
+      if (distVec.Mag() < 5*fTrackProjErr.Mag())
+      {
+         fAdjacentStiHits.insert(&*iHit);
       }
    }
 }
