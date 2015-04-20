@@ -11,7 +11,9 @@ ClassImp(TStiHit)
 
 
 TStiHit::TStiHit() : TObject(),
-   fDetectorId(kUnknownId), fPosition(), fTimesUsed(0)
+   fDetectorId(kUnknownId), fPosition(),
+   fPositionLocal(),
+   fTimesUsed(0)
 {
 }
 
@@ -19,6 +21,7 @@ TStiHit::TStiHit() : TObject(),
 TStiHit::TStiHit(const StiHit & stiHit) : TObject(),
    fDetectorId( stiHit.detector() ? static_cast<StDetectorId>(stiHit.detector()->getGroupId()) : kUnknownId ),
    fPosition(stiHit.x_g(), stiHit.y_g(), stiHit.z_g()),
+   fPositionLocal(stiHit.x(), stiHit.y(), stiHit.z()),
    fTimesUsed(stiHit.timesUsed())
 {
 }

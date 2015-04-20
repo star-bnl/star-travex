@@ -22,6 +22,7 @@ private:
 
    StDetectorId fDetectorId;
    TVector3  fPosition;   ///< Coordinates of the hit
+   TVector3  fPositionLocal;   ///< Local coordinates of the hit in the detector CS
    char      fTimesUsed;  ///< The number of tracks this hit was assigned to
 
    ClassDef(TStiHit, 2)
