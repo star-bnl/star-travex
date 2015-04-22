@@ -60,7 +60,7 @@ void loop_over_tree(StiScanPrgOptions &prgOpts)
 
       treeChain->GetEntry(iEvent-1);
 
-      outRootFile.FillHists(*stiHifyEvent, &prgOpts.GetVolumeList());
+      outRootFile.FillHists(*stiHifyEvent);
    }
 
    delete stiHifyEvent;
