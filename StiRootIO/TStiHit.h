@@ -15,6 +15,7 @@ public:
    TStiHit(const StiHit & stiHit);
    std::string GetVolumeName() const { return fVolumeName; }
    const TVector3& GetPosition() const { return fPosition; }
+   const TVector3& GetPositionLocal() const { return fPositionLocal; }
    virtual void Print(Option_t *opt = "") const;
 
    friend bool operator< (const TStiHit& lhs, const TStiHit& rhs);

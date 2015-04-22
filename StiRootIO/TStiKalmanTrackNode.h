@@ -22,8 +22,11 @@ public:
    TStiKalmanTrackNode();
    TStiKalmanTrackNode(TStiKalmanTrack* const track, const StiKalmanTrackNode &stiKTN);
    bool  IsValid() const { return fValid; }
+   bool  IsInsideVolume() const { return fIsInsideVolume; }
    const TVector3& GetTrackP() const { return fTrackP; }
    const TVector3& GetPosition() const { return fPosition; }
+   const TVector3& GetPositionLocal() const { return fPositionLocal; }
+   const TVector3& GetTrackProjErr() const { return fTrackProjErr; }
    float GetEnergyLosses() const { return fabs(fEnergyLosses); }
    float GetNodeRadius() const { return fNodeRadius; }
    float GetNodeCenterRefAngle() const { return fNodeCenterRefAngle; }
@@ -31,6 +34,9 @@ public:
    float GetNodeRelRadLength() const { return fNodeRelRadLength; }
    float GetNodeTrackLength() const { return fNodeTrackLength; }
    std::string GetVolumeName() const { return fVolumeName; }
+   const TStiHit* GetHit() const { return fStiHit; }
+   const TStiHit* GetClosestHit() const { return fClosestStiHit; }
+   const std::set<const TStiHit*>& GetAdjacentHits() const { return fAdjacentStiHits; }
    void   AssignClosestHit(const std::set<TStiHit>& stiHits);
    void   FindAdjacentHits(const std::set<TStiHit>& stiHits);
    double CalcDistanceToClosestHit() const { return fClosestStiHit ? (fClosestStiHit->GetPosition() - GetPosition()).Mag() : -1; }
