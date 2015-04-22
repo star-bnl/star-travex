@@ -34,8 +34,8 @@ public:
    void FillDerivedHists();
    void SaveAllAs(std::string prefix="./");
    void SetZRange(double minZ, double maxZ) { mNodeZMin = minZ; mNodeZMax = maxZ; }
-   double GetZMin() { return mNodeZMin; }
-   double GetZMax() { return mNodeZMax; }
+   double GetZMin() const { return mNodeZMin; }
+   double GetZMax() const { return mNodeZMax; }
    void SetRRange(float minR, float maxR) { mNodeRMin = minR; mNodeRMax = maxR; }
    float GetRMin() const { return mNodeRMin; }
    float GetRMax() const { return mNodeRMax; }
