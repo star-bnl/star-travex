@@ -12,6 +12,8 @@
 
 class TStiKalmanTrack;
 
+enum class StiNodeHitStatus {Any, Accepted, Rejected, Candidate};
+
 
 class TStiKalmanTrackNode : public TObject
 {
