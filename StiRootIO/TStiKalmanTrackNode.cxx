@@ -72,6 +72,32 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(TStiKalmanTrack* const track, const Sti
 }
 
 
+TVector3 TStiKalmanTrackNode::CalcPullToHit(const TStiHit& hit) const
+{
+   double pullX = (hit.GetPositionLocal().X() - fPositionLocal.X()) / fTrackProjErr.X();
+   double pullY = (hit.GetPositionLocal().Y() - fPositionLocal.Y()) / fTrackProjErr.Y();
+   double pullZ = (hit.GetPositionLocal().Z() - fPositionLocal.Z()) / fTrackProjErr.Z();
+
+   return TVector3(pullX, pullY, pullZ);
+}
+
+
+/**
+ * Calculates and returns uncorrelated three components which can be used in the
+ * pull distribution.
+ */
+TVector3 TStiKalmanTrackNode::CalcPullClosestHit() const
+{
+   if (!fClosestStiHit) return TVector3(DBL_MAX, DBL_MAX, DBL_MAX);
+
+   double pullX = (fClosestStiHit->GetPositionLocal().X() - fPositionLocal.X()) / fTrackProjErr.X();
+   double pullY = (fClosestStiHit->GetPositionLocal().Y() - fPositionLocal.Y()) / fTrackProjErr.Y();
+   double pullZ = (fClosestStiHit->GetPositionLocal().Z() - fPositionLocal.Z()) / fTrackProjErr.Z();
+
+   return TVector3(pullX, pullY, pullZ);
+}
+
+
 bool TStiKalmanTrackNode::MatchedVolName(const std::string & pattern) const
 {
    if (fVolumeName.empty()) return true;
