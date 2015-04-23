@@ -42,6 +42,11 @@ protected:
 
    HistMap mHs;
 
+   TH1I* hDistClosest2AcceptedHit;
+   TH1I* hPullClosestHit1D;
+   TH2I* hPullClosestHit2D;
+   TH2I* hPullCandidateHits2D;
+   TH2F* hActiveLayerCounts;
 };
 
 #endif

@@ -11,7 +11,11 @@
 
 
 StiHifyHistContainer::StiHifyHistContainer(StiScanPrgOptions& prgOpts) : TDirectoryFile(),
-   mHs()
+   mHs(),
+   hDistClosest2AcceptedHit(nullptr),
+   hPullClosestHit1D(nullptr),
+   hPullClosestHit2D(nullptr),
+   hPullCandidateHits2D(nullptr)
 {
    BookHists();
 }
@@ -19,7 +23,11 @@ StiHifyHistContainer::StiHifyHistContainer(StiScanPrgOptions& prgOpts) : TDirect
 
 StiHifyHistContainer::StiHifyHistContainer(StiScanPrgOptions& prgOpts, const char* name, TDirectory* motherDir, bool doProjection, Option_t* option) :
    TDirectoryFile(name, name, option, motherDir),
-   mHs()
+   mHs(),
+   hDistClosest2AcceptedHit(nullptr),
+   hPullClosestHit1D(nullptr),
+   hPullClosestHit2D(nullptr),
+   hPullCandidateHits2D(nullptr)
 {
    BookHists();
 }
@@ -38,10 +46,24 @@ void StiHifyHistContainer::BookHists()
 {
    this->cd();
 
+   mHs["hDistClosest2AcceptedHit"] = hDistClosest2AcceptedHit
+      = new TH1I("hDistClosest2AcceptedHit", " ; Distance; Num. of Track Nodes; ", 100, 0, 0.5);
+   hDistClosest2AcceptedHit->SetOption("XY hist");
 
+   mHs["hPullClosestHit1D"] = hPullClosestHit1D
+      = new TH1I("hPullClosestHit1D", " ; Distance; Num. of Track Nodes; ", 100, 0, 6);
 
+   mHs["hPullClosestHit2D"] = hPullClosestHit2D
+      = new TH2I("hPullClosestHit2D", " ; local Z; local Y; Num. of Track Nodes", 50, -10, 10, 50, -10, 10);
+   hPullClosestHit2D->SetOption("colz");
 
+   mHs["hPullCandidateHits2D"] = hPullCandidateHits2D
+      = new TH2I("hPullCandidateHits2D", " ; local Z; local Y; Num. of Track Nodes", 50, -6, 6, 50, -6, 6);
+   hPullCandidateHits2D->SetOption("colz");
 
+   mHs["hActiveLayerCounts"] = hActiveLayerCounts
+      = new TH2F("hActiveLayerCounts", " ; local Z; local Y; Num. of Track Nodes", 50, -23, 23, 50, 0, 6);
+   hActiveLayerCounts->SetOption("colz");
 }
 
 
