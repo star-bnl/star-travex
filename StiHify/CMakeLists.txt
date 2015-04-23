@@ -11,6 +11,7 @@ add_library(
 	StiHifyEvent.cxx
 	StiHifyTreeMaker.cxx
 	StiHifyHistContainer.cxx
+	StiHifyRatiosHistContainer.cxx
 	StiHifyRootFile.cxx
 	StiHify_Cint.cxx
 )
