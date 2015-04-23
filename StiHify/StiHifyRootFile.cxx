@@ -6,6 +6,7 @@
 #include "TStyle.h"
 
 #include "StiHify/StiHifyHistContainer.h"
+#include "StiHify/StiHifyRatiosHistContainer.h"
 #include "StiScan/StiScanPrgOptions.h"
 
 
@@ -54,4 +55,14 @@ void StiHifyRootFile::FillDerivedHists()
 
       container->FillDerivedHists();
    }
+
+   StiHifyRatiosHistContainer *ratios;
+   mDirs["sti_hit_ratio"] = ratios = new StiHifyRatiosHistContainer("sti_hit_ratio", this);
+
+   TH1* hitsAll
+      = static_cast<StiHifyHistContainer*>(mDirs["sti_hit_closest"])->GetHists().find("hActiveLayerCounts")->second;
+   TH1* hitsAcc
+      = static_cast<StiHifyHistContainer*>(mDirs["sti_hit_accepted"])->GetHists().find("hActiveLayerCounts")->second;
+
+   ratios->CreateRatioHist(hitsAcc, hitsAll);
 }
