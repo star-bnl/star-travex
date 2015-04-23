@@ -26,10 +26,10 @@ void create_volume_hash_map(TGeoNavigator &geoNav, Hash2StringMap &hash2PathMap)
 
 int main(int argc, char **argv)
 {
-   const std::string hftTreeName = "t";
+   const std::string stiTreeName = "t";
    const std::string geantStepTreeName = "stepping";
 
-   StiScanPrgOptions prgOpts(argc, argv, hftTreeName, geantStepTreeName);
+   StiScanPrgOptions prgOpts(argc, argv, stiTreeName, geantStepTreeName);
    prgOpts.ProcessOptions();
 
    // Initialize gGeoManager with geometry from a ROOT file
@@ -52,11 +52,11 @@ int main(int argc, char **argv)
 
 void loop_over_tree(StiScanPrgOptions &prgOpts)
 {
-   TChain *hftChain       = prgOpts.GetHftChain();
+   TChain *stiChain       = prgOpts.GetStiTChain();
    TChain *geantStepChain = prgOpts.GetGeantStepChain();
 
    // Create a new output file
-   std::string outFileName = prgOpts.GetHftreeFile();
+   std::string outFileName = prgOpts.GetStiTreeInFile();
 
    std::string suffix("stiscan.root");
    std::size_t suffix_pos = outFileName.find(suffix);
@@ -70,15 +70,15 @@ void loop_over_tree(StiScanPrgOptions &prgOpts)
 
    StiScanRootFile outRootFile(prgOpts, outFileName.c_str(), "recreate");
 
-   int nTreeEvents = hftChain->GetEntries();
+   int nTreeEvents = stiChain->GetEntries();
    int nProcEvents = 0;
 
    Info("loop_over_tree", "Found tree/chain with N entries: %d", nTreeEvents);
 
    StiScanEvent *stiScanEvent = new StiScanEvent();
-   hftChain->SetBranchAddress("e.", &stiScanEvent);
-   hftChain->SetBranchStatus("e.*", false);
-   hftChain->SetBranchStatus("e.TStiEvent.fTStiKalmanTracks*", true);
+   stiChain->SetBranchAddress("e.", &stiScanEvent);
+   stiChain->SetBranchStatus("e.*", false);
+   stiChain->SetBranchStatus("e.TStiEvent.fTStiKalmanTracks*", true);
 
    // Prepare resources for geant event
    TGeaEvent *geantEvent = new TGeaEvent();
@@ -97,7 +97,7 @@ void loop_over_tree(StiScanPrgOptions &prgOpts)
 
       if (myRandom.Rndm() > prgOpts.GetSparsity()) continue;
 
-      hftChain->GetEntry(iEvent-1);
+      stiChain->GetEntry(iEvent-1);
 
       outRootFile.FillHists(*stiScanEvent, &prgOpts.GetVolumeList());
 

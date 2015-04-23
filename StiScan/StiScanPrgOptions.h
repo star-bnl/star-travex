@@ -27,7 +27,7 @@ class StiScanPrgOptions : public PrgOptionProcessor
 public:
 
    StiScanPrgOptions();
-   StiScanPrgOptions(int argc, char **argv, const std::string& hftTreeName="t", const std::string& geantStepTreeName="stepping");
+   StiScanPrgOptions(int argc, char **argv, const std::string& stiTreeName="t", const std::string& geantStepTreeName="stepping");
    ~StiScanPrgOptions();
 
    bool  DoGeantStepTree() const { return fDoGeantStepTree; }
@@ -44,7 +44,7 @@ public:
 protected:
 
    virtual void VerifyOptions();
-   virtual void AddToInputChains(std::string hftTreeRootFileName);
+   virtual void AddToInputChains(std::string stiTreeRootFileName);
 
    bool    fDoGeantStepTree; ///< A flag to process geant tree if set
    bool    fDoAutoHistRange; ///< A flag to find optimal range for histogram axises automatically

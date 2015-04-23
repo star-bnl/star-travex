@@ -19,9 +19,9 @@ void loop_over_tree(StiScanPrgOptions &prgOpts);
 
 int main(int argc, char **argv)
 {
-   const std::string hftTreeName = "t";
+   const std::string stiTreeName = "t";
 
-   StiScanPrgOptions prgOpts(argc, argv, hftTreeName);
+   StiScanPrgOptions prgOpts(argc, argv, stiTreeName);
    prgOpts.ProcessOptions();
 
    loop_over_tree(prgOpts);
@@ -32,10 +32,10 @@ int main(int argc, char **argv)
 
 void loop_over_tree(StiScanPrgOptions &prgOpts)
 {
-   TChain *treeChain = prgOpts.GetHftChain();
+   TChain *treeChain = prgOpts.GetStiTChain();
 
    // Create a new output file
-   std::string outFileName = prgOpts.GetHftreeFile();
+   std::string outFileName = prgOpts.GetStiTreeInFile();
 
    std::string suffix("stihify.root");
    std::size_t suffix_pos = outFileName.find(suffix);

@@ -49,12 +49,12 @@ void StiScanRootFile::FindAutoRange() const
 {
    const std::set<std::string> *volumeList = &fPrgOptions.GetVolumeList();
 
-   TChain *hftChain = fPrgOptions.GetHftChain();
+   TChain *stiChain = fPrgOptions.GetStiTChain();
    StiScanEvent *eventT = new StiScanEvent();
 
-   hftChain->SetBranchAddress("e.", &eventT);
-   hftChain->SetBranchStatus("e.*", false);
-   hftChain->SetBranchStatus("e.fTStiKalmanTracks*", true);
+   stiChain->SetBranchAddress("e.", &eventT);
+   stiChain->SetBranchStatus("e.*", false);
+   stiChain->SetBranchStatus("e.fTStiKalmanTracks*", true);
 
    double nodeRMax = 0;
    double nodeZMin = DBL_MAX;
@@ -62,7 +62,7 @@ void StiScanRootFile::FindAutoRange() const
 
    TRandom myRandom;
 
-   int nTreeEvents = hftChain->GetEntries();
+   int nTreeEvents = stiChain->GetEntries();
 
    Info("FindAutoRange", "Found tree/chain with N entries: %d", nTreeEvents);
 
@@ -73,7 +73,7 @@ void StiScanRootFile::FindAutoRange() const
 
       if (myRandom.Rndm() > fPrgOptions.GetSparsity()) continue;
 
-      hftChain->GetEntry(iEvent-1);
+      stiChain->GetEntry(iEvent-1);
 
       auto iTStiKTrack = eventT->GetTStiKalmanTracks().begin();
 

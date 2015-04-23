@@ -25,14 +25,14 @@ class PrgOptionProcessor : public TObject
 public:
 
    PrgOptionProcessor();
-   PrgOptionProcessor(int argc, char **argv, const std::string& hftTreeName="t");
+   PrgOptionProcessor(int argc, char **argv, const std::string& stiTreeName="t");
 
-   std::string  GetHftreeFile() const { return fHftreeFile; }
+   std::string  GetStiTreeInFile() const { return fStiTreeInFile; }
    const std::set<std::string>&  GetVolumeList() const { return fVolumeList; }
    unsigned int GetMaxEventsUser() const;
    float GetSparsity() const { return fSparsity; }
    bool  SaveGraphics() const { return fSaveGraphics; }
-   TChain* GetHftChain() { return fHftChain; }
+   TChain* GetStiTChain() { return fStiTChain; }
    std::string GetStyleMacro() const { return fEnvVars.find("OFFLINE_HFT_DIR")->second + "/star-offline-hft/tests/style_hists.C"; }
 
    void ProcessOptions();
@@ -42,14 +42,14 @@ protected:
 
    void BuildInputChains();
    virtual void VerifyOptions();
-   virtual void AddToInputChains(std::string hftTreeRootFileName);
+   virtual void AddToInputChains(std::string stiTreeRootFileName);
 
    int                     fArgc;
    char**                  fArgv;
    po::options_description fOptions;
    po::variables_map       fOptionsValues;
-   /// Full path to either a root file with hft event tree or a text file with a list of such root files
-   std::string             fHftreeFile;
+   /// Full path to either a root file with Sti event tree or a text file with a list of such root files
+   std::string             fStiTreeInFile;
    std::string             fVolumeListFile;  ///< Full path to a text file with Sti/TGeo volume names
    std::string             fVolumePattern;   ///< Regex pattern provided by the user in the command line
    std::set<std::string>   fVolumeList;      ///< A list of volume names to consider
@@ -57,7 +57,7 @@ protected:
    float                   fSparsity;        ///< Approximate fraction of events to read and process
    bool                    fSaveGraphics;    ///< A flag to create images when set
    std::map<std::string, std::string> fEnvVars;
-   TChain *fHftChain;
+   TChain *fStiTChain;
 
 private:
 

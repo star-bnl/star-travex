@@ -11,22 +11,22 @@
 
 PrgOptionProcessor::PrgOptionProcessor() : TObject(),
    fArgc(0), fArgv(),
-   fOptions("Program options", 120), fOptionsValues(), fHftreeFile(), fVolumeListFile(),
+   fOptions("Program options", 120), fOptionsValues(), fStiTreeInFile(), fVolumeListFile(),
    fVolumePattern(),
    fVolumeList(), fMaxEventsUser(0), fSparsity(1), fSaveGraphics(false),
-   fEnvVars(), fHftChain(0)
+   fEnvVars(), fStiTChain(0)
 {
    InitOptions();
    InitEnvVars();
 }
 
 
-PrgOptionProcessor::PrgOptionProcessor(int argc, char **argv, const std::string& hftTreeName) : TObject(),
+PrgOptionProcessor::PrgOptionProcessor(int argc, char **argv, const std::string& stiTreeName) : TObject(),
    fArgc(argc), fArgv(argv),
-   fOptions("Program options", 120), fOptionsValues(), fHftreeFile(), fVolumeListFile(),
+   fOptions("Program options", 120), fOptionsValues(), fStiTreeInFile(), fVolumeListFile(),
    fVolumePattern(),
    fVolumeList(), fMaxEventsUser(0), fSparsity(1), fSaveGraphics(false),
-   fEnvVars(), fHftChain(new TChain(hftTreeName.c_str(), "READ"))
+   fEnvVars(), fStiTChain(new TChain(stiTreeName.c_str(), "READ"))
 {
    InitOptions();
    InitEnvVars();
@@ -38,7 +38,7 @@ void PrgOptionProcessor::InitOptions()
    // Declare supported options
    fOptions.add_options()
       ("help,h",              "Print help message")
-      ("hftree-file,f",       po::value<std::string>(&fHftreeFile), "Full path to a ROOT file containing a 'hftree' TTree " \
+      ("stitree-file,f",       po::value<std::string>(&fStiTreeInFile), "Full path to a ROOT file containing an Sti TTree " \
                               "OR a text file with a list of such ROOT files")
       ("volume-pattern,p",    po::value<std::string>(&fVolumePattern)->implicit_value("process_all_volumes"),
                               "A regex pattern to match Sti/TGeo volume names. If specified without a value all volumes will be matched")
@@ -92,14 +92,14 @@ void PrgOptionProcessor::VerifyOptions()
    Info("VerifyOptions", "User provided options:");
 
 
-   if (fOptionsValues.count("hftree-file"))
+   if (fOptionsValues.count("stitree-file"))
    {
-      std::string hftreeFile = boost::any_cast<std::string>(fOptionsValues["hftree-file"].value());
+      std::string treeFile = boost::any_cast<std::string>(fOptionsValues["stitree-file"].value());
 
-      std::cout << "fHftreeFile: " << hftreeFile << std::endl;
-      std::ifstream tmpFileCheck(hftreeFile.c_str());
+      std::cout << "fStiTreeInFile: " << treeFile << std::endl;
+      std::ifstream tmpFileCheck(treeFile.c_str());
       if (!tmpFileCheck.good()) {
-         Fatal("VerifyOptions", "File \"%s\" does not exist", hftreeFile.c_str());
+         Fatal("VerifyOptions", "File \"%s\" does not exist", treeFile.c_str());
       }
    } else {
       Fatal("VerifyOptions", "Input file not set");
@@ -206,26 +206,26 @@ bool PrgOptionProcessor::MatchedVolName(std::string & volName) const
 
 void PrgOptionProcessor::BuildInputChains()
 {
-   TFile file( fHftreeFile.c_str() );
+   TFile file( fStiTreeInFile.c_str() );
 
    if ( file.IsZombie() )
    {
-      Warning("BuildInputChains", "Input file is not a root file: %s\nWill treat it as a file list", fHftreeFile.c_str());
+      Warning("BuildInputChains", "Input file is not a root file: %s\nWill treat it as a file list", fStiTreeInFile.c_str());
 
-      std::ifstream hftreeListFile(fHftreeFile.c_str());
+      std::ifstream treeListFile(fStiTreeInFile.c_str());
 
-      while ( hftreeListFile.good() )
+      while ( treeListFile.good() )
       {
-         std::string hftTreeFileName;
-         hftreeListFile >> hftTreeFileName;
-         if (hftreeListFile.eof()) break;
+         std::string treeFileName;
+         treeListFile >> treeFileName;
+         if (treeListFile.eof()) break;
 
-         AddToInputChains(hftTreeFileName);
+         AddToInputChains(treeFileName);
       }
    } else
    {
-      Info("BuildInputChains", "Found root file: %s", fHftreeFile.c_str());
-      AddToInputChains(fHftreeFile);
+      Info("BuildInputChains", "Found root file: %s", fStiTreeInFile.c_str());
+      AddToInputChains(fStiTreeInFile);
    }
 }
 
@@ -236,13 +236,13 @@ void PrgOptionProcessor::BuildInputChains()
  *
  * XXX: Need to add a check to validate the tree in the file.
  */
-void PrgOptionProcessor::AddToInputChains(std::string hftTreeRootFileName)
+void PrgOptionProcessor::AddToInputChains(std::string stiTreeRootFileName)
 {
-   TFile file( hftTreeRootFileName.c_str() );
+   TFile file( stiTreeRootFileName.c_str() );
 
    if ( file.IsZombie() )
-      Fatal("AddToInputChains", "Input file is not a valid root file: %s", hftTreeRootFileName.c_str());
+      Fatal("AddToInputChains", "Input file is not a valid root file: %s", stiTreeRootFileName.c_str());
 
-   fHftChain->AddFile( hftTreeRootFileName.c_str() );
-   Info("AddToInputChains", "Found valid ROOT file with HFT tree: %s", hftTreeRootFileName.c_str());
+   fStiTChain->AddFile( stiTreeRootFileName.c_str() );
+   Info("AddToInputChains", "Found valid ROOT file with Sti tree: %s", stiTreeRootFileName.c_str());
 }
