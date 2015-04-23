@@ -8,7 +8,6 @@ root_generate_dictionary(
 add_library(
 	StiScan
 	SHARED
-	PrgOptionProcessor.cxx
 	StiScanEvent.cxx
 	StiScanHftTreeMaker.cxx
 	StiScanHistContainer.cxx

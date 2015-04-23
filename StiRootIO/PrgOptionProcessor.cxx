@@ -6,7 +6,7 @@
 #include "TFile.h"
 #include "TSystem.h"
 
-#include "StiScan/PrgOptionProcessor.h"
+#include "StiRootIO/PrgOptionProcessor.h"
 
 
 PrgOptionProcessor::PrgOptionProcessor() : TObject(),

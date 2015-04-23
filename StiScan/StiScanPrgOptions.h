@@ -11,7 +11,7 @@
 #include "TObject.h"
 #include "TChain.h"
 
-#include "StiScan/PrgOptionProcessor.h"
+#include "StiRootIO/PrgOptionProcessor.h"
 
 
 namespace {

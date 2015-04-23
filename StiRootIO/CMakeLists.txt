@@ -15,6 +15,7 @@ add_library(
 	StiRootIO
 	SHARED
 	H3D.cxx
+	PrgOptionProcessor.cxx
 	Profile2D.cxx
 	Profile3D.cxx
 	StiTreeMaker.cxx
