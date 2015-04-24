@@ -21,8 +21,8 @@ StiScanRootFile::StiScanRootFile(StiScanPrgOptions& prgOpts) : TFile(), mDirs(),
 }
 
 
-StiScanRootFile::StiScanRootFile(StiScanPrgOptions& prgOpts, const char *fname, Option_t *option, const char *ftitle, Int_t compress) :
-   TFile(fname, option, ftitle, compress), mDirs(),
+StiScanRootFile::StiScanRootFile(StiScanPrgOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
+   TFile(prgOpts.GetOutFileName().c_str(), option, ftitle, compress), mDirs(),
    fPrgOptions(prgOpts)
 {
    Info("StiScanRootFile", "Created ROOT file: %s", GetName());

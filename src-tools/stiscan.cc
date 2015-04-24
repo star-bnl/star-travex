@@ -55,20 +55,7 @@ void loop_over_tree(StiScanPrgOptions &prgOpts)
    TChain *stiChain       = prgOpts.GetStiTChain();
    TChain *geantStepChain = prgOpts.GetGeantStepChain();
 
-   // Create a new output file
-   std::string outFileName = prgOpts.GetStiTreeInFile();
-
-   std::string suffix("stiscan.root");
-   std::size_t suffix_pos = outFileName.find(suffix);
-
-   if (suffix_pos != std::string::npos)
-   {
-      outFileName.replace( suffix_pos, suffix.length(), "stiscan.hist.root");
-   } else {
-      outFileName += "_stiscan.root";
-   }
-
-   StiScanRootFile outRootFile(prgOpts, outFileName.c_str(), "recreate");
+   StiScanRootFile outRootFile(prgOpts, "recreate");
 
    int nTreeEvents = stiChain->GetEntries();
    int nProcEvents = 0;

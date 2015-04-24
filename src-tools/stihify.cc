@@ -34,20 +34,7 @@ void loop_over_tree(StiScanPrgOptions &prgOpts)
 {
    TChain *treeChain = prgOpts.GetStiTChain();
 
-   // Create a new output file
-   std::string outFileName = prgOpts.GetStiTreeInFile();
-
-   std::string suffix("stihify.root");
-   std::size_t suffix_pos = outFileName.find(suffix);
-
-   if (suffix_pos != std::string::npos)
-   {
-      outFileName.replace( suffix_pos, suffix.length(), "stihify.hist.root");
-   } else {
-      outFileName += "_stiscan.root";
-   }
-
-   StiHifyRootFile outRootFile(prgOpts, outFileName.c_str(), "recreate");
+   StiHifyRootFile outRootFile(prgOpts, "recreate");
 
    int nTreeEvents = treeChain->GetEntries();
    int nProcEvents = 0;

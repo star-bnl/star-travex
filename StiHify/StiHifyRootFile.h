@@ -24,7 +24,7 @@ class StiHifyRootFile : public TFile
 public:
 
    StiHifyRootFile(StiScanPrgOptions& prgOpts);
-   StiHifyRootFile(StiScanPrgOptions& prgOpts, const char* fname, Option_t* option="", const char* ftitle="", Int_t compress=1);
+   StiHifyRootFile(StiScanPrgOptions& prgOpts, Option_t* option="", const char* ftitle="", Int_t compress=1);
 
    void FillHists(const StiHifyEvent &event, const std::set<std::string> *volumeList=0);
    void FillDerivedHists();

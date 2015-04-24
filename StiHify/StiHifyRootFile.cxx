@@ -21,8 +21,8 @@ StiHifyRootFile::StiHifyRootFile(StiScanPrgOptions& prgOpts) : TFile(), mDirs(),
 }
 
 
-StiHifyRootFile::StiHifyRootFile(StiScanPrgOptions& prgOpts, const char *fname, Option_t *option, const char *ftitle, Int_t compress) :
-   TFile(fname, option, ftitle, compress), mDirs(),
+StiHifyRootFile::StiHifyRootFile(StiScanPrgOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
+   TFile(prgOpts.GetOutFileName().c_str(), option, ftitle, compress), mDirs(),
    fPrgOptions(prgOpts)
 {
    Info("StiHifyRootFile", "Created ROOT file: %s", GetName());

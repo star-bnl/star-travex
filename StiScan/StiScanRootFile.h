@@ -25,7 +25,7 @@ class StiScanRootFile : public TFile
 public:
 
    StiScanRootFile(StiScanPrgOptions& prgOpts);
-   StiScanRootFile(StiScanPrgOptions& prgOpts, const char* fname, Option_t* option="", const char* ftitle="", Int_t compress=1);
+   StiScanRootFile(StiScanPrgOptions& prgOpts, Option_t* option="", const char* ftitle="", Int_t compress=1);
 
    void FillHists(const StiScanEvent &eventT, const std::set<std::string> *volumeList=0);
    void FillHists(const TGeaEvent &eventG, const std::set<std::string> *volumeList=0);
