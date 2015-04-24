@@ -9,16 +9,7 @@
 #include "StiRootIO/PrgOptionProcessor.h"
 
 
-PrgOptionProcessor::PrgOptionProcessor() : TObject(),
-   fArgc(0), fArgv(),
-   fOptions("Program options", 120), fOptionsValues(), fStiTreeInFile(), fVolumeListFile(),
-   fVolumePattern(),
-   fVolumeList(), fMaxEventsUser(0), fSparsity(1), fSaveGraphics(false),
-   fEnvVars(), fStiTChain(0)
-{
-   InitOptions();
-   InitEnvVars();
-}
+PrgOptionProcessor::PrgOptionProcessor() : PrgOptionProcessor(0, nullptr) { }
 
 
 PrgOptionProcessor::PrgOptionProcessor(int argc, char **argv, const std::string& stiTreeName) : TObject(),

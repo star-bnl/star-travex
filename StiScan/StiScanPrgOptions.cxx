@@ -9,14 +9,7 @@
 #include "StiScan/StiScanPrgOptions.h"
 
 
-StiScanPrgOptions::StiScanPrgOptions() : PrgOptionProcessor(), fDoGeantStepTree(false), fDoAutoHistRange(true),
-   fGeantStepChain(nullptr),
-   fOutPrefix("./"),
-   fHistZMin(0), fHistZMax(0),
-   fHistRMin(0), fHistRMax(0)
-{
-   InitOptions();
-}
+StiScanPrgOptions::StiScanPrgOptions() : StiScanPrgOptions(0, nullptr) { }
 
 
 StiScanPrgOptions::StiScanPrgOptions(int argc, char **argv, const std::string& stiTreeName, const std::string& geantStepTreeName) :
