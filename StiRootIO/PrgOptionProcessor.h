@@ -29,7 +29,7 @@ public:
 
    std::string  GetStiTreeInFile() const { return fInFilePath; }
    const std::set<std::string>&  GetVolumeList() const { return fVolumeList; }
-   unsigned int GetMaxEventsUser() const;
+   unsigned int GetMaxEventsUser() const { return fMaxEventsUser; }
    float GetSparsity() const { return fSparsity; }
    bool  SaveGraphics() const { return fSaveGraphics; }
    TChain* GetStiTChain() { return fStiTChain; }
