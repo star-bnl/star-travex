@@ -27,7 +27,7 @@ public:
    PrgOptionProcessor();
    PrgOptionProcessor(int argc, char **argv, const std::string& stiTreeName="t");
 
-   std::string  GetStiTreeInFile() const { return fStiTreeInFile; }
+   std::string  GetStiTreeInFile() const { return fInFilePath; }
    const std::set<std::string>&  GetVolumeList() const { return fVolumeList; }
    unsigned int GetMaxEventsUser() const;
    float GetSparsity() const { return fSparsity; }
@@ -49,7 +49,7 @@ protected:
    po::options_description fOptions;
    po::variables_map       fOptionsValues;
    /// Full path to either a root file with Sti event tree or a text file with a list of such root files
-   std::string             fStiTreeInFile;
+   std::string             fInFilePath;
    std::string             fVolumeListFile;  ///< Full path to a text file with Sti/TGeo volume names
    std::string             fVolumePattern;   ///< Regex pattern provided by the user in the command line
    std::set<std::string>   fVolumeList;      ///< A list of volume names to consider

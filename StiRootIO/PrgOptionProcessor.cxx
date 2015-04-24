@@ -14,7 +14,7 @@ PrgOptionProcessor::PrgOptionProcessor() : PrgOptionProcessor(0, nullptr) { }
 
 PrgOptionProcessor::PrgOptionProcessor(int argc, char **argv, const std::string& stiTreeName) : TObject(),
    fArgc(argc), fArgv(argv),
-   fOptions("Program options", 120), fOptionsValues(), fStiTreeInFile(), fVolumeListFile(),
+   fOptions("Program options", 120), fOptionsValues(), fInFilePath(), fVolumeListFile(),
    fVolumePattern(),
    fVolumeList(), fMaxEventsUser(0), fSparsity(1), fSaveGraphics(false),
    fEnvVars(), fStiTChain(new TChain(stiTreeName.c_str(), "READ"))
@@ -29,7 +29,7 @@ void PrgOptionProcessor::InitOptions()
    // Declare supported options
    fOptions.add_options()
       ("help,h",              "Print help message")
-      ("stitree-file,f",       po::value<std::string>(&fStiTreeInFile), "Full path to a ROOT file containing an Sti TTree " \
+      ("stitree-file,f",       po::value<std::string>(&fInFilePath), "Full path to a ROOT file containing an Sti TTree " \
                               "OR a text file with a list of such ROOT files")
       ("volume-pattern,p",    po::value<std::string>(&fVolumePattern)->implicit_value("process_all_volumes"),
                               "A regex pattern to match Sti/TGeo volume names. If specified without a value all volumes will be matched")
@@ -87,7 +87,7 @@ void PrgOptionProcessor::VerifyOptions()
    {
       std::string treeFile = boost::any_cast<std::string>(fOptionsValues["stitree-file"].value());
 
-      std::cout << "fStiTreeInFile: " << treeFile << std::endl;
+      std::cout << "fInFilePath: " << treeFile << std::endl;
       std::ifstream tmpFileCheck(treeFile.c_str());
       if (!tmpFileCheck.good()) {
          Fatal("VerifyOptions", "File \"%s\" does not exist", treeFile.c_str());
@@ -197,13 +197,13 @@ bool PrgOptionProcessor::MatchedVolName(std::string & volName) const
 
 void PrgOptionProcessor::BuildInputChains()
 {
-   TFile file( fStiTreeInFile.c_str() );
+   TFile file( fInFilePath.c_str() );
 
    if ( file.IsZombie() )
    {
-      Warning("BuildInputChains", "Input file is not a root file: %s\nWill treat it as a file list", fStiTreeInFile.c_str());
+      Warning("BuildInputChains", "Input file is not a root file: %s\nWill treat it as a file list", fInFilePath.c_str());
 
-      std::ifstream treeListFile(fStiTreeInFile.c_str());
+      std::ifstream treeListFile(fInFilePath.c_str());
 
       while ( treeListFile.good() )
       {
@@ -215,8 +215,8 @@ void PrgOptionProcessor::BuildInputChains()
       }
    } else
    {
-      Info("BuildInputChains", "Found root file: %s", fStiTreeInFile.c_str());
-      AddToInputChains(fStiTreeInFile);
+      Info("BuildInputChains", "Found root file: %s", fInFilePath.c_str());
+      AddToInputChains(fInFilePath);
    }
 }
 
