@@ -34,6 +34,7 @@ public:
    bool  SaveGraphics() const { return fSaveGraphics; }
    TChain* GetStiTChain() { return fStiTChain; }
    std::string GetStyleMacro() const { return fEnvVars.find("OFFLINE_HFT_DIR")->second + "/star-offline-hft/tests/style_hists.C"; }
+   std::string GetOutFileName(std::string suffix="hist") const;
 
    void ProcessOptions();
    bool MatchedVolName(std::string & volName) const;
