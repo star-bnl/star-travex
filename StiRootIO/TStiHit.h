@@ -22,6 +22,7 @@ public:
 
 private:
 
+   const StiHit*  fStiHit;    //!< Transient pointer to original StiHit to access non-persistent info
    StDetectorId fDetectorId;
    TVector3  fPosition;   ///< Coordinates of the hit
    std::string fVolumeName; //!< Name of Sti volume

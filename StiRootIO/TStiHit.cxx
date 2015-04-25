@@ -11,6 +11,7 @@ ClassImp(TStiHit)
 
 
 TStiHit::TStiHit() : TObject(),
+   fStiHit(nullptr),
    fDetectorId(kUnknownId),
    fVolumeName(""),
    fPosition(),
@@ -21,6 +22,7 @@ TStiHit::TStiHit() : TObject(),
 
 
 TStiHit::TStiHit(const StiHit & stiHit) : TObject(),
+   fStiHit(&stiHit),
    fDetectorId( stiHit.detector() ? static_cast<StDetectorId>(stiHit.detector()->getGroupId()) : kUnknownId ),
    fVolumeName(""),
    fPosition(stiHit.x_g(), stiHit.y_g(), stiHit.z_g()),
