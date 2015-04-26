@@ -1,5 +1,5 @@
-#ifndef TStiSti_h
-#define TStiSti_h
+#ifndef TStiHit_h
+#define TStiHit_h
 
 #include "TObject.h"
 
