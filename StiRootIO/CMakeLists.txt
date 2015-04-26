@@ -6,6 +6,7 @@ root_generate_dictionary(
 	StiTreeMaker.h
 	TStiEvent.h
 	TStiHit.h
+	TStiHitProxy.h
 	TStiKalmanTrack.h
 	TStiKalmanTrackNode.h
 	LINKDEF LinkDef.h
@@ -21,6 +22,7 @@ add_library(
 	StiTreeMaker.cxx
 	TStiEvent.cxx
 	TStiHit.cxx
+	TStiHitProxy.cxx
 	TStiKalmanTrack.cxx
 	TStiKalmanTrackNode.cxx
 	StiRootIO_Cint.cxx

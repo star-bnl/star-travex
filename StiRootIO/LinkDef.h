@@ -10,6 +10,7 @@
 #pragma link C++ class StiTreeMaker+;
 #pragma link C++ class TStiEvent+;
 #pragma link C++ class TStiHit+;
+#pragma link C++ class TStiHitProxy+;
 #pragma link C++ class TStiKalmanTrack+;
 #pragma link C++ class TStiKalmanTrackNode+;
 
