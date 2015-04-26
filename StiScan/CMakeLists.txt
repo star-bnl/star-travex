@@ -1,7 +1,7 @@
 root_generate_dictionary(
 	StiScan_Cint
 	StiScanEvent.h
-	StiScanHftTreeMaker.h
+	StiScanTreeMaker.h
 	LINKDEF LinkDef.h
 )
 
@@ -9,7 +9,7 @@ add_library(
 	StiScan
 	SHARED
 	StiScanEvent.cxx
-	StiScanHftTreeMaker.cxx
+	StiScanTreeMaker.cxx
 	StiScanHistContainer.cxx
 	StiScanHistsByVolume.cxx
 	StiScanPrgOptions.cxx

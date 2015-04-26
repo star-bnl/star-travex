@@ -5,6 +5,6 @@
 #pragma link off all functions;
 
 #pragma link C++ class StiScanEvent+;
-#pragma link C++ class StiScanHftTreeMaker+;
+#pragma link C++ class StiScanTreeMaker+;
 
 #endif

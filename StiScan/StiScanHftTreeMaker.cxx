@@ -1,4 +1,4 @@
-#include "StiScan/StiScanHftTreeMaker.h"
+#include "StiScan/StiScanTreeMaker.h"
 
 #include "TBranch.h"
 
@@ -9,22 +9,22 @@
 
 #include "StiScan/StiScanEvent.h"
 
-ClassImp(StiScanHftTreeMaker)
+ClassImp(StiScanTreeMaker)
 
 
-StiScanHftTreeMaker::StiScanHftTreeMaker(const std::string name) : StiTreeMaker(name, "stiscan")
+StiScanTreeMaker::StiScanTreeMaker(const std::string name) : StiTreeMaker(name, "stiscan")
 {
 }
 
 
-void StiScanHftTreeMaker::SetEventTree()
+void StiScanTreeMaker::SetEventTree()
 {
    fEvent = new StiScanEvent();
    TBranch *branch = fTree->Branch("e.", "StiScanEvent", &fEvent, 64000, 99);
 }
 
 
-Int_t StiScanHftTreeMaker::Make()
+Int_t StiScanTreeMaker::Make()
 {
    // Fill event with information from Sti tracks
    StiMaker* stiMaker = (StiMaker*) GetMaker("Sti");

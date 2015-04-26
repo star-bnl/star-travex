@@ -1,21 +1,21 @@
-#ifndef StiScanHftTreeMaker_h
-#define StiScanHftTreeMaker_h
+#ifndef StiScanTreeMaker_h
+#define StiScanTreeMaker_h
 
 #include "StiRootIO/StiTreeMaker.h"
 
 
-class StiScanHftTreeMaker : public StiTreeMaker
+class StiScanTreeMaker : public StiTreeMaker
 {
 public:
 
-   StiScanHftTreeMaker(const std::string name="StiScanHftTreeMaker");
+   StiScanTreeMaker(const std::string name="StiScanTreeMaker");
    virtual Int_t Make();
 
 private:
 
    virtual void SetEventTree();
 
-   ClassDef(StiScanHftTreeMaker, 0)
+   ClassDef(StiScanTreeMaker, 0)
 };
 
 #endif
