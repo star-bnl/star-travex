@@ -43,6 +43,7 @@ public:
    double CalcDistanceToHit() const { return fStiHit ? (fStiHit->GetPosition() - GetPosition()).Mag() : -1; }
    TVector3 CalcPullToHit(const TStiHit& hit) const;
    TVector3 CalcPullClosestHit() const;
+   double   CalcChi2(const TStiHit& hit) const;
    bool   MatchedVolName(const std::string & pattern) const;
    bool   MatchedVolName(const std::set<std::string> & patterns) const;
    virtual void Print(Option_t *opt = "") const;

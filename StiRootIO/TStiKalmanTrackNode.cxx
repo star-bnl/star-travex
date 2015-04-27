@@ -100,6 +100,18 @@ TVector3 TStiKalmanTrackNode::CalcPullClosestHit() const
 }
 
 
+/**
+ * Calculate chi2 for a user provided hit using the original Sti methods.
+ */
+double TStiKalmanTrackNode::CalcChi2(const TStiHit& hit) const
+{
+   if (!fStiTrackNode || !hit.GetStiHit())
+      return -1;
+
+   return fStiTrackNode->evaluateChi2Info(hit.GetStiHit());
+}
+
+
 bool TStiKalmanTrackNode::MatchedVolName(const std::string & pattern) const
 {
    if (fVolumeName.empty()) return true;
