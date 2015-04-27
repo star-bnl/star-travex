@@ -12,7 +12,7 @@
 
 StiScanRootFile::StiScanRootFile(StiScanPrgOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
    StiRootFile(prgOpts, option, ftitle, compress),
-	fPrgOptions(prgOpts)
+   fPrgOptions(prgOpts)
 {
    // Find ranges (\todo if requested by the user)
    if (fPrgOptions.DoAutoHistRange()) {
@@ -37,8 +37,8 @@ void StiScanRootFile::FindAutoRange() const
    const std::set<std::string> *volumeList = &fPrgOptions.GetVolumeList();
 
    TChain *stiChain = fPrgOptions.GetStiTChain();
-   StiScanEvent *stiEvent = new StiScanEvent();
 
+   StiScanEvent *stiEvent = new StiScanEvent();
    stiChain->SetBranchAddress("e.", &stiEvent);
    stiChain->SetBranchStatus("e.TStiEvent.*", false);
    stiChain->SetBranchStatus("e.TStiEvent.fTStiKalmanTracks*", true);
@@ -74,9 +74,11 @@ void StiScanRootFile::FindAutoRange() const
          {
             const TStiKalmanTrackNode &kalmNode = *iTStiKTrackNode;
 
-            if (volumeList && volumeList->size() && !kalmNode.MatchedVolName(*volumeList) ) continue;
+            if (volumeList && volumeList->size() && !kalmNode.MatchedVolName(*volumeList) )
+               continue;
 
-            if (kalmNode.GetNodeMaterialDensity() <= 0) continue;
+            if (kalmNode.GetNodeMaterialDensity() <= 0)
+               continue;
 
             double node_z = kalmNode.GetPosition().Z();
 

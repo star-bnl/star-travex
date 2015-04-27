@@ -67,6 +67,7 @@ void loop_over_tree(StiScanPrgOptions &prgOpts)
    stiChain->SetBranchStatus("e.TStiEvent*", false);
    stiChain->SetBranchStatus("e.TStiEvent.fTStiKalmanTracks*", true);
 
+
    // Prepare resources for geant event
    TGeaEvent *geantEvent = new TGeaEvent();
 
