@@ -9,6 +9,7 @@
 
 #include "Sti/StiKalmanTrackNode.h"
 #include "StiRootIO/TStiHit.h"
+#include "StiRootIO/TStiHitProxy.h"
 
 class TStiKalmanTrack;
 
@@ -36,7 +37,7 @@ public:
    std::string GetVolumeName() const { return fVolumeName; }
    const TStiHit* GetHit() const { return fStiHit; }
    const TStiHit* GetClosestHit() const { return fClosestStiHit; }
-   const std::set<const TStiHit*>& GetAdjacentHits() const { return fAdjacentStiHits; }
+   const std::set<TStiHitProxy>& GetAdjacentProxyHits() const { return fAdjacentStiHits; }
    void   AssignClosestHit(const std::set<TStiHit>& stiHits);
    void   FindAdjacentHits(const std::set<TStiHit>& stiHits);
    double CalcDistanceToClosestHit() const { return fClosestStiHit ? (fClosestStiHit->GetPosition() - GetPosition()).Mag() : -1; }
@@ -68,7 +69,7 @@ protected:
    std::string fVolumeName;           ///< Name of Sti volume
    const TStiHit  *fStiHit;           ///< Pointer to the hit associated with this node if any
    const TStiHit  *fClosestStiHit;    ///< Pointer to the hit closest to this node if any
-   std::set<const TStiHit*> fAdjacentStiHits;   ///< Collection of hits in some proximity of mean track projection
+   std::set<TStiHitProxy> fAdjacentStiHits;   ///< Collection of hits in some proximity of mean track projection
    TVector3    fTrackProjErr;         ///< The projection error to the node before the fit
 
    ClassDef(TStiKalmanTrackNode, 9)

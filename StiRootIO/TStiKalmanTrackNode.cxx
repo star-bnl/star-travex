@@ -195,7 +195,7 @@ void TStiKalmanTrackNode::FindAdjacentHits(const std::set<TStiHit>& stiHits)
 
       if (distVec.Mag() < 5*fTrackProjErr.Mag())
       {
-         fAdjacentStiHits.insert(&*iHit);
+         fAdjacentStiHits.insert(TStiHitProxy(*iHit, *this));
       }
    }
 }
