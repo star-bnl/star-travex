@@ -16,7 +16,9 @@ StiHifyHistContainer::StiHifyHistContainer(StiScanPrgOptions& prgOpts) : TDirect
    hDistClosest2AcceptedHit(nullptr),
    hPullClosestHit1D(nullptr),
    hPullClosestHit2D(nullptr),
-   hPullCandidateHits2D(nullptr)
+   hPullCandidateHits2D(nullptr),
+   hChi2CandidateHits(nullptr),
+   hCountCandidateHits(nullptr)
 {
    BookHists();
 }
@@ -28,7 +30,9 @@ StiHifyHistContainer::StiHifyHistContainer(StiScanPrgOptions& prgOpts, const cha
    hDistClosest2AcceptedHit(nullptr),
    hPullClosestHit1D(nullptr),
    hPullClosestHit2D(nullptr),
-   hPullCandidateHits2D(nullptr)
+   hPullCandidateHits2D(nullptr),
+   hChi2CandidateHits(nullptr),
+   hCountCandidateHits(nullptr)
 {
    BookHists();
 }
@@ -61,6 +65,12 @@ void StiHifyHistContainer::BookHists()
    mHs["hPullCandidateHits2D"] = hPullCandidateHits2D
       = new TH2I("hPullCandidateHits2D", " ; local Z; local Y; Num. of Track Nodes", 50, -6, 6, 50, -6, 6);
    hPullCandidateHits2D->SetOption("colz");
+
+   mHs["hChi2CandidateHits"] = hChi2CandidateHits
+      = new TH1I("hChi2CandidateHits", " ; #chi^2; Num. of Track Nodes", 50, 0, 50);
+
+   mHs["hCountCandidateHits"] = hCountCandidateHits
+      = new TH1I("hCountCandidateHits", " ; Num. of Candidate Hits; Counts", 20, 0, 20);
 
    mHs["hActiveLayerCounts"] = hActiveLayerCounts
       = new TH2F("hActiveLayerCounts", " ; local Z; local Y; Num. of Track Nodes", 50, -23, 23, 50, 0, 6);
@@ -123,12 +133,15 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
 
    const std::set<TStiHitProxy>& hitCandidates = trkNode.GetAdjacentProxyHits();
 
+   hCountCandidateHits->Fill(hitCandidates.size());
+
    for (auto iHitCandidate=hitCandidates.begin(); iHitCandidate!=hitCandidates.end(); ++iHitCandidate)
    {
       const TStiHitProxy& hitCandidate = *iHitCandidate;
 
       TVector3 pull = trkNode.CalcPullToHit( *hitCandidate.GetTStiHit() );
       hPullCandidateHits2D->Fill(pull.Z(), pull.Y());
+      hChi2CandidateHits->Fill(hitCandidate.GetChi2());
    }
 
    hActiveLayerCounts->Fill(trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y());
