@@ -15,6 +15,9 @@ public:
    TStiHitProxy();
    TStiHitProxy(const TStiHit& hit, const TStiKalmanTrackNode& node);
 
+   const TStiHit* GetTStiHit() const { return fTStiHit; }
+   double         GetChi2() const { return fChi2; }
+
    static const TStiHit* GetBareStiHit(const TStiHitProxy& hitProxy) { return hitProxy.fTStiHit; }
    friend bool operator< (const TStiHitProxy& lhs, const TStiHitProxy& rhs);
 

@@ -13,6 +13,7 @@ public:
 
    TStiHit();
    TStiHit(const StiHit & stiHit);
+   const StiHit* GetStiHit() const { return fStiHit; }
    std::string GetVolumeName() const { return fVolumeName; }
    const TVector3& GetPosition() const { return fPosition; }
    const TVector3& GetPositionLocal() const { return fPositionLocal; }
