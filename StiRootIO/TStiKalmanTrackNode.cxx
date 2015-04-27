@@ -1,6 +1,7 @@
 #include "StiRootIO/TStiKalmanTrackNode.h"
 
 #include <boost/regex.hpp>
+#include <algorithm>
 
 #include "StarClassLibrary/StThreeVector.hh"
 #include "Sti/StiPlacement.h"
@@ -157,6 +158,17 @@ void TStiKalmanTrackNode::Print(Option_t *opt) const
 bool operator< (const TStiKalmanTrackNode& lhs, const TStiKalmanTrackNode& rhs)
 {
    return lhs.fNodeRadius < rhs.fNodeRadius;
+}
+
+
+std::set<const TStiHit*> TStiKalmanTrackNode::GetAdjacentHits() const
+{
+   std::set<const TStiHit*> adjacentHits;
+
+   std::transform(fAdjacentStiHits.begin(), fAdjacentStiHits.end(),
+      std::inserter(adjacentHits, adjacentHits.begin()), TStiHitProxy::GetBareStiHit);
+
+   return adjacentHits;
 }
 
 

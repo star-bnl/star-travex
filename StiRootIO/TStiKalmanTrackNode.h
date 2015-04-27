@@ -37,6 +37,7 @@ public:
    std::string GetVolumeName() const { return fVolumeName; }
    const TStiHit* GetHit() const { return fStiHit; }
    const TStiHit* GetClosestHit() const { return fClosestStiHit; }
+   std::set<const TStiHit*> GetAdjacentHits() const;
    const std::set<TStiHitProxy>& GetAdjacentProxyHits() const { return fAdjacentStiHits; }
    void   AssignClosestHit(const std::set<TStiHit>& stiHits);
    void   FindAdjacentHits(const std::set<TStiHit>& stiHits);
