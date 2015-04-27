@@ -73,7 +73,7 @@ void StiHifyHistContainer::BookHists()
       = new TH1I("hCountCandidateHits", " ; Num. of Candidate Hits; Counts", 20, 0, 20);
 
    mHs["hActiveLayerCounts"] = hActiveLayerCounts
-      = new TH2F("hActiveLayerCounts", " ; local Z; local Y; Num. of Track Nodes", 50, -23, 23, 50, 0, 6);
+      = new TH2F("hActiveLayerCounts", " ; local Z; local Y; Num. of Track Nodes", 25, -25, 25, 12, -2, 10);
    hActiveLayerCounts->SetOption("colz");
 }
 
