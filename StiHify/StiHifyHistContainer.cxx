@@ -8,6 +8,7 @@
 
 #include "StiHify/StiHifyHistContainer.h"
 #include "StiRootIO/TStiKalmanTrackNode.h"
+#include "StiRootIO/TStiHitProxy.h"
 
 
 StiHifyHistContainer::StiHifyHistContainer(StiScanPrgOptions& prgOpts) : TDirectoryFile(),
@@ -120,9 +121,13 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
    TVector3 pull = trkNode.CalcPullClosestHit();
    hPullClosestHit2D->Fill(pull.Z(), pull.Y());
 
-   for (auto iCandHit=trkNode.GetAdjacentHits().begin(); iCandHit!=trkNode.GetAdjacentHits().end(); ++iCandHit)
+   const std::set<TStiHitProxy>& hitCandidates = trkNode.GetAdjacentProxyHits();
+
+   for (auto iHitCandidate=hitCandidates.begin(); iHitCandidate!=hitCandidates.end(); ++iHitCandidate)
    {
-      TVector3 pull = trkNode.CalcPullToHit(**iCandHit);
+      const TStiHitProxy& hitCandidate = *iHitCandidate;
+
+      TVector3 pull = trkNode.CalcPullToHit( *hitCandidate.GetTStiHit() );
       hPullCandidateHits2D->Fill(pull.Z(), pull.Y());
    }
 
