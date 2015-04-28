@@ -19,6 +19,8 @@ add_library(
 	PrgOptionProcessor.cxx
 	Profile2D.cxx
 	Profile3D.cxx
+	StiHistContainer.cxx
+	StiRootFile.cxx
 	StiTreeMaker.cxx
 	TStiEvent.cxx
 	TStiHit.cxx
