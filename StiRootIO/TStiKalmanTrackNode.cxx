@@ -203,7 +203,9 @@ void TStiKalmanTrackNode::FindAdjacentHits(const std::set<TStiHit>& stiHits)
 
    for (auto iHit = stiHits.begin(); iHit != stiHits.end(); ++iHit)
    {
-      distVec = GetPosition() - iHit->GetPosition();
+      if (fVolumeName != iHit->GetVolumeName()) continue;
+
+      distVec = GetPositionLocal() - iHit->GetPositionLocal();
 
       if (distVec.Mag() < 5*fTrackProjErr.Mag())
       {
