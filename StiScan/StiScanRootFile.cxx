@@ -15,11 +15,9 @@
 
 
 StiScanRootFile::StiScanRootFile(StiScanPrgOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
-   TFile(prgOpts.GetOutFileName().c_str(), option, ftitle, compress), mDirs(),
-   fPrgOptions(prgOpts)
+   StiRootFile(prgOpts, option, ftitle, compress),
+	fPrgOptions(prgOpts)
 {
-   Info("StiScanRootFile", "Created ROOT file: %s", GetName());
-
    // Find ranges (\todo if requested by the user)
    if (fPrgOptions.DoAutoHistRange()) {
       Info("StiScanRootFile", "Find auto range. Loop over tree/chain...");
@@ -145,56 +143,5 @@ void StiScanRootFile::FillDerivedHists()
       }
 
       container->FillDerivedHists();
-   }
-}
-
-
-Int_t StiScanRootFile::Write(const char* name, Int_t opt, Int_t bufsiz)
-{
-   Info("Write", "%s", GetName());
-
-   return TFile::Write(name, opt, bufsiz);
-}
-
-
-Int_t StiScanRootFile::Write(const char* name, Int_t opt, Int_t bufsiz) const
-{
-   return TFile::Write(name, opt, bufsiz);
-}
-
-
-void StiScanRootFile::Close(Option_t *option)
-{
-   TFile::Close(option);
-}
-
-
-void StiScanRootFile::SaveAllAs(std::string prefix)
-{
-   namespace fs = boost::filesystem;
-
-   if (fs::create_directories(prefix))
-      Info("SaveAllAs", "Created dir: %s", prefix.c_str());
-   else
-      Warning("SaveAllAs", "Perhaps dir already exists: %s", prefix.c_str());
-
-   for (TDirMapConstIter iDir=mDirs.begin() ; iDir!=mDirs.end(); ++iDir)
-   {
-      std::string  dirName = iDir->first;
-      StiScanHistContainer *container = static_cast<StiScanHistContainer*> (iDir->second);
-
-      if (!container) {
-         Error("SaveAllAs", "No container/directory found for key %s. Skipping...", dirName.c_str());
-         continue;
-      }
-
-      std::string path = prefix + "/" + dirName;
-
-      if (gSystem->mkdir(path.c_str()) < 0)
-         Warning("SaveAllAs", "Perhaps dir already exists: %s", path.c_str());
-      else
-         Info("SaveAllAs", "Created dir: %s", path.c_str());
-
-      container->SaveAllAs(path);
    }
 }
