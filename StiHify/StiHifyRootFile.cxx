@@ -43,10 +43,10 @@ void StiHifyRootFile::FillHists(const StiHifyEvent &event, const std::set<std::s
 
 void StiHifyRootFile::FillDerivedHists()
 {
-   for (TDirMapConstIter iDir=mDirs.begin() ; iDir!=mDirs.end(); ++iDir)
+   for (const std::pair<std::string, TDirectoryFile*>& iDir : mDirs)
    {
-      std::string  dirName = iDir->first;
-      StiHifyHistContainer *container = (StiHifyHistContainer*) iDir->second;
+      std::string  dirName = iDir.first;
+      StiHistContainer *container = static_cast<StiHistContainer*>(iDir.second);
 
       if (!container) {
          Error("FillDerivedHists", "No container/directory found for key %s. Skipping...", dirName.c_str());

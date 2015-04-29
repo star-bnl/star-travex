@@ -46,10 +46,10 @@ void StiRootFile::SaveAllAs(std::string prefix)
    else
       Warning("SaveAllAs", "Perhaps dir already exists: %s", prefix.c_str());
 
-   for (TDirMapConstIter iDir=mDirs.begin() ; iDir!=mDirs.end(); ++iDir)
+   for (const std::pair<std::string, TDirectoryFile*>& iDir : mDirs)
    {
-      std::string  dirName = iDir->first;
-      StiHistContainer *container = static_cast<StiHistContainer*>(iDir->second);
+      std::string  dirName = iDir.first;
+      StiHistContainer *container = static_cast<StiHistContainer*>(iDir.second);
 
       if (!container) {
          Error("SaveAllAs", "No container/directory found for key %s. Skipping...", dirName.c_str());

@@ -26,12 +26,10 @@ void StiHistContainer::SaveAllAs(std::string prefix)
    canvas.SetGridx(true);
    canvas.SetGridy(true);
 
-   HistMapIter iHist = mHs.begin();
-
-   for ( ; iHist!=mHs.end(); ++iHist)
+   for (const std::pair<std::string, TH1*>& iHist : mHs)
    {
-      string objName = iHist->first;
-      TH1*   obj     = iHist->second;
+      string objName = iHist.first;
+      TH1*   obj     = iHist.second;
 
       if (!obj) {
          Error("SaveAllAs", "No object found for key %s. Skipping...", objName.c_str());

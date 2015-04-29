@@ -16,7 +16,7 @@
 
 typedef std::unordered_map<size_t, std::string> Hash2StringMap;
 
-TGeoManager *gGeoManager = 0;
+TGeoManager *gGeoManager = nullptr;
 
 
 void loop_over_tree(StiScanPrgOptions &prgOpts);
