@@ -20,7 +20,6 @@ class StiHistContainer : public TDirectoryFile
 {
 public:
 
-   StiHistContainer();
    StiHistContainer(const char* name, TDirectory* motherDir=nullptr, Option_t* option="");
    ~StiHistContainer();
 

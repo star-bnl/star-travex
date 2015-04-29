@@ -5,13 +5,6 @@
 #include "StiRootIO/TStiHitProxy.h"
 
 
-StiHistContainer::StiHistContainer() :
-   TDirectoryFile(),
-   mHs()
-{
-}
-
-
 StiHistContainer::StiHistContainer(const char* name, TDirectory* motherDir, Option_t* option) :
    TDirectoryFile(name, name, option, motherDir),
    mHs()
