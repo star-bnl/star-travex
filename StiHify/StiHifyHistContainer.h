@@ -25,7 +25,6 @@ class StiHifyHistContainer : public TDirectoryFile
 {
 public:
 
-   StiHifyHistContainer();
    StiHifyHistContainer(const char* name, TDirectory* motherDir = 0, Option_t* option = "");
    ~StiHifyHistContainer();
 

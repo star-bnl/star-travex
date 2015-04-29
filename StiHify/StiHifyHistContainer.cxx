@@ -11,19 +11,6 @@
 #include "StiRootIO/TStiHitProxy.h"
 
 
-StiHifyHistContainer::StiHifyHistContainer() : TDirectoryFile(),
-   mHs(),
-   hDistClosest2AcceptedHit(nullptr),
-   hPullClosestHit1D(nullptr),
-   hPullClosestHit2D(nullptr),
-   hPullCandidateHits2D(nullptr),
-   hChi2CandidateHits(nullptr),
-   hCountCandidateHits(nullptr)
-{
-   BookHists();
-}
-
-
 StiHifyHistContainer::StiHifyHistContainer(const char* name, TDirectory* motherDir, Option_t* option) :
    TDirectoryFile(name, name, option, motherDir),
    mHs(),
