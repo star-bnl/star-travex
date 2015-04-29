@@ -19,9 +19,9 @@ StiHifyRootFile::StiHifyRootFile(StiScanPrgOptions& prgOpts, Option_t *option, c
 void StiHifyRootFile::BookHists()
 {
 
-   mDirs["sti_hit_closest"] = new StiHifyHistContainer(fPrgOptions, "sti_hit_closest", this);
-   mDirs["sti_hit_accepted"] = new StiHifyHistContainer(fPrgOptions, "sti_hit_accepted", this);
-   mDirs["sti_hit_rejected"] = new StiHifyHistContainer(fPrgOptions, "sti_hit_rejected", this);
+   mDirs["sti_hit_closest"]  = new StiHifyHistContainer("sti_hit_closest",  this);
+   mDirs["sti_hit_accepted"] = new StiHifyHistContainer("sti_hit_accepted", this);
+   mDirs["sti_hit_rejected"] = new StiHifyHistContainer("sti_hit_rejected", this);
 }
 
 

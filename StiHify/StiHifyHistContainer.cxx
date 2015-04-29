@@ -11,7 +11,7 @@
 #include "StiRootIO/TStiHitProxy.h"
 
 
-StiHifyHistContainer::StiHifyHistContainer(StiScanPrgOptions& prgOpts) : TDirectoryFile(),
+StiHifyHistContainer::StiHifyHistContainer() : TDirectoryFile(),
    mHs(),
    hDistClosest2AcceptedHit(nullptr),
    hPullClosestHit1D(nullptr),
@@ -24,7 +24,7 @@ StiHifyHistContainer::StiHifyHistContainer(StiScanPrgOptions& prgOpts) : TDirect
 }
 
 
-StiHifyHistContainer::StiHifyHistContainer(StiScanPrgOptions& prgOpts, const char* name, TDirectory* motherDir, Option_t* option) :
+StiHifyHistContainer::StiHifyHistContainer(const char* name, TDirectory* motherDir, Option_t* option) :
    TDirectoryFile(name, name, option, motherDir),
    mHs(),
    hDistClosest2AcceptedHit(nullptr),
