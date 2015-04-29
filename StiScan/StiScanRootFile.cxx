@@ -14,13 +14,6 @@
 #include "StiScan/StiScanPrgOptions.h"
 
 
-StiScanRootFile::StiScanRootFile(StiScanPrgOptions& prgOpts) : TFile(), mDirs(),
-   fPrgOptions(prgOpts)
-{
-   BookHists();
-}
-
-
 StiScanRootFile::StiScanRootFile(StiScanPrgOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
    TFile(prgOpts.GetOutFileName().c_str(), option, ftitle, compress), mDirs(),
    fPrgOptions(prgOpts)

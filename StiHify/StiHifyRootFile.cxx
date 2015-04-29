@@ -14,13 +14,6 @@
 #include "StiRootIO/TStiKalmanTrackNode.h"
 
 
-StiHifyRootFile::StiHifyRootFile(StiScanPrgOptions& prgOpts) : TFile(), mDirs(),
-   fPrgOptions(prgOpts)
-{
-   BookHists();
-}
-
-
 StiHifyRootFile::StiHifyRootFile(StiScanPrgOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
    TFile(prgOpts.GetOutFileName().c_str(), option, ftitle, compress), mDirs(),
    fPrgOptions(prgOpts)
