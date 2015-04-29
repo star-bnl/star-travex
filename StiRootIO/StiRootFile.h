@@ -19,7 +19,6 @@ class StiRootFile : public TFile
 {
 public:
 
-   StiRootFile(PrgOptionProcessor& prgOpts);
    StiRootFile(PrgOptionProcessor& prgOpts, Option_t* option="", const char* ftitle="", Int_t compress=1);
 
    virtual Int_t Write(const char* name = 0, Int_t opt = 0, Int_t bufsiz = 0);

@@ -8,14 +8,6 @@
 #include "StiRootIO/PrgOptionProcessor.h"
 
 
-StiRootFile::StiRootFile(PrgOptionProcessor& prgOpts) :
-   TFile(),
-   mDirs(),
-   fPrgOptions(prgOpts)
-{
-}
-
-
 StiRootFile::StiRootFile(PrgOptionProcessor& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
    TFile(prgOpts.GetOutFileName().c_str(), option, ftitle, compress),
    mDirs(),
