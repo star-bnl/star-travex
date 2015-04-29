@@ -37,9 +37,9 @@ void StiScanRootFile::FindAutoRange() const
    const std::set<std::string> *volumeList = &fPrgOptions.GetVolumeList();
 
    TChain *stiChain = fPrgOptions.GetStiTChain();
-   StiScanEvent *eventT = new StiScanEvent();
+   StiScanEvent *stiEvent = new StiScanEvent();
 
-   stiChain->SetBranchAddress("e.", &eventT);
+   stiChain->SetBranchAddress("e.", &stiEvent);
    stiChain->SetBranchStatus("e.*", false);
    stiChain->SetBranchStatus("e.TStiEvent.fTStiKalmanTracks*", true);
 
@@ -62,9 +62,9 @@ void StiScanRootFile::FindAutoRange() const
 
       stiChain->GetEntry(iEvent-1);
 
-      auto iTStiKTrack = eventT->GetTStiKalmanTracks().begin();
+      auto iTStiKTrack = stiEvent->GetTStiKalmanTracks().begin();
 
-      for ( ; iTStiKTrack != eventT->GetTStiKalmanTracks().end(); ++iTStiKTrack)
+      for ( ; iTStiKTrack != stiEvent->GetTStiKalmanTracks().end(); ++iTStiKTrack)
       {
          const TStiKalmanTrack &kalmTrack = *iTStiKTrack;
 
@@ -103,26 +103,26 @@ void StiScanRootFile::FindAutoRange() const
    fPrgOptions.SetHistZRange(nodeZMin, nodeZMax);
    fPrgOptions.SetHistRMax(nodeRMax);
 
-   delete eventT;
+   delete stiEvent;
 }
 
 
-void StiScanRootFile::FillHists(const StiScanEvent &eventT, const std::set<std::string> *volumeList)
+void StiScanRootFile::FillHists(const StiScanEvent &stiEvent, const std::set<std::string> *volumeList)
 {
    StiScanHistContainer* container;
 
    container = static_cast<StiScanHistContainer*> (mDirs["sti_vol"]);
-   container->FillHists(eventT, volumeList);
+   container->FillHists(stiEvent, volumeList);
 
    container = static_cast<StiScanHistContainer*> (mDirs["sti_trk"]);
-   container->FillHists(eventT, volumeList);
+   container->FillHists(stiEvent, volumeList);
 }
 
 
-void StiScanRootFile::FillHists(const TGeaEvent &eventG, const std::set<std::string> *volumeList)
+void StiScanRootFile::FillHists(const TGeaEvent &geaEvent, const std::set<std::string> *volumeList)
 {
    StiScanHistContainer* container = static_cast<StiScanHistContainer*> (mDirs["gea"]);
-   container->FillHists(eventG, volumeList);
+   container->FillHists(geaEvent, volumeList);
 }
 
 
