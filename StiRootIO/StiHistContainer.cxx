@@ -1,8 +1,6 @@
 #include "TCanvas.h"
 
 #include "StiRootIO/StiHistContainer.h"
-#include "StiRootIO/TStiKalmanTrackNode.h"
-#include "StiRootIO/TStiHitProxy.h"
 
 
 StiHistContainer::StiHistContainer(const char* name, TDirectory* motherDir, Option_t* option) :
