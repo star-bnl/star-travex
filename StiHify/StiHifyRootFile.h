@@ -5,11 +5,6 @@
 #include <set>
 #include <string>
 
-#include "TH2S.h"
-#include "TDirectoryFile.h"
-#include "TFile.h"
-#include "StMaker.h"
-
 #include "StiRootIO/StiRootFile.h"
 #include "StiHify/StiHifyEvent.h"
 

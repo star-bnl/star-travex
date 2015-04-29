@@ -3,11 +3,7 @@
 
 #include "StiScanRootFile.h"
 
-#include "TCanvas.h"
-#include "TH2S.h"
-#include "TProfile2D.h"
 #include "TRandom.h"
-#include "TSystem.h"
 
 #include "StiScan/StiScanHistContainer.h"
 #include "StiScan/StiScanHistsByVolume.h"

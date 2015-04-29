@@ -5,14 +5,9 @@
 #include <set>
 #include <string>
 
-#include "TH2S.h"
-#include "TDirectoryFile.h"
-#include "TFile.h"
-#include "StMaker.h"
-
 #include "StiRootIO/StiRootFile.h"
-#include "StiScan/StiScanEvent.h"
 #include "GeaRootIO/TGeaEvent.h"
+#include "StiScan/StiScanEvent.h"
 
 class StiScanPrgOptions;
 

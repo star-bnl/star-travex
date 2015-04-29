@@ -1,17 +1,12 @@
-#include <cmath>
 #include <boost/filesystem.hpp>
 
 #include "StiHifyRootFile.h"
 
-#include "TCanvas.h"
-#include "TH2S.h"
-#include "TProfile2D.h"
-#include "TRandom.h"
-#include "TSystem.h"
+#include "TH1.h"
+#include "TStyle.h"
 
 #include "StiHify/StiHifyHistContainer.h"
 #include "StiScan/StiScanPrgOptions.h"
-#include "StiRootIO/TStiKalmanTrackNode.h"
 
 
 StiHifyRootFile::StiHifyRootFile(StiScanPrgOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
