@@ -26,7 +26,7 @@ public:
    virtual void Close(Option_t *option="");
    void SaveAllAs(std::string prefix="./");
 
-private:
+protected:
 
    TDirMap mDirs;   ///< A string-to-TDirectoryFile map for convenient access to enclosed directories
    PrgOptionProcessor& fPrgOptions; ///< Command line arguments and options requested by the user
