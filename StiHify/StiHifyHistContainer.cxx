@@ -24,7 +24,7 @@ StiHifyHistContainer::StiHifyHistContainer(StiScanPrgOptions& prgOpts) : TDirect
 }
 
 
-StiHifyHistContainer::StiHifyHistContainer(StiScanPrgOptions& prgOpts, const char* name, TDirectory* motherDir, bool doProjection, Option_t* option) :
+StiHifyHistContainer::StiHifyHistContainer(StiScanPrgOptions& prgOpts, const char* name, TDirectory* motherDir, Option_t* option) :
    TDirectoryFile(name, name, option, motherDir),
    mHs(),
    hDistClosest2AcceptedHit(nullptr),

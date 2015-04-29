@@ -26,7 +26,7 @@ class StiHifyHistContainer : public TDirectoryFile
 public:
 
    StiHifyHistContainer(StiScanPrgOptions& prgOpts);
-   StiHifyHistContainer(StiScanPrgOptions& prgOpts, const char* name, TDirectory* motherDir = 0, bool doProjection=true, Option_t* option = "");
+   StiHifyHistContainer(StiScanPrgOptions& prgOpts, const char* name, TDirectory* motherDir = 0, Option_t* option = "");
    ~StiHifyHistContainer();
 
    void FillHists(const StiHifyEvent &event, StiNodeHitStatus hitStatus=StiNodeHitStatus::Any, const std::set<std::string> *volumeList=0);

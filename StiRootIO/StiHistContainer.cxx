@@ -5,14 +5,14 @@
 #include "StiRootIO/TStiHitProxy.h"
 
 
-StiHistContainer::StiHistContainer(PrgOptionProcessor& prgOpts) :
+StiHistContainer::StiHistContainer() :
    TDirectoryFile(),
    mHs()
 {
 }
 
 
-StiHistContainer::StiHistContainer(PrgOptionProcessor& prgOpts, const char* name, TDirectory* motherDir, Option_t* option) :
+StiHistContainer::StiHistContainer(const char* name, TDirectory* motherDir, Option_t* option) :
    TDirectoryFile(name, name, option, motherDir),
    mHs()
 {

@@ -8,7 +8,6 @@
 #include "TH1.h"
 #include "TDirectoryFile.h"
 
-#include "StiRootIO/PrgOptionProcessor.h"
 #include "StiRootIO/TStiEvent.h"
 
 
@@ -21,8 +20,8 @@ class StiHistContainer : public TDirectoryFile
 {
 public:
 
-   StiHistContainer(PrgOptionProcessor& prgOpts);
-   StiHistContainer(PrgOptionProcessor& prgOpts, const char* name, TDirectory* motherDir=nullptr, Option_t* option="");
+   StiHistContainer();
+   StiHistContainer(const char* name, TDirectory* motherDir=nullptr, Option_t* option="");
    ~StiHistContainer();
 
    virtual void FillHists(const TStiEvent &event, const std::set<std::string> *volumeRegex=nullptr) = 0;
