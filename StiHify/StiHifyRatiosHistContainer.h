@@ -5,7 +5,6 @@
 #include <set>
 #include <string>
 
-#include "TDirectoryFile.h"
 #include "TProfile2D.h"
 #include "TProfile3D.h"
 
@@ -14,25 +13,21 @@
 #include "StiRootIO/Profile3D.h"
 #include "StiRootIO/TStiKalmanTrack.h"
 #include "StiRootIO/TStiKalmanTrackNode.h"
-
-typedef std::map<std::string, TH1*>                    HistMap;
-typedef std::map<std::string, TH1*>::iterator          HistMapIter;
-typedef std::map<std::string, TH1*>::const_iterator    HistMapConstIter;
+#include "StiRootIO/StiHistContainer.h"
 
 
-class StiHifyRatiosHistContainer : public TDirectoryFile
+class StiHifyRatiosHistContainer : public StiHistContainer
 {
 public:
 
    StiHifyRatiosHistContainer(const char* name, TDirectory* motherDir = 0, Option_t* option = "");
-   ~StiHifyRatiosHistContainer();
 
+   virtual void FillDerivedHists() {}
    void CreateRatioHist(const TH1* hNumer, const TH1* hDenom);
-   void SaveAllAs(std::string prefix="./");
 
-private:
+protected:
 
-   HistMap mHs;
+   virtual void BookHists() {}
 };
 
 #endif

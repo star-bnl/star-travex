@@ -11,9 +11,9 @@
 
 
 StiScanHistContainer::StiScanHistContainer(StiScanPrgOptions& prgOpts, const char* name, TDirectory* motherDir, bool doProjection, Option_t* option) :
-   TDirectoryFile(name, name, option, motherDir),
+   StiHistContainer(name, motherDir, option),
    fPrgOptions(prgOpts),
-   mHs(), mNodeZMin(-250), mNodeZMax(250),
+   mNodeZMin(-250), mNodeZMax(250),
    mNodeRMin(0), mNodeRMax(30),
    mDoProjection(doProjection),
    hNStepsVsPhiVsRVsZ(nullptr),
@@ -24,15 +24,6 @@ StiScanHistContainer::StiScanHistContainer(StiScanPrgOptions& prgOpts, const cha
 {
    InitRange();
    BookHists();
-}
-
-
-StiScanHistContainer::~StiScanHistContainer()
-{
-   while (!mHs.empty()) {
-      delete mHs.begin()->second;
-      mHs.erase(mHs.begin());
-   }
 }
 
 
@@ -262,42 +253,4 @@ void StiScanHistContainer::FillHists(const TGeaTrack &trackG, const std::set<std
    hELossVsPhiVsRVsZ->ResetBinCumulMode();
    hELossVsXVsYVsZ->ResetBinCumulMode();
    hRelRadLengthVsPhiVsRVsZ->ResetBinCumulMode();
-}
-
-
-void StiScanHistContainer::SaveAllAs(std::string prefix)
-{
-   TCanvas canvas("canvas", "canvas", 1400, 600);
-   canvas.UseCurrentStyle();
-   canvas.SetGridx(true);
-   canvas.SetGridy(true);
-
-   HistMapIter iHist = mHs.begin();
-
-   for ( ; iHist!=mHs.end(); ++iHist) {
-      // For shorthand
-      string   objName = iHist->first;
-      TObject *obj      = iHist->second;
-
-      if (!obj) {
-         Error("SaveAllAs", "No object found for key %s. Skipping...", objName.c_str());
-         continue;
-      }
-
-      char* opts = (char*) obj->GetOption();
-
-      if (strstr(opts, "logX")) canvas.SetLogx(true);
-      else canvas.SetLogx(false);
-
-      if (strstr(opts, "logY")) canvas.SetLogy(true);
-      else canvas.SetLogy(false);
-
-      if (strstr(opts, "logZ")) canvas.SetLogz(true);
-      else canvas.SetLogz(false);
-
-      obj->Draw();
-
-      string sFileName = prefix + "/c_" + objName + ".png";
-      canvas.SaveAs(sFileName.c_str());
-   }
 }

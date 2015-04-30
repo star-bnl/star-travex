@@ -11,27 +11,22 @@
 
 #include "StiScan/StiScanEvent.h"
 #include "StiScan/StiScanPrgOptions.h"
+#include "StiRootIO/StiHistContainer.h"
 #include "StiRootIO/Profile2D.h"
 #include "StiRootIO/Profile3D.h"
 #include "StiRootIO/TStiKalmanTrack.h"
 #include "GeaRootIO/TGeaEvent.h"
 
-typedef std::map<std::string, TH1*>                    HistMap;
-typedef std::map<std::string, TH1*>::iterator          HistMapIter;
-typedef std::map<std::string, TH1*>::const_iterator    HistMapConstIter;
 
-
-class StiScanHistContainer : public TDirectoryFile
+class StiScanHistContainer : public StiHistContainer
 {
 public:
 
    StiScanHistContainer(StiScanPrgOptions& prgOpts, const char* name, TDirectory* motherDir = 0, bool doProjection=true, Option_t* option = "");
-   ~StiScanHistContainer();
 
    void FillHists(const StiScanEvent &eventT, const std::set<std::string> *volumeList=0);
    void FillHists(const TGeaEvent &eventG, const std::set<std::string> *volumeList=0);
    void FillDerivedHists();
-   void SaveAllAs(std::string prefix="./");
    void SetZRange(double minZ, double maxZ) { mNodeZMin = minZ; mNodeZMax = maxZ; }
    double GetZMin() const { return mNodeZMin; }
    double GetZMax() const { return mNodeZMax; }
@@ -41,12 +36,11 @@ public:
 
 protected:
 
-   void BookHists();
+   virtual void BookHists();
    virtual void FillHists(const TStiKalmanTrack &kalmTrack, const std::set<std::string> *volumeList=0);
    void FillHists(const TGeaTrack &trackG, const std::set<std::string> *volumeList=0);
 
    StiScanPrgOptions& fPrgOptions; ///< Command line arguments and options requested by the user
-   HistMap mHs;
    double  mNodeZMin;
    double  mNodeZMax;
    float   mNodeRMin;
