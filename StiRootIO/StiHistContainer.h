@@ -23,7 +23,6 @@ public:
    StiHistContainer(const char* name, TDirectory* motherDir=nullptr, Option_t* option="");
    ~StiHistContainer();
 
-   virtual void FillHists(const TStiEvent &event, const std::set<std::string> *volumeRegex=nullptr) = 0;
    virtual void FillDerivedHists() = 0;
    void SaveAllAs(std::string prefix="./");
 
