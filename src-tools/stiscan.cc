@@ -64,7 +64,7 @@ void loop_over_tree(StiScanPrgOptions &prgOpts)
 
    StiScanEvent *stiScanEvent = new StiScanEvent();
    stiChain->SetBranchAddress("e.", &stiScanEvent);
-   stiChain->SetBranchStatus("e.*", false);
+   stiChain->SetBranchStatus("e.TStiEvent*", false);
    stiChain->SetBranchStatus("e.TStiEvent.fTStiKalmanTracks*", true);
 
    // Prepare resources for geant event

@@ -40,7 +40,7 @@ void StiScanRootFile::FindAutoRange() const
    StiScanEvent *stiEvent = new StiScanEvent();
 
    stiChain->SetBranchAddress("e.", &stiEvent);
-   stiChain->SetBranchStatus("e.*", false);
+   stiChain->SetBranchStatus("e.TStiEvent.*", false);
    stiChain->SetBranchStatus("e.TStiEvent.fTStiKalmanTracks*", true);
 
    double nodeRMax = 0;
