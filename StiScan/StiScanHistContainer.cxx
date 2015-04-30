@@ -10,21 +10,6 @@
 #include "StiRootIO/TStiKalmanTrackNode.h"
 
 
-StiScanHistContainer::StiScanHistContainer(StiScanPrgOptions& prgOpts) : TDirectoryFile(),
-   fPrgOptions(prgOpts), mHs(), mNodeZMin(-250), mNodeZMax(250),
-   mNodeRMin(0), mNodeRMax(30),
-   mDoProjection(false),
-   hNStepsVsPhiVsRVsZ(nullptr),
-   hELossVsPhiVsRVsZ(nullptr),
-   hELossVsXVsYVsZ(nullptr),
-   hDensityVsPhiVsRVsZ(nullptr),
-   hRelRadLengthVsPhiVsRVsZ(nullptr)
-{
-   InitRange();
-   BookHists();
-}
-
-
 StiScanHistContainer::StiScanHistContainer(StiScanPrgOptions& prgOpts, const char* name, TDirectory* motherDir, bool doProjection, Option_t* option) :
    TDirectoryFile(name, name, option, motherDir),
    fPrgOptions(prgOpts),

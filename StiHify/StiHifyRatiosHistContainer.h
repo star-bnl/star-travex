@@ -24,7 +24,6 @@ class StiHifyRatiosHistContainer : public TDirectoryFile
 {
 public:
 
-   StiHifyRatiosHistContainer();
    StiHifyRatiosHistContainer(const char* name, TDirectory* motherDir = 0, Option_t* option = "");
    ~StiHifyRatiosHistContainer();
 

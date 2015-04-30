@@ -7,11 +7,6 @@
 #include "StiRootIO/TStiKalmanTrackNode.h"
 
 
-StiScanHistsByVolume::StiScanHistsByVolume(StiScanPrgOptions& prgOpts) : StiScanHistContainer(prgOpts)
-{
-}
-
-
 StiScanHistsByVolume::StiScanHistsByVolume(StiScanPrgOptions& prgOpts, const char* name, TDirectory* motherDir, bool doProjection, Option_t* option) :
    StiScanHistContainer(prgOpts, name, motherDir, doProjection, option)
 {

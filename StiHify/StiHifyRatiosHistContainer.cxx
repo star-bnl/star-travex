@@ -10,12 +10,6 @@
 #include "StiRootIO/TStiKalmanTrackNode.h"
 
 
-StiHifyRatiosHistContainer::StiHifyRatiosHistContainer() : TDirectoryFile(),
-   mHs()
-{
-}
-
-
 StiHifyRatiosHistContainer::StiHifyRatiosHistContainer(const char* name, TDirectory* motherDir, Option_t* option) :
    TDirectoryFile(name, name, option, motherDir),
    mHs()

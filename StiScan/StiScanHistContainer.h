@@ -25,7 +25,6 @@ class StiScanHistContainer : public TDirectoryFile
 {
 public:
 
-   StiScanHistContainer(StiScanPrgOptions& prgOpts);
    StiScanHistContainer(StiScanPrgOptions& prgOpts, const char* name, TDirectory* motherDir = 0, bool doProjection=true, Option_t* option = "");
    ~StiScanHistContainer();
 

@@ -14,7 +14,6 @@ class StiScanHistsByVolume : public StiScanHistContainer
 {
 public:
 
-   StiScanHistsByVolume(StiScanPrgOptions& prgOpts);
    StiScanHistsByVolume(StiScanPrgOptions& prgOpts, const char* name, TDirectory* motherDir = 0, bool doProjection=false, Option_t* option = "");
 
 protected:
