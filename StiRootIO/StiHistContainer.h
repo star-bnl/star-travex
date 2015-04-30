@@ -23,6 +23,7 @@ public:
    StiHistContainer(const char* name, TDirectory* motherDir=nullptr, Option_t* option="");
    ~StiHistContainer();
 
+   const HistMap& GetHists() const { return mHs; }
    virtual void FillDerivedHists() = 0;
    void SaveAllAs(std::string prefix="./");
 
