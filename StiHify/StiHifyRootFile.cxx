@@ -42,18 +42,7 @@ void StiHifyRootFile::FillHists(const StiHifyEvent &event, const std::set<std::s
 
 void StiHifyRootFile::FillDerivedHists()
 {
-   for (const std::pair<std::string, TDirectoryFile*>& iDir : mDirs)
-   {
-      std::string  dirName = iDir.first;
-      StiHistContainer *container = static_cast<StiHistContainer*>(iDir.second);
-
-      if (!container) {
-         Error("FillDerivedHists", "No container/directory found for key %s. Skipping...", dirName.c_str());
-         continue;
-      }
-
-      container->FillDerivedHists();
-   }
+   StiRootFile::FillDerivedHists();
 
    StiHifyRatiosHistContainer *ratios;
    mDirs["sti_hit_ratio"] = ratios = new StiHifyRatiosHistContainer("sti_hit_ratio", this);

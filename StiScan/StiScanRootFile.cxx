@@ -124,20 +124,3 @@ void StiScanRootFile::FillHists(const TGeaEvent &geaEvent, const std::set<std::s
    StiScanHistContainer* container = static_cast<StiScanHistContainer*> (mDirs["gea"]);
    container->FillHists(geaEvent, volumeList);
 }
-
-
-void StiScanRootFile::FillDerivedHists()
-{
-   for (TDirMapConstIter iDir=mDirs.begin() ; iDir!=mDirs.end(); ++iDir)
-   {
-      std::string  dirName = iDir->first;
-      StiScanHistContainer *container = (StiScanHistContainer*) iDir->second;
-
-      if (!container) {
-         Error("FillDerivedHists", "No container/directory found for key %s. Skipping...", dirName.c_str());
-         continue;
-      }
-
-      container->FillDerivedHists();
-   }
-}

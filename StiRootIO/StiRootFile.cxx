@@ -17,6 +17,23 @@ StiRootFile::StiRootFile(PrgOptionProcessor& prgOpts, Option_t *option, const ch
 }
 
 
+void StiRootFile::FillDerivedHists()
+{
+   for (const std::pair<std::string, TDirectoryFile*>& iDir : mDirs)
+   {
+      std::string  dirName = iDir.first;
+      StiHistContainer *container = static_cast<StiHistContainer*>(iDir.second);
+
+      if (!container) {
+         Error("FillDerivedHists", "No container/directory found for key %s. Skipping...", dirName.c_str());
+         continue;
+      }
+
+      container->FillDerivedHists();
+   }
+}
+
+
 Int_t StiRootFile::Write(const char* name, Int_t opt, Int_t bufsiz)
 {
    Info("Write", "%s", GetName());
