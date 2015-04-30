@@ -28,15 +28,15 @@ void StiHistContainer::SaveAllAs(std::string prefix)
 
    for (const std::pair<std::string, TH1*>& iHist : mHs)
    {
-      string objName = iHist.first;
-      TH1*   obj     = iHist.second;
+      string histName = iHist.first;
+      TH1*   hist     = iHist.second;
 
-      if (!obj) {
-         Error("SaveAllAs", "No object found for key %s. Skipping...", objName.c_str());
+      if (!hist) {
+         Error("SaveAllAs", "No object found for key %s. Skipping...", histName.c_str());
          continue;
       }
 
-      char* opts = (char*) obj->GetOption();
+      char* opts = (char*) hist->GetOption();
 
       if (strstr(opts, "logX")) canvas.SetLogx(true);
       else canvas.SetLogx(false);
@@ -47,9 +47,9 @@ void StiHistContainer::SaveAllAs(std::string prefix)
       if (strstr(opts, "logZ")) canvas.SetLogz(true);
       else canvas.SetLogz(false);
 
-      obj->Draw();
+      hist->Draw();
 
-      string sFileName = prefix + "/c_" + objName + ".png";
+      string sFileName = prefix + "/c_" + histName + ".png";
       canvas.SaveAs(sFileName.c_str());
    }
 }

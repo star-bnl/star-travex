@@ -80,12 +80,6 @@ void StiHifyHistContainer::FillHists(const StiHifyEvent &event, StiNodeHitStatus
 }
 
 
-void StiHifyHistContainer::FillDerivedHists()
-{
-   this->cd();
-}
-
-
 void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList)
 {
    if (volumeList && volumeList->size() && !trkNode.MatchedVolName(*volumeList) )

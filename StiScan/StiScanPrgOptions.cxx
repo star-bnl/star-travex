@@ -4,7 +4,6 @@
 #include <boost/regex.hpp>
 
 #include "TFile.h"
-#include "TSystem.h"
 
 #include "StiScan/StiScanPrgOptions.h"
 

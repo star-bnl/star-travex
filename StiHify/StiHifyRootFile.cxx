@@ -3,7 +3,6 @@
 #include "StiHifyRootFile.h"
 
 #include "TH1.h"
-#include "TStyle.h"
 
 #include "StiHify/StiHifyHistContainer.h"
 #include "StiHify/StiHifyRatiosHistContainer.h"
