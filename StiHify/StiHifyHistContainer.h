@@ -1,19 +1,15 @@
 #ifndef StiHifyHistContainer_h
 #define StiHifyHistContainer_h
 
-#include <map>
 #include <set>
 #include <string>
 
-#include "TDirectoryFile.h"
-#include "TProfile2D.h"
-#include "TProfile3D.h"
+#include "TH1I.h"
+#include "TH2I.h"
+#include "TH2F.h"
 
 #include "StiHify/StiHifyEvent.h"
 #include "StiScan/StiScanPrgOptions.h"
-#include "StiRootIO/Profile2D.h"
-#include "StiRootIO/Profile3D.h"
-#include "StiRootIO/TStiKalmanTrack.h"
 #include "StiRootIO/StiHistContainer.h"
 #include "StiRootIO/TStiKalmanTrackNode.h"
 

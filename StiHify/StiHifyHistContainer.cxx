@@ -1,13 +1,8 @@
 #include <cmath>
 
-#include "TCanvas.h"
-#include "TClonesArray.h"
-#include "TH2S.h"
-#include "TProfile2D.h"
 #include "TVector3.h"
 
 #include "StiHify/StiHifyHistContainer.h"
-#include "StiRootIO/TStiKalmanTrackNode.h"
 #include "StiRootIO/TStiHitProxy.h"
 
 

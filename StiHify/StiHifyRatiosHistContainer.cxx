@@ -1,13 +1,6 @@
-#include <cmath>
-
-#include "TCanvas.h"
-#include "TClonesArray.h"
-#include "TH2S.h"
-#include "TProfile2D.h"
-#include "TVector3.h"
-
 #include "StiHify/StiHifyRatiosHistContainer.h"
-#include "StiRootIO/TStiKalmanTrackNode.h"
+
+#include "TH1.h"
 
 
 StiHifyRatiosHistContainer::StiHifyRatiosHistContainer(const char* name, TDirectory* motherDir, Option_t* option) :

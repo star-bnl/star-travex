@@ -1,13 +1,8 @@
 #ifndef StiScanHistContainer_h
 #define StiScanHistContainer_h
 
-#include <map>
 #include <set>
 #include <string>
-
-#include "TDirectoryFile.h"
-#include "TProfile2D.h"
-#include "TProfile3D.h"
 
 #include "StiScan/StiScanEvent.h"
 #include "StiScan/StiScanPrgOptions.h"

@@ -1,18 +1,6 @@
 #ifndef StiHifyRatiosHistContainer_h
 #define StiHifyRatiosHistContainer_h
 
-#include <map>
-#include <set>
-#include <string>
-
-#include "TProfile2D.h"
-#include "TProfile3D.h"
-
-#include "StiHify/StiHifyEvent.h"
-#include "StiRootIO/Profile2D.h"
-#include "StiRootIO/Profile3D.h"
-#include "StiRootIO/TStiKalmanTrack.h"
-#include "StiRootIO/TStiKalmanTrackNode.h"
 #include "StiRootIO/StiHistContainer.h"
 
 

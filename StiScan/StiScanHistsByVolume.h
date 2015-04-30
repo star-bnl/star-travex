@@ -1,7 +1,6 @@
 #ifndef StiScanHistsByVolume_h
 #define StiScanHistsByVolume_h
 
-#include <map>
 #include <set>
 #include <string>
 

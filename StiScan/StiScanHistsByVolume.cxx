@@ -1,7 +1,6 @@
 #include <cmath>
 
 #include "TProfile2D.h"
-#include "TVector3.h"
 
 #include "StiScan/StiScanHistsByVolume.h"
 #include "StiRootIO/TStiKalmanTrackNode.h"
