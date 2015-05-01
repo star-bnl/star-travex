@@ -1,9 +1,9 @@
 [submodule "contrib/star-sti"]
 	path = contrib/star-sti
-	url = git@github.com:plexoos/star-sti.git
+	url = git@github.com:star-bnl/star-sti.git
 [submodule "contrib/star-bfchain"]
 	path = contrib/star-bfchain
-	url = git@github.com:plexoos/star-bfchain.git
+	url = git@github.com:star-bnl/star-bfchain.git
 [submodule "contrib/star-db-calibrations"]
 	path = contrib/star-db-calibrations
 	url = git@github.com:star-bnl/star-db-calibrations.git
