@@ -60,6 +60,7 @@ include_directories(
 	${Boost_INCLUDE_DIR}
 	${ROOT_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}
+	${CMAKE_CURRENT_BINARY_DIR}
 	contrib
 	contrib/star-sti
 	$ENV{STAR}/StRoot
@@ -91,6 +92,8 @@ set(STAR_LIBRARIES
 	StarRoot
 	StarClassLibrary
 )
+
+configure_file(src-tools/config.h.in src-tools/config.h)
 
 add_executable(stiscan src-tools/stiscan.cc)
 add_executable(stihify src-tools/stihify.cc)
