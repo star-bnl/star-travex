@@ -38,13 +38,13 @@ void StiHistContainer::SaveAllAs(std::string prefix)
 
       char* opts = (char*) hist->GetOption();
 
-      if (strstr(opts, "logX")) canvas.SetLogx(true);
+      if (strstr(opts, "XX")) canvas.SetLogx(true);
       else canvas.SetLogx(false);
 
-      if (strstr(opts, "logY")) canvas.SetLogy(true);
+      if (strstr(opts, "XY")) canvas.SetLogy(true);
       else canvas.SetLogy(false);
 
-      if (strstr(opts, "logZ")) canvas.SetLogz(true);
+      if (strstr(opts, "XZ")) canvas.SetLogz(true);
       else canvas.SetLogz(false);
 
       hist->Draw();
