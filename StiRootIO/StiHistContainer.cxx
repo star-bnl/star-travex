@@ -21,7 +21,7 @@ StiHistContainer::~StiHistContainer()
 
 void StiHistContainer::SaveAllAs(std::string prefix)
 {
-   TCanvas canvas("canvas", "canvas", 1400, 600);
+   TCanvas canvas("canvas", "canvas", 1200, 600);
    canvas.UseCurrentStyle();
    canvas.SetGridx(true);
    canvas.SetGridy(true);
