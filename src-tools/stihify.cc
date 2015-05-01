@@ -8,6 +8,8 @@
 #include "TRandom.h"
 #include "TROOT.h"
 
+#include "src-tools/config.h"
+
 #include "StiHify/StiHifyEvent.h"
 #include "StiScan/StiScanPrgOptions.h"
 #include "StiHify/StiHifyRootFile.h"
@@ -68,7 +70,9 @@ void loop_over_tree(StiScanPrgOptions &prgOpts)
    outRootFile.FillDerivedHists();
 
    if (prgOpts.SaveGraphics()) {
-      gROOT->Macro(prgOpts.GetStyleMacro().c_str());
+      std::string macroPath = std::string(gROOT->GetMacroPath()) + ":" + stitools::gStiToolsMacrosPath;
+      gROOT->SetMacroPath(macroPath.c_str());
+      gROOT->Macro("style_hists.C");
       outRootFile.SaveAllAs(prgOpts.GetOutPrefix());
    }
 
