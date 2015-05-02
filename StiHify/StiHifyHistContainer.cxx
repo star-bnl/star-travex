@@ -24,28 +24,28 @@ void StiHifyHistContainer::BookHists()
    this->cd();
 
    mHs["hDistClosest2AcceptedHit"] = hDistClosest2AcceptedHit
-      = new TH1I("hDistClosest2AcceptedHit", " ; Distance; Num. of Track Nodes; ", 100, 0, 0.5);
+      = new TH1I("hDistClosest2AcceptedHit", " ; Closest to Accepted Hits: Distance R, cm; Num. of Track Nodes; ", 100, 0, 0.5);
    hDistClosest2AcceptedHit->SetOption("XY hist");
 
    mHs["hPullClosestHit1D"] = hPullClosestHit1D
-      = new TH1I("hPullClosestHit1D", " ; Distance; Num. of Track Nodes; ", 100, 0, 6);
+      = new TH1I("hPullClosestHit1D", " ; Track Proj. to Closest Hit Pull Dist.: Distance R, #sigma-units; Num. of Track Nodes; ", 100, 0, 10);
 
    mHs["hPullClosestHit2D"] = hPullClosestHit2D
-      = new TH2I("hPullClosestHit2D", " ; local Z; local Y; Num. of Track Nodes", 50, -10, 10, 50, -10, 10);
+      = new TH2I("hPullClosestHit2D", " ; Track Proj. to Closest Hit Pull Dist.: Local Z, #sigma-units; Local Y, #sigma-units; Num. of Track Nodes", 50, -10, 10, 50, -10, 10);
    hPullClosestHit2D->SetOption("colz");
 
    mHs["hPullCandidateHits2D"] = hPullCandidateHits2D
-      = new TH2I("hPullCandidateHits2D", " ; local Z; local Y; Num. of Track Nodes", 50, -6, 6, 50, -6, 6);
+      = new TH2I("hPullCandidateHits2D", " ; Track Proj. to Candidate Hit Pull Dist.: Local Z, #sigma-units; Local Y, #sigma-units; Num. of Track Nodes", 50, -6, 6, 50, -6, 6);
    hPullCandidateHits2D->SetOption("colz");
 
    mHs["hChi2CandidateHits"] = hChi2CandidateHits
-      = new TH1I("hChi2CandidateHits", " ; #chi^2; Num. of Track Nodes", 50, 0, 50);
+      = new TH1I("hChi2CandidateHits", " ; Track Proj. to Candidate Hit: #chi^{2}; Num. of Track Nodes", 50, 0, 50);
 
    mHs["hCountCandidateHits"] = hCountCandidateHits
-      = new TH1I("hCountCandidateHits", " ; Num. of Candidate Hits; Counts", 20, 0, 20);
+      = new TH1I("hCountCandidateHits", " ; Num. of Candidate Hits; Num. of Track Nodes", 20, 0, 20);
 
    mHs["hActiveLayerCounts"] = hActiveLayerCounts
-      = new TH2F("hActiveLayerCounts", " ; local Z; local Y; Num. of Track Nodes", 25, -25, 25, 12, -2, 10);
+      = new TH2F("hActiveLayerCounts", " ; Track Proj. Local Z, cm; Local Y, cm; Num. of Track Nodes", 25, -25, 25, 10, -2, 8);
    hActiveLayerCounts->SetOption("colz");
 }
 
