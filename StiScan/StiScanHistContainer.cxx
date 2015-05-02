@@ -138,28 +138,28 @@ void StiScanHistContainer::FillDerivedHists()
 
 
    mHs["hELossVsPhiVsRVsZ_pyx"] = profile2D = hELossVsPhiVsRVsZ->Project3DProfile("yx");
-   profile2D->SetOption("colz logZ");
+   profile2D->SetOption("colz XZ");
    mHs["hELossVsPhiVsRVsZ_pyx_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
-   mHs["hELossVsPhiVsRVsZ_pyx_px"]->SetOption("logY");
+   mHs["hELossVsPhiVsRVsZ_pyx_px"]->SetOption("XY");
 
    mHs["hELossVsPhiVsRVsZ_pyz"] = profile2D = hELossVsPhiVsRVsZ->Project3DProfile("yz");
-   profile2D->SetOption("colz logZ");
+   profile2D->SetOption("colz XZ");
    mHs["hELossVsPhiVsRVsZ_pyz_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
 
    mHs["hELossVsPhiVsRVsZ_pxz"] = profile2D = hELossVsPhiVsRVsZ->Project3DProfile("xz");
-   profile2D->SetOption("colz logZ");
+   profile2D->SetOption("colz XZ");
    mHs["hELossVsPhiVsRVsZ_pxz_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
 
 
    mHs["hELossVsXVsYVsZ_pyx"] = profile2D = hELossVsXVsYVsZ->Project3DProfile("yx");
-   profile2D->SetOption("colz logZ");
+   profile2D->SetOption("colz XZ");
 
 
    // For 1D density profiles we always calculate the average density
    mHs["hDensityVsPhiVsRVsZ_pyx"] = profile2D = hDensityVsPhiVsRVsZ->Project3DProfile("yx");
    profile2D->SetOption("colz");
    mHs["hDensityVsPhiVsRVsZ_pyx_px"] = profile2D->ProfileX();
-   mHs["hDensityVsPhiVsRVsZ_pyx_px"]->SetOption("logY");
+   mHs["hDensityVsPhiVsRVsZ_pyx_px"]->SetOption("XY");
 
    mHs["hDensityVsPhiVsRVsZ_pyz"] = profile2D = hDensityVsPhiVsRVsZ->Project3DProfile("yz");
    profile2D->SetOption("colz");
@@ -173,7 +173,7 @@ void StiScanHistContainer::FillDerivedHists()
    mHs["hRelRadLengthVsPhiVsRVsZ_pyx"] = profile2D = hRelRadLengthVsPhiVsRVsZ->Project3DProfile("yx");
    profile2D->SetOption("colz");
    mHs["hRelRadLengthVsPhiVsRVsZ_pyx_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
-   mHs["hRelRadLengthVsPhiVsRVsZ_pyx_px"]->SetOption("logY");
+   mHs["hRelRadLengthVsPhiVsRVsZ_pyx_px"]->SetOption("XY");
 
    mHs["hRelRadLengthVsPhiVsRVsZ_pyz"] = profile2D = hRelRadLengthVsPhiVsRVsZ->Project3DProfile("yz");
    profile2D->SetOption("colz");
