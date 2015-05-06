@@ -9,31 +9,23 @@
 ClassImp(TStiKalmanTrack)
 
 
-TStiKalmanTrack::TStiKalmanTrack() : TObject(),
+TStiKalmanTrack::TStiKalmanTrack(TStiEvent* event) : TObject(),
    fEvent(nullptr), fNodes(), fEnergyLosses(0)
 {
 }
 
 
 TStiKalmanTrack::TStiKalmanTrack(const StiKalmanTrack& stiKTrack, TStiEvent* event) :
-   TObject(),
-   fEvent(event), fNodes(), fEnergyLosses(0)
+   TStiKalmanTrack(event)
 {
    // Loop over track nodes
-   for (StiKTNIterator it = stiKTrack.begin(); it != stiKTrack.end(); ++it)
+   for (const StiKalmanTrackNode& stiNode : stiKTrack)
    {
-      StiKalmanTrackNode *stiNode = &(*it);
-
-      if ( !stiNode ) {
-         Warning("TStiKalmanTrack", "Invalid kalman node. Skipping to next one...");
-         continue;
-      }
-
       // Silently skip DCA nodes
-      if ( stiNode->isDca() )
+      if ( stiNode.isDca() )
          continue;
 
-      const StiDetector* stiKTNDet = stiNode->getDetector();
+      const StiDetector* stiKTNDet = stiNode.getDetector();
 
       if (!stiKTNDet) {
          Warning("TStiKalmanTrack", "No detector found associated with non-DCA node. Skipping to next one...");
@@ -50,7 +42,7 @@ TStiKalmanTrack::TStiKalmanTrack(const StiKalmanTrack& stiKTrack, TStiEvent* eve
          fNodes.insert( TStiKalmanTrackNode(stiNode, this) );
       }
 
-      fEnergyLosses += stiNode->getEnergyLosses();
+      fEnergyLosses += stiNode.getEnergyLosses();
    }
 }
 
@@ -73,11 +65,13 @@ void TStiKalmanTrack::Print(Option_t *opt) const
 {
    Info("Print", "fEnergyLosses: %f\n", fEnergyLosses);
 
-   std::set<TStiKalmanTrackNode>::const_iterator iTStiKTrackNode = fNodes.begin();
+   int nodeIdx = 0;
 
-   for (int nodeIdx=0; iTStiKTrackNode != fNodes.end(); ++iTStiKTrackNode, ++nodeIdx) {
+   for (const TStiKalmanTrackNode& iNode : fNodes)
+   {
       Info("Print", "node index: %d\n", nodeIdx);
-      iTStiKTrackNode->Print();
+      iNode.Print();
+      nodeIdx++;
    }
 }
 
@@ -88,11 +82,11 @@ void TStiKalmanTrack::Print(Option_t *opt) const
  */
 void TStiKalmanTrack::AssignClosestHits(const std::set<TStiHit>& stiHits)
 {
-   for (auto iNode = fNodes.begin(); iNode != fNodes.end(); ++iNode)
+   for (const TStiKalmanTrackNode& iNode : fNodes)
    {
       // The following cast is ugly but we want to update a member which is not
       // used for ordering of the set elements which is a safe thing to do
-      TStiKalmanTrackNode& tmpNode = const_cast< TStiKalmanTrackNode& >(*iNode);
+      TStiKalmanTrackNode& tmpNode = const_cast< TStiKalmanTrackNode& >(iNode);
       tmpNode.AssignClosestHit(stiHits);
    }
 }
@@ -104,11 +98,11 @@ void TStiKalmanTrack::AssignClosestHits(const std::set<TStiHit>& stiHits)
  */
 void TStiKalmanTrack::FindAdjacentHits(const std::set<TStiHit>& stiHits)
 {
-   for (auto iNode = fNodes.begin(); iNode != fNodes.end(); ++iNode)
+   for (const TStiKalmanTrackNode& iNode : fNodes)
    {
       // The following cast is ugly but we want to update a member which is not
       // used for ordering of the set elements which is a safe thing to do
-      TStiKalmanTrackNode& tmpNode = const_cast< TStiKalmanTrackNode& >(*iNode);
+      TStiKalmanTrackNode& tmpNode = const_cast< TStiKalmanTrackNode& >(iNode);
       tmpNode.FindAdjacentHits(stiHits);
    }
 }

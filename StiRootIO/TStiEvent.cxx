@@ -1,5 +1,7 @@
 #include "StiRootIO/TStiEvent.h"
 #include "St_base/Stypes.h"
+#include "Sti/StiTrack.h"
+#include "Sti/StiKalmanTrack.h"
 
 ClassImp(TStiEvent);
 
@@ -20,7 +22,7 @@ TStiEvent::TStiEvent() : TObject(), fTStiKalmanTracks(), fTStiHits()
  * detector Id.
  */
 TStiEvent::TStiEvent(StDetectorId detGroupId, bool detActiveOnly) :
-   TObject(), fTStiKalmanTracks(), fTStiHits()
+   TStiEvent()
 {
    fgDetGroupId = detGroupId;
    fgDetActiveOnly = detActiveOnly;
@@ -29,37 +31,29 @@ TStiEvent::TStiEvent(StDetectorId detGroupId, bool detActiveOnly) :
 
 EReturnCodes TStiEvent::Fill(const StiTrackContainer &stiTrackContainer)
 {
-   for (auto trackIt = stiTrackContainer.begin(); trackIt != stiTrackContainer.end(); ++trackIt)
+   for (const StiTrack* stiTrack : stiTrackContainer)
    {
-      StiKalmanTrack* stiKTrack = static_cast<StiKalmanTrack*>(*trackIt);
-
-      if ( !stiKTrack ) {
-         Info("Fill", "Invalid kalman kTrack. Skipping to next one...");
-         continue;
-      }
+      const StiKalmanTrack& stiKTrack = static_cast<const StiKalmanTrack&>(*stiTrack);
 
       // This is where we'd like to apply the general QA on selected tracks
-      if (stiKTrack->getFitPointCount(kTpcId) > 30)
+      if (stiKTrack.getFitPointCount(kTpcId) > 30)
          continue;
 
       if (fgDetGroupId == kMaxDetectorId)
       {
          // All tracks regardless of detector are accepted
-         fTStiKalmanTracks.push_back( TStiKalmanTrack(*stiKTrack, this) );
+         fTStiKalmanTracks.push_back( TStiKalmanTrack(stiKTrack, this) );
          continue;
 
       } else {
          // Accept only tracks having a node associated with the given detector
-         for (StiKTNIterator it = stiKTrack->begin(); it != stiKTrack->end(); ++it)
+         for (const StiKalmanTrackNode& stiNode : stiKTrack)
          {
-            StiKalmanTrackNode *stiNode = &(*it);
-            if ( !stiNode ) continue;
-
-            StDetectorId stiNodeDetId = stiNode->getDetector() ?
-               static_cast<StDetectorId>( stiNode->getDetector()->getGroupId() ) : kUnknownId;
+            StDetectorId stiNodeDetId = stiNode.getDetector() ?
+               static_cast<StDetectorId>( stiNode.getDetector()->getGroupId() ) : kUnknownId;
 
             if (stiNodeDetId == fgDetGroupId) {
-               fTStiKalmanTracks.push_back( TStiKalmanTrack(*stiKTrack, this) );
+               fTStiKalmanTracks.push_back( TStiKalmanTrack(stiKTrack, this) );
                break;
             }
          }
