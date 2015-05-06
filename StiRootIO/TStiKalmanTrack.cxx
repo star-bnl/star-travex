@@ -15,7 +15,7 @@ TStiKalmanTrack::TStiKalmanTrack() : TObject(),
 }
 
 
-TStiKalmanTrack::TStiKalmanTrack(TStiEvent* event, const StiKalmanTrack& stiKTrack) :
+TStiKalmanTrack::TStiKalmanTrack(const StiKalmanTrack& stiKTrack, TStiEvent* event) :
    TObject(),
    fEvent(event), fNodes(), fEnergyLosses(0)
 {
@@ -47,7 +47,7 @@ TStiKalmanTrack::TStiKalmanTrack(TStiEvent* event, const StiKalmanTrack& stiKTra
            ( (TStiEvent::fgDetActiveOnly && stiKTNDet->isActive()) || !TStiEvent::fgDetActiveOnly )
          )
       {
-         fNodes.insert( TStiKalmanTrackNode(this, *stiNode) );
+         fNodes.insert( TStiKalmanTrackNode(stiNode, this) );
       }
 
       fEnergyLosses += stiNode->getEnergyLosses();

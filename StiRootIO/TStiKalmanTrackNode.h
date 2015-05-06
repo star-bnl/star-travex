@@ -21,7 +21,7 @@ class TStiKalmanTrackNode : public TObject
 public:
 
    TStiKalmanTrackNode();
-   TStiKalmanTrackNode(TStiKalmanTrack* const track, const StiKalmanTrackNode &stiKTN);
+   TStiKalmanTrackNode(const StiKalmanTrackNode &stiKTN, TStiKalmanTrack* const parent=nullptr);
    bool  IsValid() const { return fValid; }
    bool  IsInsideVolume() const { return fIsInsideVolume; }
    const TVector3& GetTrackP() const { return fTrackP; }

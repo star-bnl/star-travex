@@ -45,7 +45,7 @@ EReturnCodes TStiEvent::Fill(const StiTrackContainer &stiTrackContainer)
       if (fgDetGroupId == kMaxDetectorId)
       {
          // All tracks regardless of detector are accepted
-         fTStiKalmanTracks.push_back( TStiKalmanTrack(this, *stiKTrack) );
+         fTStiKalmanTracks.push_back( TStiKalmanTrack(*stiKTrack, this) );
          continue;
 
       } else {
@@ -59,7 +59,7 @@ EReturnCodes TStiEvent::Fill(const StiTrackContainer &stiTrackContainer)
                static_cast<StDetectorId>( stiNode->getDetector()->getGroupId() ) : kUnknownId;
 
             if (stiNodeDetId == fgDetGroupId) {
-               fTStiKalmanTracks.push_back( TStiKalmanTrack(this, *stiKTrack) );
+               fTStiKalmanTracks.push_back( TStiKalmanTrack(*stiKTrack, this) );
                break;
             }
          }

@@ -23,9 +23,9 @@ TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
 }
 
 
-TStiKalmanTrackNode::TStiKalmanTrackNode(TStiKalmanTrack* const track, const StiKalmanTrackNode &stiKTN) : TObject(),
+TStiKalmanTrackNode::TStiKalmanTrackNode(const StiKalmanTrackNode &stiKTN, TStiKalmanTrack* const parent) : TObject(),
    fStiTrackNode(&stiKTN),
-   fTrack(track), fValid(stiKTN.isValid()), fIsInsideVolume(stiKTN.inside(1+2+4)),
+   fTrack(parent), fValid(stiKTN.isValid()), fIsInsideVolume(stiKTN.inside(1+2+4)),
    fPosition(), fPositionLocal(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(stiKTN.getTrackLength()),
    fNodeRelRadLength(0), fVolumeName(""), fStiHit(nullptr), fClosestStiHit(nullptr),
