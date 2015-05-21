@@ -63,11 +63,15 @@ include_directories(
 	${CMAKE_CURRENT_BINARY_DIR}
 	contrib
 	contrib/star-sti
-	$ENV{STAR}/StRoot
-	$ENV{STAR}/StRoot/St_base
-	$ENV{STAR}/StRoot/Star2Root
+	contrib/star-stevent
+	contrib/star-base
+	contrib/star-base/St_base
+	contrib/star-base/Star2Root
 	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include
+	$ENV{STAR}/StRoot #/StDetectorDbMaker
 )
+
+add_subdirectory(contrib/star-base)
 
 add_subdirectory(StiRootIO)
 add_subdirectory(GeaRootIO)
