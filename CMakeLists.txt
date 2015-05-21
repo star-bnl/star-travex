@@ -53,9 +53,6 @@ if(NOT ROOT_FOUND)
    message(FATAL_ERROR "Fatal error: ROOT package not found")
 endif()
 
-add_subdirectory(contrib/star-bfchain)
-add_subdirectory(contrib/star-sti)
-
 include_directories(
 	${Boost_INCLUDE_DIR}
 	${ROOT_INCLUDE_DIR}
@@ -72,6 +69,8 @@ include_directories(
 )
 
 add_subdirectory(contrib/star-base)
+add_subdirectory(contrib/star-bfchain)
+add_subdirectory(contrib/star-sti)
 
 add_subdirectory(StiRootIO)
 add_subdirectory(GeaRootIO)
@@ -86,16 +85,8 @@ install(DIRECTORY contrib/star-db-calibrations/ DESTINATION "StarDb/Calibrations
 link_directories(
 	${Boost_LIBRARY_DIR}
 	${ROOT_LIBRARY_DIR}
-	$ENV{STAR_LIB}
-	$ENV{OPTSTAR}/lib
 )
 
-set(STAR_LIBRARIES
-	St_base
-	StChain
-	StarRoot
-	StarClassLibrary
-)
 
 configure_file(src-tools/config.h.in src-tools/config.h)
 
@@ -103,13 +94,13 @@ add_executable(stiscan src-tools/stiscan.cc)
 add_executable(stihify src-tools/stihify.cc)
 
 target_link_libraries(stiscan
-	${Boost_LIBRARIES} ${STAR_LIBRARIES} ${ROOT_LIBRARIES}
-	Table Geom Eve StiUtilities Sti StiRootIO GeaRootIO StiScan
+	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table Geom Eve
+	St_base StChain StarRoot StarClassLibrary StiUtilities Sti StiRootIO GeaRootIO StiScan
 )
 
 target_link_libraries(stihify
-	${Boost_LIBRARIES} ${STAR_LIBRARIES} ${ROOT_LIBRARIES}
-	Table Geom Eve StiUtilities Sti StiRootIO StiScan StiHify
+	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table Geom Eve
+	St_base StChain StarRoot StarClassLibrary StiUtilities Sti StiRootIO StiScan StiHify
 )
 
 if(FORCE_32BIT)
