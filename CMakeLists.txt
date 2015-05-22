@@ -13,15 +13,6 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
 project(star-sti-tools)
 
-# Set path to installation directory
-if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-	set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR} CACHE PATH "Default install prefix" FORCE)
-else(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-	set(MY_TEMP_CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
-	unset(CMAKE_INSTALL_PREFIX CACHE)
-	set(CMAKE_INSTALL_PREFIX ${MY_TEMP_CMAKE_INSTALL_PREFIX})
-endif(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-
 option(FORCE_32BIT "compile 32-bit application" ON)
 option(Boost_NO_BOOST_CMAKE "Due to bug in boost cmake files in Scientific Linux" ON)
 
