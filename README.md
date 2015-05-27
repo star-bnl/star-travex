@@ -1,17 +1,57 @@
+This project offers a number of tools to support reconstruction and analysis of
+the data collected by the STAR experiment at RHIC. The main objective is to
+evaluate and validate the reconstruction of charged particle tracks measured by
+the tracking detectors.
+
+Currently we provide two tools 'stiscan' and 'stihify' which purpose is to
+verify the accuracy of the modeled detector material and to measure the
+efficiency of hit assignment during track reconstruction respectively.
+
+
 Installation
 ============
 
-The following assumes the common environment available to STAR experiment users.
+In the following we assume that the user environment includes the standard shell
+variables available for a typical user account of the STAR experiment. The
+following environment variables should be set:
 
-    git clone git@github.com:plexoos/star-sti-tools.git
+    $STAR
+    $OPTSTAR
+    $STAR_HOST_SYS
+
+Checkout the code using one of the following commands:
+
+    git clone https://github.com/plexoos/star-sti-tools.git   # If you do not have an account on github.com
+    git clone git@github.com:plexoos/star-sti-tools.git       # otherwise.
+
+Compile and build the tools:
+
+    starver dev
     cd star-sti-tools/
     git submodule init
     git submodule update
     mkdir build
     cd build/
-    cmake ..
-    make
+    # See "Remark about C++11 at STAR" below
+    cmake -DCMAKE_INSTALL_PREFIX=./ ../
+    make -j
     make install
+
+*Remark about C++11 at STAR:* Our code extensively uses the features of the
+newer C++ standard (C++11) and, therefore, a compiler with C++11 support is
+required to compile it. As of May 2015 the default compiler in the STAR
+environment is gcc-4.4.7 does not provide full support of C++11 but a newer
+version 4.8.2 is also available. To use it just provide the following options to
+cmake:
+
+    cmake -DCMAKE_CXX_COMPILER=/afs/rhic.bnl.gov/rcassoft/x8664_sl6/gcc482/bin/g++ -DCMAKE_INSTALL_PREFIX=./ ../
+    export LD_LIBRARY_PATH+=":/afs/rhic.bnl.gov/rcassoft/x8664_sl6/gcc482/lib"
+    make -j
+    make install
+
+The make tool will place the libraries in the local `.slXX_gccXXX` directory.
+
+
 
 
 Regular expressions matching geometry volumes used at STAR
