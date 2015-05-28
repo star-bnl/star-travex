@@ -1,8 +1,11 @@
 <?php
+
+include_once("../common/config.php");
+
 $page_title = "Stiscan Plots";
 
-include_once("head.php");
-include_once("PlotHelper.php");
+include_once(BASE_DIR."/common/head.php");
+include_once(BASE_DIR."/common/PlotHelper.php");
 
 
 $pfx = isset($_GET['pfx']) ? $_GET['pfx'] : "";
@@ -164,5 +167,5 @@ endif;
 
 
 <?php
-include_once("bottom.html");
+include_once(BASE_DIR."/common/bottom.php");
 ?>

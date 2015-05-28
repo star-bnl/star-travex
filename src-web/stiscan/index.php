@@ -1,7 +1,11 @@
 <?php
+
+include_once("../common/config.php");
+
 $page_title = "Stiscan Results";
 
-include_once("head.php");
+include_once(BASE_DIR."/common/head.php");
+
 ?>
 
 <h1>Stiscan Results</h1>
@@ -234,5 +238,5 @@ terminate called after throwing an instance of 'std::runtime_error'
 
 
 <?php
-include_once("bottom.php");
+include_once(BASE_DIR."/common/bottom.php");
 ?>
