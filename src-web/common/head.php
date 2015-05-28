@@ -29,6 +29,7 @@ Contact
 &nbsp;
 &nbsp;
 &nbsp;
+<a href="<?=STIHIFY_BASE_URL?>" class="s120">stihify</a>
 
 </div>
 

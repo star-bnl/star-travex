@@ -8,5 +8,6 @@ define("BASE_URL",            "/~smirnovd");
 define("STISCAN_BASE_URL",    BASE_URL."/stiscan");
 define("STISCAN_RESULTS_URL", BASE_URL."/stiscan_images");
 define("STISCAN_RESULTS_DIR", "/star/u/smirnovd/WWW/stiscan_images");
+define("STIHIFY_BASE_URL",    BASE_URL."/stihify");
 
 ?>
