@@ -26,7 +26,7 @@ a set of basic histograms with track energy lost in Sti volumes one can do:
 
     stiscan -f path/to/my.stiscan.root
 
-For more options type `stiscan -h`.
+For more options type `stiscan --help`.
 
 By default, only sensitive layers of the PXL, IST, and SSD detectors are used in
 the energy loss analysis. One can easily specify any other volume or a set of

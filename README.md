@@ -3,13 +3,19 @@ the data collected by the STAR experiment at RHIC. The main objective is to
 evaluate and validate the reconstruction of charged particle tracks measured by
 the tracking detectors.
 
-Currently we provide two tools 'stiscan' and 'stihify' which purpose is to
-verify the accuracy of the modeled detector material and to measure the
-efficiency of hit assignment during track reconstruction respectively.
+Currently we provide two tools `stiscan` and `stihify` the purpose of which is
+to verify the accuracy of the modeled detector material and to measure the
+efficiency of hits assigned during track reconstruction respectively.
 
 
-Installation
-============
+How to build and install libraries and tools
+============================================
+
+The libraries and tools of star-sti-tools package significantly depend on ROOT
+(http://root.cern.ch) and some select modules from the STAR software library.
+
+...using cmake
+--------------
 
 In the following we assume that the user environment includes the standard shell
 variables available for a typical user account of the STAR experiment. The
@@ -28,10 +34,8 @@ Compile and build the tools:
 
     starver dev
     cd star-sti-tools/
-    git submodule init
-    git submodule update
-    mkdir build
-    cd build/
+    git submodule update --init --depth=20
+    mkdir build && cd build
     # See "Remark about C++11 at STAR" below
     cmake -DCMAKE_INSTALL_PREFIX=./ ../
     make -j
@@ -51,6 +55,18 @@ cmake:
 
 The make tool will place the libraries in the local `.slXX_gccXXX` directory.
 
+
+...using cons within STAR environment
+-------------------------------------
+
+    starver dev
+    export LD_LIBRARY_PATH+=":/afs/rhic.bnl.gov/rcassoft/x8664_sl6/gcc482/lib"
+    git clone https://github.com/plexoos/star-sti-tools.git && cd star-sti-tools
+    git submodule update --init --depth=20
+    mkdir -p build-cons/StRoot && cd build-cons/StRoot
+    ln -s ../../contrib/star-sti/Sti* ../../Sti* ../../GeaRootIO .
+    cd ..
+    cons "CXX=/afs/rhic.bnl.gov/rcassoft/x8664_sl6/gcc482/bin/g++"
 
 
 
