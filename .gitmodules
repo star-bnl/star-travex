@@ -13,3 +13,6 @@
 [submodule "contrib/star-stevent"]
 	path = contrib/star-stevent
 	url = git@github.com:star-bnl/star-stevent.git
+[submodule "contrib/star-stdb"]
+	path = contrib/star-stdb
+	url = git@github.com:star-bnl/star-stdb.git
