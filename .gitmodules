@@ -7,7 +7,6 @@
 [submodule "contrib/star-db-calibrations"]
 	path = contrib/star-db-calibrations
 	url = git@github.com:star-bnl/star-db-calibrations.git
-	branch = ds-master
 [submodule "contrib/star-base"]
 	path = contrib/star-base
 	url = git@github.com:star-bnl/star-base.git
