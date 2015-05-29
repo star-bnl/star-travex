@@ -1,12 +1,5 @@
 #include "StiRootIO/TStiHit.h"
 
-#include <boost/regex.hpp>
-
-#include "StarClassLibrary/StThreeVector.hh"
-#include "Sti/StiPlacement.h"
-#include "StiRootIO/TStiKalmanTrack.h"
-
-
 ClassImp(TStiHit)
 
 
