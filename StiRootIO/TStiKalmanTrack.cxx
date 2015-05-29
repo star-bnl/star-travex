@@ -9,8 +9,14 @@
 ClassImp(TStiKalmanTrack)
 
 
-TStiKalmanTrack::TStiKalmanTrack(TStiEvent* event) : TObject(),
+TStiKalmanTrack::TStiKalmanTrack() : TObject(),
    fEvent(nullptr), fNodes(), fEnergyLosses(0)
+{
+}
+
+
+TStiKalmanTrack::TStiKalmanTrack(TStiEvent* event) : TObject(),
+   fEvent(event), fNodes(), fEnergyLosses(0)
 {
 }
 
