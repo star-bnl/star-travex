@@ -17,12 +17,11 @@ TStiHit::TStiHit() : TObject(),
 TStiHit::TStiHit(const StiHit & stiHit) : TObject(),
    fStiHit(&stiHit),
    fDetectorId( stiHit.detector() ? static_cast<StDetectorId>(stiHit.detector()->getGroupId()) : kUnknownId ),
-   fVolumeName(""),
+   fVolumeName( stiHit.detector() ? stiHit.detector()->getName() : "" ),
    fPosition(stiHit.x_g(), stiHit.y_g(), stiHit.z_g()),
    fPositionLocal(stiHit.x(), stiHit.y(), stiHit.z()),
    fTimesUsed(stiHit.timesUsed())
 {
-   fVolumeName = stiHit.detector() ? stiHit.detector()->getName() : "";
 }
 
 
