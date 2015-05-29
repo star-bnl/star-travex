@@ -70,7 +70,7 @@ add_subdirectory(StiScan)
 
 
 install(DIRECTORY contrib/star-bfchain/ DESTINATION "StRoot/StBFChain" FILES_MATCHING PATTERN "*.h" PATTERN "*.cxx" PATTERN "*.C")
-install(DIRECTORY contrib/star-db-calibrations/ DESTINATION "StarDb/Calibrations")
+install(DIRECTORY contrib/star-db-calibrations/tracker DESTINATION "StarDb/Calibrations")
 
 
 link_directories(
