@@ -11,6 +11,7 @@ add_library(
 	StiScanEvent.cxx
 	StiScanTreeMaker.cxx
 	StiScanHistContainer.cxx
+	StiScanRatiosHistContainer.cxx
 	StiScanHistsByVolume.cxx
 	StiScanPrgOptions.cxx
 	StiScanRootFile.cxx
