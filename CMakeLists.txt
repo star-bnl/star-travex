@@ -17,10 +17,10 @@ option(FORCE_32BIT "compile 32-bit application" ON)
 option(Boost_NO_BOOST_CMAKE "Due to bug in boost cmake files in Scientific Linux" ON)
 
 if(FORCE_32BIT)
-   SET_PROPERTY(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS OFF)
+	set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS OFF)
+	set(CMAKE_CXX_FLAGS "-m32 -std=c++0x")
 endif()
 
-set(CMAKE_CXX_FLAGS "-m32 -std=c++0x")
 
 # Find boost headers and library locations
 set(Boost_USE_MULTITHREADED OFF)
