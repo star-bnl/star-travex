@@ -44,19 +44,49 @@ if(NOT ROOT_FOUND)
    message(FATAL_ERROR "Fatal error: ROOT package not found")
 endif()
 
+# Some external files on which this project depends
+set( STI_TOOLS_EXTERNAL_FILES_1
+	$ENV{STAR}/asps/rexe/TGeant3/StarMC.h
+	$ENV{STAR}/asps/rexe/TGeant3/TGiant3.h
+	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/TrackingParameters.h
+	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/KalmanTrackFinderParameters.h
+	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/KalmanTrackFitterParameters.h
+
+	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/LocalTrackSeedFinder.h
+	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/HitError.h
+)
+
+set( STI_TOOLS_EXTERNAL_FILES_2
+	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/tables/St_TrackingParameters_Table.h
+	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/tables/St_KalmanTrackFinderParameters_Table.h
+	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/tables/St_KalmanTrackFitterParameters_Table.h
+
+	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/tables/St_LocalTrackSeedFinder_Table.h
+	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/tables/St_HitError_Table.h
+)
+
+file(COPY ${STI_TOOLS_EXTERNAL_FILES_1} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/include)
+file(COPY ${STI_TOOLS_EXTERNAL_FILES_2} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/include/tables)
+file(COPY $ENV{STAR}/StRoot/St_geant_Maker/St_geant_Maker.h DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/include/St_geant_Maker)
+
+
 include_directories(
 	${Boost_INCLUDE_DIR}
 	${ROOT_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR}
+	${CMAKE_CURRENT_BINARY_DIR}/include
 	contrib
 	contrib/star-sti
 	contrib/star-stevent
+	contrib/star-stevent/StEvent
 	contrib/star-base
 	contrib/star-base/St_base
 	contrib/star-base/Star2Root
-	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include
-	$ENV{STAR}/StRoot #/StDetectorDbMaker
+	contrib/star-base/StarClassLibrary
+	contrib/star-base/StChain
+	contrib/star-stdb
+	contrib/star-bfchain
 )
 
 add_subdirectory(contrib/star-base)
