@@ -90,7 +90,7 @@ include_directories(
 )
 
 add_subdirectory(contrib/star-base)
-add_subdirectory(contrib/star-bfchain)
+add_subdirectory(contrib/star-bfchain/StBFChain)
 add_subdirectory(contrib/star-sti)
 
 add_subdirectory(StiRootIO)
@@ -99,8 +99,8 @@ add_subdirectory(StiHify)
 add_subdirectory(StiScan)
 
 
-install(DIRECTORY contrib/star-bfchain/ DESTINATION "StRoot/StBFChain" FILES_MATCHING PATTERN "*.h" PATTERN "*.cxx" PATTERN "*.C")
-install(DIRECTORY contrib/star-db-calibrations/tracker DESTINATION "StarDb/Calibrations")
+install(DIRECTORY "contrib/star-bfchain/StBFChain" DESTINATION "StRoot")
+install(DIRECTORY "contrib/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
 
 
 link_directories(
