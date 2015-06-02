@@ -3,7 +3,8 @@ the data collected by the STAR experiment at RHIC. The main objective is to
 evaluate and validate the reconstruction of charged particle tracks measured by
 the tracking detectors.
 
-Currently we provide two tools `stiscan` and `stihify` the purpose of which is
+Currently we provide two tools `stiscan` ([StiScan/README.md](StiScan/README.md))
+and `stihify` ([StiHify/README.md](StiHify/README.md)) the purpose of which is
 to verify the accuracy of the modeled detector material and to measure the
 efficiency of hits assigned during track reconstruction respectively.
 
@@ -22,6 +23,7 @@ variables available for a typical user account of the STAR experiment. The
 following environment variables should be set:
 
     $STAR
+    $STAR_LIB        # Used in supple/starsim_zslice_*.kumac
     $OPTSTAR
     $STAR_HOST_SYS
 
