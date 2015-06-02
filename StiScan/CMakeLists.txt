@@ -2,7 +2,7 @@ root_generate_dictionary(
 	StiScan_Cint
 	StiScanEvent.h
 	StiScanTreeMaker.h
-	LINKDEF LinkDef.h
+	LINKDEF StiScanLinkDef.h
 )
 
 add_library(

@@ -2,7 +2,7 @@ root_generate_dictionary(
 	StiHify_Cint
 	StiHifyEvent.h
 	StiHifyTreeMaker.h
-	LINKDEF LinkDef.h
+	LINKDEF StiHifyLinkDef.h
 )
 
 add_library(

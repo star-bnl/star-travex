@@ -9,7 +9,7 @@ root_generate_dictionary(
 	TStiHitProxy.h
 	TStiKalmanTrack.h
 	TStiKalmanTrackNode.h
-	LINKDEF LinkDef.h
+	LINKDEF StiRootIOLinkDef.h
 )
 
 add_library(

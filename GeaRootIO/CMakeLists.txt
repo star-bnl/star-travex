@@ -1,7 +1,7 @@
 root_generate_dictionary(
 	GeaRootIO_Cint
 	TGeaEvent.h
-	LINKDEF LinkDef.h
+	LINKDEF GeaRootIOLinkDef.h
 )
 
 add_library(
