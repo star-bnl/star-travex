@@ -1,0 +1,37 @@
+detp geometry y2014a
+gexec $STAR_LIB/StarMagFieldNoDict.so
+gexec $STAR_LIB/xgeometry.so
+gclose all
+physi
+DCAY 0
+ANNI 0
+BREM 0
+COMP 0
+HADR 0
+MUNU 0
+PAIR 0
+PFIS 0
+PHOT 0
+RAYL 0
+LOSS 2
+DRAY 0
+MULS 0
+STRA 0
+gclose all
+physi
+make sim/gstar
+gclose all
+debug off
+
+do z = -20, 20, 1
+
+   gfile o mytest_z_[z].fz
+   user/vxyz 0.0 0.0 [z].01
+   user/vsig 0.0001 0.0001
+   aguser/gkine 50 8 5.0 5.0 0 0 -3.14159 3.14159
+   trig 100
+
+enddo
+
+gprint kine
+quit
