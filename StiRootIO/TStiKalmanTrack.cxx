@@ -38,8 +38,7 @@ TStiKalmanTrack::TStiKalmanTrack(const StiKalmanTrack& stiKTrack, TStiEvent* eve
          continue;
       }
 
-      StDetectorId stiNodeDetId = stiKTNDet ?
-         static_cast<StDetectorId>( stiKTNDet->getGroupId() ) : kUnknownId;
+      StDetectorId stiNodeDetId = static_cast<StDetectorId>( stiKTNDet->getGroupId() );
 
       if ( ( TStiEvent::fgDetGroupId == stiNodeDetId || TStiEvent::fgDetGroupId == kMaxDetectorId ) &&
            ( (TStiEvent::fgDetActiveOnly && stiKTNDet->isActive()) || !TStiEvent::fgDetActiveOnly )
