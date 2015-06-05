@@ -33,7 +33,6 @@ public:
    float GetSparsity() const { return fSparsity; }
    bool  SaveGraphics() const { return fSaveGraphics; }
    TChain* GetStiTChain() { return fStiTChain; }
-   std::string GetStyleMacro() const { return fEnvVars.find("OFFLINE_HFT_DIR")->second + "/star-offline-hft/tests/style_hists.C"; }
    std::string GetOutPrefix() const { return fOutPrefix; }
    std::string GetOutFileName(std::string suffix="hist") const;
 
