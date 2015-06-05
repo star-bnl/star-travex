@@ -8,6 +8,7 @@
 #include "StiScan/StiScanHistContainer.h"
 #include "StiScan/StiScanHistsByVolume.h"
 #include "StiScan/StiScanPrgOptions.h"
+#include "StiScan/StiScanRatiosHistContainer.h"
 
 
 StiScanRootFile::StiScanRootFile(StiScanPrgOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
@@ -125,4 +126,21 @@ void StiScanRootFile::FillHists(const TGeaEvent &geaEvent, const std::set<std::s
 {
    StiScanHistContainer* container = static_cast<StiScanHistContainer*> (mDirs["gea"]);
    container->FillHists(geaEvent, volumeList);
+}
+
+
+void StiScanRootFile::FillDerivedHists()
+{
+   StiRootFile::FillDerivedHists();
+
+   StiScanRatiosHistContainer *ratios;
+   mDirs["sti_gea_ratio"] = ratios = new StiScanRatiosHistContainer("sti_gea_ratio", this);
+
+   TH1* gea_eloss
+      = static_cast<StiScanHistContainer*>(mDirs["gea"])->GetHists().find("hELossVsXVsYVsZ_pyx")->second;
+
+   TH1* sti_eloss
+      = static_cast<StiScanHistContainer*>(mDirs["sti_trk"])->GetHists().find("hELossVsXVsYVsZ_pyx")->second;
+
+   ratios->CreateRatioHist(sti_eloss, gea_eloss);
 }
