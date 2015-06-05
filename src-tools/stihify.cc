@@ -6,7 +6,6 @@
 #include "TGeoNavigator.h"
 #include "TGeoManager.h"
 #include "TRandom.h"
-#include "TROOT.h"
 
 #include "src-tools/config.h"
 
@@ -68,14 +67,6 @@ void loop_over_tree(StiScanPrgOptions &prgOpts)
    delete stiHifyEvent;
 
    outRootFile.FillDerivedHists();
-
-   if (prgOpts.SaveGraphics()) {
-      std::string macroPath = std::string(gROOT->GetMacroPath()) + ":" + stitools::gStiToolsMacrosPath;
-      gROOT->SetMacroPath(macroPath.c_str());
-      gROOT->Macro("style_hists.C");
-      outRootFile.SaveAllAs(prgOpts.GetOutPrefix());
-   }
-
    outRootFile.Write();
    outRootFile.Close();
 }

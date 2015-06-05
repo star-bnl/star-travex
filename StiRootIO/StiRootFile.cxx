@@ -3,6 +3,9 @@
 #include "StiRootIO/StiRootFile.h"
 
 #include "TSystem.h"
+#include "TROOT.h"
+
+#include "src-tools/config.h"
 
 #include "StiRootIO/StiHistContainer.h"
 #include "StiRootIO/PrgOptionProcessor.h"
@@ -14,6 +17,9 @@ StiRootFile::StiRootFile(PrgOptionProcessor& prgOpts, Option_t *option, const ch
    fPrgOptions(prgOpts)
 {
    Info("StiRootFile", "Created ROOT file: %s", GetName());
+
+   std::string macroPath = std::string(gROOT->GetMacroPath()) + ":" + stitools::gStiToolsMacrosPath;
+   gROOT->SetMacroPath(macroPath.c_str());
 }
 
 
@@ -50,12 +56,18 @@ Int_t StiRootFile::Write(const char* name, Int_t opt, Int_t bufsiz) const
 
 void StiRootFile::Close(Option_t *option)
 {
+   if (fPrgOptions.SaveGraphics()) {
+      SaveAllAs(fPrgOptions.GetOutPrefix());
+   }
+
    TFile::Close(option);
 }
 
 
 void StiRootFile::SaveAllAs(std::string prefix)
 {
+   gROOT->Macro("style_hists.C");
+
    namespace fs = boost::filesystem;
 
    if (fs::create_directories(prefix))

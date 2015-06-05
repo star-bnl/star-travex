@@ -7,7 +7,6 @@
 #include "TGeoNavigator.h"
 #include "TGeoManager.h"
 #include "TRandom.h"
-#include "TROOT.h"
 
 #include "GeaRootIO/TGeaEvent.h"
 #include "StiScan/StiScanEvent.h"
@@ -99,12 +98,6 @@ void loop_over_tree(StiScanPrgOptions &prgOpts)
    delete geantEvent;
 
    outRootFile.FillDerivedHists();
-
-   if (prgOpts.SaveGraphics()) {
-      gROOT->Macro(prgOpts.GetStyleMacro().c_str());
-      outRootFile.SaveAllAs(prgOpts.GetOutPrefix());
-   }
-
    outRootFile.Write();
    outRootFile.Close();
 }
