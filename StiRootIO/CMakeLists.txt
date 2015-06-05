@@ -1,5 +1,6 @@
 root_generate_dictionary(
 	StiRootIO_Cint
+	H2D.h
 	H3D.h
 	Profile2D.h
 	Profile3D.h
@@ -15,6 +16,7 @@ root_generate_dictionary(
 add_library(
 	StiRootIO
 	SHARED
+	H2D.cxx
 	H3D.cxx
 	PrgOptionProcessor.cxx
 	Profile2D.cxx
