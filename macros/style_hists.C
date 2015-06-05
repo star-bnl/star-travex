@@ -26,6 +26,8 @@ gStyle->SetNdivisions(505, "Y");
 gStyle->SetNdivisions(505, "Z");
 
 gStyle->SetPalette(1);
+gStyle->SetNumberContours(50);
+
 gStyle->SetOptFit(1111);
 gStyle->SetOptStat("emroui");
 gStyle->SetStatX(0.99);
