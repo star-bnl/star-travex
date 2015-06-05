@@ -1,4 +1,7 @@
 #include "TCanvas.h"
+#include "TColor.h"
+#include "TPaletteAxis.h"
+#include "TROOT.h"
 
 #include "StiRootIO/StiHistContainer.h"
 
@@ -49,7 +52,23 @@ void StiHistContainer::SaveAllAs(std::string prefix)
 
       hist->Draw();
 
+      TColor *color;
+      float r, g, b;
+
+      if (strstr(opts, "whit_zro")) {
+         gPad->Update();
+         TPaletteAxis *palette = (TPaletteAxis*) hist->GetListOfFunctions()->FindObject("palette");
+         color = gROOT->GetColor( palette->GetValueColor(0) );
+         color->GetRGB(r, g, b);
+         color->SetRGB(255, 255, 255);
+      }
+
       string sFileName = prefix + "/c_" + histName + ".png";
       canvas.SaveAs(sFileName.c_str());
+
+      // Restore modified color
+      if (strstr(opts, "whit_zro")) {
+         color->SetRGB(r, g, b);
+      }
    }
 }
