@@ -43,12 +43,11 @@ Compile and build the tools:
     make -j
     make install
 
-*Remark about C++11 at STAR:* Our code extensively uses the features of the
-newer C++ standard (C++11) and, therefore, a compiler with C++11 support is
-required to compile it. As of May 2015 the default compiler in the STAR
-environment is gcc-4.4.7 does not provide full support of C++11 but a newer
-version 4.8.2 is also available. To use it just provide the following options to
-cmake:
+*Remark about C++11 at STAR:* Our code extensively uses the features from the
+C++11 standard and, therefore, a compiler with C++11 support is required to
+compile it. As of May 2015 the default compiler in the STAR environment is
+gcc-4.4.7 does not provide full support of C++11 but a newer version 4.8.2 is
+also available. To use it just provide the following options to cmake:
 
     cmake -DCMAKE_CXX_COMPILER=/afs/rhic.bnl.gov/rcassoft/x8664_sl6/gcc482/bin/g++ -DCMAKE_INSTALL_PREFIX=./ ../
     export LD_LIBRARY_PATH+=":/afs/rhic.bnl.gov/rcassoft/x8664_sl6/gcc482/lib"

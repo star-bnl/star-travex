@@ -94,4 +94,4 @@ script.
 Reconstruction chain examples
 =============================
 
-    root4star -q -b -l 'bfc.C(1, 100, "tpcRS y2014a AgML MakeEvent ITTF StiHftC Idst BAna l0 Tree logger Sti tpcDB TpcHitMover TpxClu bbcSim btofsim tags emcY2 EEfs evout -dstout IdTruth geantout big fzin MiniMcMk clearmem StiScanTreeMaker", "stiscan_zslice.fz")'
+    root4star -q -b -l 'bfc.C(1, 100, "tpcRS y2014a AgML MakeEvent ITTF StiHftC Idst BAna l0 Tree logger Sti tpcDB TpcHitMover TpxClu bbcSim btofsim tags emcY2 EEfs evout -dstout IdTruth geantout big fzin MiniMcMk clearmem StiScanTreeMaker", "starsim_zslice.fz")'
