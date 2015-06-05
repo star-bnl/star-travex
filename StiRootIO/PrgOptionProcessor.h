@@ -34,6 +34,7 @@ public:
    bool  SaveGraphics() const { return fSaveGraphics; }
    TChain* GetStiTChain() { return fStiTChain; }
    std::string GetStyleMacro() const { return fEnvVars.find("OFFLINE_HFT_DIR")->second + "/star-offline-hft/tests/style_hists.C"; }
+   std::string GetOutPrefix() const { return fOutPrefix; }
    std::string GetOutFileName(std::string suffix="hist") const;
 
    void ProcessOptions();
@@ -51,6 +52,7 @@ protected:
    po::variables_map       fOptionsValues;
    /// Full path to either a root file with Sti event tree or a text file with a list of such root files
    std::string             fInFilePath;
+   std::string             fOutPrefix;
    std::string             fVolumeListFile;  ///< Full path to a text file with Sti/TGeo volume names
    std::string             fVolumePattern;   ///< Regex pattern provided by the user in the command line
    std::set<std::string>   fVolumeList;      ///< A list of volume names to consider

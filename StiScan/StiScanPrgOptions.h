@@ -33,7 +33,6 @@ public:
    bool  DoGeantStepTree() const { return fDoGeantStepTree; }
    bool  DoAutoHistRange() const { return fDoAutoHistRange; }
    TChain* GetGeantStepChain() { return fGeantStepChain; }
-   std::string GetOutPrefix() const { return fOutPrefix; }
    double GetHistZMin() const { return fHistZMin; }
    double GetHistZMax() const { return fHistZMax; }
    double GetHistRMin() const { return fHistRMin; }
@@ -49,7 +48,6 @@ protected:
    bool    fDoGeantStepTree; ///< A flag to process geant tree if set
    bool    fDoAutoHistRange; ///< A flag to find optimal range for histogram axises automatically
    TChain *fGeantStepChain;
-   std::string fOutPrefix;
    double  fHistZMin;
    double  fHistZMax;
    double  fHistRMin;

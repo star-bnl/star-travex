@@ -14,7 +14,9 @@ PrgOptionProcessor::PrgOptionProcessor() : PrgOptionProcessor(0, nullptr) { }
 
 PrgOptionProcessor::PrgOptionProcessor(int argc, char **argv, const std::string& stiTreeName) : TObject(),
    fArgc(argc), fArgv(argv),
-   fOptions("Program options", 120), fOptionsValues(), fInFilePath(), fVolumeListFile(),
+   fOptions("Program options", 120), fOptionsValues(), fInFilePath(),
+   fOutPrefix("./"),
+   fVolumeListFile(),
    fVolumePattern(),
    fVolumeList(), fMaxEventsUser(0), fSparsity(1), fSaveGraphics(false),
    fEnvVars(), fStiTChain(new TChain(stiTreeName.c_str(), "READ"))
@@ -34,6 +36,7 @@ void PrgOptionProcessor::InitOptions()
       ("volume-pattern,p",    po::value<std::string>(&fVolumePattern)->implicit_value("process_all_volumes"),
                               "A regex pattern to match Sti/TGeo volume names. If specified without a value all volumes will be matched")
       ("volume-pattern-flist,l",   po::value<std::string>(&fVolumeListFile), "Full path to a text file with regex patterns to match Sti/TGeo volume names")
+      ("out-prefix,o",        po::value<std::string>(&fOutPrefix), "Absolute or relative path prefix for the output files")
       ("max-events,n",        po::value<unsigned int>(&fMaxEventsUser)->default_value(0), "Maximum number of events to process")
       ("sparsity,s",          po::value<float>(&fSparsity)->default_value(1), "Approximate fraction of events to read and process")
       ("save-graph,g",        "Use this option to save plots in png format")
