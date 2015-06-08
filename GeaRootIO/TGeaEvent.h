@@ -41,7 +41,7 @@ public:
 class TGeaTrack : public TObject
 {
 public:
-  TGeaTrack(TGeaEvent *parentEvent=nullptr);
+  explicit TGeaTrack(TGeaEvent *parentEvent=nullptr);
   ~TGeaTrack(){ Clear(); }
 
   TGeaEvent *mParentEvent; //!< Transient pointer to parent event

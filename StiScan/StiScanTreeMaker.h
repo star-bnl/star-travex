@@ -8,7 +8,7 @@ class StiScanTreeMaker : public StiTreeMaker
 {
 public:
 
-   StiScanTreeMaker(const std::string name="StiScanTreeMaker");
+   explicit StiScanTreeMaker(const std::string name="StiScanTreeMaker");
    virtual Int_t Make();
 
 private:

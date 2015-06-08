@@ -17,7 +17,7 @@ class TStiKalmanTrack : public TObject
 public:
 
    TStiKalmanTrack();
-   TStiKalmanTrack(TStiEvent* event);
+   explicit TStiKalmanTrack(TStiEvent* event);
    TStiKalmanTrack(const StiKalmanTrack& stiKTrack, TStiEvent* event=nullptr);
    const TStiEvent* GetParentEvent() const { return fEvent; }
    std::pair<std::set<TStiHit>::iterator, bool> AddToParentEvent(const TStiHit& stiHit);
