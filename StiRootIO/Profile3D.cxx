@@ -137,8 +137,8 @@ Profile2D *Profile3D::DoProjectProfile2D(const char* name, const char * title, T
    if (useWeights) p2->Sumw2();
 
    // make projection in a 3D first
-   H3D * h3dW = (H3D*) ProjectionXYZ("h3temp-W","W");
-   H3D * h3dN = (H3D*) ProjectionXYZ("h3temp-N","B");
+   H3D * h3dW = static_cast<H3D*>(ProjectionXYZ("h3temp-W","W"));
+   H3D * h3dN = static_cast<H3D*>(ProjectionXYZ("h3temp-N","B"));
 
    h3dW->SetDirectory(0); h3dN->SetDirectory(0);
 
