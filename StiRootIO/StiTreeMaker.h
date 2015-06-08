@@ -14,7 +14,7 @@ class StiTreeMaker : public StMaker
 {
 public:
 
-   StiTreeMaker(const std::string name="StiTreeMaker", const std::string suffix="stitree");
+   StiTreeMaker(const std::string &name="StiTreeMaker", const std::string &suffix="stitree");
    virtual ~StiTreeMaker();
    virtual Int_t Init();
    virtual Int_t Make() = 0;

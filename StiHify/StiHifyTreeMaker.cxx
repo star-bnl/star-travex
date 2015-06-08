@@ -13,7 +13,7 @@
 ClassImp(StiHifyTreeMaker)
 
 
-StiHifyTreeMaker::StiHifyTreeMaker(const std::string name) : StiTreeMaker(name, "stihify")
+StiHifyTreeMaker::StiHifyTreeMaker(const std::string &name) : StiTreeMaker(name, "stihify")
 {
 }
 

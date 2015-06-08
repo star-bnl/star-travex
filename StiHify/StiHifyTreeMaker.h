@@ -10,7 +10,7 @@ class StiHifyTreeMaker : public StiTreeMaker
 {
 public:
 
-   explicit StiHifyTreeMaker(const std::string name="StiHifyTreeMaker");
+   explicit StiHifyTreeMaker(const std::string &name="StiHifyTreeMaker");
    virtual Int_t Make();
 
 private:
