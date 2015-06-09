@@ -43,18 +43,22 @@ if (file_exists($info_file))
 <tr>
    <th>Geant Simulation
    <th>Sti Reconstruction
+   <th>Relative Ratio: (Sti-Geant)/Geant
 
 <tr>
    <td><?php print $gP->img("gea/hELossVsXVsYVsZ_pyx", 800); ?>
    <td><?php print $gP->img("sti_trk/hELossVsXVsYVsZ_pyx", 800); ?>
+   <td><?php print $gP->img("sti_gea_ratio/hELossVsXVsYVsZ_pyx", 800); ?>
 
 <tr>
    <td><?php print $gP->img("gea/hELossVsPhiVsRVsZ_pyx", 800); ?>
    <td><?php print $gP->img("sti_trk/hELossVsPhiVsRVsZ_pyx", 800); ?>
+   <td><?php print $gP->img("sti_gea_ratio/hELossVsPhiVsRVsZ_pyx", 800); ?>
 
 <tr>
    <td><?php print $gP->img("gea/hELossVsPhiVsRVsZ_pyx_px", 800); ?>
    <td><?php print $gP->img("sti_trk/hELossVsPhiVsRVsZ_pyx_px", 800); ?>
+   <td><?php print $gP->img("sti_gea_ratio/hELossVsPhiVsRVsZ_pyx_px", 800); ?>
 
 </table>
 
