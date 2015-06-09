@@ -30,6 +30,10 @@ Contact
 &nbsp;
 &nbsp;
 <a href="<?=STIHIFY_BASE_URL?>" class="s120">stihify</a>
+&nbsp;
+&nbsp;
+&nbsp;
+<a href="https://github.com/plexoos/star-sti-tools" class="s120">Source code</a>
 
 </div>
 
