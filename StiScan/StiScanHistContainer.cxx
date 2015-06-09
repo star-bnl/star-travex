@@ -76,7 +76,7 @@ void StiScanHistContainer::BookHists()
    mHs["hELossVsZVsR"]     = h = new TProfile2D("hELossVsZVsR", " ; z, cm; r, cm; Energy Losses in Select Volumes, keV", nZBins, mNodeZMin, mNodeZMax, nRBins, mNodeRMin, mNodeRMax);
    h->SetOption("colz");
 
-   mHs["hELossVsPhiVsR"]   = h = new Profile2D("hELossVsPhiVsR", " ; #phi, rad; r, cm; Energy Losses in Select Volumes, keV", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, "colz");
+   mHs["hELossVsPhiVsR"]   = new Profile2D("hELossVsPhiVsR", " ; #phi, rad; r, cm; Energy Losses in Select Volumes, keV", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, "colz");
 
    mHs["hNStepsVsPhiVsRVsZ"] = hNStepsVsPhiVsRVsZ =
       new Profile3D("hNStepsVsPhiVsRVsZ", "Num. of Steps per Track ; #phi, rad; r, cm; z, cm", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);

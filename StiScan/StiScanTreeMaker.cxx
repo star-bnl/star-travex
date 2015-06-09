@@ -20,7 +20,7 @@ StiScanTreeMaker::StiScanTreeMaker(const std::string &name) : StiTreeMaker(name,
 void StiScanTreeMaker::SetEventTree()
 {
    fEvent = new StiScanEvent();
-   TBranch *branch = fTree->Branch("e.", "StiScanEvent", &fEvent, 64000, 99);
+   fTree->Branch("e.", "StiScanEvent", &fEvent, 64000, 99);
 }
 
 
