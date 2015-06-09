@@ -11,6 +11,19 @@ include_once(BASE_DIR."/common/head.php");
 <h1>Stiscan Results</h1>
 
 
+<h2 class="colsep">stiscan_1.20</h2>
+
+<p>z = -5 cm
+
+<ul>
+   <li><a href="plots.php?pfx=stiscan_1.20/volumes_hft_sensitive">HFT Sensitive Layers</a>
+   <li><a href="plots.php?pfx=stiscan_1.20/volumes_pxl">PXL</a>
+   <li><a href="plots.php?pfx=stiscan_1.20/volumes_ist">IST</a>
+   <li><a href="plots.php?pfx=stiscan_1.20/volumes_sst">SST</a>
+   <li><a href="plots.php?pfx=stiscan_1.20/volumes_beam_pipe">Beam pipe</a>
+</ul>
+
+
 <h2 class="colsep">stiscan_1.17 (Sti code as of 2015-02-10) </h2>
 
 <p>z = +3 cm
