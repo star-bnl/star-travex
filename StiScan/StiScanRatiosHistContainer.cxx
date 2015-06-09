@@ -18,6 +18,8 @@ void StiScanRatiosHistContainer::CreateRatioHist(const TH1* hNumer, const TH1* h
 
    TH1* myRatio = static_cast<TH1*>(hNumer->Clone());
 
+   myRatio->SetOption("");
+
    // Take care of a special case when the objects are of TProfile2D class
    if ( hNumer->InheritsFrom("TProfile2D") && hDenom->InheritsFrom("TProfile2D") )
    {
