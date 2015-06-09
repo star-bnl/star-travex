@@ -56,6 +56,8 @@ void StiHistContainer::SaveAllAs(std::string prefix)
       float r, g, b;
 
       if (strstr(opts, "whit_zro")) {
+         hist->GetZaxis()->SetRangeUser(-1,1);
+         hist->SetContour(11);
          gPad->Update();
          TPaletteAxis *palette = (TPaletteAxis*) hist->GetListOfFunctions()->FindObject("palette");
          color = gROOT->GetColor( palette->GetValueColor(0) );
