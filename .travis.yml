@@ -1,0 +1,14 @@
+language: cpp
+compiler:
+  - gcc
+before_script:
+  - echo yes | sudo add-apt-repository ppa:marco89-7/root
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq libc6-dev-i386 root-system
+  - sudo apt-get install -qq libboost-dev libboost-filesystem-dev libboost-test-dev
+  - mkdir build
+  - cd build
+  - cmake ..
+script:
+  - make
+  - ./stiscan --help
