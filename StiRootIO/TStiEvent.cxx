@@ -90,6 +90,14 @@ EReturnCodes TStiEvent::PostFill()
 
 void TStiEvent::Print(Option_t *opt) const
 {
+   std::cout << "TStiEvent::Print(" << *opt << ")" << "\n"
+             << "Num. of tracks: " << fTStiKalmanTracks.size() << "\n"
+             << "Num. of hits:   " << fTStiHits.size()
+             << std::endl;
+
+   if (string(opt).find("all") == std::string::npos)
+      return;
+
    for (auto iTStiKTrack = fTStiKalmanTracks.begin(); iTStiKTrack != fTStiKalmanTracks.end(); ++iTStiKTrack) {
       iTStiKTrack->Print();
    }
