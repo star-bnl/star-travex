@@ -12,6 +12,8 @@ public:
    StiHifyEvent();
    StiHifyEvent(StDetectorId detGroupId, bool detActiveOnly);
 
+   virtual EReturnCodes Fill(const StiTrackContainer &stiTrackContainer);
+
    ClassDef(StiHifyEvent, 1)
 };
 

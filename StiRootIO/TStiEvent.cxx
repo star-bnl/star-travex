@@ -36,10 +36,6 @@ EReturnCodes TStiEvent::Fill(const StiTrackContainer &stiTrackContainer)
    {
       const StiKalmanTrack& stiKTrack = static_cast<const StiKalmanTrack&>(*stiTrack);
 
-      // This is where we'd like to apply the general QA on selected tracks
-      if (stiKTrack.getFitPointCount(kTpcId) > 30)
-         continue;
-
       if (fgDetGroupId == kMaxDetectorId)
       {
          // All tracks regardless of detector are accepted
