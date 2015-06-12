@@ -2,6 +2,7 @@
 #define TStiHit_h
 
 #include "TObject.h"
+#include "TVector3.h"
 
 #include "Sti/StiHit.h"
 #include "StEvent/StEnumerations.h"
