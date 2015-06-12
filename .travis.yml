@@ -4,7 +4,10 @@ compiler:
 before_script:
   - g++ --version
   - wget http://root.cern.ch/download/root_v5.34.30.Linux-ubuntu12-x86_64-gcc4.6.tar.gz -O /tmp/root_v5.34.30.tar.gz
-  - tar -xzvf /tmp/root_v5.34.30.tar.gz
+  - tar -xzf /tmp/root_v5.34.30.tar.gz
   - source ./root/bin/thisroot.sh
   - root-config --libs
   - root-config --cflags
+branches:
+  only:
+    - ds-travis
