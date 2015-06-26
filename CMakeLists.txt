@@ -45,52 +45,37 @@ if(NOT ROOT_FOUND)
 endif()
 
 # Some external files on which this project depends
-set( STI_TOOLS_EXTERNAL_FILES_1
-	$ENV{STAR}/asps/rexe/TGeant3/StarMC.h
-	$ENV{STAR}/asps/rexe/TGeant3/TGiant3.h
-	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/TrackingParameters.h
-	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/KalmanTrackFinderParameters.h
-	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/KalmanTrackFitterParameters.h
-
-	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/LocalTrackSeedFinder.h
-	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/HitError.h
-)
-
-set( STI_TOOLS_EXTERNAL_FILES_2
-	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/tables/St_TrackingParameters_Table.h
-	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/tables/St_KalmanTrackFinderParameters_Table.h
-	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/tables/St_KalmanTrackFitterParameters_Table.h
-
-	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/tables/St_LocalTrackSeedFinder_Table.h
-	$ENV{STAR}/.$ENV{STAR_HOST_SYS}/include/tables/St_HitError_Table.h
-)
-
-file(COPY ${STI_TOOLS_EXTERNAL_FILES_1} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/include)
-file(COPY ${STI_TOOLS_EXTERNAL_FILES_2} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/include/tables)
-file(COPY $ENV{STAR}/StRoot/St_geant_Maker/St_geant_Maker.h DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/include/St_geant_Maker)
+file(COPY asps/rexe/TGeant3/TGiant3.h asps/rexe/TGeant3/StarMC.h DESTINATION inc/)
 
 
 include_directories(
 	${Boost_INCLUDE_DIR}
 	${ROOT_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}
-	${CMAKE_CURRENT_BINARY_DIR}
-	${CMAKE_CURRENT_BINARY_DIR}/include
-	contrib
-	contrib/star-sti
-	contrib/star-stevent
-	contrib/star-stevent/StEvent
+	${CMAKE_CURRENT_BINARY_DIR}/inc
 	contrib/star-base
-	contrib/star-base/St_base
-	contrib/star-base/Star2Root
-	contrib/star-base/StarClassLibrary
-	contrib/star-base/StChain
-	contrib/star-stdb
 	contrib/star-bfchain
+	contrib/star-daq
+	contrib/star-db-calibrations
+	contrib/star-emc
+	contrib/star-geant
+	contrib/star-hbt
+	contrib/star-ist
+	contrib/star-pxl
+	contrib/star-RTS
+	contrib/star-ssd
+	contrib/star-stdb
+	contrib/star-stevent
+	contrib/star-sti
+	contrib/star-svt
+	contrib/star-tables
+	contrib/star-tof
+	contrib/star-tpc
+	contrib/star-vertex
 )
 
 add_subdirectory(contrib/star-base)
-add_subdirectory(contrib/star-bfchain/StBFChain)
+add_subdirectory(contrib/star-bfchain)
 add_subdirectory(contrib/star-sti)
 
 add_subdirectory(StiRootIO)
@@ -109,7 +94,7 @@ link_directories(
 )
 
 
-configure_file(src-tools/config.h.in src-tools/config.h)
+configure_file(src-tools/config.h.in inc/src-tools/config.h)
 
 add_executable(stiscan src-tools/stiscan.cc)
 add_executable(stihify src-tools/stihify.cc)
