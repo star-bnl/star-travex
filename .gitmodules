@@ -18,3 +18,42 @@
 [submodule "contrib/star-stdb"]
 	path = contrib/star-stdb
 	url = https://github.com/star-bnl/star-stdb.git
+[submodule "contrib/star-tables"]
+	path = contrib/star-tables
+	url = git@github.com:star-bnl/star-tables.git
+[submodule "contrib/star-geant"]
+	path = contrib/star-geant
+	url = git@github.com:star-bnl/star-geant.git
+[submodule "contrib/star-daq"]
+	path = contrib/star-daq
+	url = git@github.com:star-bnl/star-daq.git
+[submodule "contrib/star-tof"]
+	path = contrib/star-tof
+	url = git@github.com:star-bnl/star-tof.git
+[submodule "contrib/star-svt"]
+	path = contrib/star-svt
+	url = git@github.com:star-bnl/star-svt.git
+[submodule "contrib/star-RTS"]
+	path = contrib/star-RTS
+	url = git@github.com:star-bnl/star-RTS.git
+[submodule "contrib/star-tpc"]
+	path = contrib/star-tpc
+	url = git@github.com:star-bnl/star-tpc.git
+[submodule "contrib/star-ist"]
+	path = contrib/star-ist
+	url = git@github.com:star-bnl/star-ist.git
+[submodule "contrib/star-pxl"]
+	path = contrib/star-pxl
+	url = git@github.com:star-bnl/star-pxl.git
+[submodule "contrib/star-ssd"]
+	path = contrib/star-ssd
+	url = git@github.com:star-bnl/star-ssd.git
+[submodule "contrib/star-emc"]
+	path = contrib/star-emc
+	url = git@github.com:star-bnl/star-emc.git
+[submodule "contrib/star-vertex"]
+	path = contrib/star-vertex
+	url = git@github.com:star-bnl/star-vertex.git
+[submodule "contrib/star-hbt"]
+	path = contrib/star-hbt
+	url = git@github.com:star-bnl/star-hbt.git
