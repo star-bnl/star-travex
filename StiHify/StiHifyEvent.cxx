@@ -29,9 +29,11 @@ EReturnCodes StiHifyEvent::Fill(const StiTrackContainer &stiTrackContainer)
    };
 
    StiTrackContainer filtered(stiTrackContainer.getName(), stiTrackContainer.getDescription());
-   filtered.reserve(stiTrackContainer.size());
+   filtered.resize(stiTrackContainer.size());
 
-   std::copy_if(stiTrackContainer.begin(), stiTrackContainer.end(), filtered.begin(), acceptTrack);
+   auto new_end = std::copy_if(stiTrackContainer.begin(), stiTrackContainer.end(), filtered.begin(), acceptTrack);
+   // Shrink container to new size
+   filtered.resize(std::distance(filtered.begin(), new_end));
 
    return TStiEvent::Fill(filtered);
 }
