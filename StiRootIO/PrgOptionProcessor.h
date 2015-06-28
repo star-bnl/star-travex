@@ -26,6 +26,7 @@ public:
 
    PrgOptionProcessor();
    PrgOptionProcessor(int argc, char **argv, const std::string& stiTreeName="t");
+   ~PrgOptionProcessor();
 
    std::string  GetStiTreeInFile() const { return fInFilePath; }
    const std::set<std::string>&  GetVolumeList() const { return fVolumeList; }

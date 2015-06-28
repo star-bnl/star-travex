@@ -26,6 +26,12 @@ PrgOptionProcessor::PrgOptionProcessor(int argc, char **argv, const std::string&
 }
 
 
+PrgOptionProcessor::~PrgOptionProcessor()
+{
+   delete fStiTChain; fStiTChain = nullptr;
+}
+
+
 void PrgOptionProcessor::InitOptions()
 {
    // Declare supported options
