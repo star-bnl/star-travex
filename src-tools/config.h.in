@@ -6,7 +6,7 @@
 
 namespace stitools {
 
-std::string gStiToolsMacrosPath("${CMAKE_CURRENT_SOURCE_DIR}/macros");
+const std::string gStiToolsMacrosPath("${CMAKE_CURRENT_SOURCE_DIR}/macros");
 
 }
 
