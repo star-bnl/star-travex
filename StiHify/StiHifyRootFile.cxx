@@ -47,10 +47,8 @@ void StiHifyRootFile::FillDerivedHists()
    StiHifyRatiosHistContainer *ratios;
    mDirs["sti_hit_ratio"] = ratios = new StiHifyRatiosHistContainer("sti_hit_ratio", this);
 
-   TH1* hitsAll
-      = static_cast<StiHifyHistContainer*>(mDirs["sti_hit_closest"])->GetHists().find("hActiveLayerCounts")->second;
-   TH1* hitsAcc
-      = static_cast<StiHifyHistContainer*>(mDirs["sti_hit_accepted"])->GetHists().find("hActiveLayerCounts")->second;
+   const TH1* hitsAll = static_cast<const StiHistContainer*>(mDirs["sti_hit_closest"])->FindHist("hActiveLayerCounts");
+   const TH1* hitsAcc = static_cast<const StiHistContainer*>(mDirs["sti_hit_accepted"])->FindHist("hActiveLayerCounts");
 
    ratios->CreateRatioHist(hitsAcc, hitsAll);
 }
