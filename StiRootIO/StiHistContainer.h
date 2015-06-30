@@ -24,12 +24,14 @@ public:
    ~StiHistContainer();
 
    const HistMap& GetHists() const { return mHs; }
+   const TH1*     FindHist(const std::string& hist_name) const;
    virtual void FillDerivedHists() = 0;
    void SaveAllAs(std::string prefix="./");
 
 protected:
 
    virtual void BookHists() = 0;
+   TH1* FindHist(const std::string& hist_name);
 
    HistMap mHs;
 };

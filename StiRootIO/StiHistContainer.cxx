@@ -22,6 +22,20 @@ StiHistContainer::~StiHistContainer()
 }
 
 
+const TH1* StiHistContainer::FindHist(const std::string& hist_name) const
+{
+   auto iter = mHs.find(hist_name);
+   return ( iter != mHs.end() ) ? iter->second : nullptr;
+}
+
+
+TH1* StiHistContainer::FindHist(const std::string& hist_name)
+{
+   auto iter = mHs.find(hist_name);
+   return ( iter != mHs.end() ) ? iter->second : nullptr;
+}
+
+
 void StiHistContainer::SaveAllAs(std::string prefix)
 {
    TCanvas canvas("canvas", "canvas", 1200, 600);
