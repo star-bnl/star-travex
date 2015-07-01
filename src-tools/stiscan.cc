@@ -19,7 +19,6 @@ TGeoManager *gGeoManager = nullptr;
 
 
 void loop_over_tree(StiScanPrgOptions &prgOpts);
-void make_geometry(std::string geoTag="y2014a");
 void create_volume_hash_map(TGeoNavigator &geoNav, Hash2StringMap &hash2PathMap);
 
 
@@ -32,7 +31,10 @@ int main(int argc, char **argv)
    prgOpts.ProcessOptions();
 
    // Initialize gGeoManager with geometry from a ROOT file
-   make_geometry("y2014a");
+   TGeoManager::Import(prgOpts.PathToGeometryFile().c_str());
+
+   if (!gGeoManager)
+      Fatal(__PRETTY_FUNCTION__, "Cannot load TGeo geometry from %s", prgOpts.PathToGeometryFile().c_str());
 
    gGeoManager->cd("HALL_1/CAVE_1");
    TGeoNavigator* geoNav = gGeoManager->GetCurrentNavigator();
@@ -100,19 +102,6 @@ void loop_over_tree(StiScanPrgOptions &prgOpts)
    outRootFile.FillDerivedHists();
    outRootFile.Write();
    outRootFile.Close();
-}
-
-
-void make_geometry(std::string geoTag)
-{
-   std::string myGeomTag("y2014a");
-
-   TGeoManager::Import( Form("%s.root", myGeomTag.c_str()) );
-
-   if (!gGeoManager) {
-      Error("make_geometry", "No gGeoManager found");
-      exit(EXIT_FAILURE);
-   }
 }
 
 
