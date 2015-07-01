@@ -28,7 +28,7 @@ public:
    PrgOptionProcessor(int argc, char **argv, const std::string& stiTreeName="t");
    ~PrgOptionProcessor();
 
-   std::string  GetStiTreeInFile() const { return fInFilePath; }
+   std::string  PathToStiTreeFile() const { return fInFilePath; }
    std::string  PathToGeometryFile() const { return fGeomFilePath; }
    const std::set<std::string>&  GetVolumeList() const { return fVolumeList; }
    unsigned int GetMaxEventsUser() const { return fMaxEventsUser; }
