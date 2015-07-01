@@ -15,6 +15,7 @@ PrgOptionProcessor::PrgOptionProcessor() : PrgOptionProcessor(0, nullptr) { }
 PrgOptionProcessor::PrgOptionProcessor(int argc, char **argv, const std::string& stiTreeName) : TObject(),
    fArgc(argc), fArgv(argv),
    fOptions("Program options", 120), fOptionsValues(), fInFilePath(),
+   fGeomFilePath(),
    fOutPrefix("./"),
    fVolumeListFile(),
    fVolumePattern(),
@@ -39,6 +40,7 @@ void PrgOptionProcessor::InitOptions()
       ("help,h",              "Print help message")
       ("stitree-file,f",       po::value<std::string>(&fInFilePath), "Full path to a ROOT file containing an Sti TTree " \
                               "OR a text file with a list of such ROOT files")
+      ("geom-file",           po::value<std::string>(&fGeomFilePath)->default_value("y2014a.root"), "Full path to a ROOT file with TGeo geometry")
       ("volume-pattern,p",    po::value<std::string>(&fVolumePattern)->implicit_value("process_all_volumes"),
                               "A regex pattern to match Sti/TGeo volume names. If specified without a value all volumes will be matched")
       ("volume-pattern-flist,l",   po::value<std::string>(&fVolumeListFile), "Full path to a text file with regex patterns to match Sti/TGeo volume names")
@@ -104,6 +106,17 @@ void PrgOptionProcessor::VerifyOptions()
    } else {
       Fatal("VerifyOptions", "Input file not set");
    }
+
+
+   if (fOptionsValues.count("geom-file"))
+   {
+      std::string pathToGeomFile = boost::any_cast<std::string>(fOptionsValues["geom-file"].value());
+      std::cout << "File with TGeo geometry: " << pathToGeomFile << std::endl;
+
+      if ( !std::ifstream(pathToGeomFile.c_str()).good() )
+         Fatal("VerifyOptions", "File \"%s\" does not exist", pathToGeomFile.c_str());
+   } else
+      Fatal("VerifyOptions", "Geometry file not set");
 
 
    if (fOptionsValues.count("volume-pattern-flist"))
