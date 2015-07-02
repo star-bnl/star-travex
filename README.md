@@ -36,6 +36,7 @@ Compile and build the tools:
 
     starver dev
     cd star-sti-tools/
+    git clone --depth=1 --branch=ds-master https://github.com/star-bnl/star-db-calibrations.git contrib/star-db-calibrations
     git submodule update --init --depth=1
     mkdir build && cd build
     # See "Remark about C++11 at STAR" below
