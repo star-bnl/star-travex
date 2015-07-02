@@ -111,6 +111,20 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
    }
 
    hActiveLayerCounts->Fill(trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y());
+
+
+   std::string histName("hActiveLayerCounts_" + trkNode.GetVolumeName());
+
+   TH1* hActiveLayerCounts_det = FindHist(histName);
+
+   if (!hActiveLayerCounts_det) {
+      this->cd();
+      mHs[histName] = hActiveLayerCounts_det
+         = new TH2F(histName.c_str(), " ; Track Proj. Local Z, cm; Local Y, cm; Num. of Track Nodes", 25, -25, 25, 10, -2, 8);
+      hActiveLayerCounts_det->SetOption("colz");
+   }
+
+   hActiveLayerCounts_det->Fill( trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y() );
 }
 
 
