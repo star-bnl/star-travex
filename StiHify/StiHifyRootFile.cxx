@@ -1,4 +1,5 @@
 #include <boost/filesystem.hpp>
+#include <boost/regex.hpp>
 
 #include "StiHifyRootFile.h"
 
@@ -47,8 +48,25 @@ void StiHifyRootFile::FillDerivedHists()
    StiHifyRatiosHistContainer *ratios;
    mDirs["sti_hit_ratio"] = ratios = new StiHifyRatiosHistContainer("sti_hit_ratio", this);
 
-   const TH1* hitsAll = static_cast<const StiHistContainer*>(mDirs["sti_hit_closest"])->FindHist("hActiveLayerCounts");
-   const TH1* hitsAcc = static_cast<const StiHistContainer*>(mDirs["sti_hit_accepted"])->FindHist("hActiveLayerCounts");
 
-   ratios->CreateRatioHist(hitsAcc, hitsAll);
+   const HistMap& hists = mDirs["sti_hit_closest"]->GetHists();
+
+   for (const auto& hist_iter : hists)
+   {
+      std::string hist_name = hist_iter.first;
+
+      bool matched = boost::regex_match(hist_name, boost::regex("^hActiveLayerCounts.*$"));
+      Info(__FUNCTION__, "hist name: %s, %d", hist_name.c_str(), matched);
+
+      if (!matched) continue;
+
+      const StiHistContainer& hitsDenom(*mDirs["sti_hit_closest"]);
+      const StiHistContainer& hitsNumer(*mDirs["sti_hit_accepted"]);
+
+      const TH1* hitsAll = hitsDenom.FindHist(hist_name);
+      const TH1* hitsAcc = hitsNumer.FindHist(hist_name);
+
+      ratios->CreateRatioHist(hitsAcc, hitsAll);
+   }
+
 }
