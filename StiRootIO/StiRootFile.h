@@ -4,15 +4,13 @@
 #include <map>
 #include <string>
 
-#include "TDirectoryFile.h"
 #include "TFile.h"
 
 #include "StiRootIO/PrgOptionProcessor.h"
+#include "StiRootIO/StiHistContainer.h"
 
 
-typedef std::map<std::string, TDirectoryFile*>                   TDirMap;
-typedef std::map<std::string, TDirectoryFile*>::iterator         TDirMapIter;
-typedef std::map<std::string, TDirectoryFile*>::const_iterator   TDirMapConstIter;
+typedef std::map<std::string, StiHistContainer*>   StiHistContainers;
 
 
 class StiRootFile : public TFile
@@ -30,7 +28,7 @@ public:
 
 protected:
 
-   TDirMap mDirs;   ///< A string-to-TDirectoryFile map for convenient access to enclosed directories
+   StiHistContainers mDirs;   ///< A string-to-StiHistContainer map for convenient access to enclosed directories
    PrgOptionProcessor& fPrgOptions; ///< Command line arguments and options requested by the user
 };
 

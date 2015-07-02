@@ -25,10 +25,10 @@ StiRootFile::StiRootFile(PrgOptionProcessor& prgOpts, Option_t *option, const ch
 
 void StiRootFile::FillDerivedHists()
 {
-   for (const std::pair<std::string, TDirectoryFile*>& iDir : mDirs)
+   for (const std::pair<std::string, StiHistContainer*>& iDir : mDirs)
    {
       std::string  dirName = iDir.first;
-      StiHistContainer *container = static_cast<StiHistContainer*>(iDir.second);
+      StiHistContainer *container = iDir.second;
 
       if (!container) {
          Error("FillDerivedHists", "No container/directory found for key %s. Skipping...", dirName.c_str());
@@ -75,10 +75,10 @@ void StiRootFile::SaveAllAs(std::string prefix)
    else
       Warning("SaveAllAs", "Perhaps dir already exists: %s", prefix.c_str());
 
-   for (const std::pair<std::string, TDirectoryFile*>& iDir : mDirs)
+   for (const std::pair<std::string, StiHistContainer*>& iDir : mDirs)
    {
       std::string  dirName = iDir.first;
-      StiHistContainer *container = static_cast<StiHistContainer*>(iDir.second);
+      StiHistContainer *container = iDir.second;
 
       if (!container) {
          Error("SaveAllAs", "No container/directory found for key %s. Skipping...", dirName.c_str());
