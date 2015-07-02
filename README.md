@@ -36,7 +36,7 @@ Compile and build the tools:
 
     starver dev
     cd star-sti-tools/
-    git submodule update --init --depth=20
+    git submodule update --init --depth=1
     mkdir build && cd build
     # See "Remark about C++11 at STAR" below
     cmake -DCMAKE_INSTALL_PREFIX=./ ../
@@ -63,7 +63,7 @@ The make tool will place the libraries in the local `.slXX_gccXXX` directory.
     starver dev
     export LD_LIBRARY_PATH+=":/afs/rhic.bnl.gov/rcassoft/x8664_sl6/gcc482/lib"
     git clone https://github.com/plexoos/star-sti-tools.git && cd star-sti-tools
-    git submodule update --init --depth=20
+    git submodule update --init --depth=1
     mkdir -p build-cons/StRoot && cd build-cons/StRoot
     ln -s ../../contrib/star-sti/Sti* ../../Sti* ../../GeaRootIO .
     cd ..
