@@ -34,7 +34,6 @@ file(COPY asps/rexe/TGeant3/TGiant3.h asps/rexe/TGeant3/StarMC.h DESTINATION inc
 
 
 include_directories(
-	${Boost_INCLUDE_DIR}
 	${ROOT_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR}/inc
