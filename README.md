@@ -35,13 +35,12 @@ Checkout the code using one of the following commands:
 
 Compile and build the tools:
 
-    starver dev
     cd star-sti-tools/
     git clone --depth=1 --branch=ds-master https://github.com/star-bnl/star-db-calibrations.git contrib/star-db-calibrations
     git submodule update --init --depth=1
     mkdir build && cd build
     # See "Remark about C++11 at STAR" below
-    cmake -DCMAKE_INSTALL_PREFIX="./.$STAR_HOST_SYS/" ../
+    cmake -DCMAKE_INSTALL_PREFIX=./ -DCMAKE_CXX_FLAGS="-m32 -std=c++0x" -DBOOST_ROOT=$OPTSTAR ../
     make && make install
 
 *Remark about C++11 at STAR:* Our code extensively uses the features from the
