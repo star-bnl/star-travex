@@ -13,20 +13,13 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
 project(star-sti-tools)
 
-# Find boost headers and library locations
-set(Boost_USE_MULTITHREADED OFF)
-set(BOOST_INCLUDEDIR $ENV{OPTSTAR}/include)
-set(BOOST_LIBRARYDIR $ENV{OPTSTAR}/lib)
 
 # Add to path in order to pick up the FindXXX.cmake files included in this project
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}")
 
 # This project depends on Boost
-find_package( Boost 1.54.0 COMPONENTS program_options regex filesystem)
-
-if(NOT Boost_FOUND)
-   message(FATAL_ERROR "Fatal error: Boost (version >= 1.54.0) not found in standard location")
-endif()
+set(Boost_USE_MULTITHREADED OFF)
+find_package( Boost 1.54.0 REQUIRED COMPONENTS program_options regex filesystem)
 
 # This project depends on ROOT
 find_package(ROOT)
@@ -34,6 +27,8 @@ find_package(ROOT)
 if(NOT ROOT_FOUND)
    message(FATAL_ERROR "Fatal error: ROOT package not found")
 endif()
+
+add_definitions(-D__ROOT__)
 
 # Some external files on which this project depends
 file(COPY asps/rexe/TGeant3/TGiant3.h asps/rexe/TGeant3/StarMC.h DESTINATION inc/)
