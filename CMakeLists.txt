@@ -13,15 +13,6 @@ cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
 project(star-sti-tools)
 
-option(FORCE_32BIT "compile 32-bit application" ON)
-option(Boost_NO_BOOST_CMAKE "Due to bug in boost cmake files in Scientific Linux" ON)
-
-if(FORCE_32BIT)
-	set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS OFF)
-	set(CMAKE_CXX_FLAGS "-m32 -std=c++0x")
-endif()
-
-
 # Find boost headers and library locations
 set(Boost_USE_MULTITHREADED OFF)
 set(BOOST_INCLUDEDIR $ENV{OPTSTAR}/include)
@@ -109,7 +100,6 @@ target_link_libraries(stihify
 	St_base StChain StarRoot StarClassLibrary StiUtilities Sti StiRootIO StiScan StiHify
 )
 
-if(FORCE_32BIT)
-	set_target_properties(stiscan PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32 -Wl,--warn-unresolved-symbols")
-	set_target_properties(stihify PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32 -Wl,--warn-unresolved-symbols")
-endif()
+
+set_target_properties(stiscan PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
+set_target_properties(stihify PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
