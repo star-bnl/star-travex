@@ -2,12 +2,33 @@ language: cpp
 compiler:
   - gcc
 before_script:
+  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+  - sudo apt-get -qq update
+  - sudo apt-get -qq install g++-4.8-multilib
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
   - g++ --version
-  - wget http://root.cern.ch/download/root_v5.34.30.Linux-ubuntu12-x86_64-gcc4.6.tar.gz -O /tmp/root_v5.34.30.tar.gz
-  - tar -xzf /tmp/root_v5.34.30.tar.gz
+  - sudo add-apt-repository -y ppa:boost-latest/ppa
+  - sudo apt-get -qq update
+  - sudo apt-get install libboost-regex1.54-dev libboost-filesystem1.54-dev libboost-program-options1.54-dev
+  - wget http://root.cern.ch/download/root_v5.34.30.source.tar.gz -P /tmp/
+  - tar -xzf /tmp/root_v5.34.30.source.tar.gz
+  - mv root root-src
+  - wget http://root.cern.ch/download/root_v5.34.30.Linux-ubuntu12-x86_64-gcc4.6.tar.gz -P /tmp/
+  - tar -xzf /tmp/root_v5.34.30.Linux-ubuntu12-x86_64-gcc4.6.tar.gz
   - source ./root/bin/thisroot.sh
   - root-config --libs
   - root-config --cflags
+  - rsync -auv root-src/math/mathmore/inc/Math root/include/
 branches:
   only:
     - ds-travis
+script:
+  - mkdir build/ && cd build/
+  - pwd
+  - cmake -DCMAKE_CXX_FLAGS=-std=c++0x ../
+  - make -j4
+  - sudo make install
+  - ls -la
+  - ls -la inc/
+  - ./stiscan --help
+  - ./stihify --help
