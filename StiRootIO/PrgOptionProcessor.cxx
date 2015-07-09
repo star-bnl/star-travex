@@ -88,7 +88,7 @@ void PrgOptionProcessor::VerifyOptions()
    if (fOptionsValues.count("help"))
    {
       std::cout << fOptions << std::endl;
-      exit(EXIT_FAILURE);
+      exit(EXIT_SUCCESS);
    }
 
    Info("VerifyOptions", "User provided options:");
