@@ -164,13 +164,13 @@ add_executable(stiscan src-tools/stiscan.cc)
 add_executable(stihify src-tools/stihify.cc)
 
 target_link_libraries(stiscan
+	StiScan GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary
 	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table Geom
-	St_base StChain StarRoot StarClassLibrary StiUtilities Sti StiRootIO GeaRootIO StiScan
 )
 
 target_link_libraries(stihify
+	StiHify StiScan StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary
 	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table Geom
-	St_base StChain StarRoot StarClassLibrary StiUtilities Sti StiRootIO StiScan StiHify
 )
 
 
