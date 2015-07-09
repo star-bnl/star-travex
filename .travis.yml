@@ -19,9 +19,6 @@ before_script:
   - root-config --libs
   - root-config --cflags
   - rsync -auv root-src/math/mathmore/inc/Math root/include/
-branches:
-  only:
-    - ds-travis
 script:
   - mkdir build/ && cd build/
   - pwd
