@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/plexoos/star-sti-tools.svg?branch=master)](https://travis-ci.org/plexoos/star-sti-tools)
+
 This project offers a number of tools to support reconstruction and analysis of
 the data collected by the STAR experiment at RHIC. The main objective is to
 evaluate and validate the reconstruction of charged particle tracks measured by
@@ -20,9 +22,8 @@ The libraries and tools of star-sti-tools package significantly depend on ROOT
 
 In the following we assume that the user environment includes the standard shell
 variables available for a typical user account of the STAR experiment. The
-following environment variables should be set:
+following environment variables can be set if needed:
 
-    $STAR
     $STAR_LIB        # Used in supple/starsim_zslice_*.kumac
     $OPTSTAR
     $STAR_HOST_SYS
@@ -40,9 +41,8 @@ Compile and build the tools:
     git submodule update --init --depth=1
     mkdir build && cd build
     # See "Remark about C++11 at STAR" below
-    cmake -DCMAKE_INSTALL_PREFIX=./ ../
-    make -j
-    make install
+    cmake -DCMAKE_INSTALL_PREFIX="./.$STAR_HOST_SYS/" ../
+    make && make install
 
 *Remark about C++11 at STAR:* Our code extensively uses the features from the
 C++11 standard and, therefore, a compiler with C++11 support is required to
@@ -50,10 +50,12 @@ compile it. As of May 2015 the default compiler in the STAR environment is
 gcc-4.4.7 does not provide full support of C++11 but a newer version 4.8.2 is
 also available. To use it just provide the following options to cmake:
 
-    cmake -DCMAKE_CXX_COMPILER=/afs/rhic.bnl.gov/rcassoft/x8664_sl6/gcc482/bin/g++ -DCMAKE_INSTALL_PREFIX=./ ../
+    cmake -DCMAKE_CXX_COMPILER=/afs/rhic.bnl.gov/rcassoft/x8664_sl6/gcc482/bin/g++ \
+          -DCMAKE_INSTALL_PREFIX=".$STAR_HOST_SYS/" \
+          -DCMAKE_CXX_FLAGS="-m32 -std=c++0x" \
+          -DBOOST_ROOT=$OPTSTAR ../
     export LD_LIBRARY_PATH+=":/afs/rhic.bnl.gov/rcassoft/x8664_sl6/gcc482/lib"
-    make -j
-    make install
+    make && make install
 
 The make tool will place the libraries in the local `.slXX_gccXXX` directory.
 
