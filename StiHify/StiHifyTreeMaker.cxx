@@ -8,12 +8,14 @@
 #include "Sti/StiTrackContainer.h"
 #include "StiMaker/StiMaker.h"
 
+#include "StiRootIO/StiVolumeFilter.h"
 #include "StiHify/StiHifyEvent.h"
 
 ClassImp(StiHifyTreeMaker)
 
 
-StiHifyTreeMaker::StiHifyTreeMaker(const std::string &name) : StiTreeMaker(name, "stihify")
+StiHifyTreeMaker::StiHifyTreeMaker(const std::string &name) : StiTreeMaker(name, "stihify"),
+   fStiVolumeFilter(StiVolumeFilter::GetInstance())
 {
 }
 
@@ -21,7 +23,7 @@ StiHifyTreeMaker::StiHifyTreeMaker(const std::string &name) : StiTreeMaker(name,
 void StiHifyTreeMaker::SetEventTree()
 {
    // Pass detector Id to event to constrain type of track nodes to save in event
-   fEvent = new StiHifyEvent(kIstId, true);
+   fEvent = new StiHifyEvent(fStiVolumeFilter);
    fTree->Branch("e.", "StiHifyEvent", &fEvent, 64000, 99);
 }
 

@@ -1,12 +1,20 @@
 #include <algorithm>
 
+#include "StiRootIO/StiVolumeFilter.h"
 #include "StiHify/StiHifyEvent.h"
 #include "Sti/StiKalmanTrack.h"
 
 ClassImp(StiHifyEvent);
 
 
-StiHifyEvent::StiHifyEvent() : TStiEvent()
+StiHifyEvent::StiHifyEvent() : TStiEvent(),
+   fStiVolumeFilter(StiVolumeFilter::GetInstance())
+{
+}
+
+
+StiHifyEvent::StiHifyEvent(const StiVolumeFilter& stiVolumeFilter) : TStiEvent(),
+   fStiVolumeFilter(stiVolumeFilter)
 {
 }
 
@@ -15,7 +23,9 @@ StiHifyEvent::StiHifyEvent() : TStiEvent()
  * Constructs event in which track nodes will be constrained by the provided
  * detector Id.
  */
-StiHifyEvent::StiHifyEvent(StDetectorId detGroupId, bool detActiveOnly) : TStiEvent(detGroupId, detActiveOnly)
+StiHifyEvent::StiHifyEvent(StDetectorId detGroupId, bool detActiveOnly) :
+   TStiEvent(detGroupId, detActiveOnly),
+   fStiVolumeFilter(StiVolumeFilter::GetInstance())
 {
 }
 
