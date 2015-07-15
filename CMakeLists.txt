@@ -115,6 +115,7 @@ add_library(
 	StiRootIO/StiHistContainer.cxx
 	StiRootIO/StiRootFile.cxx
 	StiRootIO/StiTreeMaker.cxx
+	StiRootIO/StiVolumeFilter.cxx
 	StiRootIO/TStiEvent.cxx
 	StiRootIO/TStiHit.cxx
 	StiRootIO/TStiHitProxy.cxx
