@@ -15,6 +15,9 @@
 #include "StiRootIO/TStiHit.h"
 
 class StiVolumeFilter;
+class StiKalmanTrack;
+class StiKalmanTrackNode;
+
 
 class TStiEvent : public TObject
 {
@@ -23,6 +26,8 @@ public:
    TStiEvent();
    explicit TStiEvent(const StiVolumeFilter& stiVolumeFilter);
 
+   bool AcceptTrack(const StiKalmanTrack& track) const;
+   bool AcceptTrackNode(const StiKalmanTrackNode& node) const;
    virtual EReturnCodes  Fill(const StiTrackContainer &stiTrackContainer);
    virtual EReturnCodes  Fill(StiHitContainer &stiHitContainer);
    virtual EReturnCodes  PostFill();

@@ -24,6 +24,18 @@ TStiEvent::TStiEvent(const StiVolumeFilter& stiVolumeFilter) :
 }
 
 
+bool TStiEvent::AcceptTrack(const StiKalmanTrack& track) const
+{
+   return fStiVolumeFilter.AcceptTrack(track);
+}
+
+
+bool TStiEvent::AcceptTrackNode(const StiKalmanTrackNode& node) const
+{
+   return fStiVolumeFilter.AcceptTrackNode(node);
+}
+
+
 EReturnCodes TStiEvent::Fill(const StiTrackContainer &stiTrackContainer)
 {
    for (const StiTrack* stiTrack : stiTrackContainer)
@@ -57,7 +69,7 @@ EReturnCodes TStiEvent::Fill(const StiTrackContainer &stiTrackContainer)
 
 EReturnCodes TStiEvent::Fill(StiHitContainer &stiHitContainer)
 {
-   std::vector<StiHit*>& selectedHits = stiHitContainer.getHits(fgDetGroupId);
+   std::vector<StiHit*>& selectedHits = stiHitContainer.getHits(fStiVolumeFilter.GetDetGroupId());
 
    for (auto iStiHit = selectedHits.begin(); iStiHit != selectedHits.end(); ++iStiHit)
       InsertStiHit(**iStiHit);
