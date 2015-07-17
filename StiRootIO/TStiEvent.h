@@ -14,16 +14,14 @@
 #include "StiRootIO/TStiKalmanTrack.h"
 #include "StiRootIO/TStiHit.h"
 
+class StiVolumeFilter;
 
 class TStiEvent : public TObject
 {
 public:
 
-   static StDetectorId           fgDetGroupId;        //!< Detector group id used in this study
-   static bool                   fgDetActiveOnly;     //!< Another selection criteria to save nodes
-
    TStiEvent();
-   TStiEvent(StDetectorId detGroupId, bool detActiveOnly);
+   explicit TStiEvent(const StiVolumeFilter& stiVolumeFilter);
 
    virtual EReturnCodes  Fill(const StiTrackContainer &stiTrackContainer);
    virtual EReturnCodes  Fill(StiHitContainer &stiHitContainer);
@@ -36,6 +34,7 @@ public:
 
 protected:
 
+   const StiVolumeFilter&        fStiVolumeFilter;
    std::vector<TStiKalmanTrack>  fTStiKalmanTracks;   ///< A collection of all Sti tracks of interest in this event
    std::set<TStiHit>             fTStiHits;           ///< A collection of all Sti hits of interest in this event
 

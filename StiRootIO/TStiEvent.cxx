@@ -1,5 +1,6 @@
 #include "StiRootIO/TStiEvent.h"
 
+#include "StiRootIO/StiVolumeFilter.h"
 #include "St_base/Stypes.h"
 #include "Sti/StiTrack.h"
 #include "Sti/StiKalmanTrack.h"
@@ -7,26 +8,19 @@
 ClassImp(TStiEvent);
 
 
-/// By default, we set no constraints on tracks w.r.t. their association with
-/// a specific detector group
-StDetectorId TStiEvent::fgDetGroupId = kMaxDetectorId;
-bool TStiEvent::fgDetActiveOnly = false;
-
-
-TStiEvent::TStiEvent() : TObject(), fTStiKalmanTracks(), fTStiHits()
+TStiEvent::TStiEvent() : TObject(),
+   fStiVolumeFilter(StiVolumeFilter::GetInstance()),
+   fTStiKalmanTracks(),
+   fTStiHits()
 {
 }
 
 
-/**
- * Constructs event in which track nodes will be constrained by the provided
- * detector Id.
- */
-TStiEvent::TStiEvent(StDetectorId detGroupId, bool detActiveOnly) :
-   TStiEvent()
+TStiEvent::TStiEvent(const StiVolumeFilter& stiVolumeFilter) :
+   fStiVolumeFilter(stiVolumeFilter),
+   fTStiKalmanTracks(),
+   fTStiHits()
 {
-   fgDetGroupId = detGroupId;
-   fgDetActiveOnly = detActiveOnly;
 }
 
 
