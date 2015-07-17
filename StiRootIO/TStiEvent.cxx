@@ -42,24 +42,8 @@ EReturnCodes TStiEvent::Fill(const StiTrackContainer &stiTrackContainer)
    {
       const StiKalmanTrack& stiKTrack = static_cast<const StiKalmanTrack&>(*stiTrack);
 
-      if (fgDetGroupId == kMaxDetectorId)
-      {
-         // All tracks regardless of detector are accepted
+      if ( AcceptTrack(stiKTrack) ) {
          fTStiKalmanTracks.push_back( TStiKalmanTrack(stiKTrack, this) );
-         continue;
-
-      } else {
-         // Accept only tracks having a node associated with the given detector
-         for (const StiKalmanTrackNode& stiNode : stiKTrack)
-         {
-            StDetectorId stiNodeDetId = stiNode.getDetector() ?
-               static_cast<StDetectorId>( stiNode.getDetector()->getGroupId() ) : kUnknownId;
-
-            if (stiNodeDetId == fgDetGroupId) {
-               fTStiKalmanTracks.push_back( TStiKalmanTrack(stiKTrack, this) );
-               break;
-            }
-         }
       }
    }
 
