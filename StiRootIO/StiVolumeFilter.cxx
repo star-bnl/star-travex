@@ -1,5 +1,7 @@
 #include "StiRootIO/StiVolumeFilter.h"
 #include "TError.h"
+#include "Sti/StiKalmanTrack.h"
+#include "Sti/StiKalmanTrackNode.h"
 
 
 /**
@@ -33,20 +35,64 @@ StiVolumeFilter& StiVolumeFilter::GetInstance()
 }
 
 
-bool StiVolumeFilter::HasNodeAt(const StiKalmanTrack& stiKTrack, const boost::regex& volNamePattern)
+bool StiVolumeFilter::AcceptTrack(const StiKalmanTrack& track) const
 {
-   if (volNamePattern.empty()) return true;
+   return HasAcceptedNode(track);
+}
+
+
+bool StiVolumeFilter::AcceptTrackNode(const StiKalmanTrackNode& node) const
+{
+   // Always accept DCA nodes
+   if ( node.isDca() ) return true;
+
+   // Continue with a non-DCA node
+   // Always reject nodes without a proper detector
+   if ( !node.getDetector() ) return false;
+
+   // Non-DCA node with detector defined
+   std::string volumeName( node.getDetector()->getName() );
+
+   // Always reject nodes without a proper detector name
+   if ( volumeName.empty() ) return false;
+
+   // If no patterns defined check detectorGroupId and active det is not used but should be at some
+   // point...
+   if (fgVolumeSelectPatterns.empty())
+   {
+      StDetectorId stiNodeDetId = static_cast<StDetectorId>( node.getDetector()->getGroupId() );
+
+      if ( ( fgDetGroupId == stiNodeDetId || fgDetGroupId == kMaxDetectorId ) &&
+           ( (fgDetActiveOnly && node.getDetector()->isActive()) || !fgDetActiveOnly )
+         )
+      {
+         return true;
+      }
+
+      return false;
+   }
+
+   for (const auto& volNamePattern : fgVolumeSelectPatterns)
+   {
+      if ( boost::regex_match(volumeName, volNamePattern) ) return true;
+   }
+
+   return false;
+}
+
+
+bool StiVolumeFilter::HasAcceptedNode(const StiKalmanTrack& track) const
+{
+   // By convention return true if no patterns defined
+   if (fgVolumeSelectPatterns.empty()) return true;
 
    // Loop over track nodes
-   for (const StiKalmanTrackNode& stiNode : stiKTrack)
+   for (const StiKalmanTrackNode& node : track)
    {
-      if ( stiNode.isDca() || !stiNode.getDetector() ) continue;
+      // The decision to accept does not take into account DCA nodes
+      if ( node.isDca() ) continue;
 
-      std::string volumeName( stiNode.getDetector()->getName() );
-
-      if ( volumeName.empty() ) continue;
-
-      if ( boost::regex_match(volumeName, volNamePattern) ) return true;
+      if ( AcceptTrackNode(node) ) return true;
    }
 
    return false;

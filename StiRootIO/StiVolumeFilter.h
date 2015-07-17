@@ -4,8 +4,9 @@
 #include <boost/regex.hpp>
 
 #include "StEvent/StEnumerations.h"
-#include "Sti/StiKalmanTrack.h"
 
+class StiKalmanTrack;
+class StiKalmanTrackNode;
 
 /** 
  * A singleton to manage constraints on save Sti objects such as tracks and
@@ -17,8 +18,11 @@ public:
 
    static StiVolumeFilter& GetInstance();
 
-   bool HasNodeAt(const StiKalmanTrack& stiKTrack, const boost::regex& volNamePattern);
    StDetectorId  GetDetGroupId() const { return fgDetGroupId; }
+
+   bool AcceptTrack(const StiKalmanTrack& track) const;
+   bool AcceptTrackNode(const StiKalmanTrackNode& node) const;
+   bool HasAcceptedNode(const StiKalmanTrack& track) const;
    const std::set<boost::regex>& GetNamePatterns() const { return fgVolumeSelectPatterns; }
 
 protected:
