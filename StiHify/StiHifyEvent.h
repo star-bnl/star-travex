@@ -13,13 +13,8 @@ public:
 
    StiHifyEvent();
    StiHifyEvent(const StiVolumeFilter& stiVolumeFilter);
-   StiHifyEvent(StDetectorId detGroupId, bool detActiveOnly);
 
    virtual EReturnCodes Fill(const StiTrackContainer &stiTrackContainer);
-
-protected:
-
-   const StiVolumeFilter& fStiVolumeFilter;
 
    ClassDef(StiHifyEvent, 1)
 };
