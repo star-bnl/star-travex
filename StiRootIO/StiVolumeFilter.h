@@ -18,6 +18,7 @@ public:
    static StiVolumeFilter& GetInstance();
 
    bool HasNodeAt(const StiKalmanTrack& stiKTrack, const boost::regex& volNamePattern);
+   StDetectorId  GetDetGroupId() const { return fgDetGroupId; }
    const std::set<boost::regex>& GetNamePatterns() const { return fgVolumeSelectPatterns; }
 
 protected:
