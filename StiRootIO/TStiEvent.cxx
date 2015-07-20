@@ -68,6 +68,7 @@ EReturnCodes TStiEvent::PostFill()
 {
    for (auto iTrack = fTStiKalmanTracks.begin(); iTrack != fTStiKalmanTracks.end(); ++iTrack)
    {
+      // Find the closest hit among the all known (to be saved) hits in this event
       iTrack->AssignClosestHits(fTStiHits);
       iTrack->FindAdjacentHits(fTStiHits);
    }
@@ -78,7 +79,7 @@ EReturnCodes TStiEvent::PostFill()
 
 void TStiEvent::Print(Option_t *opt) const
 {
-   std::cout << "TStiEvent::Print(" << *opt << ")" << "\n"
+   std::cout << "TStiEvent::Print(" << std::string(opt) << ")" << "\n"
              << "Num. of tracks: " << fTStiKalmanTracks.size() << "\n"
              << "Num. of hits:   " << fTStiHits.size()
              << std::endl;

@@ -8,7 +8,8 @@
 class StiKalmanTrack;
 class StiKalmanTrackNode;
 
-/** 
+
+/**
  * A singleton to manage constraints on save Sti objects such as tracks and
  * track nodes.
  */
@@ -29,8 +30,8 @@ protected:
 
    StDetectorId           fgDetGroupId;        //!< Detector group id used in this study
    bool                   fgDetActiveOnly;     //!< Another selection criteria to save nodes
-	/// A set of regex patterns to select and save track nodes passing through
-	/// volumes with matching names
+   /// A set of regex patterns to select and save track nodes passing through
+   /// volumes with matching names
    std::set<boost::regex> fgVolumeSelectPatterns;
 
 private:

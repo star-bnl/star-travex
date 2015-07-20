@@ -19,7 +19,6 @@ StiHifyRootFile::StiHifyRootFile(StiScanPrgOptions& prgOpts, Option_t *option, c
 
 void StiHifyRootFile::BookHists()
 {
-
    mDirs["sti_hit_closest"]  = new StiHifyHistContainer("sti_hit_closest",  this);
    mDirs["sti_hit_accepted"] = new StiHifyHistContainer("sti_hit_accepted", this);
    mDirs["sti_hit_rejected"] = new StiHifyHistContainer("sti_hit_rejected", this);
@@ -56,15 +55,14 @@ void StiHifyRootFile::FillDerivedHists()
       std::string hist_name = hist_iter.first;
 
       bool matched = boost::regex_match(hist_name, boost::regex("^hActiveLayerCounts.*$"));
-      Info(__FUNCTION__, "hist name: %s, %d", hist_name.c_str(), matched);
 
       if (!matched) continue;
 
-      const StiHistContainer& hitsDenom(*mDirs["sti_hit_closest"]);
       const StiHistContainer& hitsNumer(*mDirs["sti_hit_accepted"]);
+      const StiHistContainer& hitsDenom(*mDirs["sti_hit_closest"]);
 
-      const TH1* hitsAll = hitsDenom.FindHist(hist_name);
       const TH1* hitsAcc = hitsNumer.FindHist(hist_name);
+      const TH1* hitsAll = hitsDenom.FindHist(hist_name);
 
       ratios->CreateRatioHist(hitsAcc, hitsAll);
    }

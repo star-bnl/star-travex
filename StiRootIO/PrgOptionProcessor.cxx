@@ -38,7 +38,7 @@ void PrgOptionProcessor::InitOptions()
    // Declare supported options
    fOptions.add_options()
       ("help,h",              "Print help message")
-      ("stitree-file,f",       po::value<std::string>(&fInFilePath), "Full path to a ROOT file containing an Sti TTree " \
+      ("stitree-file,f",      po::value<std::string>(&fInFilePath), "Full path to a ROOT file containing an Sti TTree " \
                               "OR a text file with a list of such ROOT files")
       ("geom-file",           po::value<std::string>(&fGeomFilePath)->default_value("y2014a.root"), "Full path to a ROOT file with TGeo geometry")
       ("volume-pattern,p",    po::value<std::string>(&fVolumePattern)->implicit_value("process_all_volumes"),
@@ -97,8 +97,8 @@ void PrgOptionProcessor::VerifyOptions()
    if (fOptionsValues.count("stitree-file"))
    {
       std::string treeFile = boost::any_cast<std::string>(fOptionsValues["stitree-file"].value());
+      std::cout << "File with Sti TTree: " << treeFile << std::endl;
 
-      std::cout << "fInFilePath: " << treeFile << std::endl;
       std::ifstream tmpFileCheck(treeFile.c_str());
       if (!tmpFileCheck.good()) {
          Fatal("VerifyOptions", "File \"%s\" does not exist", treeFile.c_str());

@@ -21,7 +21,7 @@ void StiHifyRatiosHistContainer::CreateRatioHist(const TH1* hNumer, const TH1* h
 
    TH1 *myRatio = static_cast<TH1*>(hNumer->Clone());
    myRatio->SetOption("colz");
-  
+
    myRatio->Divide(hNumer, hDenom, 1, 1, "B");
 
    mHs[std::string(myRatio->GetName())] = myRatio;
