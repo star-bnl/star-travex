@@ -27,23 +27,7 @@ TStiKalmanTrack::TStiKalmanTrack(const StiKalmanTrack& stiKTrack, TStiEvent* eve
    // Loop over track nodes
    for (const StiKalmanTrackNode& stiNode : stiKTrack)
    {
-      // Silently skip DCA nodes
-      if ( stiNode.isDca() )
-         continue;
-
-      const StiDetector* stiKTNDet = stiNode.getDetector();
-
-      if (!stiKTNDet) {
-         Warning("TStiKalmanTrack", "No detector found associated with non-DCA node. Skipping to next one...");
-         continue;
-      }
-
-      StDetectorId stiNodeDetId = static_cast<StDetectorId>( stiKTNDet->getGroupId() );
-
-      if ( ( TStiEvent::fgDetGroupId == stiNodeDetId || TStiEvent::fgDetGroupId == kMaxDetectorId ) &&
-           ( (TStiEvent::fgDetActiveOnly && stiKTNDet->isActive()) || !TStiEvent::fgDetActiveOnly )
-         )
-      {
+      if (fEvent && fEvent->AcceptTrackNode(stiNode) ) {
          fNodes.insert( TStiKalmanTrackNode(stiNode, this) );
       }
 
