@@ -1,7 +1,8 @@
 #include "StiRootIO/TStiEvent.h"
-
+#include "StiRootIO/StiHitFilters.h"
 #include "StiRootIO/StiVolumeFilter.h"
 #include "St_base/Stypes.h"
+#include "Sti/StiHit.h"
 #include "Sti/StiTrack.h"
 #include "Sti/StiKalmanTrack.h"
 
@@ -53,7 +54,8 @@ EReturnCodes TStiEvent::Fill(const StiTrackContainer &stiTrackContainer)
 
 EReturnCodes TStiEvent::Fill(StiHitContainer &stiHitContainer)
 {
-   std::vector<StiHit*>& selectedHits = stiHitContainer.getHits(fStiVolumeFilter.GetDetGroupId());
+   StiHitFilterByVolumeName filter(fStiVolumeFilter.GetNamePatterns());
+   std::vector<StiHit*>& selectedHits = stiHitContainer.getHits(filter);
 
    for (auto iStiHit = selectedHits.begin(); iStiHit != selectedHits.end(); ++iStiHit)
       InsertStiHit(**iStiHit);
