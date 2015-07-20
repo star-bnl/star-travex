@@ -11,7 +11,7 @@
 StiVolumeFilter::StiVolumeFilter() : fgDetGroupId(kMaxDetectorId), fgDetActiveOnly(false),
    fgVolumeSelectPatterns()
 {
-   std::string   patternFileName("deactivate_sti_detectors.txt");
+   std::string   patternFileName("save_sti_detectors.txt");
    std::ifstream volumePatternFile(patternFileName);
    std::string   pattern;
 
