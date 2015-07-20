@@ -57,8 +57,8 @@ EReturnCodes TStiEvent::Fill(StiHitContainer &stiHitContainer)
    StiHitFilterByVolumeName filter(fStiVolumeFilter.GetNamePatterns());
    std::vector<StiHit*>& selectedHits = stiHitContainer.getHits(filter);
 
-   for (auto iStiHit = selectedHits.begin(); iStiHit != selectedHits.end(); ++iStiHit)
-      InsertStiHit(**iStiHit);
+   std::transform(selectedHits.begin(), selectedHits.end(),
+      std::inserter(fTStiHits, fTStiHits.begin()), [](const StiHit* hit) {return TStiHit(*hit);} );
 
    return kStOK;
 }
