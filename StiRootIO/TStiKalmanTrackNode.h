@@ -26,7 +26,7 @@ public:
    bool  IsInsideVolume() const { return fIsInsideVolume; }
    const TVector3& GetTrackP() const { return fTrackP; }
    const TVector3& GetPosition() const { return fPosition; }
-   const TVector3& GetPositionLocal() const { return fProjPositionLocal; }
+   const TVector3& GetProjPositionLocal() const { return fProjPositionLocal; }
    const TVector3& GetTrackProjErr() const { return fProjError; }
    float GetEnergyLosses() const { return fabs(fEnergyLosses); }
    float GetNodeRadius() const { return fNodeRadius; }

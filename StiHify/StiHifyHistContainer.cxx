@@ -111,7 +111,7 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
       hChi2CandidateHits->Fill(hitCandidate.GetChi2());
    }
 
-   hActiveLayerCounts->Fill(trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y());
+   hActiveLayerCounts->Fill(trkNode.GetProjPositionLocal().Z(), trkNode.GetProjPositionLocal().Y());
 
 
    std::string histName("hActiveLayerCounts_" + trkNode.GetVolumeName());
@@ -125,7 +125,7 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
       hActiveLayerCounts_det->SetOption("colz");
    }
 
-   hActiveLayerCounts_det->Fill( trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y() );
+   hActiveLayerCounts_det->Fill( trkNode.GetProjPositionLocal().Z(), trkNode.GetProjPositionLocal().Y() );
 }
 
 

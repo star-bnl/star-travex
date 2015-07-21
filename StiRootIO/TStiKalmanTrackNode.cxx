@@ -205,7 +205,7 @@ void TStiKalmanTrackNode::FindAdjacentHits(const std::set<TStiHit>& stiHits)
    {
       if (fVolumeName != iHit->GetVolumeName()) continue;
 
-      distVec = GetPositionLocal() - iHit->GetPositionLocal();
+      distVec = GetProjPositionLocal() - iHit->GetPositionLocal();
 
       if (fabs(distVec.Y()) < 5*fProjError.Y() &&
           fabs(distVec.Z()) < 5*fProjError.Z() )
