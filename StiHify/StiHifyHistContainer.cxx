@@ -85,7 +85,7 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
    if (volumeList && volumeList->size() && !trkNode.MatchedVolName(*volumeList) )
       return;
 
-   if (!trkNode.IsInsideVolume())
+   if (trkNode.GetVolumeName().empty() || !trkNode.IsInsideVolume())
       return;
 
    if (trkNode.GetHit()) {
