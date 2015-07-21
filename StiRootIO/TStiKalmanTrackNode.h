@@ -26,6 +26,7 @@ public:
    bool  IsInsideVolume() const { return fIsInsideVolume; }
    const TVector3& GetTrackP() const { return fTrackP; }
    const TVector3& GetPosition() const { return fPosition; }
+   const TVector3& GetPositionLocal() const { return fPositionLocal; }
    const TVector3& GetProjPositionLocal() const { return fProjPositionLocal; }
    const TVector3& GetTrackProjErr() const { return fProjError; }
    float GetEnergyLosses() const { return fabs(fEnergyLosses); }
@@ -59,6 +60,7 @@ protected:
    float       fValid;                ///< A flag taken directly from StiKalmanTrackNode
    int         fIsInsideVolume;       ///< A flag taken directly from StiKalmanTrackNode
    TVector3    fPosition;             ///< Coordinates of the track state/node position
+   TVector3    fPositionLocal;        ///< Local coordinates of the final (post refit) track node position
    TVector3    fProjPositionLocal;    ///< Coordinates of the track state/node position
    TVector3    fTrackP;               ///< Track momentum vector in global CS
    float       fEnergyLosses;         ///< Energy lost in the volume
@@ -74,7 +76,7 @@ protected:
    std::set<TStiHitProxy> fAdjacentStiHits;   ///< Collection of hits in some proximity of mean track projection
    TVector3    fProjError;            ///< The projection error to the node before the fit
 
-   ClassDef(TStiKalmanTrackNode, 9)
+   ClassDef(TStiKalmanTrackNode, 10)
 };
 
 

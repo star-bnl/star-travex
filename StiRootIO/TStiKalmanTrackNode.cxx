@@ -14,7 +14,9 @@ ClassImp(TStiKalmanTrackNode)
 TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
    fStiTrackNode(nullptr),
    fTrack(nullptr), fValid(false), fIsInsideVolume(-1),
-   fPosition(), fProjPositionLocal(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
+   fPosition(),
+   fPositionLocal(),
+   fProjPositionLocal(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(0),
    fNodeRelRadLength(0), fVolumeName(""), fStiHit(nullptr), fClosestStiHit(nullptr),
    fAdjacentStiHits(),
@@ -26,7 +28,9 @@ TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
 TStiKalmanTrackNode::TStiKalmanTrackNode(const StiKalmanTrackNode &stiKTN, TStiKalmanTrack* const parent) : TObject(),
    fStiTrackNode(&stiKTN),
    fTrack(parent), fValid(stiKTN.isValid()), fIsInsideVolume(stiKTN.inside(1+2+4)),
-   fPosition(), fProjPositionLocal(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
+   fPosition(),
+   fPositionLocal(),
+   fProjPositionLocal(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(stiKTN.getTrackLength()),
    fNodeRelRadLength(0), fVolumeName(""), fStiHit(nullptr), fClosestStiHit(nullptr),
    fAdjacentStiHits(),
@@ -34,6 +38,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(const StiKalmanTrackNode &stiKTN, TStiK
 {
    // Access node parameters
    fPosition.SetXYZ(stiKTN.x_g(), stiKTN.y_g(), stiKTN.z_g());
+   fPositionLocal.SetXYZ(stiKTN.x(), stiKTN.y(), stiKTN.z());
 
    StThreeVector<double> p3 = stiKTN.getGlobalMomentum();
    fTrackP.SetXYZ( p3.x(), p3.y(),  p3.z() );
