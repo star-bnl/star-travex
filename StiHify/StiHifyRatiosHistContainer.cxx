@@ -11,6 +11,12 @@ StiHifyRatiosHistContainer::StiHifyRatiosHistContainer(const char* name, TDirect
 
 void StiHifyRatiosHistContainer::CreateRatioHist(const TH1* hNumer, const TH1* hDenom)
 {
+   if (!hNumer || !hDenom) {
+      Error(__FUNCTION__, "Cannot calculate ratio from non-existing histograms: "
+                            "Numerator hist %p / Denumerator hist %p, ", hNumer, hDenom);
+      return;
+   }
+
    this->cd();
 
    TH1 *myRatio = static_cast<TH1*>(hNumer->Clone());
