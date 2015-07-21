@@ -152,12 +152,7 @@ add_library(
 )
 
 
-link_directories(
-	${CMAKE_CURRENT_BINARY_DIR}/.$ENV{STAR_HOST_SYS}/lib
-	${Boost_LIBRARY_DIR}
-	${ROOT_LIBRARY_DIR}
-)
-
+link_directories( ${Boost_LIBRARY_DIR} ${ROOT_LIBRARY_DIR} )
 
 configure_file(src-tools/config.h.in inc/src-tools/config.h)
 
