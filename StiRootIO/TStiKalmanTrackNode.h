@@ -27,7 +27,7 @@ public:
    const TVector3& GetTrackP() const { return fTrackP; }
    const TVector3& GetPosition() const { return fPosition; }
    const TVector3& GetPositionLocal() const { return fPositionLocal; }
-   const TVector3& GetTrackProjErr() const { return fTrackProjErr; }
+   const TVector3& GetTrackProjErr() const { return fProjError; }
    float GetEnergyLosses() const { return fabs(fEnergyLosses); }
    float GetNodeRadius() const { return fNodeRadius; }
    float GetNodeCenterRefAngle() const { return fNodeCenterRefAngle; }
@@ -72,7 +72,7 @@ protected:
    const TStiHit  *fStiHit;
    const TStiHit  *fClosestStiHit;    ///< Pointer to the hit closest to this node if any
    std::set<TStiHitProxy> fAdjacentStiHits;   ///< Collection of hits in some proximity of mean track projection
-   TVector3    fTrackProjErr;         ///< The projection error to the node before the fit
+   TVector3    fProjError;            ///< The projection error to the node before the fit
 
    ClassDef(TStiKalmanTrackNode, 9)
 };
