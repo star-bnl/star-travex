@@ -14,7 +14,7 @@ ClassImp(TStiKalmanTrackNode)
 TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
    fStiTrackNode(nullptr),
    fTrack(nullptr), fValid(false), fIsInsideVolume(-1),
-   fPosition(), fPositionLocal(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
+   fPosition(), fProjPositionLocal(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(0),
    fNodeRelRadLength(0), fVolumeName(""), fStiHit(nullptr), fClosestStiHit(nullptr),
    fAdjacentStiHits(),
@@ -26,7 +26,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
 TStiKalmanTrackNode::TStiKalmanTrackNode(const StiKalmanTrackNode &stiKTN, TStiKalmanTrack* const parent) : TObject(),
    fStiTrackNode(&stiKTN),
    fTrack(parent), fValid(stiKTN.isValid()), fIsInsideVolume(stiKTN.inside(1+2+4)),
-   fPosition(), fPositionLocal(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
+   fPosition(), fProjPositionLocal(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(stiKTN.getTrackLength()),
    fNodeRelRadLength(0), fVolumeName(""), fStiHit(nullptr), fClosestStiHit(nullptr),
    fAdjacentStiHits(),
@@ -70,16 +70,16 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(const StiKalmanTrackNode &stiKTN, TStiK
 
    if (prefitKTNParams) {
       fProjError.SetXYZ(sqrt(prefitKTNParams->mPE._cXX), sqrt(prefitKTNParams->mPE._cYY), sqrt(prefitKTNParams->mPE._cZZ));
-      fPositionLocal.SetXYZ(prefitKTNParams->mPP.x(), prefitKTNParams->mPP.y(), prefitKTNParams->mPP.z());
+      fProjPositionLocal.SetXYZ(prefitKTNParams->mPP.x(), prefitKTNParams->mPP.y(), prefitKTNParams->mPP.z());
    }
 }
 
 
 TVector3 TStiKalmanTrackNode::CalcPullToHit(const TStiHit& hit) const
 {
-   double pullX = (hit.GetPositionLocal().X() - fPositionLocal.X()) / fProjError.X();
-   double pullY = (hit.GetPositionLocal().Y() - fPositionLocal.Y()) / fProjError.Y();
-   double pullZ = (hit.GetPositionLocal().Z() - fPositionLocal.Z()) / fProjError.Z();
+   double pullX = (hit.GetPositionLocal().X() - fProjPositionLocal.X()) / fProjError.X();
+   double pullY = (hit.GetPositionLocal().Y() - fProjPositionLocal.Y()) / fProjError.Y();
+   double pullZ = (hit.GetPositionLocal().Z() - fProjPositionLocal.Z()) / fProjError.Z();
 
    return TVector3(pullX, pullY, pullZ);
 }
@@ -93,9 +93,9 @@ TVector3 TStiKalmanTrackNode::CalcPullClosestHit() const
 {
    if (!fClosestStiHit) return TVector3(DBL_MAX, DBL_MAX, DBL_MAX);
 
-   double pullX = (fClosestStiHit->GetPositionLocal().X() - fPositionLocal.X()) / fProjError.X();
-   double pullY = (fClosestStiHit->GetPositionLocal().Y() - fPositionLocal.Y()) / fProjError.Y();
-   double pullZ = (fClosestStiHit->GetPositionLocal().Z() - fPositionLocal.Z()) / fProjError.Z();
+   double pullX = (fClosestStiHit->GetPositionLocal().X() - fProjPositionLocal.X()) / fProjError.X();
+   double pullY = (fClosestStiHit->GetPositionLocal().Y() - fProjPositionLocal.Y()) / fProjError.Y();
+   double pullZ = (fClosestStiHit->GetPositionLocal().Z() - fProjPositionLocal.Z()) / fProjError.Z();
 
    return TVector3(pullX, pullY, pullZ);
 }
