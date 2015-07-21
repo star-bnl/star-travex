@@ -174,7 +174,6 @@ set_target_properties(stiscan PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbo
 set_target_properties(stihify PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 
 
-install(DIRECTORY "contrib/star-bfchain/StBFChain" DESTINATION "StRoot")
 install(DIRECTORY "contrib/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
 install(TARGETS StiRootIO GeaRootIO AgUStep StiHify StiScan DESTINATION "lib")
 install(TARGETS stiscan stihify DESTINATION "bin")
