@@ -20,12 +20,7 @@
 #include "StMuDSTMaker/COMMON/StMuEvent.h"
 #include "StMuDSTMaker/COMMON/StMuTrack.h"
 #include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
-class StMuDstMaker;
-#define ClassStMessMgr
-#define StMessMgr Int_t
 #include "StMuDSTMaker/COMMON/StMuDstMaker.h"
-#undef  StMessMgr
-#undef ClassStMessMgr
 #include "TDatime.h"
 #include "TMath.h"
 #include "StBTofHeader.h"
