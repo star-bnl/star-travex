@@ -31,7 +31,6 @@ class StMuDstMaker;
 #include "StBTofHeader.h"
 #endif
 
-StMuDstMaker* maker = 0;
 #include "Ask.h"
 
 
@@ -60,12 +59,12 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
   
   // ----------------------------------------------
   StMuDebug::setLevel(0);  
-  maker = new StMuDstMaker(0,0,"",file,"st:MuDst.root",1e9);   // set up maker in read mode
-  //                       0,0                        this mean read mode
-  //                           dir                    read all files in this directory
-  //                               file               bla.lis real all file in this list, if (file!="") dir is ignored
-  //                                    filter        apply filter to filenames, multiple filters are separated by ':'
-  //                                          10      maximum number of file to read
+  StMuDstMaker* maker = new StMuDstMaker(0,0,"",file,"st:MuDst.root",1e9);   // set up maker in read mode
+                //                       0,0                        this mean read mode
+                //                           dir                    read all files in this directory
+                //                               file               bla.lis real all file in this list, if (file!="") dir is ignored
+                //                                    filter        apply filter to filenames, multiple filters are separated by ':'
+                //                                          10      maximum number of file to read
   maker->SetStatus("*",0);
   const Char_t *ActiveBranches[] = {
     "MuEvent",
