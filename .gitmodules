@@ -1,0 +1,9 @@
+[submodule "contrib/star-base"]
+	path = contrib/star-base
+	url = https://github.com/star-bnl/star-base.git
+[submodule "contrib/star-stevent"]
+	path = contrib/star-stevent
+	url = https://github.com/star-bnl/star-stevent.git
+[submodule "contrib/star-muDst"]
+	path = contrib/star-muDst
+	url = https://github.com/star-bnl/star-muDst.git
