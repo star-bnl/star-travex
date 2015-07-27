@@ -26,7 +26,6 @@ class StMuDstMaker;
 #include "StMuDSTMaker/COMMON/StMuDstMaker.h"
 #undef  StMessMgr
 #undef ClassStMessMgr
-//StMuDstMaker* maker = 0;
 #include "TDatime.h"
 #include "TMath.h"
 #include "StBTofHeader.h"

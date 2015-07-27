@@ -5,7 +5,6 @@ void lMuDst() {
 #else
   gROOT->LoadMacro("bfc.C");
   TString Chain("StEvent,RMuDst,mysql,tpcDb,magF,nodefault");
-  //TString Chain("StEvent,RMuDst,mysql,tpcDb,magF,nodefault");
   bfc(-2,Chain,0,0,0);
   //  gROOT->LoadMacro("FitP_t.h+");
   gSystem->Load("libEG");
