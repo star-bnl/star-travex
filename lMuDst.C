@@ -5,6 +5,9 @@ void lMuDst() {
 #else
   gROOT->LoadMacro("bfc.C");
   TString Chain("StEvent,RMuDst,mysql,tpcDb,magF,nodefault");
+
+  // The first argument (Last = -2) to bfc() below asks bfc to load the
+  // libraries but do not loop over events. The actuall loop is in VertexRank.C
   bfc(-2,Chain,0,0,0);
   //  gROOT->LoadMacro("FitP_t.h+");
   gSystem->Load("libEG");
