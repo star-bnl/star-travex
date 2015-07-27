@@ -23,7 +23,7 @@
 #include "StMuDSTMaker/COMMON/StMuDstMaker.h"
 #include "TDatime.h"
 #include "TMath.h"
-#include "StBTofHeader.h"
+#include "StEvent/StBTofHeader.h"
 #endif
 
 #include "Ask.h"
