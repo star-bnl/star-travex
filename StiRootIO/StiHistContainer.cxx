@@ -45,7 +45,7 @@ void StiHistContainer::SaveAllAs(std::string prefix)
 
    for (const std::pair<std::string, TH1*>& iHist : mHs)
    {
-      string histName = iHist.first;
+      std::string histName = iHist.first;
       TH1*   hist     = iHist.second;
 
       if (!hist) {
@@ -79,7 +79,7 @@ void StiHistContainer::SaveAllAs(std::string prefix)
          color->SetRGB(255, 255, 255);
       }
 
-      string sFileName = prefix + "/c_" + histName + ".png";
+      std::string sFileName = prefix + "/c_" + histName + ".png";
       canvas.SaveAs(sFileName.c_str());
 
       // Restore modified color
