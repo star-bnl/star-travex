@@ -8,8 +8,6 @@
 #include "TH1.h"
 #include "TDirectoryFile.h"
 
-#include "StiRootIO/TStiEvent.h"
-
 
 typedef std::map<std::string, TH1*>                    HistMap;
 typedef std::map<std::string, TH1*>::iterator          HistMapIter;
