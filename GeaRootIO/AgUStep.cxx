@@ -14,7 +14,7 @@ extern "C" {
     if ( AgUStep::Instance() ) {
       (*AgUStep::Instance())();
     }
-  };
+  }
 
   struct Agcstep_t {
     
@@ -27,7 +27,7 @@ extern "C" {
 
   } agcstep_;
 
-};
+}
 
 
 #define agcstep agcstep_
@@ -85,7 +85,7 @@ AgUStep::AgUStep() : TObject(),
 
   oldEvent = -999;
 
-};
+}
 
 
 // Take a step through the G3 geometry

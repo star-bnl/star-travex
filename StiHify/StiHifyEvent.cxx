@@ -4,7 +4,7 @@
 #include "StiHify/StiHifyEvent.h"
 #include "Sti/StiKalmanTrack.h"
 
-ClassImp(StiHifyEvent);
+ClassImp(StiHifyEvent)
 
 
 StiHifyEvent::StiHifyEvent() : TStiEvent()

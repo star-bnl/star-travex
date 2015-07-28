@@ -131,7 +131,7 @@ void  TGeaTrack::Clear( const Option_t *opts )
   x = 0; y = 0; z = 0; mass = 0; charge = 0;
   nSteps=0;
   steps.Clear("");
-};
+}
 
 
 TGeaStep::TGeaStep() : TObject(),
