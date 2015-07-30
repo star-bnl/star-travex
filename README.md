@@ -8,8 +8,8 @@
     
 2.- Run TMVA to classify signal and background. A separate set of signal and background must be given, with a define set of variables for the training. Also need to specify the classifier. To run (e.g. with classifiers Fisher and Likelihood):
 
-    $root.exe TMVAClassification.C\(\"Fisher,Likelihood\"\)
+    $root TMVAClassification.C\(\"Fisher,Likelihood\"\)
     
 3.- Apply the results of the classification with ApplyClassifier.C. The output will be the same tree for step (1) but with a new branch with the classifier response. Run:
 
-    $root.exe ApplyClassifier.C
+    $root ApplyClassifier.C
