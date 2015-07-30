@@ -203,6 +203,18 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
          primVtx.McZ    = mcVertex->XyzV().z();
       }
 
+      primVtx.beam   =  Vtx->isBeamConstrained() ? 1 : 0;
+      primVtx.postx  =  Vtx->nPostXtracks();
+      primVtx.prompt =  Vtx->nPromptTracks();
+      primVtx.cross  =  Vtx->nCrossCentralMembrane();
+      primVtx.tof    = (Vtx->nCTBMatch()     + Vtx->nBTOFMatch());
+      primVtx.notof  = (Vtx->nCTBNotMatch()  + Vtx->nBTOFNotMatch());
+      primVtx.BEMC   =  Vtx->nBEMCMatch();
+      primVtx.noBEMC =  Vtx->nBEMCNotMatch();
+      primVtx.EEMC   =  Vtx->nEEMCMatch();
+      primVtx.noEEMC =  Vtx->nEEMCNotMatch();
+      primVtx.chi2   =  Vtx->chiSquared();
+
       if (l==0 && abs(primVtx.primZ-VpdZ)<3) h1->Fill(primVtx.primZ-VpdZ);
       if(MaxMult==primVtx.mult) {primVtx.maxmult = 1; if (abs(primVtx.primZ-VpdZ)<3) h2->Fill(primVtx.primZ-VpdZ);}
       else primVtx.maxmult = 0;
