@@ -163,13 +163,13 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
       noreco++;
       primVtx.event = ev;
       primVtx.zVpd = 999;
-      primVtx.MultP = 999;
-      primVtx.refMultP = 999;
+      primVtx.mult = 999;
+      primVtx.refMult = 999;
       
       primVtx.primX = 999;
       primVtx.primY = 999;
       primVtx.primZ = 999;
-      primVtx.l = 999;
+      primVtx.index = 999;
       primVtx.rank = 999;
       primVtx.maxmult = 999;
       primaryvtx->Fill(&primVtx.event);
@@ -182,24 +182,24 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
             
       primVtx.event = ev;
       
-      primVtx.MultP = Vtx->noTracks();
-      primVtx.refMultP = Vtx->refMult();
+      primVtx.mult = Vtx->noTracks();
+      primVtx.refMult = Vtx->refMult();
       
       primVtx.primX = Vtx->position().x();
       primVtx.primY = Vtx->position().y();
       primVtx.primZ = Vtx->position().z();
-      primVtx.l = l;
+      primVtx.index = l;
       primVtx.rank = Vtx->ranking();
 
       if (l==0 && abs(primVtx.primZ-VpdZ)<3) h1->Fill(primVtx.primZ-VpdZ);
-      if(MaxMult==primVtx.MultP) {primVtx.maxmult = 1; if (abs(primVtx.primZ-VpdZ)<3) h2->Fill(primVtx.primZ-VpdZ);}
+      if(MaxMult==primVtx.mult) {primVtx.maxmult = 1; if (abs(primVtx.primZ-VpdZ)<3) h2->Fill(primVtx.primZ-VpdZ);}
       else primVtx.maxmult = 0;
       
       primaryvtx->Fill();
 
       if (_debugAsk) {
 	//cout << Form("Vx[%3i]", l) << *Vtx << endl;
-	cout << Form("[%i]",l) <<Form(" %8.3f  %8.3f  %8.3f ",Vtx->position().x(),Vtx->position().y(),Vtx->position().z()) << Form("  Rank:%1.0f",Vtx->ranking()) << "    MultP: " << primVtx.MultP ;
+	cout << Form("[%i]",l) <<Form(" %8.3f  %8.3f  %8.3f ",Vtx->position().x(),Vtx->position().y(),Vtx->position().z()) << Form("  Rank:%1.0f",Vtx->ranking()) << "    Mult: " << primVtx.mult;
 	if (primVtx.maxmult == 1 && l!=0) cout << "\t WRONG RANK"<< endl;
 	else cout << endl;
       }
