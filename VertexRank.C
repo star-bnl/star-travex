@@ -43,10 +43,40 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
   
   //////////////////////////////////////////////////////->Define the variables 
   //static Double_t pionM = 0.13956995;  
-  struct primVtxPoint_t{ Float_t event,primX,primY,primZ,MultP,refMultP,l,rank,maxmult,zVpd;};
+  struct primVtxPoint_t{
+    Int_t event,index,rank,mult,refMult,maxmult;
+    Float_t primX,primY,primZ,zVpd;
+    Float_t McX, McY, McZ;
+    Float_t chi2;
+    Int_t beam,postx,prompt,cross,tof,notof,EEMC,noEEMC,BEMC,noBEMC;
+  };
   primVtxPoint_t primVtx;
 
-  TNtuple *primaryvtx = new TNtuple("primaryvtx","The Primary Vertices","event:primX:primY:primZ:MultP:refMultP:l:rank:maxmult:zVpd");
+  TTree *primaryvtx = new TTree("primaryvtx","The Primary Vertices");
+  primaryvtx->Branch("event",&primVtx.event,"event/I");
+  primaryvtx->Branch("index",&primVtx.index,"index/I");
+  primaryvtx->Branch("rank",&primVtx.rank,"rank/I");
+  primaryvtx->Branch("mult",&primVtx.mult,"mult/I");
+  primaryvtx->Branch("refMult",&primVtx.refMult,"refMult/I");
+  primaryvtx->Branch("maxmult",&primVtx.maxmult,"maxmult/I");
+  primaryvtx->Branch("primX",&primVtx.primX,"primX/F");
+  primaryvtx->Branch("primY",&primVtx.primY,"primY/F");
+  primaryvtx->Branch("primZ",&primVtx.primZ,"primZ/F");
+  primaryvtx->Branch("zVpd",&primVtx.zVpd,"zVpd/F");
+  primaryvtx->Branch("McX",&primVtx.McX,"McX/F");
+  primaryvtx->Branch("McY",&primVtx.McY,"McY/F");
+  primaryvtx->Branch("McZ",&primVtx.McZ,"McZ/F");
+  primaryvtx->Branch("chi2",&primVtx.chi2,"chi2/F");
+  primaryvtx->Branch("beam",&primVtx.beam,"beam/I");
+  primaryvtx->Branch("postx",&primVtx.postx,"postx/I");
+  primaryvtx->Branch("prompt",&primVtx.prompt,"prompt/I");
+  primaryvtx->Branch("cross",&primVtx.cross,"cross/I");
+  primaryvtx->Branch("tof",&primVtx.tof,"tof/I");
+  primaryvtx->Branch("notof",&primVtx.notof,"notof/I");
+  primaryvtx->Branch("EEMC",&primVtx.EEMC,"EEMC/I");
+  primaryvtx->Branch("noEEMC",&primVtx.noEEMC,"noEEMC/I");
+  primaryvtx->Branch("BEMC",&primVtx.BEMC,"BEMC/I");
+  primaryvtx->Branch("noBEMC",&primVtx.noBEMC,"noBEMC/I");
 
   TH1F *h1 =  new TH1F("h1","Rank Max",200,-3,3);
   TH1F *h2 =  new TH1F("h2","Max Mult",200,-3,3);
@@ -165,7 +195,7 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
       if(MaxMult==primVtx.MultP) {primVtx.maxmult = 1; if (abs(primVtx.primZ-VpdZ)<3) h2->Fill(primVtx.primZ-VpdZ);}
       else primVtx.maxmult = 0;
       
-      primaryvtx->Fill(&primVtx.event);
+      primaryvtx->Fill();
 
       if (_debugAsk) {
 	//cout << Form("Vx[%3i]", l) << *Vtx << endl;
