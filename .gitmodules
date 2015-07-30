@@ -7,3 +7,6 @@
 [submodule "contrib/star-muDst"]
 	path = contrib/star-muDst
 	url = https://github.com/star-bnl/star-muDst.git
+[submodule "contrib/star-tables"]
+	path = contrib/star-tables
+	url = https://github.com/star-bnl/star-tables.git
