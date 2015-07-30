@@ -20,6 +20,7 @@
 #include "StMuDSTMaker/COMMON/StMuEvent.h"
 #include "StMuDSTMaker/COMMON/StMuTrack.h"
 #include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
+#include "StMuDSTMaker/COMMON/StMuMcVertex.h"
 #include "StMuDSTMaker/COMMON/StMuDstMaker.h"
 #include "TDatime.h"
 #include "TMath.h"
@@ -68,7 +69,8 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
     //"CovPrimTrack",
     //"GlobalTracks",
     "BTofHit",
-    "BTofHeader"
+    "BTofHeader",
+    "StStMuMcVertex"
   }; 
 
   Int_t Nb = sizeof(ActiveBranches)/sizeof(Char_t *);
@@ -101,6 +103,9 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
     //TClonesArray *GlobalTracks    = mu->array(muGlobal);  
     //Int_t NoGlobalTracks = GlobalTracks->GetEntriesFast();  // cout << "\tPrimaryTracks " << NoPrimaryTracks;
   
+    TClonesArray *MuMcVertices   = mu->mcArray(0);
+    Int_t NoMuMcVertices = MuMcVertices->GetEntriesFast();
+
     ///////VPD////////////
     Float_t VpdZ =999;
     StBTofHeader *BTofHeader = mu->btofHeader();
