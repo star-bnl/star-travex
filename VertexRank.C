@@ -190,6 +190,19 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
       primVtx.index = l;
       primVtx.rank = Vtx->ranking();
 
+      //////Mc info/////////
+      primVtx.McX    = 999;
+      primVtx.McY    = 999;
+      primVtx.McZ    = 999;
+      Int_t idd = Vtx->idTruth();
+      StMuMcVertex *mcVertex = 0;
+      if (idd > 0 && idd < NoMuMcVertices) mcVertex = (StMuMcVertex *) MuMcVertices->UncheckedAt(idd-1);
+      if (mcVertex) {
+         primVtx.McX    = mcVertex->XyzV().x();
+         primVtx.McY    = mcVertex->XyzV().y();
+         primVtx.McZ    = mcVertex->XyzV().z();
+      }
+
       if (l==0 && abs(primVtx.primZ-VpdZ)<3) h1->Fill(primVtx.primZ-VpdZ);
       if(MaxMult==primVtx.mult) {primVtx.maxmult = 1; if (abs(primVtx.primZ-VpdZ)<3) h2->Fill(primVtx.primZ-VpdZ);}
       else primVtx.maxmult = 0;
