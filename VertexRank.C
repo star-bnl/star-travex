@@ -20,18 +20,26 @@
 #include "StMuDSTMaker/COMMON/StMuEvent.h"
 #include "StMuDSTMaker/COMMON/StMuTrack.h"
 #include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
+#include "StMuDSTMaker/COMMON/StMuMcVertex.h"
+class StMuDstMaker;
+#define ClassStMessMgr
+#define StMessMgr Int_t
 #include "StMuDSTMaker/COMMON/StMuDstMaker.h"
+#undef  StMessMgr
+#undef ClassStMessMgr
+//StMuDstMaker* maker = 0;
 #include "TDatime.h"
 #include "TMath.h"
-#include "StEvent/StBTofHeader.h"
+#include "StBTofHeader.h"
 #endif
 
+StMuDstMaker* maker = 0;
 #include "Ask.h"
 
 
 //--->START MAIN PROGRAM
 //________________________________________________________________________________
-void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const  char* outFile="test") {
+void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const  char* outFile="outvertex") {
   
   gROOT->cd();
   
@@ -42,10 +50,42 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
   
   //////////////////////////////////////////////////////->Define the variables 
   //static Double_t pionM = 0.13956995;  
-  struct primVtxPoint_t{ Float_t event,primX,primY,primZ,MultP,refMultP,l,rank,maxmult,zVpd;};
+  struct primVtxPoint_t{ 
+    Int_t event,index,rank,mult,refMult,maxmult;
+    Float_t primX,primY,primZ,zVpd;
+    Float_t McX, McY, McZ;
+    Float_t chi2;
+    Int_t beam,postx,prompt,cross,tof,notof,EEMC,noEEMC,BEMC,noBEMC;
+  };
   primVtxPoint_t primVtx;
 
-  TNtuple *primaryvtx = new TNtuple("primaryvtx","The Primary Vertices","event:primX:primY:primZ:MultP:refMultP:l:rank:maxmult:zVpd");
+  //TNtuple *primaryvtx = new TNtuple("primaryvtx","The Primary Vertices","event:primX:primY:primZ:MultP:refMultP:l:rank:maxmult:zVpd");
+  TTree *primaryvtx = new TTree("primaryvtx","The Primary Vertices");
+  primaryvtx->SetAutoSave(1000000);
+  primaryvtx->Branch("event",&primVtx.event,"event/I");
+  primaryvtx->Branch("index",&primVtx.index,"index/I");
+  primaryvtx->Branch("rank",&primVtx.rank,"rank/I");
+  primaryvtx->Branch("mult",&primVtx.mult,"mult/I");
+  primaryvtx->Branch("refMult",&primVtx.refMult,"refMult/I");
+  primaryvtx->Branch("maxmult",&primVtx.maxmult,"maxmult/I");
+  primaryvtx->Branch("primX",&primVtx.primX,"primX/F");
+  primaryvtx->Branch("primY",&primVtx.primY,"primY/F");
+  primaryvtx->Branch("primZ",&primVtx.primZ,"primZ/F");
+  primaryvtx->Branch("zVpd",&primVtx.zVpd,"zVpd/F");
+  primaryvtx->Branch("McX",&primVtx.McX,"McX/F");
+  primaryvtx->Branch("McY",&primVtx.McY,"McY/F");
+  primaryvtx->Branch("McZ",&primVtx.McZ,"McZ/F");
+  primaryvtx->Branch("chi2",&primVtx.chi2,"chi2/F");
+  primaryvtx->Branch("beam",&primVtx.beam,"beam/I");
+  primaryvtx->Branch("postx",&primVtx.postx,"postx/I");
+  primaryvtx->Branch("prompt",&primVtx.prompt,"prompt/I");
+  primaryvtx->Branch("cross",&primVtx.cross,"cross/I");
+  primaryvtx->Branch("tof",&primVtx.tof,"tof/I");
+  primaryvtx->Branch("notof",&primVtx.notof,"notof/I");
+  primaryvtx->Branch("EEMC",&primVtx.EEMC,"EEMC/I");
+  primaryvtx->Branch("noEEMC",&primVtx.noEEMC,"noEEMC/I");
+  primaryvtx->Branch("BEMC",&primVtx.BEMC,"BEMC/I");
+  primaryvtx->Branch("noBEMC",&primVtx.noBEMC,"noBEMC/I");
 
   TH1F *h1 =  new TH1F("h1","Rank Max",200,-3,3);
   TH1F *h2 =  new TH1F("h2","Max Mult",200,-3,3);
@@ -54,12 +94,12 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
   
   // ----------------------------------------------
   StMuDebug::setLevel(0);  
-  StMuDstMaker* maker = new StMuDstMaker(0,0,"",file,"st:MuDst.root",1e9);   // set up maker in read mode
-                //                       0,0                        this mean read mode
-                //                           dir                    read all files in this directory
-                //                               file               bla.lis real all file in this list, if (file!="") dir is ignored
-                //                                    filter        apply filter to filenames, multiple filters are separated by ':'
-                //                                          10      maximum number of file to read
+  maker = new StMuDstMaker(0,0,"",file,"st:MuDst.root",1e9);   // set up maker in read mode
+  //                       0,0                        this mean read mode
+  //                           dir                    read all files in this directory
+  //                               file               bla.lis real all file in this list, if (file!="") dir is ignored
+  //                                    filter        apply filter to filenames, multiple filters are separated by ':'
+  //                                          10      maximum number of file to read
   maker->SetStatus("*",0);
   const Char_t *ActiveBranches[] = {
     "MuEvent",
@@ -68,7 +108,9 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
     //"CovPrimTrack",
     //"GlobalTracks",
     "BTofHit",
-    "BTofHeader"
+    "BTofHeader",
+    "StStMuMcVertex",
+    "StStMuMcTrack"
   }; 
 
   Int_t Nb = sizeof(ActiveBranches)/sizeof(Char_t *);
@@ -100,7 +142,9 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
     //TClonesArray *CovPrimTrack     = mu->covPrimTrack(); // cout << "\tCovPrimTrack " << CovPrimTrack->GetEntriesFast();
     //TClonesArray *GlobalTracks    = mu->array(muGlobal);  
     //Int_t NoGlobalTracks = GlobalTracks->GetEntriesFast();  // cout << "\tPrimaryTracks " << NoPrimaryTracks;
-  
+    TClonesArray *MuMcVertices   = mu->mcArray(0); 
+    Int_t NoMuMcVertices = MuMcVertices->GetEntriesFast();
+
     ///////VPD////////////
     Float_t VpdZ =999;
     StBTofHeader *BTofHeader = mu->btofHeader();
@@ -117,8 +161,8 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
     for (Int_t l = 0; l < NoPrimaryVertices; l++) {
       StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(l);
       Float_t Multiplicity = Vtx->noTracks();
-      if(MaxMult < Multiplicity) {                                //Amilkar: check if the multiplicity is higher than previous
-	MaxMult = Multiplicity;                                   //Amilkar: asign the new maximum value
+      if(MaxMult < Multiplicity) {                                //check if the multiplicity is higher than previous
+	MaxMult = Multiplicity;                                   //asign the new maximum value
       }                                                           
     }
     //////////////////////
@@ -128,16 +172,16 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
       noreco++;
       primVtx.event = ev;
       primVtx.zVpd = 999;
-      primVtx.MultP = 999;
-      primVtx.refMultP = 999;
+      primVtx.mult = 999;
+      primVtx.refMult = 999;
       
       primVtx.primX = 999;
       primVtx.primY = 999;
       primVtx.primZ = 999;
-      primVtx.l = 999;
+      primVtx.index = 999;
       primVtx.rank = 999;
       primVtx.maxmult = 999;
-      primaryvtx->Fill(&primVtx.event);
+      //primaryvtx->Fill();  /Do not save non reconstructed vertices
       if (_debugAsk) cout << "No reconstructed vertex" << endl; 
     }
     ////////////////////////////////
@@ -147,24 +191,50 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
             
       primVtx.event = ev;
       
-      primVtx.MultP = Vtx->noTracks();
-      primVtx.refMultP = Vtx->refMult();
+      primVtx.mult = Vtx->noTracks();
+      primVtx.refMult = Vtx->refMult();
       
       primVtx.primX = Vtx->position().x();
       primVtx.primY = Vtx->position().y();
       primVtx.primZ = Vtx->position().z();
-      primVtx.l = l;
+      primVtx.index = l;
       primVtx.rank = Vtx->ranking();
 
+      //////Mc info/////////
+      primVtx.McX    = 999;
+      primVtx.McY    = 999;
+      primVtx.McZ    = 999;
+      Int_t idd = Vtx->idTruth();
+      StMuMcVertex *mcVertex = 0;
+      if (idd > 0 && idd < NoMuMcVertices) mcVertex = (StMuMcVertex *) MuMcVertices->UncheckedAt(idd-1);
+      if (mcVertex) {
+	primVtx.McX    = mcVertex->XyzV().x();
+	primVtx.McY    = mcVertex->XyzV().y();
+	primVtx.McZ    = mcVertex->XyzV().z();
+      }
+      //////////////////////
+
+      primVtx.beam   =  Vtx->isBeamConstrained() ? 1 : 0;
+      primVtx.postx  =  Vtx->nPostXtracks();
+      primVtx.prompt =  Vtx->nPromptTracks();
+      primVtx.cross  =  Vtx->nCrossCentralMembrane();
+      primVtx.tof    = (Vtx->nCTBMatch()     + Vtx->nBTOFMatch());
+      primVtx.notof  = (Vtx->nCTBNotMatch()  + Vtx->nBTOFNotMatch());
+      primVtx.BEMC   =  Vtx->nBEMCMatch();
+      primVtx.noBEMC =  Vtx->nBEMCNotMatch();
+      primVtx.EEMC   =  Vtx->nEEMCMatch();
+      primVtx.noEEMC =  Vtx->nEEMCNotMatch();
+      primVtx.chi2   =  Vtx->chiSquared();
+      
       if (l==0 && abs(primVtx.primZ-VpdZ)<3) h1->Fill(primVtx.primZ-VpdZ);
-      if(MaxMult==primVtx.MultP) {primVtx.maxmult = 1; if (abs(primVtx.primZ-VpdZ)<3) h2->Fill(primVtx.primZ-VpdZ);}
+      if(MaxMult==primVtx.mult) {primVtx.maxmult = 1; if (abs(primVtx.primZ-VpdZ)<3) h2->Fill(primVtx.primZ-VpdZ);}
       else primVtx.maxmult = 0;
       
-      primaryvtx->Fill(&primVtx.event);
+      primaryvtx->Fill();
 
       if (_debugAsk) {
 	//cout << Form("Vx[%3i]", l) << *Vtx << endl;
-	cout << Form("[%i]",l) <<Form(" %8.3f  %8.3f  %8.3f ",Vtx->position().x(),Vtx->position().y(),Vtx->position().z()) << Form("  Rank:%1.0f",Vtx->ranking()) << "    MultP: " << primVtx.MultP ;
+	cout << Form("[%i]",l) <<Form(" %8.3f  %8.3f  %8.3f ",Vtx->position().x(),Vtx->position().y(),Vtx->position().z()) << Form("  Rank:%1.0f",Vtx->ranking()) << "    Mult: " << primVtx.mult;
 	if (primVtx.maxmult == 1 && l!=0) cout << "\t WRONG RANK"<< endl;
 	else cout << endl;
       }
