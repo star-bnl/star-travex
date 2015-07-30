@@ -172,7 +172,6 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
       primVtx.index = 999;
       primVtx.rank = 999;
       primVtx.maxmult = 999;
-      primaryvtx->Fill(&primVtx.event);
       if (_debugAsk) cout << "No reconstructed vertex" << endl; 
     }
     ////////////////////////////////
