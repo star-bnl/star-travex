@@ -254,7 +254,7 @@ Bool_t Ask() {
   static Bool_t fAsk = kTRUE;
   char symbol;
   if (fAsk){
-    std::cout << "ask (enter - next, s - save, r - don't ask, q - quit) >";
+    std::cout << "ask (enter - next, r - don't ask, q - quit) >";
     do{
       std::cin.get(symbol);
       if (symbol == 'r') {
