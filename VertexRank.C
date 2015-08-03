@@ -29,7 +29,7 @@
 
 static bool gDebugFlag = false;
 
-Bool_t Ask();
+Bool_t ask_user();
 
 
 void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", const  char *outFile = "test")
@@ -125,8 +125,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
       if (gDebugFlag) cout << "Read event #" << ev << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << endl;
 
-      TClonesArray *PrimaryVertices   = mu->primaryVertices();
-      Int_t NoPrimaryVertices = PrimaryVertices->GetEntriesFast();  // cout << "\tPrimaryVertices " << NoPrimaryVertices;
+      TClonesArray *primaryVertices   = mu->primaryVertices();
+      int numPrimaryVertices = primaryVertices->GetEntriesFast();  // cout << "\tPrimaryVertices " << numPrimaryVertices;
       //TClonesArray *PrimaryTracks    = mu->array(muPrimary);
       //Int_t NoPrimaryTracks = PrimaryTracks->GetEntriesFast();  // cout << "\tPrimaryTracks " << NoPrimaryTracks;
       //TClonesArray *CovPrimTrack     = mu->covPrimTrack(); // cout << "\tCovPrimTrack " << CovPrimTrack->GetEntriesFast();
@@ -153,19 +153,19 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       /////Usually the correct vertex/////
       Int_t MaxMult = 0;
 
-      for (Int_t l = 0; l < NoPrimaryVertices; l++) {
-         StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(l);
-         Float_t Multiplicity = Vtx->noTracks();
+      for (Int_t l = 0; l < numPrimaryVertices; l++) {
+         StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
+         Float_t numTrackPerVertex = Vtx->noTracks();
 
-         hNumTracksPerVertex.Fill(Multiplicity);
+         hNumTracksPerVertex.Fill(numTrackPerVertex);
 
-         if (MaxMult < Multiplicity) {                               //Amilkar: check if the multiplicity is higher than previous
-            MaxMult = Multiplicity;                                   //Amilkar: asign the new maximum value
+         if (MaxMult < numTrackPerVertex) {                               //Amilkar: check if the numTrackPerVertex is higher than previous
+            MaxMult = numTrackPerVertex;                                   //Amilkar: asign the new maximum value
          }
       }
 
       ////////No reconstructed///////////
-      if (NoPrimaryVertices == 0) {
+      if (numPrimaryVertices == 0) {
          noreco++;
          primVtx.event = ev;
          primVtx.zVpd = 999;
@@ -182,8 +182,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          if (gDebugFlag) cout << "No reconstructed vertex" << endl;
       }
 
-      for (Int_t l = 0; l < NoPrimaryVertices; l++) {        //START Vertices
-         StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(l);
+      for (Int_t l = 0; l < numPrimaryVertices; l++) {        //START Vertices
+         StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
 
          primVtx.event = ev;
 
@@ -246,10 +246,10 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
       }// END VERTICES
 
-      hNumVertices.Fill(NoPrimaryVertices);
+      hNumVertices.Fill(numPrimaryVertices);
 
       if ( !gROOT->IsBatch() ) {
-         if (Ask()) return;
+         if (ask_user()) return;
       }
       else {gDebugFlag = false;}
 
@@ -265,7 +265,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
 
 /** Get input from user to control amount of print out interactively. */
-Bool_t Ask()
+Bool_t ask_user()
 {
    static Bool_t fAsk = kTRUE;
    char symbol;
