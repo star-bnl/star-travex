@@ -36,9 +36,6 @@ Bool_t Ask();
 //________________________________________________________________________________
 void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", const  char *outFile = "test")
 {
-
-   gROOT->cd();
-
    TString OutFile(outFile);
    OutFile += ".root";
    TFile fOut(OutFile, "recreate");        //Create the file to save the data
