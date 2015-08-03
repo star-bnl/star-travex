@@ -27,7 +27,9 @@
 #include "StEvent/StBTofHeader.h"
 #endif
 
-#include "Ask.h"
+static Int_t _debugAsk = 1;
+
+Bool_t Ask();
 
 
 //--->START MAIN PROGRAM
@@ -244,4 +246,23 @@ void VertexRank(Long64_t nevent = 999999,const char* file="./*.MuDst.root",const
   //vertexall->Write();
  
   fOut->Close();      //Need to be used for condor
+}
+
+
+/** Get input from user to control amount of print out interactively. */
+Bool_t Ask() {
+  static Bool_t fAsk = kTRUE;
+  char symbol;
+  if (fAsk){
+    std::cout << "ask (enter - next, s - save, r - don't ask, q - quit) >";
+    do{
+      std::cin.get(symbol);
+      if (symbol == 'r') {
+	_debugAsk = 0;
+        fAsk = kFALSE;
+      } else if (symbol == 'q') return kTRUE;
+    } while (symbol != '\n');
+    std::cout << std::endl;
+  }
+  return kFALSE;
 }
