@@ -32,16 +32,12 @@ static bool gDebugFlag = false;
 Bool_t Ask();
 
 
-//--->START MAIN PROGRAM
-//________________________________________________________________________________
 void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", const  char *outFile = "test")
 {
    TString OutFile(outFile);
    OutFile += ".root";
    TFile fOut(OutFile, "recreate");        //Create the file to save the data
 
-   //////////////////////////////////////////////////////->Define the variables
-   //static Double_t pionM = 0.13956995;
    struct primVtxPoint_t {
       Int_t event, index, rank, mult, refMult, maxmult;
       Float_t primX, primY, primZ, zVpd;
@@ -81,10 +77,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    TH1I hNumTracksPerVertex("hNumTracksPerVertex", "Number of Tracks per Vertex", 100, 0, 100);
    TH1F h1("h1", "Rank Max", 100, -3, 3);
    TH1F h2("h2", "Max Mult", 100, -3, 3);
-   ///////////////////////////////////////////////////////<-
 
 
-   // ----------------------------------------------
    StMuDebug::setLevel(0);
    StMuDstMaker *maker = new StMuDstMaker(0, 0, "", file, "st:MuDst.root", 1e9); // set up maker in read mode
    //                       0,0                        this mean read mode
@@ -155,8 +149,6 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
       if (gDebugFlag) cout << Form("Vpd value:              %8.3f", VpdZ) << endl;
 
-      /////////////////////
-
       //////Max multiplicity/////////
       /////Usually the correct vertex/////
       Int_t MaxMult = 0;
@@ -171,8 +163,6 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
             MaxMult = Multiplicity;                                   //Amilkar: asign the new maximum value
          }
       }
-
-      //////////////////////
 
       ////////No reconstructed///////////
       if (NoPrimaryVertices == 0) {
@@ -191,8 +181,6 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
          if (gDebugFlag) cout << "No reconstructed vertex" << endl;
       }
-
-      ////////////////////////////////
 
       for (Int_t l = 0; l < NoPrimaryVertices; l++) {        //START Vertices
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(l);
@@ -235,9 +223,15 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          primVtx.noEEMC =  Vtx->nEEMCNotMatch();
          primVtx.chi2   =  Vtx->chiSquared();
 
-         if (l == 0 && abs(primVtx.primZ - VpdZ) < 3) h1.Fill(primVtx.primZ - VpdZ);
+         if (l == 0 && abs(primVtx.primZ - VpdZ) < 3)
+            h1.Fill(primVtx.primZ - VpdZ);
 
-         if (MaxMult == primVtx.mult) {primVtx.maxmult = 1; if (abs(primVtx.primZ - VpdZ) < 3) h2.Fill(primVtx.primZ - VpdZ);}
+         if (MaxMult == primVtx.mult) {
+            primVtx.maxmult = 1;
+
+            if (abs(primVtx.primZ - VpdZ) < 3)
+               h2.Fill(primVtx.primZ - VpdZ);
+         }
          else primVtx.maxmult = 0;
 
          primaryvtx->Fill();
@@ -254,7 +248,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
       hNumVertices.Fill(NoPrimaryVertices);
 
-      if (! gROOT->IsBatch()) {
+      if ( !gROOT->IsBatch() ) {
          if (Ask()) return;
       }
       else {gDebugFlag = false;}
@@ -267,7 +261,6 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
    TDatime now1;
    now1.Print();
-   //vertexall->Write();
 }
 
 
