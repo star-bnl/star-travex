@@ -81,6 +81,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    primaryvtx->Branch("BEMC", &primVtx.BEMC, "BEMC/I");
    primaryvtx->Branch("noBEMC", &primVtx.noBEMC, "noBEMC/I");
 
+   TH1I hNumVertices("hNumVertices", "Number of Vertices", 500, 0, 500);
+   TH1I hNumTracksPerVertex("hNumTracksPerVertex", "Number of Tracks per Vertex", 100, 0, 100);
    TH1F h1("h1", "Rank Max", 100, -3, 3);
    TH1F h2("h2", "Max Mult", 100, -3, 3);
    ///////////////////////////////////////////////////////<-
@@ -167,6 +169,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(l);
          Float_t Multiplicity = Vtx->noTracks();
 
+         hNumTracksPerVertex.Fill(Multiplicity);
+
          if (MaxMult < Multiplicity) {                               //Amilkar: check if the multiplicity is higher than previous
             MaxMult = Multiplicity;                                   //Amilkar: asign the new maximum value
          }
@@ -251,6 +255,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          }
 
       }// END VERTICES
+
+      hNumVertices.Fill(NoPrimaryVertices);
 
       if (! gROOT->IsBatch()) {
          if (Ask()) return;
