@@ -27,7 +27,7 @@
 #include "StEvent/StBTofHeader.h"
 #endif
 
-static Int_t _debugAsk = 1;
+static bool gDebugFlag = false;
 
 Bool_t Ask();
 
@@ -129,7 +129,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       StMuDst *mu = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
       StMuEvent *muEvent = mu->event(); // get a pointer to the class holding event-wise information
 
-      if (_debugAsk) cout << "Read event #" << ev << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << endl;
+      if (gDebugFlag) cout << "Read event #" << ev << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << endl;
 
       TClonesArray *PrimaryVertices   = mu->primaryVertices();
       Int_t NoPrimaryVertices = PrimaryVertices->GetEntriesFast();  // cout << "\tPrimaryVertices " << NoPrimaryVertices;
@@ -153,7 +153,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       }
       else primVtx.zVpd = 999;
 
-      if (_debugAsk) cout << Form("Vpd value:              %8.3f", VpdZ) << endl;
+      if (gDebugFlag) cout << Form("Vpd value:              %8.3f", VpdZ) << endl;
 
       /////////////////////
 
@@ -189,7 +189,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          primVtx.rank = 999;
          primVtx.maxmult = 999;
 
-         if (_debugAsk) cout << "No reconstructed vertex" << endl;
+         if (gDebugFlag) cout << "No reconstructed vertex" << endl;
       }
 
       ////////////////////////////////
@@ -242,7 +242,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
          primaryvtx->Fill();
 
-         if (_debugAsk) {
+         if (gDebugFlag) {
             //cout << Form("Vx[%3i]", l) << *Vtx << endl;
             cout << Form("[%i]", l) << Form(" %8.3f  %8.3f  %8.3f ", Vtx->position().x(), Vtx->position().y(), Vtx->position().z()) << Form("  Rank:%1.0f", Vtx->ranking()) << "    Mult: " << primVtx.mult;
 
@@ -257,7 +257,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       if (! gROOT->IsBatch()) {
          if (Ask()) return;
       }
-      else {_debugAsk = 0;}
+      else {gDebugFlag = false;}
 
       //if ((ev % 100) == 0) cout << "Number of events: " << ev << endl;
    }     //END EVENTS
@@ -284,7 +284,7 @@ Bool_t Ask()
          std::cin.get(symbol);
 
          if (symbol == 'r') {
-            _debugAsk = 0;
+            gDebugFlag = false;
             fAsk = kFALSE;
          }
          else if (symbol == 'q') return kTRUE;
