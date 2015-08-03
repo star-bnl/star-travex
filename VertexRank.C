@@ -41,8 +41,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
    TString OutFile(outFile);
    OutFile += ".root";
-   TFile *fOut = TFile::Open(OutFile, "recreate");        //Create the file to save the data
-   fOut->cd();
+   TFile fOut(OutFile, "recreate");        //Create the file to save the data
 
    //////////////////////////////////////////////////////->Define the variables
    //static Double_t pionM = 0.13956995;
@@ -267,13 +266,11 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    }     //END EVENTS
 
    cout << "Number of events: " <<  nevent << "  No reconstructed events: " << noreco << endl;
-   fOut->Write();
+   fOut.Write();
 
    TDatime now1;
    now1.Print();
    //vertexall->Write();
-
-   fOut->Close();      //Need to be used for condor
 }
 
 
