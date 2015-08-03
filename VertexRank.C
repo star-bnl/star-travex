@@ -81,8 +81,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    primaryvtx->Branch("BEMC", &primVtx.BEMC, "BEMC/I");
    primaryvtx->Branch("noBEMC", &primVtx.noBEMC, "noBEMC/I");
 
-   TH1F *h1 =  new TH1F("h1", "Rank Max", 200, -3, 3);
-   TH1F *h2 =  new TH1F("h2", "Max Mult", 200, -3, 3);
+   TH1F h1("h1", "Rank Max", 100, -3, 3);
+   TH1F h2("h2", "Max Mult", 100, -3, 3);
    ///////////////////////////////////////////////////////<-
 
 
@@ -235,9 +235,9 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          primVtx.noEEMC =  Vtx->nEEMCNotMatch();
          primVtx.chi2   =  Vtx->chiSquared();
 
-         if (l == 0 && abs(primVtx.primZ - VpdZ) < 3) h1->Fill(primVtx.primZ - VpdZ);
+         if (l == 0 && abs(primVtx.primZ - VpdZ) < 3) h1.Fill(primVtx.primZ - VpdZ);
 
-         if (MaxMult == primVtx.mult) {primVtx.maxmult = 1; if (abs(primVtx.primZ - VpdZ) < 3) h2->Fill(primVtx.primZ - VpdZ);}
+         if (MaxMult == primVtx.mult) {primVtx.maxmult = 1; if (abs(primVtx.primZ - VpdZ) < 3) h2.Fill(primVtx.primZ - VpdZ);}
          else primVtx.maxmult = 0;
 
          primaryvtx->Fill();
