@@ -4,7 +4,7 @@
 //   to run > root.exe lMuDst.C 'VertexRank.C+(9999999,"/path/to/files/*MuDst.root")'
 // /star/data26/reco/pp500_production_2013/ReversedFullField/P15ic_KFvertex_BL/2013/
 
-#if !defined(__CINT__) || defined(__MAKECINT__)
+#ifndef __CINT__
 #include <string>
 #include "Riostream.h"
 #include "TROOT.h"
