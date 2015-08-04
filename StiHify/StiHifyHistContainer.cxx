@@ -13,7 +13,8 @@ StiHifyHistContainer::StiHifyHistContainer(const char* name, TDirectory* motherD
    hPullClosestHit2D(nullptr),
    hPullCandidateHits2D(nullptr),
    hChi2CandidateHits(nullptr),
-   hCountCandidateHits(nullptr)
+   hCountCandidateHits(nullptr),
+   hActiveLayerCounts(nullptr)
 {
    BookHists();
 }
@@ -45,7 +46,7 @@ void StiHifyHistContainer::BookHists()
       = new TH1I("hCountCandidateHits", " ; Num. of Candidate Hits; Num. of Track Nodes", 20, 0, 20);
 
    mHs["hActiveLayerCounts"] = hActiveLayerCounts
-      = new TH2F("hActiveLayerCounts", " ; Track Proj. Local Z, cm; Local Y, cm; Num. of Track Nodes", 25, -25, 25, 10, -2, 8);
+      = new TH2F("hActiveLayerCounts", " ; Track Local Z, cm; Local Y, cm; Num. of Track Nodes", 25, -25, 25, 10, -2, 8);
    hActiveLayerCounts->SetOption("colz");
 }
 
@@ -111,7 +112,7 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
       hChi2CandidateHits->Fill(hitCandidate.GetChi2());
    }
 
-   hActiveLayerCounts->Fill(trkNode.GetProjPositionLocal().Z(), trkNode.GetProjPositionLocal().Y());
+   hActiveLayerCounts->Fill(trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y());
 
 
    std::string histName("hActiveLayerCounts_" + trkNode.GetVolumeName());
@@ -121,11 +122,11 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
    if (!hActiveLayerCounts_det) {
       this->cd();
       mHs[histName] = hActiveLayerCounts_det
-         = new TH2F(histName.c_str(), " ; Track Proj. Local Z, cm; Local Y, cm; Num. of Track Nodes", 25, -25, 25, 10, -2, 8);
+         = new TH2F(histName.c_str(), " ; Track Local Z, cm; Local Y, cm; Num. of Track Nodes", 25, -25, 25, 10, -2, 8);
       hActiveLayerCounts_det->SetOption("colz");
    }
 
-   hActiveLayerCounts_det->Fill( trkNode.GetProjPositionLocal().Z(), trkNode.GetProjPositionLocal().Y() );
+   hActiveLayerCounts_det->Fill( trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y() );
 }
 
 
