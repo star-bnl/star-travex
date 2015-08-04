@@ -14,7 +14,9 @@ StiHifyHistContainer::StiHifyHistContainer(const char* name, TDirectory* motherD
    hPullCandidateHits2D(nullptr),
    hChi2CandidateHits(nullptr),
    hCountCandidateHits(nullptr),
-   hActiveLayerCounts(nullptr)
+   hActiveLayerCounts(nullptr),
+   hActiveLayerCounts_HitCandidate(nullptr),
+   hActiveLayerCounts_TrkPrj(nullptr)
 {
    BookHists();
 }
@@ -48,6 +50,14 @@ void StiHifyHistContainer::BookHists()
    mHs["hActiveLayerCounts"] = hActiveLayerCounts
       = new TH2F("hActiveLayerCounts", " ; Track Local Z, cm; Local Y, cm; Num. of Track Nodes", 25, -25, 25, 10, -2, 8);
    hActiveLayerCounts->SetOption("colz");
+
+   mHs["hActiveLayerCounts_HitCandidate"] = hActiveLayerCounts_HitCandidate
+      = new TH2F("hActiveLayerCounts_HitCandidate", " ; Track Local Z, cm; Local Y, cm; Num. of Track Nodes", 25, -25, 25, 10, -2, 8);
+   hActiveLayerCounts_HitCandidate->SetOption("colz");
+
+   mHs["hActiveLayerCounts_TrkPrj"] = hActiveLayerCounts_TrkPrj
+      = new TH2F("hActiveLayerCounts_TrkPrj", " ; Track Proj. Local Z, cm; Local Y, cm; Num. of Track Nodes", 25, -25, 25, 10, -2, 8);
+   hActiveLayerCounts_TrkPrj->SetOption("colz");
 }
 
 
@@ -103,6 +113,10 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
 
    hCountCandidateHits->Fill(hitCandidates.size());
 
+   // Consider the first candidate hit only. This histogram is used in hit
+   // efficiency calculation
+   bool foundClosestCandidate = false;
+
    for (auto iHitCandidate=hitCandidates.begin(); iHitCandidate!=hitCandidates.end(); ++iHitCandidate)
    {
       const TStiHitProxy& hitCandidate = *iHitCandidate;
@@ -110,9 +124,17 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
       TVector3 pull = trkNode.CalcPullToHit( *hitCandidate.GetTStiHit() );
       hPullCandidateHits2D->Fill(pull.Z(), pull.Y());
       hChi2CandidateHits->Fill(hitCandidate.GetChi2());
+
+      // Choose the first (i.e. the closest) candidate hit
+      if (hitCandidate.GetDistanceToNode() >= 0 && !foundClosestCandidate) {
+         hActiveLayerCounts_HitCandidate->Fill(trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y());
+         foundClosestCandidate = true;
+      }
    }
 
    hActiveLayerCounts->Fill(trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y());
+
+   hActiveLayerCounts_TrkPrj->Fill(trkNode.GetProjPositionLocal().Z(), trkNode.GetProjPositionLocal().Y());
 
 
    std::string histName("hActiveLayerCounts_" + trkNode.GetVolumeName());

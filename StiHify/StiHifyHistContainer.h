@@ -37,6 +37,8 @@ protected:
    TH1I* hChi2CandidateHits;
    TH1I* hCountCandidateHits;
    TH2F* hActiveLayerCounts;
+   TH2F* hActiveLayerCounts_HitCandidate;
+   TH2F* hActiveLayerCounts_TrkPrj;
 };
 
 #endif
