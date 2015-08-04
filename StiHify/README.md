@@ -8,6 +8,23 @@ chain by using the `StiHifyTreeMaker` option as:
 
     root4star -b -q -l 'bfc.C(<first_event>, <last_event>, "<your_bfc_options> StiHifyTreeMaker", "<input_file>")'
 
+In order to disable a sensitive Sti volume (with hits) one can provide a file
+called `deactivate_sti_detectors.txt` with a list of regex patterns matching the
+name of the volume to skip in tracking. Providing this file is optional but
+required if one would like to estimate the true single hit efficiency of
+a detector.
+
+By default, all tracks and track nodes will be saved in the output tree. This is
+an unlikely desirable feature as it can lead to a very large output tree. To
+limit the number of saved track and track nodes one can provide another text
+file called `save_sti_detectors.txt` containing regex patterns matching the name
+of the Sti volumes crossed by tracks. In the simplest case both the
+`deactivate_sti_detectors.txt` and `save_sti_detectors.txt` files can contain
+the same set of regex patterns.
+
+Once the tree is produced one can run the `stihify` program over it to create
+a set of histograms with hit efficiencies.
+
 
 Reconstruction chain examples
 =============================
@@ -16,3 +33,8 @@ Note that in the following example the PXL hits are excluded from tracking
 by using the `NoPxlIT`option.
 
     root4star -q -b -l 'bfc.C(1, 100, "P2014a mtd btof pxlHit istHit NoPxlIT BEmcChkStat CorrX OSpaceZ2 OGridLeak3D -hitfilt StiHifyTreeMaker", "st_physics_file.daq")'
+
+The following command is for the pretty much standard reconstruction with all
+HFT hits used in tracking.
+
+    root4star -q -b -l 'bfc.C(1, 100, "P2014a mtd btof pxlHit istHit sstHit BEmcChkStat CorrX OSpaceZ2 OGridLeak3D -hitfilt StiHifyTreeMaker", "st_physics_file.daq")'
