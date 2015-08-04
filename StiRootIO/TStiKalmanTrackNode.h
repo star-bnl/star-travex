@@ -44,6 +44,7 @@ public:
    void   FindAdjacentHits(const std::set<TStiHit>& stiHits);
    double CalcDistanceToClosestHit() const { return fClosestStiHit ? (fClosestStiHit->GetPosition() - GetPosition()).Mag() : -1; }
    double CalcDistanceToHit() const { return fStiHit ? (fStiHit->GetPosition() - GetPosition()).Mag() : -1; }
+   double CalcDistanceToHit(const TStiHit& hit) const { return (hit.GetPosition() - GetPosition()).Mag(); }
    TVector3 CalcPullToHit(const TStiHit& hit) const;
    TVector3 CalcPullClosestHit() const;
    double   CalcChi2(const TStiHit& hit) const;
