@@ -168,3 +168,16 @@ void StiHifyHistContainer::FillHistsHitsRejected(const TStiKalmanTrackNode &trkN
 
    FillHists(trkNode, volumeList);
 }
+
+
+void StiHifyHistContainer::FillDerivedHists()
+{
+   this->cd();
+
+   TH1 *myRatio = static_cast<TH1*>(hActiveLayerCounts->Clone());
+   myRatio->SetOption("colz");
+   myRatio->SetName("hActiveLayerCounts_HitCandidate_eff");
+   myRatio->Divide(hActiveLayerCounts_HitCandidate, hActiveLayerCounts, 1, 1, "B");
+
+   mHs[std::string(myRatio->GetName())] = myRatio;
+}
