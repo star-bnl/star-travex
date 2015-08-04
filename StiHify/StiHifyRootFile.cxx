@@ -19,7 +19,7 @@ StiHifyRootFile::StiHifyRootFile(StiScanPrgOptions& prgOpts, Option_t *option, c
 
 void StiHifyRootFile::BookHists()
 {
-   mDirs["sti_hit_closest"]  = new StiHifyHistContainer("sti_hit_closest",  this);
+   mDirs["sti_hit_any_node"] = new StiHifyHistContainer("sti_hit_any_node",  this);
    mDirs["sti_hit_accepted"] = new StiHifyHistContainer("sti_hit_accepted", this);
    mDirs["sti_hit_rejected"] = new StiHifyHistContainer("sti_hit_rejected", this);
 }
@@ -29,7 +29,7 @@ void StiHifyRootFile::FillHists(const StiHifyEvent &event, const std::set<std::s
 {
    StiHifyHistContainer* container;
 
-   container = static_cast<StiHifyHistContainer*> (mDirs["sti_hit_closest"]);
+   container = static_cast<StiHifyHistContainer*> (mDirs["sti_hit_any_node"]);
    container->FillHists(event, StiNodeHitStatus::Any, volumeList);
 
    container = static_cast<StiHifyHistContainer*> (mDirs["sti_hit_accepted"]);
@@ -48,7 +48,7 @@ void StiHifyRootFile::FillDerivedHists()
    mDirs["sti_hit_ratio"] = ratios = new StiHifyRatiosHistContainer("sti_hit_ratio", this);
 
 
-   const HistMap& hists = mDirs["sti_hit_closest"]->GetHists();
+   const HistMap& hists = mDirs["sti_hit_any_node"]->GetHists();
 
    for (const auto& hist_iter : hists)
    {
@@ -59,7 +59,7 @@ void StiHifyRootFile::FillDerivedHists()
       if (!matched) continue;
 
       const StiHistContainer& hitsNumer(*mDirs["sti_hit_accepted"]);
-      const StiHistContainer& hitsDenom(*mDirs["sti_hit_closest"]);
+      const StiHistContainer& hitsDenom(*mDirs["sti_hit_any_node"]);
 
       const TH1* hitsAcc = hitsNumer.FindHist(hist_name);
       const TH1* hitsAll = hitsDenom.FindHist(hist_name);
