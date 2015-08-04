@@ -70,7 +70,7 @@ EReturnCodes TStiEvent::PostFill()
    {
       // Find the closest hit among the all known (to be saved) hits in this event
       iTrack->AssignClosestHits(fTStiHits);
-      iTrack->FindAdjacentHits(fTStiHits);
+      iTrack->FindCandidateHits(fTStiHits);
    }
 
    return kStOk;

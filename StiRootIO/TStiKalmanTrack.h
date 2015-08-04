@@ -23,7 +23,7 @@ public:
    std::pair<std::set<TStiHit>::iterator, bool> AddToParentEvent(const TStiHit& stiHit);
    const std::set<TStiKalmanTrackNode>& GetNodes() const { return fNodes; }
    void  AssignClosestHits(const std::set<TStiHit>& stiHits);
-   void  FindAdjacentHits(const std::set<TStiHit>& stiHits);
+   void  FindCandidateHits(const std::set<TStiHit>& stiHits);
    const TStiKalmanTrackNode& GetDcaNode() const;
    double GetEnergyLosses() const;
    virtual void Print(Option_t *opt = "") const;

@@ -19,7 +19,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
    fProjPositionLocal(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(0),
    fNodeRelRadLength(0), fVolumeName(""), fStiHit(nullptr), fClosestStiHit(nullptr),
-   fAdjacentStiHits(),
+   fCandidateStiHits(),
    fProjError()
 {
 }
@@ -33,7 +33,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(const StiKalmanTrackNode &stiKTN, TStiK
    fProjPositionLocal(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(stiKTN.getTrackLength()),
    fNodeRelRadLength(0), fVolumeName(""), fStiHit(nullptr), fClosestStiHit(nullptr),
-   fAdjacentStiHits(),
+   fCandidateStiHits(),
    fProjError()
 {
    // Access node parameters
@@ -166,14 +166,14 @@ bool operator< (const TStiKalmanTrackNode& lhs, const TStiKalmanTrackNode& rhs)
 }
 
 
-std::set<const TStiHit*> TStiKalmanTrackNode::GetAdjacentHits() const
+std::set<const TStiHit*> TStiKalmanTrackNode::GetCandidateHits() const
 {
-   std::set<const TStiHit*> adjacentHits;
+   std::set<const TStiHit*> candidateHits;
 
-   std::transform(fAdjacentStiHits.begin(), fAdjacentStiHits.end(),
-      std::inserter(adjacentHits, adjacentHits.begin()), TStiHitProxy::GetBareStiHit);
+   std::transform(fCandidateStiHits.begin(), fCandidateStiHits.end(),
+      std::inserter(candidateHits, candidateHits.begin()), TStiHitProxy::GetBareStiHit);
 
-   return adjacentHits;
+   return candidateHits;
 }
 
 
@@ -197,12 +197,12 @@ void TStiKalmanTrackNode::AssignClosestHit(const std::set<TStiHit>& stiHits)
 
 /**
  * Finds all hits within a 5x(track_proj_err) vicinity of the track mean
- * projection and fills this node's fAdjacentStiHits collection with pointers to
+ * projection and fills this node's fCandidateStiHits collection with pointers to
  * the found hits. The hits are selected from the user provided collection
  * stiHits which is normaly a collection of hits in the parent event to which
  * the track belongs.
  */
-void TStiKalmanTrackNode::FindAdjacentHits(const std::set<TStiHit>& stiHits)
+void TStiKalmanTrackNode::FindCandidateHits(const std::set<TStiHit>& stiHits)
 {
    TVector3 distVec;
 
@@ -215,7 +215,7 @@ void TStiKalmanTrackNode::FindAdjacentHits(const std::set<TStiHit>& stiHits)
       if (fabs(distVec.Y()) < 5*fProjError.Y() &&
           fabs(distVec.Z()) < 5*fProjError.Z() )
       {
-         fAdjacentStiHits.insert(TStiHitProxy(*iHit, *this));
+         fCandidateStiHits.insert(TStiHitProxy(*iHit, *this));
       }
    }
 }

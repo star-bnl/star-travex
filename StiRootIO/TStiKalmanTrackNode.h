@@ -38,10 +38,10 @@ public:
    std::string GetVolumeName() const { return fVolumeName; }
    const TStiHit* GetHit() const { return fStiHit; }
    const TStiHit* GetClosestHit() const { return fClosestStiHit; }
-   std::set<const TStiHit*> GetAdjacentHits() const;
-   const std::set<TStiHitProxy>& GetAdjacentProxyHits() const { return fAdjacentStiHits; }
+   std::set<const TStiHit*> GetCandidateHits() const;
+   const std::set<TStiHitProxy>& GetCandidateProxyHits() const { return fCandidateStiHits; }
    void   AssignClosestHit(const std::set<TStiHit>& stiHits);
-   void   FindAdjacentHits(const std::set<TStiHit>& stiHits);
+   void   FindCandidateHits(const std::set<TStiHit>& stiHits);
    double CalcDistanceToClosestHit() const { return fClosestStiHit ? (fClosestStiHit->GetPosition() - GetPosition()).Mag() : -1; }
    double CalcDistanceToHit() const { return fStiHit ? (fStiHit->GetPosition() - GetPosition()).Mag() : -1; }
    double CalcDistanceToHit(const TStiHit& hit) const { return (hit.GetPosition() - GetPosition()).Mag(); }
@@ -74,7 +74,7 @@ protected:
    /// Pointer to the hit associated with this node by the reconstruction algorithm, if any
    const TStiHit  *fStiHit;
    const TStiHit  *fClosestStiHit;    ///< Pointer to the hit closest to this node if any
-   std::set<TStiHitProxy> fAdjacentStiHits;   ///< Collection of hits in some proximity of mean track projection
+   std::set<TStiHitProxy> fCandidateStiHits;   ///< Collection of hits in some proximity of mean track projection
    TVector3    fProjError;            ///< The projection error to the node before the fit
 
    ClassDef(TStiKalmanTrackNode, 10)

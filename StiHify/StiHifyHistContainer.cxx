@@ -98,7 +98,7 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
    TVector3 pull = trkNode.CalcPullClosestHit();
    hPullClosestHit2D->Fill(pull.Z(), pull.Y());
 
-   const std::set<TStiHitProxy>& hitCandidates = trkNode.GetAdjacentProxyHits();
+   const std::set<TStiHitProxy>& hitCandidates = trkNode.GetCandidateProxyHits();
 
    hCountCandidateHits->Fill(hitCandidates.size());
 
