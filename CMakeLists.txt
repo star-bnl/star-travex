@@ -29,6 +29,7 @@ include_directories(
 	contrib/star-base
 	contrib/star-muDst
 	contrib/star-stevent
+	contrib/star-tables
 )
 
 add_library( star-vertex-eval SHARED VertexRank.C)
