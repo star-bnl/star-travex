@@ -20,7 +20,6 @@
 #include "TString.h"
 #include "StMuDSTMaker/COMMON/StMuDst.h"
 #include "StMuDSTMaker/COMMON/StMuEvent.h"
-#include "StMuDSTMaker/COMMON/StMuTrack.h"
 #include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
 #include "StMuDSTMaker/COMMON/StMuMcVertex.h"
 #include "StMuDSTMaker/COMMON/StMuDstMaker.h"
