@@ -8,14 +8,14 @@
 #include "StiRootIO/StiRootFile.h"
 #include "StiHify/StiHifyEvent.h"
 
-class StiScanPrgOptions;
+class StiHifyPrgOptions;
 
 
 class StiHifyRootFile : public StiRootFile
 {
 public:
 
-   StiHifyRootFile(StiScanPrgOptions& prgOpts, Option_t* option="", const char* ftitle="", Int_t compress=1);
+   StiHifyRootFile(StiHifyPrgOptions& prgOpts, Option_t* option="", const char* ftitle="", Int_t compress=1);
 
    void FillHists(const StiHifyEvent &event, const std::set<std::string> *volumeList=0);
    void FillDerivedHists();

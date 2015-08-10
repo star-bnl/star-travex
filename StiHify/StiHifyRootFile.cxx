@@ -7,10 +7,10 @@
 
 #include "StiHify/StiHifyHistContainer.h"
 #include "StiHify/StiHifyRatiosHistContainer.h"
-#include "StiScan/StiScanPrgOptions.h"
+#include "StiHify/StiHifyPrgOptions.h"
 
 
-StiHifyRootFile::StiHifyRootFile(StiScanPrgOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
+StiHifyRootFile::StiHifyRootFile(StiHifyPrgOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
    StiRootFile(prgOpts, option, ftitle, compress)
 {
    BookHists();

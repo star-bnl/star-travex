@@ -10,19 +10,19 @@
 #include "src-tools/config.h"
 
 #include "StiHify/StiHifyEvent.h"
-#include "StiScan/StiScanPrgOptions.h"
+#include "StiHify/StiHifyPrgOptions.h"
 #include "StiHify/StiHifyRootFile.h"
 
 
 
-void loop_over_tree(StiScanPrgOptions &prgOpts);
+void loop_over_tree(StiHifyPrgOptions &prgOpts);
 
 
 int main(int argc, char **argv)
 {
    const std::string stiTreeName = "t";
 
-   StiScanPrgOptions prgOpts(argc, argv, stiTreeName);
+   StiHifyPrgOptions prgOpts(argc, argv, stiTreeName);
    prgOpts.ProcessOptions();
 
    loop_over_tree(prgOpts);
@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 }
 
 
-void loop_over_tree(StiScanPrgOptions &prgOpts)
+void loop_over_tree(StiHifyPrgOptions &prgOpts)
 {
    TChain *treeChain = prgOpts.GetStiTChain();
 
