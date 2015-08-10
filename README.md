@@ -41,7 +41,7 @@ Compile and build the tools:
     mkdir build && cd build
     # See "Remark about C++11 at STAR" below
     cmake -DCMAKE_INSTALL_PREFIX=./ -DCMAKE_CXX_FLAGS="-m32 -std=c++0x" -DBOOST_ROOT=$OPTSTAR ../
-    make && make install
+    make -j4 && make install
 
 *Remark about C++11 at STAR:* Our code extensively uses the features from the
 C++11 standard and, therefore, a compiler with C++11 support is required to
@@ -54,7 +54,7 @@ also available. To use it just provide the following options to cmake:
           -DCMAKE_CXX_FLAGS="-m32 -std=c++0x" \
           -DBOOST_ROOT=$OPTSTAR ../
     export LD_LIBRARY_PATH+=":/afs/rhic.bnl.gov/rcassoft/x8664_sl6/gcc482/lib"
-    make && make install
+    make -j4 && make install
 
 The make tool will place the libraries in the local `.slXX_gccXXX` directory.
 
