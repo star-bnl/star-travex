@@ -219,3 +219,17 @@ void TStiKalmanTrackNode::FindCandidateHits(const std::set<TStiHit>& stiHits)
       }
    }
 }
+
+
+void TStiKalmanTrackNode::FindCandidateHitsByChi2(const std::set<TStiHit>& stiHits)
+{
+   for (const auto& hit : stiHits)
+   {
+      if (fVolumeName != hit.GetVolumeName()) continue;
+
+      if (CalcChi2(hit) < 20)
+      {
+         fCandidateStiHits.insert(TStiHitProxy(hit, *this));
+      }
+   }
+}

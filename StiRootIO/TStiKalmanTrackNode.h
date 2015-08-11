@@ -42,6 +42,7 @@ public:
    const std::set<TStiHitProxy>& GetCandidateProxyHits() const { return fCandidateStiHits; }
    void   AssignClosestHit(const std::set<TStiHit>& stiHits);
    void   FindCandidateHits(const std::set<TStiHit>& stiHits);
+   void   FindCandidateHitsByChi2(const std::set<TStiHit>& stiHits);
    double CalcDistanceToClosestHit() const { return fClosestStiHit ? (fClosestStiHit->GetPosition() - GetPosition()).Mag() : -1; }
    double CalcDistanceToHit() const { return fStiHit ? (fStiHit->GetPosition() - GetPosition()).Mag() : -1; }
    double CalcDistanceToHit(const TStiHit& hit) const { return (hit.GetPosition() - GetPosition()).Mag(); }
