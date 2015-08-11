@@ -35,7 +35,7 @@ protected:
    virtual void FillHists(const TStiKalmanTrack &kalmTrack, const std::set<std::string> *volumeList=0);
    void FillHists(const TGeaTrack &trackG, const std::set<std::string> *volumeList=0);
 
-   StiScanPrgOptions& fPrgOptions; ///< Command line arguments and options requested by the user
+   const StiScanPrgOptions& fPrgOptions; ///< Command line arguments and options requested by the user
    double  mNodeZMin;
    double  mNodeZMax;
    float   mNodeRMin;
