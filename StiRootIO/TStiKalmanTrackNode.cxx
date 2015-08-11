@@ -177,7 +177,7 @@ std::set<const TStiHit*> TStiKalmanTrackNode::GetCandidateHits() const
 }
 
 
-void TStiKalmanTrackNode::AssignClosestHit(const std::set<TStiHit>& stiHits)
+void TStiKalmanTrackNode::FindClosestHit(const std::set<TStiHit>& stiHits)
 {
    TVector3 distVec;
    double min_dist = DBL_MAX;
