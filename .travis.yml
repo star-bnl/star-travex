@@ -22,12 +22,11 @@ before_script:
   - root-config --cflags
   - rsync -auv root-src/math/mathmore/inc/Math root/include/
 script:
-  - mkdir build/ && cd build/
-  - pwd
-  - cmake -DCMAKE_CXX_FLAGS=-std=c++0x ../
-  - make -j4
-  - sudo make install
-  - ls -la
-  - ls -la inc/
-  - ./stiscan --help
-  - ./stihify --help
+  - mkdir build/ && cd build/ && pwd
+  - cmake -D CMAKE_CXX_FLAGS=-std=c++0x -D CMAKE_INSTALL_PREFIX=./ -D CMAKE_BUILD_TYPE=Release ../
+  - make -j4 && make install && make clean
+  - ls -la ./ && ls -la lib/ && ls -la bin/ && ls -la inc/
+  - export PATH=$PATH:./bin
+  - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./lib
+  - ./bin/stiscan --help
+  - ./bin/stihify --help
