@@ -6,8 +6,9 @@
 #include "StiRootIO/TStiHitProxy.h"
 
 
-StiHifyHistContainer::StiHifyHistContainer(const char* name, TDirectory* motherDir, Option_t* option) :
+StiHifyHistContainer::StiHifyHistContainer(const StiHifyPrgOptions& prgOpts, const char* name, TDirectory* motherDir, Option_t* option) :
    StiHistContainer(name, motherDir, option),
+   fPrgOptions(prgOpts),
    hDistClosest2AcceptedHit(nullptr),
    hPullClosestHit1D(nullptr),
    hPullClosestHit2D(nullptr),

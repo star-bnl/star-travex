@@ -9,7 +9,7 @@
 #include "TH2F.h"
 
 #include "StiHify/StiHifyEvent.h"
-#include "StiScan/StiScanPrgOptions.h"
+#include "StiHify/StiHifyPrgOptions.h"
 #include "StiRootIO/StiHistContainer.h"
 #include "StiRootIO/TStiKalmanTrackNode.h"
 
@@ -18,7 +18,7 @@ class StiHifyHistContainer : public StiHistContainer
 {
 public:
 
-   StiHifyHistContainer(const char* name, TDirectory* motherDir = 0, Option_t* option = "");
+   StiHifyHistContainer(const StiHifyPrgOptions& prgOpts, const char* name, TDirectory* motherDir = 0, Option_t* option = "");
 
    void FillHists(const StiHifyEvent &event, StiNodeHitStatus hitStatus=StiNodeHitStatus::Any, const std::set<std::string> *volumeList=0);
    virtual void FillDerivedHists();
@@ -39,6 +39,10 @@ protected:
    TH2F* hActiveLayerCounts;
    TH2F* hActiveLayerCounts_HitCandidate;
    TH2F* hActiveLayerCounts_TrkPrj;
+
+private:
+
+   const StiHifyPrgOptions& fPrgOptions; ///< Command line arguments and options requested by the user
 };
 
 #endif
