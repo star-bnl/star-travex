@@ -25,6 +25,7 @@ public:
    StiHifyPrgOptions();
    StiHifyPrgOptions(int argc, char **argv, const std::string& stiTreeName="t");
 
+   bool   AcceptCandidateHit() const { return fAcceptCandidateHit; }
    double GetHistZMin() const { return fHistZMin; }
    double GetHistZMax() const { return fHistZMax; }
    double GetHistYMin() const { return fHistYMin; }
@@ -34,6 +35,7 @@ public:
 
 protected:
 
+   bool    fAcceptCandidateHit;   ///< A flag to force closest candidate hit to be the accepted track node hit
    double  fHistZMin;
    double  fHistZMax;
    double  fHistYMin;
