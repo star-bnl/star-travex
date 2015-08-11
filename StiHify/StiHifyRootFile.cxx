@@ -13,15 +13,15 @@
 StiHifyRootFile::StiHifyRootFile(StiHifyPrgOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
    StiRootFile(prgOpts, option, ftitle, compress)
 {
-   BookHists();
+   BookHists(prgOpts);
 }
 
 
-void StiHifyRootFile::BookHists()
+void StiHifyRootFile::BookHists(const StiHifyPrgOptions& prgOpts)
 {
-   mDirs["sti_hit_any_node"] = new StiHifyHistContainer("sti_hit_any_node",  this);
-   mDirs["sti_hit_accepted"] = new StiHifyHistContainer("sti_hit_accepted", this);
-   mDirs["sti_hit_rejected"] = new StiHifyHistContainer("sti_hit_rejected", this);
+   mDirs["sti_hit_any_node"] = new StiHifyHistContainer(prgOpts, "sti_hit_any_node", this);
+   mDirs["sti_hit_accepted"] = new StiHifyHistContainer(prgOpts, "sti_hit_accepted", this);
+   mDirs["sti_hit_rejected"] = new StiHifyHistContainer(prgOpts, "sti_hit_rejected", this);
 }
 
 

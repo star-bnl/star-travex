@@ -22,7 +22,7 @@ public:
 
 private:
 
-   void BookHists();
+   void BookHists(const StiHifyPrgOptions& prgOpts);
 };
 
 #endif
