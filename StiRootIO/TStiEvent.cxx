@@ -66,11 +66,11 @@ EReturnCodes TStiEvent::Fill(StiHitContainer &stiHitContainer)
 
 EReturnCodes TStiEvent::PostFill()
 {
-   for (auto iTrack = fTStiKalmanTracks.begin(); iTrack != fTStiKalmanTracks.end(); ++iTrack)
+   for (auto& track : fTStiKalmanTracks)
    {
       // Find the closest hit among the all known (to be saved) hits in this event
-      iTrack->AssignClosestHits(fTStiHits);
-      iTrack->FindCandidateHits(fTStiHits);
+      track.AssignClosestHits(fTStiHits);
+      track.FindCandidateHits(fTStiHits);
    }
 
    return kStOk;
@@ -87,8 +87,8 @@ void TStiEvent::Print(Option_t *opt) const
    if (string(opt).find("all") == std::string::npos)
       return;
 
-   for (auto iTStiKTrack = fTStiKalmanTracks.begin(); iTStiKTrack != fTStiKalmanTracks.end(); ++iTStiKTrack) {
-      iTStiKTrack->Print();
+   for (const auto& track : fTStiKalmanTracks) {
+      track.Print();
    }
 }
 

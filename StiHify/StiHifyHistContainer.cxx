@@ -77,14 +77,10 @@ void StiHifyHistContainer::BookHists()
 
 void StiHifyHistContainer::FillHists(const StiHifyEvent &event, StiNodeHitStatus hitStatus, const std::set<std::string> *volumeList)
 {
-   for (auto iTStiKTrack=event.GetTStiKalmanTracks().begin(); iTStiKTrack!=event.GetTStiKalmanTracks().end(); ++iTStiKTrack)
+   for (const auto& kalmTrack : event.GetTStiKalmanTracks())
    {
-      const TStiKalmanTrack &kalmTrack = *iTStiKTrack;
-
-      for (auto iTStiKTrackNode=kalmTrack.GetNodes().begin(); iTStiKTrackNode!=kalmTrack.GetNodes().end(); ++iTStiKTrackNode)
+      for (const auto& trkNode : kalmTrack.GetNodes())
       {
-         const TStiKalmanTrackNode &trkNode = *iTStiKTrackNode;
-
          switch (hitStatus)
          {
          case StiNodeHitStatus::Any:
@@ -131,10 +127,8 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
    // efficiency calculation
    bool foundClosestCandidate = false;
 
-   for (auto iHitCandidate=hitCandidates.begin(); iHitCandidate!=hitCandidates.end(); ++iHitCandidate)
+   for (const auto& hitCandidate : hitCandidates)
    {
-      const TStiHitProxy& hitCandidate = *iHitCandidate;
-
       TVector3 pull = trkNode.CalcPullToHit( *hitCandidate.GetTStiHit() );
       hPullCandidateHits2D->Fill(pull.Z(), pull.Y());
       hChi2CandidateHits->Fill(hitCandidate.GetChi2());

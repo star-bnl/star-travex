@@ -182,14 +182,14 @@ void TStiKalmanTrackNode::AssignClosestHit(const std::set<TStiHit>& stiHits)
    TVector3 distVec;
    double min_dist = DBL_MAX;
 
-   for (auto iHit = stiHits.begin(); iHit != stiHits.end(); ++iHit)
+   for (const auto& hit : stiHits)
    {
-      distVec = GetPosition() - iHit->GetPosition();
+      distVec = GetPosition() - hit.GetPosition();
 
       double dist = distVec.Mag();
       if (dist < min_dist) {
          min_dist = dist;
-         fClosestStiHit = &*iHit;
+         fClosestStiHit = &hit;
       }
    }
 }
@@ -206,16 +206,16 @@ void TStiKalmanTrackNode::FindCandidateHits(const std::set<TStiHit>& stiHits)
 {
    TVector3 distVec;
 
-   for (auto iHit = stiHits.begin(); iHit != stiHits.end(); ++iHit)
+   for (const auto& hit : stiHits)
    {
-      if (fVolumeName != iHit->GetVolumeName()) continue;
+      if (fVolumeName != hit.GetVolumeName()) continue;
 
-      distVec = GetPositionLocal() - iHit->GetPositionLocal();
+      distVec = GetPositionLocal() - hit.GetPositionLocal();
 
       if (fabs(distVec.Y()) < 5*fProjError.Y() &&
           fabs(distVec.Z()) < 5*fProjError.Z() )
       {
-         fCandidateStiHits.insert(TStiHitProxy(*iHit, *this));
+         fCandidateStiHits.insert(TStiHitProxy(hit, *this));
       }
    }
 }

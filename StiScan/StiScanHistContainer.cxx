@@ -97,11 +97,8 @@ void StiScanHistContainer::BookHists()
 
 void StiScanHistContainer::FillHists(const StiScanEvent &eventT, const std::set<std::string> *volumeList)
 {
-   std::vector<TStiKalmanTrack>::const_iterator iTStiKTrack = eventT.GetTStiKalmanTracks().begin();
-
-   for ( ; iTStiKTrack != eventT.GetTStiKalmanTracks().end(); ++iTStiKTrack)
+   for (const auto& kalmTrack : eventT.GetTStiKalmanTracks())
    {
-      const TStiKalmanTrack &kalmTrack = *iTStiKTrack;
       FillHists(kalmTrack, volumeList);
    }
 }
@@ -193,12 +190,8 @@ void StiScanHistContainer::FillHists(const TStiKalmanTrack &kalmTrack, const std
    mHs["hTrackCountVsEtaVsPhi"]->Fill(dcaNode.GetTrackP().Eta(), dcaNode.GetTrackP().Phi());
    mHs["hTrackCountVsZVsPhi"]->Fill(dcaNode.GetPosition().Z(), dcaNode.GetTrackP().Phi());
 
-   std::set<TStiKalmanTrackNode>::const_iterator iTStiKTrackNode = kalmTrack.GetNodes().begin();
-
-   for ( ; iTStiKTrackNode != kalmTrack.GetNodes().end(); ++iTStiKTrackNode)
+   for (const auto& kalmNode : kalmTrack.GetNodes())
    {
-      const TStiKalmanTrackNode &kalmNode = *iTStiKTrackNode;
-
       if (volumeList && volumeList->size() && !kalmNode.MatchedVolName(*volumeList) ) continue;
 
       if (kalmNode.GetNodeMaterialDensity() <= 0) continue;

@@ -63,18 +63,10 @@ void StiScanRootFile::FindAutoRange() const
 
       stiChain->GetEntry(iEvent-1);
 
-      auto iTStiKTrack = stiEvent->GetTStiKalmanTracks().begin();
-
-      for ( ; iTStiKTrack != stiEvent->GetTStiKalmanTracks().end(); ++iTStiKTrack)
+      for (const auto& kalmTrack : stiEvent->GetTStiKalmanTracks())
       {
-         const TStiKalmanTrack &kalmTrack = *iTStiKTrack;
-
-         auto iTStiKTrackNode = kalmTrack.GetNodes().begin();
-
-         for ( ; iTStiKTrackNode != kalmTrack.GetNodes().end(); ++iTStiKTrackNode)
+         for (const auto& kalmNode : kalmTrack.GetNodes())
          {
-            const TStiKalmanTrackNode &kalmNode = *iTStiKTrackNode;
-
             if (volumeList && volumeList->size() && !kalmNode.MatchedVolName(*volumeList) )
                continue;
 
