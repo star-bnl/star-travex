@@ -36,7 +36,7 @@ public:
    float GetNodeRelRadLength() const { return fNodeRelRadLength; }
    float GetNodeTrackLength() const { return fNodeTrackLength; }
    std::string GetVolumeName() const { return fVolumeName; }
-   const TStiHit* GetHit() const { return fStiHit; }
+   const TStiHit* GetHit() const { return fAcceptedStiHit; }
    const TStiHit* GetClosestHit() const { return fClosestStiHit; }
    std::set<const TStiHit*> GetCandidateHits() const;
    const std::set<TStiHitProxy>& GetCandidateProxyHits() const { return fCandidateStiHits; }
@@ -44,7 +44,7 @@ public:
    void   FindCandidateHits(const std::set<TStiHit>& stiHits);
    void   FindCandidateHitsByChi2(const std::set<TStiHit>& stiHits);
    double CalcDistanceToClosestHit() const { return fClosestStiHit ? (fClosestStiHit->GetPosition() - GetPosition()).Mag() : -1; }
-   double CalcDistanceToHit() const { return fStiHit ? (fStiHit->GetPosition() - GetPosition()).Mag() : -1; }
+   double CalcDistanceToHit() const { return fAcceptedStiHit ? (fAcceptedStiHit->GetPosition() - GetPosition()).Mag() : -1; }
    double CalcDistanceToHit(const TStiHit& hit) const { return (hit.GetPosition() - GetPosition()).Mag(); }
    TVector3 CalcPullToHit(const TStiHit& hit) const;
    TVector3 CalcPullClosestHit() const;
@@ -73,7 +73,7 @@ protected:
    float       fNodeRelRadLength;     ///< Relative radiation length
    std::string fVolumeName;           ///< Name of Sti volume
    /// Pointer to the hit associated with this node by the reconstruction algorithm, if any
-   const TStiHit  *fStiHit;
+   const TStiHit  *fAcceptedStiHit;
    const TStiHit  *fClosestStiHit;    ///< Pointer to the hit closest to this node if any
    std::set<TStiHitProxy> fCandidateStiHits;   ///< Collection of hits in some proximity of mean track projection
    TVector3    fProjError;            ///< The projection error to the node before the fit

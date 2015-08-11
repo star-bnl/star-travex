@@ -18,7 +18,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
    fPositionLocal(),
    fProjPositionLocal(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(0),
-   fNodeRelRadLength(0), fVolumeName(""), fStiHit(nullptr), fClosestStiHit(nullptr),
+   fNodeRelRadLength(0), fVolumeName(""), fAcceptedStiHit(nullptr), fClosestStiHit(nullptr),
    fCandidateStiHits(),
    fProjError()
 {
@@ -32,7 +32,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(const StiKalmanTrackNode &stiKTN, TStiK
    fPositionLocal(),
    fProjPositionLocal(), fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
    fNodeTrackLength(stiKTN.getTrackLength()),
-   fNodeRelRadLength(0), fVolumeName(""), fStiHit(nullptr), fClosestStiHit(nullptr),
+   fNodeRelRadLength(0), fVolumeName(""), fAcceptedStiHit(nullptr), fClosestStiHit(nullptr),
    fCandidateStiHits(),
    fProjError()
 {
@@ -66,7 +66,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(const StiKalmanTrackNode &stiKTN, TStiK
    {
       auto resultPair = fTrack->AddToParentEvent( TStiHit(*stiKTN.getHit()) );
       // Save the pointer to the hit in the parent event
-      fStiHit = &(*resultPair.first);
+      fAcceptedStiHit = &(*resultPair.first);
    }
 
    // Note (as of now) this info is available for nodes with r < kRMinTpc [= 55 cm]
