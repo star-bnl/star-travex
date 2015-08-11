@@ -25,6 +25,19 @@ StiHifyHistContainer::StiHifyHistContainer(const StiHifyPrgOptions& prgOpts, con
 
 void StiHifyHistContainer::BookHists()
 {
+   const double suggestBinWidth = 1;   // desired bin width in cm
+
+   const double z_max = fPrgOptions.GetHistZMax();
+   const double z_min = fPrgOptions.GetHistZMin();
+   const double y_max = fPrgOptions.GetHistYMax();
+   const double y_min = fPrgOptions.GetHistYMin();
+
+   int n_z_bins = ceil( (z_max - z_min) / suggestBinWidth );
+   int n_y_bins = ceil( (y_max - y_min) / suggestBinWidth );
+
+   n_z_bins = ( n_z_bins <= 10 ? 10 : (n_z_bins >  50 ? 50 : n_z_bins) );
+   n_y_bins = ( n_y_bins <= 10 ? 10 : (n_y_bins >  50 ? 50 : n_y_bins) );
+
    this->cd();
 
    mHs["hDistClosest2AcceptedHit"] = hDistClosest2AcceptedHit
@@ -49,15 +62,15 @@ void StiHifyHistContainer::BookHists()
       = new TH1I("hCountCandidateHits", " ; Num. of Candidate Hits; Num. of Track Nodes", 20, 0, 20);
 
    mHs["hActiveLayerCounts"] = hActiveLayerCounts
-      = new TH2F("hActiveLayerCounts", " ; Track Local Z, cm; Local Y, cm; Num. of Track Nodes", 25, -25, 25, 10, -2, 8);
+      = new TH2F("hActiveLayerCounts", " ; Track Local Z, cm; Local Y, cm; Num. of Track Nodes", n_z_bins, z_min, z_max, n_y_bins, y_min, y_max);
    hActiveLayerCounts->SetOption("colz");
 
    mHs["hActiveLayerCounts_HitCandidate"] = hActiveLayerCounts_HitCandidate
-      = new TH2F("hActiveLayerCounts_HitCandidate", " ; Track Local Z, cm; Local Y, cm; Num. of Track Nodes", 25, -25, 25, 10, -2, 8);
+      = new TH2F("hActiveLayerCounts_HitCandidate", " ; Track Local Z, cm; Local Y, cm; Num. of Track Nodes", n_z_bins, z_min, z_max, n_y_bins, y_min, y_max);
    hActiveLayerCounts_HitCandidate->SetOption("colz");
 
    mHs["hActiveLayerCounts_TrkPrj"] = hActiveLayerCounts_TrkPrj
-      = new TH2F("hActiveLayerCounts_TrkPrj", " ; Track Proj. Local Z, cm; Local Y, cm; Num. of Track Nodes", 25, -25, 25, 10, -2, 8);
+      = new TH2F("hActiveLayerCounts_TrkPrj", " ; Track Proj. Local Z, cm; Local Y, cm; Num. of Track Nodes", n_z_bins, z_min, z_max, n_y_bins, y_min, y_max);
    hActiveLayerCounts_TrkPrj->SetOption("colz");
 }
 
@@ -144,9 +157,10 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
 
    if (!hActiveLayerCounts_det) {
       this->cd();
-      mHs[histName] = hActiveLayerCounts_det
-         = new TH2F(histName.c_str(), " ; Track Local Z, cm; Local Y, cm; Num. of Track Nodes", 25, -25, 25, 10, -2, 8);
+      hActiveLayerCounts_det = static_cast<TH1*>(hActiveLayerCounts->Clone());
+      hActiveLayerCounts_det->SetName(histName.c_str());
       hActiveLayerCounts_det->SetOption("colz");
+      mHs[histName] = hActiveLayerCounts_det;
    }
 
    hActiveLayerCounts_det->Fill( trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y() );
