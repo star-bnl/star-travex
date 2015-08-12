@@ -68,8 +68,7 @@ EReturnCodes TStiEvent::PostFill()
 {
    for (auto& track : fTStiKalmanTracks)
    {
-      // Find the closest hit among the all known (to be saved) hits in this event
-      track.FindClosestHits(fTStiHits);
+      // Finding candidate hits now also assumes finding the closest hit to the track node
       track.FindCandidateHits(fTStiHits);
    }
 

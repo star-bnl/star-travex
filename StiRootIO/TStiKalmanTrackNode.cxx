@@ -197,14 +197,16 @@ void TStiKalmanTrackNode::FindClosestHit(const std::set<TStiHit>& stiHits)
 
 /**
  * Finds all hits within a 5x(track_proj_err) vicinity of the track mean
- * projection and fills this node's fCandidateStiHits collection with pointers to
- * the found hits. The hits are selected from the user provided collection
- * stiHits which is normaly a collection of hits in the parent event to which
- * the track belongs.
+ * projection and fills this node's fCandidateStiHits collection with pointers
+ * to the found hits. Note that the function also among the candidate hist finds
+ * the closest hit to the track node position. The hits are selected from the
+ * user provided collection stiHits which should normaly be a collection of hits
+ * in the parent event to which the track belongs.
  */
 void TStiKalmanTrackNode::FindCandidateHits(const std::set<TStiHit>& stiHits)
 {
    TVector3 distVec;
+   double min_dist = DBL_MAX;
 
    for (const auto& hit : stiHits)
    {
@@ -216,6 +218,12 @@ void TStiKalmanTrackNode::FindCandidateHits(const std::set<TStiHit>& stiHits)
           fabs(distVec.Z()) < 5*fProjError.Z() )
       {
          fCandidateStiHits.insert(TStiHitProxy(hit, *this));
+
+         double dist = distVec.Mag();
+         if (dist < min_dist) {
+            min_dist = dist;
+            fClosestStiHit = &hit;
+         }
       }
    }
 }
