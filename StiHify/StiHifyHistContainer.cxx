@@ -46,7 +46,7 @@ void StiHifyHistContainer::BookHists()
       = new TH1I("hPullClosestHit1D", " ; Track Proj. to Closest Hit Pull Dist.: Distance R, #sigma-units; Num. of Track Nodes; ", 100, 0, 10);
 
    mHs["hPullClosestHit2D"] = hPullClosestHit2D
-      = new TH2I("hPullClosestHit2D", " ; Track Proj. to Closest Hit Pull Dist.: Local Z, #sigma-units; Local Y, #sigma-units; Num. of Track Nodes", 50, -10, 10, 50, -10, 10);
+      = new TH2I("hPullClosestHit2D", " ; Track Proj. to Closest Hit Pull Dist.: Local Z, #sigma-units; Local Y, #sigma-units; Num. of Track Nodes", 50, -6, 6, 50, -6, 6);
    hPullClosestHit2D->SetOption("colz");
 
    mHs["hPullCandidateHits2D"] = hPullCandidateHits2D
@@ -54,7 +54,7 @@ void StiHifyHistContainer::BookHists()
    hPullCandidateHits2D->SetOption("colz");
 
    mHs["hChi2CandidateHits"] = hChi2CandidateHits
-      = new TH1I("hChi2CandidateHits", " ; Track Proj. to Candidate Hit: #chi^{2}; Num. of Track Nodes", 50, 0, 50);
+      = new TH1I("hChi2CandidateHits", " ; Track Proj. to Candidate Hit: #chi^{2}; Num. of Track Nodes", 100, 0, 20);
 
    mHs["hCountCandidateHits"] = hCountCandidateHits
       = new TH1I("hCountCandidateHits", " ; Num. of Candidate Hits; Num. of Track Nodes", 20, 0, 20);
