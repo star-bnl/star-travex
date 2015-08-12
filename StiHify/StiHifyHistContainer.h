@@ -21,7 +21,7 @@ public:
    StiHifyHistContainer(const StiHifyPrgOptions& prgOpts, const char* name, TDirectory* motherDir = 0, Option_t* option = "");
 
    void FillHists(const StiHifyEvent &event, StiNodeHitStatus hitStatus=StiNodeHitStatus::Any, const std::set<std::string> *volumeList=0);
-   virtual void FillDerivedHists();
+   virtual void FillDerivedHists() {}
 
 protected:
 
@@ -37,8 +37,6 @@ protected:
    TH1I* hChi2CandidateHits;
    TH1I* hCountCandidateHits;
    TH2F* hActiveLayerCounts;
-   TH2F* hActiveLayerCounts_HitCandidate;
-   TH2F* hActiveLayerCounts_TrkPrj;
 
 private:
 

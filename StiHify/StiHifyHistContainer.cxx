@@ -15,9 +15,7 @@ StiHifyHistContainer::StiHifyHistContainer(const StiHifyPrgOptions& prgOpts, con
    hPullCandidateHits2D(nullptr),
    hChi2CandidateHits(nullptr),
    hCountCandidateHits(nullptr),
-   hActiveLayerCounts(nullptr),
-   hActiveLayerCounts_HitCandidate(nullptr),
-   hActiveLayerCounts_TrkPrj(nullptr)
+   hActiveLayerCounts(nullptr)
 {
    BookHists();
 }
@@ -64,14 +62,6 @@ void StiHifyHistContainer::BookHists()
    mHs["hActiveLayerCounts"] = hActiveLayerCounts
       = new TH2F("hActiveLayerCounts", " ; Track Local Z, cm; Local Y, cm; Num. of Track Nodes", n_z_bins, z_min, z_max, n_y_bins, y_min, y_max);
    hActiveLayerCounts->SetOption("colz");
-
-   mHs["hActiveLayerCounts_HitCandidate"] = hActiveLayerCounts_HitCandidate
-      = new TH2F("hActiveLayerCounts_HitCandidate", " ; Track Local Z, cm; Local Y, cm; Num. of Track Nodes", n_z_bins, z_min, z_max, n_y_bins, y_min, y_max);
-   hActiveLayerCounts_HitCandidate->SetOption("colz");
-
-   mHs["hActiveLayerCounts_TrkPrj"] = hActiveLayerCounts_TrkPrj
-      = new TH2F("hActiveLayerCounts_TrkPrj", " ; Track Proj. Local Z, cm; Local Y, cm; Num. of Track Nodes", n_z_bins, z_min, z_max, n_y_bins, y_min, y_max);
-   hActiveLayerCounts_TrkPrj->SetOption("colz");
 }
 
 
@@ -135,14 +125,11 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
 
       // Choose the first (i.e. the closest) candidate hit
       if (hitCandidate.GetDistanceToNode() >= 0 && !foundClosestCandidate) {
-         hActiveLayerCounts_HitCandidate->Fill(trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y());
          foundClosestCandidate = true;
       }
    }
 
    hActiveLayerCounts->Fill(trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y());
-
-   hActiveLayerCounts_TrkPrj->Fill(trkNode.GetProjPositionLocal().Z(), trkNode.GetProjPositionLocal().Y());
 
 
    std::string histName("hActiveLayerCounts_" + trkNode.GetVolumeName());
@@ -176,17 +163,4 @@ void StiHifyHistContainer::FillHistsHitsRejected(const TStiKalmanTrackNode &trkN
       return;
 
    FillHists(trkNode, volumeList);
-}
-
-
-void StiHifyHistContainer::FillDerivedHists()
-{
-   this->cd();
-
-   TH1 *myRatio = static_cast<TH1*>(hActiveLayerCounts->Clone());
-   myRatio->SetOption("colz");
-   myRatio->SetName("hActiveLayerCounts_HitCandidate_eff");
-   myRatio->Divide(hActiveLayerCounts_HitCandidate, hActiveLayerCounts, 1, 1, "B");
-
-   mHs[std::string(myRatio->GetName())] = myRatio;
 }
