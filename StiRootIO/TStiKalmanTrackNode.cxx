@@ -177,7 +177,7 @@ std::set<const TStiHit*> TStiKalmanTrackNode::GetCandidateHits() const
 }
 
 
-void TStiKalmanTrackNode::FindClosestHit(const std::set<TStiHit>& stiHits)
+void TStiKalmanTrackNode::FindClosestHit(const std::set<TStiHit>& stiHits) const
 {
    TVector3 distVec;
    double min_dist = DBL_MAX;
@@ -203,7 +203,7 @@ void TStiKalmanTrackNode::FindClosestHit(const std::set<TStiHit>& stiHits)
  * user provided collection stiHits which should normaly be a collection of hits
  * in the parent event to which the track belongs.
  */
-void TStiKalmanTrackNode::FindCandidateHits(const std::set<TStiHit>& stiHits)
+void TStiKalmanTrackNode::FindCandidateHits(const std::set<TStiHit>& stiHits) const
 {
    TVector3 distVec;
    double min_dist = DBL_MAX;
@@ -229,7 +229,7 @@ void TStiKalmanTrackNode::FindCandidateHits(const std::set<TStiHit>& stiHits)
 }
 
 
-void TStiKalmanTrackNode::FindCandidateHitsByChi2(const std::set<TStiHit>& stiHits)
+void TStiKalmanTrackNode::FindCandidateHitsByChi2(const std::set<TStiHit>& stiHits) const
 {
    for (const auto& hit : stiHits)
    {
