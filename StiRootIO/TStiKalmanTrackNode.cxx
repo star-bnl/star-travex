@@ -98,11 +98,7 @@ TVector3 TStiKalmanTrackNode::CalcPullClosestHit() const
 {
    if (!fClosestStiHit) return TVector3(DBL_MAX, DBL_MAX, DBL_MAX);
 
-   double pullX = (fClosestStiHit->GetPositionLocal().X() - fProjPositionLocal.X()) / fProjError.X();
-   double pullY = (fClosestStiHit->GetPositionLocal().Y() - fProjPositionLocal.Y()) / fProjError.Y();
-   double pullZ = (fClosestStiHit->GetPositionLocal().Z() - fProjPositionLocal.Z()) / fProjError.Z();
-
-   return TVector3(pullX, pullY, pullZ);
+   return CalcPullToHit(*fClosestStiHit);
 }
 
 
