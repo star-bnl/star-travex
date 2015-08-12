@@ -24,6 +24,7 @@ public:
    const std::set<TStiKalmanTrackNode>& GetNodes() const { return fNodes; }
    void  FindClosestHits(const std::set<TStiHit>& stiHits);
    void  FindCandidateHits(const std::set<TStiHit>& stiHits);
+   void  AssignClosestCandidateHit();
    const TStiKalmanTrackNode& GetDcaNode() const;
    double GetEnergyLosses() const;
    virtual void Print(Option_t *opt = "") const;

@@ -95,3 +95,12 @@ void TStiKalmanTrack::FindCandidateHits(const std::set<TStiHit>& stiHits)
       tmpNode.FindCandidateHits(stiHits);
    }
 }
+
+
+void TStiKalmanTrack::AssignClosestCandidateHit()
+{
+   for (const auto& node : fNodes)
+   {
+      node.AssignClosestCandidateHit();
+   }
+}

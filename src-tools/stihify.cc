@@ -61,6 +61,9 @@ void loop_over_tree(StiHifyPrgOptions &prgOpts)
 
       treeChain->GetEntry(iEvent-1);
 
+      if (prgOpts.AcceptCandidateHit())
+         stiHifyEvent->AssignClosestCandidateHit();
+
       outRootFile.FillHists(*stiHifyEvent);
    }
 

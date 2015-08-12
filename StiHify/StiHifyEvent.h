@@ -15,6 +15,7 @@ public:
    StiHifyEvent(const StiVolumeFilter& stiVolumeFilter);
 
    virtual EReturnCodes Fill(const StiTrackContainer &stiTrackContainer);
+   void AssignClosestCandidateHit();
 
    ClassDef(StiHifyEvent, 1)
 };
