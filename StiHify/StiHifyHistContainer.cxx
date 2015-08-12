@@ -106,9 +106,6 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
 
    hPullClosestHit1D->Fill(trkNode.CalcDistanceToClosestHit() < 0 ? -1 : (trkNode.CalcDistanceToClosestHit()/trkNode.GetTrackProjErr().Mag()) );
 
-   TVector3 pull = trkNode.CalcPullClosestHit();
-   hPullClosestHit2D->Fill(pull.Z(), pull.Y());
-
    const std::set<TStiHitProxy>& hitCandidates = trkNode.GetCandidateProxyHits();
 
    hCountCandidateHits->Fill(hitCandidates.size());
@@ -120,11 +117,14 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
    for (const auto& hitCandidate : hitCandidates)
    {
       TVector3 pull = trkNode.CalcPullToHit( *hitCandidate.GetTStiHit() );
+
       hPullCandidateHits2D->Fill(pull.Z(), pull.Y());
       hChi2CandidateHits->Fill(hitCandidate.GetChi2());
 
       // Choose the first (i.e. the closest) candidate hit
-      if (hitCandidate.GetDistanceToNode() >= 0 && !foundClosestCandidate) {
+      if (hitCandidate.GetDistanceToNode() >= 0 && !foundClosestCandidate)
+      {
+         hPullClosestHit2D->Fill(pull.Z(), pull.Y());
          foundClosestCandidate = true;
       }
    }
