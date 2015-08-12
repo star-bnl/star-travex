@@ -71,12 +71,9 @@ void TStiKalmanTrack::Print(Option_t *opt) const
  */
 void TStiKalmanTrack::FindClosestHits(const std::set<TStiHit>& stiHits)
 {
-   for (const TStiKalmanTrackNode& iNode : fNodes)
+   for (const auto& node : fNodes)
    {
-      // The following cast is ugly but we want to update a member which is not
-      // used for ordering of the set elements which is a safe thing to do
-      TStiKalmanTrackNode& tmpNode = const_cast< TStiKalmanTrackNode& >(iNode);
-      tmpNode.FindClosestHit(stiHits);
+      node.FindClosestHit(stiHits);
    }
 }
 
@@ -87,12 +84,9 @@ void TStiKalmanTrack::FindClosestHits(const std::set<TStiHit>& stiHits)
  */
 void TStiKalmanTrack::FindCandidateHits(const std::set<TStiHit>& stiHits)
 {
-   for (const TStiKalmanTrackNode& iNode : fNodes)
+   for (const auto& node : fNodes)
    {
-      // The following cast is ugly but we want to update a member which is not
-      // used for ordering of the set elements which is a safe thing to do
-      TStiKalmanTrackNode& tmpNode = const_cast< TStiKalmanTrackNode& >(iNode);
-      tmpNode.FindCandidateHits(stiHits);
+      node.FindCandidateHits(stiHits);
    }
 }
 
