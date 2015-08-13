@@ -11,16 +11,16 @@ include_once(BASE_DIR."/common/head.php");
 <h1>Stiscan Results</h1>
 
 
-<h2 class="colsep">stiscan_1.20</h2>
+<h2 class="colsep">stiscan_1.18</h2>
 
-<p>z = -5 cm
+<p>z = +3 cm
 
 <ul>
-   <li><a href="plots.php?pfx=stiscan_1.20/volumes_hft_sensitive">HFT Sensitive Layers</a>
-   <li><a href="plots.php?pfx=stiscan_1.20/volumes_pxl">PXL</a>
-   <li><a href="plots.php?pfx=stiscan_1.20/volumes_ist">IST</a>
-   <li><a href="plots.php?pfx=stiscan_1.20/volumes_sst">SST</a>
-   <li><a href="plots.php?pfx=stiscan_1.20/volumes_beam_pipe">Beam pipe</a>
+   <li><a href="plots.php?pfx=stiscan_1.18/volumes_hft_sensitive">HFT Sensitive Layers</a>
+   <li><a href="plots.php?pfx=stiscan_1.18/volumes_pxl">PXL</a>
+   <li><a href="plots.php?pfx=stiscan_1.18/volumes_ist">IST</a>
+   <li><a href="plots.php?pfx=stiscan_1.18/volumes_sst">SST</a>
+   <li><a href="plots.php?pfx=stiscan_1.18/volumes_beam_pipe">Beam pipe</a>
 </ul>
 
 
@@ -48,18 +48,6 @@ include_once(BASE_DIR."/common/head.php");
 </ul>
 
 
-<h2 class="colsep">stiscan_2.3 (StiHFT_1b branch, Sti code as of 2015-01-07) </h2>
-
-<p>z = +3 cm
-
-<ul>
-   <li><a href="plots.php?pfx=stiscan_2.3/volumes_pxl">PXL</a>
-   <li><a href="plots.php?pfx=stiscan_2.3/volumes_ist">IST</a>
-   <li><a href="plots.php?pfx=stiscan_2.3/volumes_sst">SST</a>
-   <li><a href="plots.php?pfx=stiscan_2.3/volumes_beam_pipe">Beam pipe</a>
-</ul>
-
-
 <h2 class="colsep">stiscan_1.15 (Sti code as of 2014-12-15) </h2>
 
 <p>z = +3 cm
@@ -69,18 +57,6 @@ include_once(BASE_DIR."/common/head.php");
    <li><a href="plots.php?pfx=stiscan_1.15/volumes_ist">IST</a>
    <li><a href="plots.php?pfx=stiscan_1.15/volumes_sst">SST</a>
    <li><a href="plots.php?pfx=stiscan_1.15/volumes_beam_pipe">Beam pipe</a>
-</ul>
-
-
-<h2 class="colsep">stiscan_2.2 (StiHFT_1b branch, Sti code as of 2014-12-09) </h2>
-
-<p>z = +3 cm
-
-<ul>
-   <li><a href="plots.php?pfx=stiscan_2.2/volumes_pxl">PXL</a>
-   <li><a href="plots.php?pfx=stiscan_2.2/volumes_ist">IST</a>
-   <li><a href="plots.php?pfx=stiscan_2.2/volumes_sst">SST</a>
-   <li><a href="plots.php?pfx=stiscan_2.2/volumes_beam_pipe">Beam pipe</a>
 </ul>
 
 
@@ -105,17 +81,6 @@ include_once(BASE_DIR."/common/head.php");
    <li><a href="plots.php?pfx=stiscan_1.13/volumes_ist">IST</a>
    <li><a href="plots.php?pfx=stiscan_1.13/volumes_sst">SST</a>
    <li><a href="plots.php?pfx=stiscan_1.13/volumes_beam_pipe">Beam pipe</a>
-</ul>
-
-
-<h2 class="colsep">stiscan_2.1 (StiHFT_1b branch, Sti code as of 2014-10-30) </h2>
-
-<p>z = +3 cm
-
-<ul>
-   <li><a href="plots.php?pfx=stiscan_2.1/volumes_pxl">PXL</a>
-   <li><a href="plots.php?pfx=stiscan_2.1/volumes_ist">IST</a>
-   <li><a href="plots.php?pfx=stiscan_2.1/volumes_sst">SST</a>
 </ul>
 
 
