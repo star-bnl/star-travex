@@ -1,4 +1,5 @@
 #include <cmath>
+#include <boost/algorithm/string/replace.hpp>
 
 #include "TVector3.h"
 
@@ -132,7 +133,7 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
    hActiveLayerCounts->Fill(trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y());
 
 
-   std::string histName("hActiveLayerCounts_" + trkNode.GetVolumeName());
+   std::string histName("hActiveLayerCounts_" + boost::replace_all_copy<string>(trkNode.GetVolumeName(), "/", "__"));
 
    TH1* hActiveLayerCounts_det = FindHist(histName);
 
