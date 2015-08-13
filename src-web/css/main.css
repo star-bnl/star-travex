@@ -377,3 +377,10 @@ H4.colsep {
 H5.colsep {
 	background-color: #efefff;
 }
+
+html .thumbcaption {
+	border: none;
+	text-align: left;
+	line-height: 1.4em;
+	padding: .5em !important;
+}

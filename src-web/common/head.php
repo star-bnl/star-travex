@@ -33,7 +33,11 @@ Contact
 &nbsp;
 &nbsp;
 &nbsp;
-<a href="https://github.com/plexoos/star-sti-tools" class="s120">Source code</a>
+<a href="https://github.com/plexoos/star-sti-tools" class="s120">Source Code</a>
+&nbsp;
+&nbsp;
+&nbsp;
+<a href="https://github.com/plexoos/star-sti-tools/blob/master/README.md" class="s120">About</a>
 
 </div>
 
