@@ -22,7 +22,7 @@ EReturnCodes StiHifyEvent::Fill(const StiTrackContainer &stiTrackContainer)
    auto acceptTrack = [] (const StiTrack* stiTrack) -> bool
    {
       const StiKalmanTrack& stiKTrack = static_cast<const StiKalmanTrack&>(*stiTrack);
-      return (stiKTrack.getFitPointCount(kTpcId) > 30);
+      return (stiKTrack.getFitPointCount(kTpcId) > 40);
    };
 
    StiTrackContainer filtered(stiTrackContainer.getName(), stiTrackContainer.getDescription());
