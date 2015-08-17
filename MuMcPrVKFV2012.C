@@ -47,7 +47,6 @@
 #include "THelixTrack.h"
 #include "Names.h"
 #include "StBichsel/Bichsel.h"
-#include "TMVAGui.C"
 #include "utils.h"
 #define ClassStMessMgr
 #define StMessMgr Int_t
@@ -907,7 +906,4 @@ void TMVAClassification( TString myMethodList = "")
    cout << "==> TMVAClassification is done!" << endl;
 
    delete factory;
-
-   // Launch the GUI for the root macros
-   if (!gROOT->IsBatch()) TMVAGui( outfileName );
 }
