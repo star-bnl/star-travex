@@ -32,7 +32,6 @@
 #include "TArrayD.h"
 #include "TMVA/Factory.h"
 #include "TMVA/Tools.h"
-#include "SystemOfUnits.h"
 #include "StMuDSTMaker/COMMON/StMuTimer.h"
 #include "StMuDSTMaker/COMMON/StMuDebug.h"
 #include "StMuDSTMaker/COMMON/StMuDst.h"
@@ -42,11 +41,6 @@
 #include "StMuDSTMaker/COMMON/StMuMcVertex.h"
 #include "StMuDSTMaker/COMMON/StMuMcTrack.h"
 #include "StMuDSTMaker/COMMON/StMuPrimaryTrackCovariance.h"
-#include "StDcaGeometry.h"
-#include "TRSymMatrix.h"
-#include "THelixTrack.h"
-#include "Names.h"
-#include "StBichsel/Bichsel.h"
 #include "utils.h"
 #define ClassStMessMgr
 #define StMessMgr Int_t
