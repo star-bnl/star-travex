@@ -75,6 +75,8 @@ const Char_t *vnames = "beam:postx:prompt:cross:tof:notof:EEMC:noEEMC:chi2";
 //const Char_t *vnames = "beam:postx:prompt:cross:tof:notof:BEMC:noBEMC:EEMC:noEEMC:chi2";
 static Int_t _debug = 1;//1;
 using namespace std;
+
+
 void FillData(data_t &data, const StMuPrimaryVertex *Vtx)
 {
    memset(&data.beam, 0, sizeof(data_t));
@@ -91,36 +93,35 @@ void FillData(data_t &data, const StMuPrimaryVertex *Vtx)
    data.noEEMC =  Vtx->nEEMCNotMatch();// noTracks;
    data.chi2   =  Vtx->chiSquared();
 }
+
+
 //________________________________________________________________________________
 Bool_t Accept(const StMuTrack *gTrack = 0)
 {
    if (! gTrack)            return kFALSE;
-
    if (! gTrack->idTruth()) return kFALSE;
-
    if (! gTrack->charge())  return kFALSE;
-
    if (  gTrack->flag() < 100 ||  gTrack->flag() % 100 == 11) return kFALSE; // bad fit or short track pointing to EEMC
-
    if (  gTrack->flag() > 1000) return kFALSE;  // pile up track in TPC
-
    if (  gTrack->nHitsFit() < 10) return kFALSE;
 
    //  if (  gTrack->qaTruth() < 90) return kFALSE;
    return kTRUE;
 }
+
+
 //________________________________________________________________________________
 Bool_t AcceptVX(const StMuPrimaryVertex *Vtx = 0)
 {
    if (! Vtx) return kFALSE;
-
    if (! Vtx->idTruth())  return kFALSE;
-
    if (  Vtx->position().perp() > 3.0) return kFALSE;
 
    //  if (  Vtx->qaTruth() < 90) return kFALSE;
    return kTRUE;
 }
+
+
 //________________________________________________________________________________
 void ForceAnimate(unsigned int times = 0, int msecDelay = 0)
 {
@@ -128,6 +129,8 @@ void ForceAnimate(unsigned int times = 0, int msecDelay = 0)
 
    while ( (!times || counter) && !gSystem->ProcessEvents()) { --counter; if (msecDelay) gSystem->Sleep(msecDelay);}
 }
+
+
 //________________________________________________________________________________
 void MuMcPrVKFV2012(Long64_t nevent = 999999,
                     const char *file = "/*.MuDst.root",
@@ -467,6 +470,8 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
 
    fOut->Write();
 }
+
+
 //+++++++++++++++++++++ from Jonathan +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // @(#)root/tmva $Id: TMVAClassification.C 38895 2011-04-18 11:59:54Z evt $
 /**********************************************************************************
@@ -907,5 +912,3 @@ void TMVAClassification( TString myMethodList = "")
    // Launch the GUI for the root macros
    if (!gROOT->IsBatch()) TMVAGui( outfileName );
 }
-
-
