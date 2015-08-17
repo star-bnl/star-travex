@@ -48,6 +48,7 @@
 #include "Names.h"
 #include "StBichsel/Bichsel.h"
 #include "TMVAGui.C"
+#include "utils.h"
 #define ClassStMessMgr
 #define StMessMgr Int_t
 #include "StMuDSTMaker/COMMON/StMuDstMaker.h"
@@ -63,7 +64,6 @@ class StMuDstMaker;
 #endif
 #endif
 StMuDstMaker *maker = 0;
-#include "Ask.h"
 #ifdef __TMVA__
 #include "TMVAClassification_BDT.class.C"
 #endif /* __TMVA__ */
@@ -462,7 +462,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
       }
 
       if (! gROOT->IsBatch()) {
-         if (Ask()) return;
+         if (vtxeval::ask_user()) return;
       }
       else {_debug = 0;}
    }

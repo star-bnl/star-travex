@@ -28,9 +28,9 @@
 #include "StEvent/StBTofHeader.h"
 #endif
 
-static bool gDebugFlag = false;
+#include "utils.h"
 
-Bool_t ask_user();
+
 
 
 void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", const  char *outFile = "test")
@@ -125,7 +125,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       StMuDst *mu = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
       StMuEvent *muEvent = mu->event(); // get a pointer to the class holding event-wise information
 
-      if (gDebugFlag) cout << "Read event #" << ev << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << endl;
+      if (vtxeval::gDebugFlag) cout << "Read event #" << ev << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << endl;
 
       TClonesArray *primaryVertices   = mu->primaryVertices();
       int numPrimaryVertices = primaryVertices->GetEntriesFast();  // cout << "\tPrimaryVertices " << numPrimaryVertices;
@@ -149,7 +149,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       }
       else primVtx.zVpd = 999;
 
-      if (gDebugFlag) cout << Form("Vpd value:              %8.3f", VpdZ) << endl;
+      if (vtxeval::gDebugFlag) cout << Form("Vpd value:              %8.3f", VpdZ) << endl;
 
       //////Max multiplicity/////////
       /////Usually the correct vertex/////
@@ -181,7 +181,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          primVtx.rank = 999;
          primVtx.maxmult = 999;
 
-         if (gDebugFlag) cout << "No reconstructed vertex" << endl;
+         if (vtxeval::gDebugFlag) cout << "No reconstructed vertex" << endl;
       }
 
       double minDistance = DBL_MAX;
@@ -257,7 +257,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
          primaryvtx->Fill();
 
-         if (gDebugFlag) {
+         if (vtxeval::gDebugFlag) {
             //cout << Form("Vx[%3i]", l) << *Vtx << endl;
             cout << Form("[%i]", l) << Form(" %8.3f  %8.3f  %8.3f ", Vtx->position().x(), Vtx->position().y(), Vtx->position().z()) << Form("  Rank:%1.0f", Vtx->ranking()) << "    Mult: " << primVtx.mult;
 
@@ -271,9 +271,9 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       hMinDistBetweenVertices.Fill(minDistance);
 
       if ( !gROOT->IsBatch() ) {
-         if (ask_user()) return;
+         if (vtxeval::ask_user()) return;
       }
-      else {gDebugFlag = false;}
+      else {vtxeval::gDebugFlag = false;}
 
       //if ((ev % 100) == 0) cout << "Number of events: " << ev << endl;
    }     //END EVENTS
@@ -283,31 +283,4 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
    TDatime now1;
    now1.Print();
-}
-
-
-/** Get input from user to control amount of print out interactively. */
-Bool_t ask_user()
-{
-   static Bool_t fAsk = kTRUE;
-   char symbol;
-
-   if (fAsk) {
-      std::cout << "ask (enter - next, r - don't ask, q - quit) >";
-
-      do {
-         std::cin.get(symbol);
-
-         if (symbol == 'r') {
-            gDebugFlag = false;
-            fAsk = kFALSE;
-         }
-         else if (symbol == 'q') return kTRUE;
-      }
-      while (symbol != '\n');
-
-      std::cout << std::endl;
-   }
-
-   return kFALSE;
 }
