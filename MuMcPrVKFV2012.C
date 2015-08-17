@@ -172,7 +172,6 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
       //inputVars.push_back("objs->GetString()");
    }
 
-#if 1
    inputVars.push_back( "beam");
    inputVars.push_back( "postx");
    inputVars.push_back( "prompt");
@@ -184,7 +183,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    inputVars.push_back( "EEMC");
    inputVars.push_back( "noEEMC");
    inputVars.push_back( "chi2");
-#endif
+
    vector<double> *inputVec = new vector<double>( inputVars.size() );
    //  gROOT->LoadMacro("./TMVAClassification_BDT.class.C++");
    IClassifierReader *classReader = new ReadBDT          ( inputVars );
