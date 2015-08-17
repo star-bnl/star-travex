@@ -62,11 +62,7 @@ StMuDstMaker *maker = 0;
 #endif /* __TMVA__ */
 struct data_t {Float_t  beam, postx, prompt, cross, tof, notof, EEMC, noEEMC, chi2;};
 const Char_t *vnames = "beam:postx:prompt:cross:tof:notof:EEMC:noEEMC:chi2";
-//struct data_t {Float_t  postx,prompt,cross,tof,notof,EEMC,noEEMC;}; //PPV
-//const Char_t *vnames = "postx:prompt:cross:tof:notof:EEMC:noEEMC";
-//struct data_t {Float_t  beam,postx,prompt,cross,tof,notof,BEMC,noBEMC,EEMC,noEEMC,chi2;};
-//const Char_t *vnames = "beam:postx:prompt:cross:tof:notof:BEMC:noBEMC:EEMC:noEEMC:chi2";
-static Int_t _debug = 1;//1;
+static Int_t _debug = 1;
 using namespace std;
 
 
@@ -80,8 +76,6 @@ void FillData(data_t &data, const StMuPrimaryVertex *Vtx)
    data.cross  =  Vtx->nCrossCentralMembrane();// noTracks;
    data.tof    = (Vtx->nCTBMatch()     + Vtx->nBTOFMatch());// noTracks;
    data.notof  = (Vtx->nCTBNotMatch()  + Vtx->nBTOFNotMatch());// noTracks;
-   //data.BEMC   =  Vtx->nBEMCMatch();// noTracks;
-   //data.noBEMC =  Vtx->nBEMCNotMatch();// noTracks;
    data.EEMC   =  Vtx->nEEMCMatch();// noTracks;
    data.noEEMC =  Vtx->nEEMCNotMatch();// noTracks;
    data.chi2   =  Vtx->chiSquared();
@@ -98,7 +92,6 @@ Bool_t Accept(const StMuTrack *gTrack = 0)
    if (  gTrack->flag() > 1000) return kFALSE;  // pile up track in TPC
    if (  gTrack->nHitsFit() < 10) return kFALSE;
 
-   //  if (  gTrack->qaTruth() < 90) return kFALSE;
    return kTRUE;
 }
 
@@ -110,7 +103,6 @@ Bool_t AcceptVX(const StMuPrimaryVertex *Vtx = 0)
    if (! Vtx->idTruth())  return kFALSE;
    if (  Vtx->position().perp() > 3.0) return kFALSE;
 
-   //  if (  Vtx->qaTruth() < 90) return kFALSE;
    return kTRUE;
 }
 
@@ -171,14 +163,11 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    inputVars.push_back( "cross");
    inputVars.push_back( "tof");
    inputVars.push_back( "notof");
-   // inputVars.push_back( "BEMC");
-   //inputVars.push_back( "noBEMC");
    inputVars.push_back( "EEMC");
    inputVars.push_back( "noEEMC");
    inputVars.push_back( "chi2");
 
    vector<double> *inputVec = new vector<double>( inputVars.size() );
-   //  gROOT->LoadMacro("./TMVAClassification_BDT.class.C++");
    IClassifierReader *classReader = new ReadBDT          ( inputVars );
 
 #endif /* __TMVA__ */
@@ -254,12 +243,6 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    const Char_t *ActiveBranches[] = {
       "MuEvent",
       "PrimaryVertices",
-#if 0
-      "PrimaryTracks",
-      "GlobalTracks",
-      "CovPrimTrack",
-      "CovGlobTrack",
-#endif
       "StStMuMcVertex", "StStMuMcTrack"
    };
    Int_t Nb = sizeof(ActiveBranches) / sizeof(Char_t *);
@@ -273,7 +256,6 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    Long64_t nentries = tree->GetEntries();
    nevent = TMath::Min(nevent, nentries);
    cout << nentries << " events in chain " << nevent << " will be read." << endl;
-   //  if (nentries < 100) return;
    tree->SetCacheSize(-1);        //by setting the read cache to -1 we set it to the AutoFlush value when writing
    tree->SetCacheLearnEntries(1); //one entry is sufficient to learn
    tree->SetCacheEntryRange(0, nevent);
@@ -292,14 +274,6 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
 
       TClonesArray *PrimaryVertices   = mu->primaryVertices();
       Int_t NoPrimaryVertices = PrimaryVertices->GetEntriesFast();  if (_debug) cout << "\tPrimaryVertices " << NoPrimaryVertices;
-#if 0
-      TClonesArray *PrimaryTracks    = mu->array(muPrimary);
-      Int_t NoPrimaryTracks = PrimaryTracks->GetEntriesFast();  if (_debug) cout << "\tPrimaryTracks " << NoPrimaryTracks;
-      TClonesArray *GlobalTracks     = mu->array(muGlobal);
-      Int_t NoGlobalTracks = GlobalTracks->GetEntriesFast();  if (_debug) cout << "\tGlobalTracks " << NoGlobalTracks;
-      TClonesArray *CovPrimTrack     = mu->covPrimTrack(); if (_debug) cout << "\tCovPrimTrack " << CovPrimTrack->GetEntriesFast();
-      TClonesArray *CovGlobTrack     = mu->covGlobTrack(); if (_debug) cout << "\tCovGlobTrack " << CovGlobTrack->GetEntriesFast();
-#endif
       TClonesArray *MuMcVertices   = mu->mcArray(0);
       Int_t NoMuMcVertices = MuMcVertices->GetEntriesFast(); if (_debug) cout << "\t" << StMuArrays::mcArrayTypes[0] << " " << NoMuMcVertices;
       TClonesArray *MuMcTracks     = mu->mcArray(1);
@@ -360,24 +334,11 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
 
          FillData(data, Vtx);
 #ifdef __TMVA__
-#if 0
-         (*inputVec)[0] = data.postx;
-         (*inputVec)[1] = data.prompt;
-         (*inputVec)[2] = data.cross;
-         (*inputVec)[3] = data.tof;
-         (*inputVec)[4] = data.notof;
-         (*inputVec)[5] = data.BEMC;
-         (*inputVec)[6] = data.noBEMC;
-         (*inputVec)[7] = data.EEMC;
-         (*inputVec)[8] = data.noEEMC;
-#else
          Float_t *dataArray = &data.beam;
-         //Float_t *dataArray = &data.postx;
          UInt_t N = inputVec->size();
 
          for (UInt_t j = 0; j < N; j++) (*inputVec)[j] = dataArray[j];
 
-#endif
          Ranks[l] = classReader->GetMvaValue( *inputVec );
 #endif
       }
@@ -653,17 +614,6 @@ void TMVAClassification( TString myMethodList = "")
       factory->AddVariable(name, 'F');
    }
 
-#if 0
-   //factory->AddVariable("chi2",'F');
-   //factory->AddVariable("beam",'F');
-   factory->AddVariable("postx", 'F');
-   factory->AddVariable("prompt", 'F');
-   factory->AddVariable("cross", 'F');
-   factory->AddVariable("tof", 'F');
-   factory->AddVariable("notof", 'F');
-   factory->AddVariable("EEMC", 'F');
-   factory->AddVariable("noEEMC", 'F');
-#endif
    // This would set individual event weights (the variables defined in the
    // expression need to exist in the original TTree)
    //    for signal    : factory->SetSignalWeightExpression("weight1*weight2");

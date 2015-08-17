@@ -92,9 +92,6 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    const Char_t *ActiveBranches[] = {
       "MuEvent",
       "PrimaryVertices",
-      //"PrimaryTracks",
-      //"CovPrimTrack",
-      //"GlobalTracks",
       "BTofHit",
       "BTofHeader",
       "StStMuMcVertex"
@@ -109,7 +106,6 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    Long64_t nentries = tree->GetEntries();
    nevent = TMath::Min(nevent, nentries);
    cout << nentries << " events in chain " << nevent << " will be read." << endl;
-   //  if (nentries < 100) return;
    tree->SetCacheSize(-1);        //by setting the read cache to -1 we set it to the AutoFlush value when writing
    tree->SetCacheLearnEntries(1); //one entry is sufficient to learn
    tree->SetCacheEntryRange(0, nevent);
@@ -129,11 +125,6 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
       TClonesArray *primaryVertices   = mu->primaryVertices();
       int numPrimaryVertices = primaryVertices->GetEntriesFast();  // cout << "\tPrimaryVertices " << numPrimaryVertices;
-      //TClonesArray *PrimaryTracks    = mu->array(muPrimary);
-      //Int_t NoPrimaryTracks = PrimaryTracks->GetEntriesFast();  // cout << "\tPrimaryTracks " << NoPrimaryTracks;
-      //TClonesArray *CovPrimTrack     = mu->covPrimTrack(); // cout << "\tCovPrimTrack " << CovPrimTrack->GetEntriesFast();
-      //TClonesArray *GlobalTracks    = mu->array(muGlobal);
-      //Int_t NoGlobalTracks = GlobalTracks->GetEntriesFast();  // cout << "\tPrimaryTracks " << NoPrimaryTracks;
 
       TClonesArray *MuMcVertices   = mu->mcArray(0);
       Int_t NoMuMcVertices = MuMcVertices->GetEntriesFast();
@@ -258,7 +249,6 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          primaryvtx->Fill();
 
          if (vtxeval::gDebugFlag) {
-            //cout << Form("Vx[%3i]", l) << *Vtx << endl;
             cout << Form("[%i]", l) << Form(" %8.3f  %8.3f  %8.3f ", Vtx->position().x(), Vtx->position().y(), Vtx->position().z()) << Form("  Rank:%1.0f", Vtx->ranking()) << "    Mult: " << primVtx.mult;
 
             if (primVtx.maxmult == 1 && l != 0) cout << "\t WRONG RANK" << endl;
@@ -274,8 +264,6 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          if (vtxeval::ask_user()) return;
       }
       else {vtxeval::gDebugFlag = false;}
-
-      //if ((ev % 100) == 0) cout << "Number of events: " << ev << endl;
    }     //END EVENTS
 
    cout << "Number of events: " <<  nevent << "  No reconstructed events: " << noreco << endl;
