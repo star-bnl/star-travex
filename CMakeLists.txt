@@ -32,6 +32,6 @@ include_directories(
 	contrib/star-tables
 )
 
-add_library( star-vertex-eval SHARED VertexRank.C)
+add_library( star-vertex-eval SHARED VertexRank.C MuMcPrVKFV2012.C)
 
 install(TARGETS star-vertex-eval DESTINATION "lib")
