@@ -65,6 +65,7 @@ protected:
    TVector3    fPosition;             ///< Coordinates of the track state/node position
    TVector3    fPositionLocal;        ///< Local coordinates of the final (post refit) track node position
    TVector3    fProjPositionLocal;    ///< Coordinates of the track state/node position
+   TVector3    fProjError;            ///< The projection error to the node before the fit
    TVector3    fTrackP;               ///< Track momentum vector in global CS
    float       fEnergyLosses;         ///< Energy lost in the volume
    float       fNodeRadius;           ///< The nominal radius of the Sti volume associated with this node
@@ -77,7 +78,6 @@ protected:
    mutable const TStiHit  *fAcceptedStiHit;
    mutable const TStiHit  *fClosestStiHit;    ///< Pointer to the hit closest to this node if any
    mutable std::set<TStiHitProxy> fCandidateStiHits;   ///< Collection of hits in some proximity of mean track projection
-   TVector3    fProjError;            ///< The projection error to the node before the fit
 
    ClassDef(TStiKalmanTrackNode, 10)
 };
