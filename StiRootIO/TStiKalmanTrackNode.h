@@ -28,7 +28,7 @@ public:
    const TVector3& GetPosition() const { return fPosition; }
    const TVector3& GetPositionLocal() const { return fPositionLocal; }
    const TVector3& GetProjPositionLocal() const { return fProjPositionLocal; }
-   const TVector3& GetTrackProjErr() const { return fProjError; }
+   const TVector3& GetProjError() const { return fProjError; }
    float GetEnergyLosses() const { return fabs(fEnergyLosses); }
    float GetNodeRadius() const { return fNodeRadius; }
    float GetNodeCenterRefAngle() const { return fNodeCenterRefAngle; }

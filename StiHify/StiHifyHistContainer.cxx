@@ -105,7 +105,7 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
       hDistClosest2AcceptedHit->Fill( fabs(trkNode.CalcDistanceToHit() - trkNode.CalcDistanceToClosestHit()) );
    }
 
-   hPullClosestHit1D->Fill(trkNode.CalcDistanceToClosestHit() < 0 ? -1 : (trkNode.CalcDistanceToClosestHit()/trkNode.GetTrackProjErr().Mag()) );
+   hPullClosestHit1D->Fill(trkNode.CalcDistanceToClosestHit() < 0 ? -1 : (trkNode.CalcDistanceToClosestHit()/trkNode.GetProjError().Mag()) );
 
    const std::set<TStiHitProxy>& hitCandidates = trkNode.GetCandidateProxyHits();
 
