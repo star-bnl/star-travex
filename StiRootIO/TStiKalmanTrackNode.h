@@ -41,18 +41,18 @@ public:
    const TStiHit* GetClosestHit() const { return fClosestStiHit; }
    std::set<const TStiHit*> GetCandidateHits() const;
    const std::set<TStiHitProxy>& GetCandidateProxyHits() const { return fCandidateStiHits; }
-   void   FindClosestHit(const std::set<TStiHit>& stiHits) const;
-   void   FindCandidateHits(const std::set<TStiHit>& stiHits) const;
-   void   FindCandidateHitsByChi2(const std::set<TStiHit>& stiHits) const;
-   void   AssignClosestCandidateHit() const { fAcceptedStiHit = fClosestStiHit; }
-   double CalcDistanceToClosestHit() const { return fClosestStiHit ? (fClosestStiHit->GetPosition() - GetPosition()).Mag() : -1; }
-   double CalcDistanceToHit() const { return fAcceptedStiHit ? (fAcceptedStiHit->GetPosition() - GetPosition()).Mag() : -1; }
-   double CalcDistanceToHit(const TStiHit& hit) const { return (hit.GetPosition() - GetPosition()).Mag(); }
+   void     FindClosestHit(const std::set<TStiHit>& stiHits) const;
+   void     FindCandidateHits(const std::set<TStiHit>& stiHits) const;
+   void     FindCandidateHitsByChi2(const std::set<TStiHit>& stiHits) const;
+   void     AssignClosestCandidateHit() const { fAcceptedStiHit = fClosestStiHit; }
+   double   CalcDistanceToClosestHit() const { return fClosestStiHit ? (fClosestStiHit->GetPosition() - GetPosition()).Mag() : -1; }
+   double   CalcDistanceToHit() const { return fAcceptedStiHit ? (fAcceptedStiHit->GetPosition() - GetPosition()).Mag() : -1; }
+   double   CalcDistanceToHit(const TStiHit& hit) const { return (hit.GetPosition() - GetPosition()).Mag(); }
    TVector3 CalcPullToHit(const TStiHit& hit) const;
    TVector3 CalcPullClosestHit() const;
    double   CalcChi2(const TStiHit& hit) const;
-   bool   MatchedVolName(const std::string & pattern) const;
-   bool   MatchedVolName(const std::set<std::string> & patterns) const;
+   bool     MatchedVolName(const std::string & pattern) const;
+   bool     MatchedVolName(const std::set<std::string> & patterns) const;
    virtual void Print(Option_t *opt = "") const;
 
    friend bool operator< (const TStiKalmanTrackNode& lhs, const TStiKalmanTrackNode& rhs);
