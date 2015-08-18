@@ -42,6 +42,7 @@ void StiHifyRatiosHistContainer::CreateRatioHist(const TH1* hNumer, const TH1* h
       // Create a profile from a 2D profile
       TProfile* myRatioProfileX   = myRatioProfile->ProfileX();
 
+      myRatioProfileX->Fit("pol0", "Q"); // Fit a line to the data points
       mHs[ratioHistName + "_pfx"]  = myRatioProfileX;
    }
 }
