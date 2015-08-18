@@ -26,6 +26,7 @@ public:
    bool  IsInsideVolume() const { return fIsInsideVolume; }
    const TVector3& GetTrackP() const { return fTrackP; }
    const TVector3& GetPosition() const { return fPosition; }
+   const TVector3& GetError() const { return fError; }
    const TVector3& GetPositionLocal() const { return fPositionLocal; }
    const TVector3& GetProjPositionLocal() const { return fProjPositionLocal; }
    const TVector3& GetProjError() const { return fProjError; }
@@ -63,6 +64,7 @@ protected:
    float       fValid;                ///< A flag taken directly from StiKalmanTrackNode
    int         fIsInsideVolume;       ///< A flag taken directly from StiKalmanTrackNode
    TVector3    fPosition;             ///< Coordinates of the track state/node position
+   TVector3    fError;                ///< Diagonal elements of error matrix after final fit
    TVector3    fPositionLocal;        ///< Local coordinates of the final (post refit) track node position
    TVector3    fProjPositionLocal;    ///< Coordinates of the track state/node position
    TVector3    fProjError;            ///< The projection error to the node before the fit
@@ -79,7 +81,7 @@ protected:
    mutable const TStiHit  *fClosestStiHit;    ///< Pointer to the hit closest to this node if any
    mutable std::set<TStiHitProxy> fCandidateStiHits;   ///< Collection of hits in some proximity of mean track projection
 
-   ClassDef(TStiKalmanTrackNode, 10)
+   ClassDef(TStiKalmanTrackNode, 11)
 };
 
 
