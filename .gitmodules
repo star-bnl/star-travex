@@ -7,8 +7,6 @@
 [submodule "contrib/star-db-calibrations"]
 	path = contrib/star-db-calibrations
 	url = https://github.com/star-bnl/star-db-calibrations.git
-	fetch = +refs/heads/ds-master:refs/remotes/origin/ds-master
-	branch = ds-master
 [submodule "contrib/star-base"]
 	path = contrib/star-base
 	url = https://github.com/star-bnl/star-base.git
