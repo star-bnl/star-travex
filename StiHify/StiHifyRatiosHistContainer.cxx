@@ -31,10 +31,17 @@ void StiHifyRatiosHistContainer::CreateRatioHist(const TH1* hNumer, const TH1* h
    // Create a 2D profile form the 2D ratio histogram
    if (myRatio->GetDimension() == 2)
    {
-      Profile2D* myRatioProfile = new Profile2D(static_cast<TH2D&>(*myRatio));
-      myRatioProfile->SetName( (std::string(myRatio->GetName()) + "_pxy").c_str() );
+      std::string ratioHistName(myRatio->GetName());
+      ratioHistName += "_pxy";
 
-      mHs[std::string(myRatioProfile->GetName())]          = myRatioProfile;
-      mHs[std::string(myRatioProfile->GetName()) + "_px"]  = myRatioProfile->ProfileX();
+      Profile2D* myRatioProfile = new Profile2D(static_cast<TH2D&>(*myRatio));
+
+      myRatioProfile->SetName( ratioHistName.c_str() );
+      mHs[ratioHistName] = myRatioProfile;
+
+      // Create a profile from a 2D profile
+      TProfile* myRatioProfileX   = myRatioProfile->ProfileX();
+
+      mHs[ratioHistName + "_pfx"]  = myRatioProfileX;
    }
 }
