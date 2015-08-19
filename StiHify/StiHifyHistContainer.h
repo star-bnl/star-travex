@@ -30,6 +30,8 @@ protected:
    void FillHistsHitsAccepted(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList=0);
    void FillHistsHitsRejected(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList=0);
 
+   TH1I* hDiffProjToFitPositionWRTHit;
+   TH2I* hDiffProjToFitError;
    TH1I* hDistClosest2AcceptedHit;
    TH1I* hPullClosestHit1D;
    TH2I* hPullClosestHit2D;

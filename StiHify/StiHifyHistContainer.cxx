@@ -10,6 +10,8 @@
 StiHifyHistContainer::StiHifyHistContainer(const StiHifyPrgOptions& prgOpts, const char* name, TDirectory* motherDir, Option_t* option) :
    StiHistContainer(name, motherDir, option),
    fPrgOptions(prgOpts),
+   hDiffProjToFitPositionWRTHit(nullptr),
+   hDiffProjToFitError(nullptr),
    hDistClosest2AcceptedHit(nullptr),
    hPullClosestHit1D(nullptr),
    hPullClosestHit2D(nullptr),
@@ -38,6 +40,14 @@ void StiHifyHistContainer::BookHists()
    n_y_bins = ( n_y_bins <= 10 ? 10 : (n_y_bins >  50 ? 50 : n_y_bins) );
 
    this->cd();
+
+   mHs["hDiffProjToFitPositionWRTHit"] = hDiffProjToFitPositionWRTHit
+      = new TH1I("hDiffProjToFitPositionWRTHit", " ; Diff. (Projection - Final) Position w.r.t. Hit, cm; Num. of Track Nodes; ", 50, -0.5, 0.5);
+   hDiffProjToFitPositionWRTHit->SetOption("XY hist");
+
+   mHs["hDiffProjToFitError"] = hDiffProjToFitError
+      = new TH2I("hDiffProjToFitError", " ; Diff. (Projection - Final) Error_z, cm; Diff. Error_y, cm; Num. of Track Nodes; ", 50, 0, 0.25, 50, 0, 0.25);
+   hDiffProjToFitError->SetOption("colz");
 
    mHs["hDistClosest2AcceptedHit"] = hDistClosest2AcceptedHit
       = new TH1I("hDistClosest2AcceptedHit", " ; Closest to Accepted Hits: Distance R, cm; Num. of Track Nodes; ", 100, 0, 0.5);
@@ -100,6 +110,10 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
 
    if (trkNode.GetVolumeName().empty() || !trkNode.IsInsideVolume())
       return;
+
+   // Start filling histograms
+   hDiffProjToFitPositionWRTHit->Fill( trkNode.CalcDiffProjToFitPositionWRTHit() );
+   hDiffProjToFitError->Fill( trkNode.CalcDiffProjToFitError().Z(), trkNode.CalcDiffProjToFitError().Y() );
 
    if (trkNode.GetHit()) {
       hDistClosest2AcceptedHit->Fill( fabs(trkNode.CalcDistanceToHit() - trkNode.CalcDistanceToClosestHit()) );
