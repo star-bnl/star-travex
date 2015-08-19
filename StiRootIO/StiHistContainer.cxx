@@ -1,4 +1,5 @@
 #include "TCanvas.h"
+#include "TClass.h"
 #include "TColor.h"
 #include "TPaletteAxis.h"
 #include "TROOT.h"
@@ -77,6 +78,18 @@ void StiHistContainer::SaveAllAs(std::string prefix)
          color = gROOT->GetColor( palette->GetValueColor(0) );
          color->GetRGB(r, g, b);
          color->SetRGB(255, 255, 255);
+      }
+
+      // Now check if there are other associated objects like functions and graphs
+      TList* sub_list = hist->GetListOfFunctions();
+      TIter  next(sub_list);
+
+      while ( TObject *iObj = (TObject*) next() )
+      {
+         if ( !iObj ) continue;
+
+         if ( ( (TClass*) iObj->IsA() )->InheritsFrom("TLine") )
+            iObj->Draw();
       }
 
       std::string sFileName = prefix + "/c_" + histName + ".png";
