@@ -45,6 +45,8 @@ public:
    void     FindCandidateHits(const std::set<TStiHit>& stiHits) const;
    void     FindCandidateHitsByChi2(const std::set<TStiHit>& stiHits) const;
    void     AssignClosestCandidateHit() const { fAcceptedStiHit = fClosestStiHit; }
+   double   CalcDiffProjToFitPositionWRTHit() const { return CalcDistanceProjToHit() - CalcDistanceToHit(); }
+   TVector3 CalcDiffProjToFitError() const { return fProjError - fError; }
    double   CalcDistanceToClosestHit() const { return fClosestStiHit ? (fClosestStiHit->GetPosition() - GetPosition()).Mag() : -1; }
    double   CalcDistanceToHit() const { return fAcceptedStiHit ? (fAcceptedStiHit->GetPosition() - GetPosition()).Mag() : -1; }
    double   CalcDistanceProjToHit() const { return fAcceptedStiHit ? (fAcceptedStiHit->GetPositionLocal() - GetProjPositionLocal()).Mag() : -1; }
