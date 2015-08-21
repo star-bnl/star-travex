@@ -46,13 +46,13 @@ void FillData(data_t &data, const StMuPrimaryVertex *Vtx)
    memset(&data.beam, 0, sizeof(data_t));
    //memset(&data.postx, 0, sizeof(data_t));    //PPV
    data.beam   =  Vtx->isBeamConstrained() ? 1 : 0;
-   data.postx  =  Vtx->nPostXtracks();// noTracks;
-   data.prompt =  Vtx->nPromptTracks();// noTracks;
-   data.cross  =  Vtx->nCrossCentralMembrane();// noTracks;
-   data.tof    = (Vtx->nCTBMatch()     + Vtx->nBTOFMatch());// noTracks;
-   data.notof  = (Vtx->nCTBNotMatch()  + Vtx->nBTOFNotMatch());// noTracks;
-   data.EEMC   =  Vtx->nEEMCMatch();// noTracks;
-   data.noEEMC =  Vtx->nEEMCNotMatch();// noTracks;
+   data.postx  =  Vtx->nPostXtracks();
+   data.prompt =  Vtx->nPromptTracks();
+   data.cross  =  Vtx->nCrossCentralMembrane();
+   data.tof    = (Vtx->nCTBMatch()     + Vtx->nBTOFMatch());
+   data.notof  = (Vtx->nCTBNotMatch()  + Vtx->nBTOFNotMatch());
+   data.EEMC   =  Vtx->nEEMCMatch();
+   data.noEEMC =  Vtx->nEEMCNotMatch();
    data.chi2   =  Vtx->chiSquared();
 }
 
