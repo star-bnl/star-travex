@@ -40,7 +40,6 @@
 
 struct data_t {Float_t  beam, postx, prompt, cross, tof, notof, EEMC, noEEMC, chi2;};
 const Char_t *vnames = "beam:postx:prompt:cross:tof:notof:EEMC:noEEMC:chi2";
-static Int_t _debug = 1;
 
 
 
@@ -244,20 +243,20 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
       StMuDst *mu = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
       StMuEvent *muEvent = mu->event(); // get a pointer to the class holding event-wise information
 
-      if (_debug) std::cout << "Read event #" << ev << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << std::endl;
+      if (vtxeval::gDebugFlag) std::cout << "Read event #" << ev << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << std::endl;
 
       Int_t referenceMultiplicity = muEvent->refMult(); // get the reference multiplicity
 
-      if (_debug) std::cout << " refMult= " << referenceMultiplicity;
+      if (vtxeval::gDebugFlag) std::cout << " refMult= " << referenceMultiplicity;
 
       TClonesArray *PrimaryVertices   = mu->primaryVertices();
-      Int_t NoPrimaryVertices = PrimaryVertices->GetEntriesFast();  if (_debug) std::cout << "\tPrimaryVertices " << NoPrimaryVertices;
+      Int_t NoPrimaryVertices = PrimaryVertices->GetEntriesFast();  if (vtxeval::gDebugFlag) std::cout << "\tPrimaryVertices " << NoPrimaryVertices;
       TClonesArray *MuMcVertices   = mu->mcArray(0);
-      Int_t NoMuMcVertices = MuMcVertices->GetEntriesFast(); if (_debug) std::cout << "\t" << StMuArrays::mcArrayTypes[0] << " " << NoMuMcVertices;
+      Int_t NoMuMcVertices = MuMcVertices->GetEntriesFast(); if (vtxeval::gDebugFlag) std::cout << "\t" << StMuArrays::mcArrayTypes[0] << " " << NoMuMcVertices;
       TClonesArray *MuMcTracks     = mu->mcArray(1);
-      Int_t NoMuMcTracks = MuMcTracks->GetEntriesFast(); if (_debug) std::cout << "\t" << StMuArrays::mcArrayTypes[1] << " " << NoMuMcTracks;
+      Int_t NoMuMcTracks = MuMcTracks->GetEntriesFast(); if (vtxeval::gDebugFlag) std::cout << "\t" << StMuArrays::mcArrayTypes[1] << " " << NoMuMcTracks;
 
-      if (_debug) std::cout << std::endl;
+      if (vtxeval::gDebugFlag) std::cout << std::endl;
 
       //    const Double_t field = muEvent->magneticField()*kilogauss;
       if (! NoMuMcVertices || ! NoMuMcTracks) {
@@ -341,7 +340,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
             continue;
          }
 
-         if (_debug) {
+         if (vtxeval::gDebugFlag) {
             std::cout << Form("Vx[%3i]", l) << *Vtx << " " << *mcVertex;
             Int_t NoMcTracksWithHitsatL = Mc2McHitTracks.count(Vtx->idTruth());
             std::cout << Form(" No.McTkHit %4i rank %8.3f", NoMcTracksWithHitsatL, Ranks[l]);
@@ -352,10 +351,10 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
          if (IdPar > 0 && IdPar <= NoMuMcTracks) {
             StMuMcTrack *mcTrack = (StMuMcTrack *) MuMcTracks->UncheckedAt(IdPar - 1);
 
-            if (mcTrack && _debug) std::cout << " " << mcTrack->GeName();
+            if (mcTrack && vtxeval::gDebugFlag) std::cout << " " << mcTrack->GeName();
          }
 
-         if (_debug) {
+         if (vtxeval::gDebugFlag) {
             if (l == lBest) std::cout << "  === Best ===";
 
             std::cout << std::endl;
@@ -396,7 +395,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
       if (! gROOT->IsBatch()) {
          if (vtxeval::ask_user()) return;
       }
-      else {_debug = 0;}
+      else {vtxeval::gDebugFlag = false;}
    }
 
    fOut->Write();
