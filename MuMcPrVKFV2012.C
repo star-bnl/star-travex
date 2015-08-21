@@ -42,7 +42,6 @@ struct data_t {Float_t  beam, postx, prompt, cross, tof, notof, EEMC, noEEMC, ch
 const Char_t *vnames = "beam:postx:prompt:cross:tof:notof:EEMC:noEEMC:chi2";
 static Int_t _debug = 1;
 
-using namespace std;
 
 
 void FillData(data_t &data, const StMuPrimaryVertex *Vtx)
@@ -132,7 +131,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    TObjString *objs;
 
    while ((objs = (TObjString *) next())) {
-      cout << objs->GetString() << endl;
+      std::cout << objs->GetString() << std::endl;
       //inputVars.push_back("objs->GetString()");
    }
 
@@ -217,7 +216,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    //                               file               bla.lis real all file in this list, if (file!="") dir is ignored
    //                                    filter        apply filter to filenames, multiple filters are separated by ':'
    //                                          10      maximum number of file to read
-   cout << "time to load chain: " << timer.elapsedTime() << endl;
+   std::cout << "time to load chain: " << timer.elapsedTime() << std::endl;
    maker->SetStatus("*", 0);
    const Char_t *ActiveBranches[] = {
       "MuEvent",
@@ -234,7 +233,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    TChain *tree = maker->chain();
    Long64_t nentries = tree->GetEntries();
    nevent = TMath::Min(nevent, nentries);
-   cout << nentries << " events in chain " << nevent << " will be read." << endl;
+   std::cout << nentries << " events in chain " << nevent << " will be read." << std::endl;
    tree->SetCacheSize(-1);        //by setting the read cache to -1 we set it to the AutoFlush value when writing
    tree->SetCacheLearnEntries(1); //one entry is sufficient to learn
    tree->SetCacheEntryRange(0, nevent);
@@ -245,24 +244,24 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
       StMuDst *mu = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
       StMuEvent *muEvent = mu->event(); // get a pointer to the class holding event-wise information
 
-      if (_debug) cout << "Read event #" << ev << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << endl;
+      if (_debug) std::cout << "Read event #" << ev << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << std::endl;
 
       Int_t referenceMultiplicity = muEvent->refMult(); // get the reference multiplicity
 
-      if (_debug) cout << " refMult= " << referenceMultiplicity;
+      if (_debug) std::cout << " refMult= " << referenceMultiplicity;
 
       TClonesArray *PrimaryVertices   = mu->primaryVertices();
-      Int_t NoPrimaryVertices = PrimaryVertices->GetEntriesFast();  if (_debug) cout << "\tPrimaryVertices " << NoPrimaryVertices;
+      Int_t NoPrimaryVertices = PrimaryVertices->GetEntriesFast();  if (_debug) std::cout << "\tPrimaryVertices " << NoPrimaryVertices;
       TClonesArray *MuMcVertices   = mu->mcArray(0);
-      Int_t NoMuMcVertices = MuMcVertices->GetEntriesFast(); if (_debug) cout << "\t" << StMuArrays::mcArrayTypes[0] << " " << NoMuMcVertices;
+      Int_t NoMuMcVertices = MuMcVertices->GetEntriesFast(); if (_debug) std::cout << "\t" << StMuArrays::mcArrayTypes[0] << " " << NoMuMcVertices;
       TClonesArray *MuMcTracks     = mu->mcArray(1);
-      Int_t NoMuMcTracks = MuMcTracks->GetEntriesFast(); if (_debug) cout << "\t" << StMuArrays::mcArrayTypes[1] << " " << NoMuMcTracks;
+      Int_t NoMuMcTracks = MuMcTracks->GetEntriesFast(); if (_debug) std::cout << "\t" << StMuArrays::mcArrayTypes[1] << " " << NoMuMcTracks;
 
-      if (_debug) cout << endl;
+      if (_debug) std::cout << std::endl;
 
       //    const Double_t field = muEvent->magneticField()*kilogauss;
       if (! NoMuMcVertices || ! NoMuMcTracks) {
-         cout << "Ev. " << ev << " has no MC information ==> skip it" << endl;
+         std::cout << "Ev. " << ev << " has no MC information ==> skip it" << std::endl;
          continue;
       }
 
@@ -293,15 +292,15 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
          //      Vtx->Print();
          // Check Mc
          if (Vtx->idTruth() < 0 || Vtx->idTruth() > NoMuMcVertices) {
-            cout << "Illegal idTruth " << Vtx->idTruth() << " The track is ignored" << endl;
+            std::cout << "Illegal idTruth " << Vtx->idTruth() << " The track is ignored" << std::endl;
             continue;
          }
 
          StMuMcVertex *mcVertex = (StMuMcVertex *) MuMcVertices->UncheckedAt(Vtx->idTruth() - 1);
 
          if (mcVertex->Id() != Vtx->idTruth()) {
-            cout << "Mismatched idTruth " << Vtx->idTruth() << " and mcVertex Id " <<  mcVertex->Id()
-                 << " The vertex is ignored" <<  endl;
+            std::cout << "Mismatched idTruth " << Vtx->idTruth() << " and mcVertex Id " <<  mcVertex->Id()
+                 << " The vertex is ignored" <<  std::endl;
          }
 
          //      mcVertex->Print();
@@ -338,14 +337,14 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
          StMuMcVertex *mcVertex = Mc2RcVertices[Vtx];
 
          if (! mcVertex) {
-            cout << "No Match from RC to MC" << endl;
+            std::cout << "No Match from RC to MC" << std::endl;
             continue;
          }
 
          if (_debug) {
-            cout << Form("Vx[%3i]", l) << *Vtx << " " << *mcVertex;
+            std::cout << Form("Vx[%3i]", l) << *Vtx << " " << *mcVertex;
             Int_t NoMcTracksWithHitsatL = Mc2McHitTracks.count(Vtx->idTruth());
-            cout << Form(" No.McTkHit %4i rank %8.3f", NoMcTracksWithHitsatL, Ranks[l]);
+            std::cout << Form(" No.McTkHit %4i rank %8.3f", NoMcTracksWithHitsatL, Ranks[l]);
          }
 
          Int_t IdPar = mcVertex->IdParTrk();
@@ -353,13 +352,13 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
          if (IdPar > 0 && IdPar <= NoMuMcTracks) {
             StMuMcTrack *mcTrack = (StMuMcTrack *) MuMcTracks->UncheckedAt(IdPar - 1);
 
-            if (mcTrack && _debug) cout << " " << mcTrack->GeName();
+            if (mcTrack && _debug) std::cout << " " << mcTrack->GeName();
          }
 
          if (_debug) {
-            if (l == lBest) cout << "  === Best ===";
+            if (l == lBest) std::cout << "  === Best ===";
 
-            cout << endl;
+            std::cout << std::endl;
          }
 
          FillData(data, Vtx);
@@ -439,11 +438,11 @@ void TMVAClassification( TString myMethodList = "")
 {
    TTree *signal     = (TTree *)gDirectory->Get("VertexG");
 
-   if (! signal) { cout << "No signal TTree" << endl; return;}
+   if (! signal) { std::cout << "No signal TTree" << std::endl; return;}
 
    TTree *background = (TTree *)gDirectory->Get("VertexB");
 
-   if (! background) { cout << "No background TTree" << endl; return;}
+   if (! background) { std::cout << "No background TTree" << std::endl; return;}
 
    //---------------------------------------------------------------
    // This loads the library
@@ -511,8 +510,8 @@ void TMVAClassification( TString myMethodList = "")
    Use["RuleFit"]         = 1;
    // ---------------------------------------------------------------
 
-   cout << endl;
-   cout << "==> Start TMVAClassification" << endl;
+   std::cout << std::endl;
+   std::cout << "==> Start TMVAClassification" << std::endl;
 
    // Select methods (don't look at this code - not of interest)
    if (myMethodList != "") {
@@ -524,11 +523,11 @@ void TMVAClassification( TString myMethodList = "")
          string regMethod(mlist[i]);
 
          if (Use.find(regMethod) == Use.end()) {
-            cout << "Method \"" << regMethod << "\" not known in TMVA under this name. Choose among the following:" << endl;
+            std::cout << "Method \"" << regMethod << "\" not known in TMVA under this name. Choose among the following:" << std::endl;
 
-            for (map<string, int>::iterator it = Use.begin(); it != Use.end(); it++) cout << it->first << " ";
+            for (map<string, int>::iterator it = Use.begin(); it != Use.end(); it++) std::cout << it->first << " ";
 
-            cout << endl;
+            std::cout << std::endl;
             return;
          }
 
@@ -564,13 +563,13 @@ void TMVAClassification( TString myMethodList = "")
 
    // load the signal and background event samples from ROOT trees
 
-   cout << " starts ... " << endl;
+   std::cout << " starts ... " << std::endl;
    // global event weights per tree (see below for setting event-wise weights)
    //   Float_t w;
    Double_t signalWeight     = 1.0;
    Double_t backgroundWeight = 1.0;
 
-   cout << " signalWeight = " << signalWeight << " backWeight = " << backgroundWeight << endl;
+   std::cout << " signalWeight = " << signalWeight << " backWeight = " << backgroundWeight << std::endl;
    factory->AddSignalTree( signal,    signalWeight     );
    factory->AddBackgroundTree( background, backgroundWeight );
 
@@ -583,7 +582,7 @@ void TMVAClassification( TString myMethodList = "")
    TObjString *objs;
 
    while ((objs = (TObjString *) next())) {
-      //    cout << objs->GetString() << endl;
+      //    std::cout << objs->GetString() << std::endl;
       TString name(objs->GetString());
 
       if (name == "BEMC") continue;
@@ -825,8 +824,8 @@ void TMVAClassification( TString myMethodList = "")
    // Save the output
    outputFile->Close();
 
-   cout << "==> Wrote root file: " << outputFile->GetName() << endl;
-   cout << "==> TMVAClassification is done!" << endl;
+   std::cout << "==> Wrote root file: " << outputFile->GetName() << std::endl;
+   std::cout << "==> TMVAClassification is done!" << std::endl;
 
    delete factory;
 }

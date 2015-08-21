@@ -105,7 +105,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    TChain *tree = maker->chain();
    Long64_t nentries = tree->GetEntries();
    nevent = TMath::Min(nevent, nentries);
-   cout << nentries << " events in chain " << nevent << " will be read." << endl;
+   std::cout << nentries << " events in chain " << nevent << " will be read." << std::endl;
    tree->SetCacheSize(-1);        //by setting the read cache to -1 we set it to the AutoFlush value when writing
    tree->SetCacheLearnEntries(1); //one entry is sufficient to learn
    tree->SetCacheEntryRange(0, nevent);
@@ -121,10 +121,10 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       StMuDst *mu = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
       StMuEvent *muEvent = mu->event(); // get a pointer to the class holding event-wise information
 
-      if (vtxeval::gDebugFlag) cout << "Read event #" << ev << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << endl;
+      if (vtxeval::gDebugFlag) std::cout << "Read event #" << ev << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << std::endl;
 
       TClonesArray *primaryVertices   = mu->primaryVertices();
-      int numPrimaryVertices = primaryVertices->GetEntriesFast();  // cout << "\tPrimaryVertices " << numPrimaryVertices;
+      int numPrimaryVertices = primaryVertices->GetEntriesFast();  // std::cout << "\tPrimaryVertices " << numPrimaryVertices;
 
       TClonesArray *MuMcVertices   = mu->mcArray(0);
       Int_t NoMuMcVertices = MuMcVertices->GetEntriesFast();
@@ -140,7 +140,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       }
       else primVtx.zVpd = 999;
 
-      if (vtxeval::gDebugFlag) cout << Form("Vpd value:              %8.3f", VpdZ) << endl;
+      if (vtxeval::gDebugFlag) std::cout << Form("Vpd value:              %8.3f", VpdZ) << std::endl;
 
       //////Max multiplicity/////////
       /////Usually the correct vertex/////
@@ -172,7 +172,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          primVtx.rank = 999;
          primVtx.maxmult = 999;
 
-         if (vtxeval::gDebugFlag) cout << "No reconstructed vertex" << endl;
+         if (vtxeval::gDebugFlag) std::cout << "No reconstructed vertex" << std::endl;
       }
 
       double minDistance = DBL_MAX;
@@ -249,10 +249,10 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          primaryvtx->Fill();
 
          if (vtxeval::gDebugFlag) {
-            cout << Form("[%i]", l) << Form(" %8.3f  %8.3f  %8.3f ", Vtx->position().x(), Vtx->position().y(), Vtx->position().z()) << Form("  Rank:%1.0f", Vtx->ranking()) << "    Mult: " << primVtx.mult;
+            std::cout << Form("[%i]", l) << Form(" %8.3f  %8.3f  %8.3f ", Vtx->position().x(), Vtx->position().y(), Vtx->position().z()) << Form("  Rank:%1.0f", Vtx->ranking()) << "    Mult: " << primVtx.mult;
 
-            if (primVtx.maxmult == 1 && l != 0) cout << "\t WRONG RANK" << endl;
-            else cout << endl;
+            if (primVtx.maxmult == 1 && l != 0) std::cout << "\t WRONG RANK" << std::endl;
+            else std::cout << std::endl;
          }
 
       }// END VERTICES
@@ -266,7 +266,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       else {vtxeval::gDebugFlag = false;}
    }     //END EVENTS
 
-   cout << "Number of events: " <<  nevent << "  No reconstructed events: " << noreco << endl;
+   std::cout << "Number of events: " <<  nevent << "  No reconstructed events: " << noreco << std::endl;
    fOut.Write();
 
    TDatime now1;
