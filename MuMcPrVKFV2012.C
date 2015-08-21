@@ -1,7 +1,6 @@
 /*
    root.exe lMuDst.C MuMcPrV.C+
 */
-//#define  __TMVA__
 #if !defined(__CINT__) || defined(__MAKECINT__)
 #include <map>
 #include <utility>
@@ -36,13 +35,6 @@
 #include "StMuDSTMaker/COMMON/StMuDstMaker.h"
 #undef  StMessMgr
 #undef ClassStMessMgr
-#else
-#ifndef __MAKECINT__
-#define BIT(n)       (1 << (n))
-#define SETBIT(n,i)  ((n) |= (1 << i))
-#define CLRBIT(n,i)  ((n) &= ~(1 << i))
-#define TESTBIT(n,i) ((Bool_t)(((n) & (1 << i)) != 0))
-#endif
 #endif
 StMuDstMaker *maker = 0;
 #ifdef __TMVA__
