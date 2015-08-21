@@ -3,29 +3,18 @@
 */
 //#define  __TMVA__
 #if !defined(__CINT__) || defined(__MAKECINT__)
-#include <assert.h>
 #include <map>
 #include <utility>
 #include <cstdlib>
 #include <string>
-#include "Riostream.h"
-#include "Rtypes.h"
 #include "TROOT.h"
 #include "TSystem.h"
-#include "TH1.h"
-#include "TH2.h"
-#include "TH3.h"
-#include "TF1.h"
-#include "TProfile.h"
-#include "TProfile3D.h"
+#include "TH1D.h"
+#include "TH2D.h"
 #include "TTree.h"
 #include "TNtuple.h"
 #include "TChain.h"
-#include "TCanvas.h"
-#include "TLegend.h"
-#include "TClassTable.h"
 #include "TFile.h"
-#include "TChain.h"
 #include "TString.h"
 #include "TObjString.h"
 #include "TArrayF.h"
