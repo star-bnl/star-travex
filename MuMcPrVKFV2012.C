@@ -30,11 +30,7 @@
 #include "StMuDSTMaker/COMMON/StMuMcTrack.h"
 #include "StMuDSTMaker/COMMON/StMuPrimaryTrackCovariance.h"
 #include "utils.h"
-#define ClassStMessMgr
-#define StMessMgr Int_t
 #include "StMuDSTMaker/COMMON/StMuDstMaker.h"
-#undef  StMessMgr
-#undef ClassStMessMgr
 #endif
 #ifdef __TMVA__
 #include "TMVAClassification_BDT.class.C"
