@@ -36,7 +36,6 @@
 #undef  StMessMgr
 #undef ClassStMessMgr
 #endif
-StMuDstMaker *maker = 0;
 #ifdef __TMVA__
 #include "TMVAClassification_BDT.class.C"
 #endif /* __TMVA__ */
@@ -212,7 +211,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    StMuTimer timer;
    timer.start();
    StMuDebug::setLevel(0);
-   maker = new StMuDstMaker(0, 0, "", file, "st:MuDst.root", 1e9); // set up maker in read mode
+   StMuDstMaker *maker = new StMuDstMaker(0, 0, "", file, "st:MuDst.root", 1e9); // set up maker in read mode
    //                       0,0                        this mean read mode
    //                           dir                    read all files in this directory
    //                               file               bla.lis real all file in this list, if (file!="") dir is ignored
