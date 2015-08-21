@@ -42,7 +42,6 @@
 #define SETBIT(n,i)  ((n) |= (1 << i))
 #define CLRBIT(n,i)  ((n) &= ~(1 << i))
 #define TESTBIT(n,i) ((Bool_t)(((n) & (1 << i)) != 0))
-class StMuDstMaker;
 #endif
 #endif
 StMuDstMaker *maker = 0;
