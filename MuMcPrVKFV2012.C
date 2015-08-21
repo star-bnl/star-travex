@@ -6,6 +6,7 @@
 #include <utility>
 #include <cstdlib>
 #include <string>
+
 #include "TROOT.h"
 #include "TSystem.h"
 #include "TH1D.h"
@@ -32,12 +33,15 @@
 #include "utils.h"
 #include "StMuDSTMaker/COMMON/StMuDstMaker.h"
 #endif
+
 #ifdef __TMVA__
 #include "TMVAClassification_BDT.class.C"
 #endif /* __TMVA__ */
+
 struct data_t {Float_t  beam, postx, prompt, cross, tof, notof, EEMC, noEEMC, chi2;};
 const Char_t *vnames = "beam:postx:prompt:cross:tof:notof:EEMC:noEEMC:chi2";
 static Int_t _debug = 1;
+
 using namespace std;
 
 
