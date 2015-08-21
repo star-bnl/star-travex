@@ -1,7 +1,7 @@
 /*
    root.exe lMuDst.C MuMcPrV.C+
 */
-#if !defined(__CINT__) || defined(__MAKECINT__)
+#ifndef __CINT__
 #include <map>
 #include <utility>
 #include <cstdlib>
