@@ -79,7 +79,7 @@ foreach($layers as $layer):
    Single hit efficiency in local detector coordinates (y and z). All sectors included
    </div>
 
-   <td><?php print $gP->img("deact_row".sprintf("%02d", $layer)."/sti_hit_ratio/hActiveLayerCounts_pxy_px", 800); ?>
+   <td><?php print $gP->img("deact_row".sprintf("%02d", $layer)."/sti_hit_ratio/hActiveLayerCounts_pxy_pfx", 800); ?>
    <div class="thumbcaption">
    Single hit efficiency as a function of z (integrated over y). All sectors included
    </div>
