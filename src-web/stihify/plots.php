@@ -48,6 +48,11 @@ foreach($layers as $layer):
 <table class="simple00 cntr">
 
 <tr>
+   <td><?php print $gP->img("deact_row".sprintf("%02d", $layer)."/sti_hit_any_node/hDiffProjToFitPositionWRTHit", 800); ?>
+
+   <td><?php print $gP->img("deact_row".sprintf("%02d", $layer)."/sti_hit_any_node/hDiffProjToFitError", 800); ?>
+
+<tr>
    <td><?php print $gP->img("deact_row".sprintf("%02d", $layer)."/sti_hit_any_node/hCountCandidateHits", 800); ?>
 
    <td><?php print $gP->img("deact_row".sprintf("%02d", $layer)."/sti_hit_any_node/hChi2CandidateHits", 800); ?>
