@@ -33,12 +33,6 @@ if (file_exists($info_file))
 <!-- {{{ -->
 <div id="div:hit_eff" class="section">
 
-<?php
-
-$layers = array(1, 5, 10, 15, 20, 25, 30, 35, 40, 41, 42, 43, 44, 45);
-
-foreach($layers as $layer):
-?>
 
 <h2 id="hit_eff" class="count">Layer <?=$layer?></h2>
 <!-- {{{ -->
@@ -48,38 +42,38 @@ foreach($layers as $layer):
 <table class="simple00 cntr">
 
 <tr>
-   <td><?php print $gP->img("deact_row".sprintf("%02d", $layer)."/sti_hit_any_node/hDiffProjToFitPositionWRTHit", 800); ?>
+   <td><?php print $gP->img("deact_sst/sti_hit_any_node/hDiffProjToFitPositionWRTHit", 800); ?>
 
-   <td><?php print $gP->img("deact_row".sprintf("%02d", $layer)."/sti_hit_any_node/hDiffProjToFitError", 800); ?>
+   <td><?php print $gP->img("deact_sst/sti_hit_any_node/hDiffProjToFitError", 800); ?>
 
 <tr>
-   <td><?php print $gP->img("deact_row".sprintf("%02d", $layer)."/sti_hit_any_node/hCountCandidateHits", 800); ?>
+   <td><?php print $gP->img("deact_sst/sti_hit_any_node/hCountCandidateHits", 800); ?>
 
-   <td><?php print $gP->img("deact_row".sprintf("%02d", $layer)."/sti_hit_any_node/hChi2CandidateHits", 800); ?>
+   <td><?php print $gP->img("deact_sst/sti_hit_any_node/hChi2CandidateHits", 800); ?>
 
 <tr>
 	<td>&nbsp;
 
-   <td><?php print $gP->img("deact_row".sprintf("%02d", $layer)."/sti_hit_any_node/hPullCandidateHits2D", 800); ?>
+   <td><?php print $gP->img("deact_sst/sti_hit_any_node/hPullCandidateHits2D", 800); ?>
 
 <tr>
-   <td><?php print $gP->img("deact_row".sprintf("%02d", $layer)."/sti_hit_any_node/hActiveLayerCounts", 800); ?>
+   <td><?php print $gP->img("deact_sst/sti_hit_any_node/hActiveLayerCounts", 800); ?>
    <div class="thumbcaption">
    Total number of track nodes. All sectors included
    </div>
 
-   <td><?php print $gP->img("deact_row".sprintf("%02d", $layer)."/sti_hit_accepted/hActiveLayerCounts", 800); ?>
+   <td><?php print $gP->img("deact_sst/sti_hit_accepted/hActiveLayerCounts", 800); ?>
    <div class="thumbcaption">
    Number of track nodes with an accepted candidate hit. All sectors included
    </div>
 
 <tr>
-   <td><?php print $gP->img("deact_row".sprintf("%02d", $layer)."/sti_hit_ratio/hActiveLayerCounts_pxy", 800); ?>
+   <td><?php print $gP->img("deact_sst/sti_hit_ratio/hActiveLayerCounts_pxy", 800); ?>
    <div class="thumbcaption">
    Single hit efficiency in local detector coordinates (y and z). All sectors included
    </div>
 
-   <td><?php print $gP->img("deact_row".sprintf("%02d", $layer)."/sti_hit_ratio/hActiveLayerCounts_pxy_pfx", 800); ?>
+   <td><?php print $gP->img("deact_sst/sti_hit_ratio/hActiveLayerCounts_pxy_pfx", 800); ?>
    <div class="thumbcaption">
    Single hit efficiency as a function of z (integrated over y). All sectors included
    </div>
@@ -89,10 +83,6 @@ foreach($layers as $layer):
 
 </div>
 <!-- }}} -->
-
-<?php
-endforeach;
-?>
 
 </div>
 <!-- }}} -->
