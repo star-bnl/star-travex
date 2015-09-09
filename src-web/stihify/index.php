@@ -14,7 +14,10 @@ include_once(BASE_DIR."/common/head.php");
 
 <ul>
    <li><a href="plots_tpc.php?pfx=v0.2">TPC</a>
-   <li><a href="plots.php?pfx=v0.2">SST</a>
+   <li><a href="plots.php?pfx=v0.2&det=sst">SST</a>
+   <li><a href="plots.php?pfx=v0.2&det=ist">IST</a>
+   <li><a href="plots.php?pfx=v0.2&det=pxl2">PXL2</a>
+   <li><a href="plots.php?pfx=v0.2&det=pxl1">PXL1</a>
 </ul>
 
 
