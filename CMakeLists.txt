@@ -33,6 +33,8 @@ include_directories(
 	contrib/star-tables
 )
 
-add_library( star-vertex-eval SHARED VertexRank.C MuMcPrVKFV2012.C)
+root_generate_dictionary(star-vertex-eval_Cint MuMcPrVKFV2012.h VertexRank.h VxEff.h LINKDEF LinkDef.h)
+
+add_library( star-vertex-eval SHARED VertexRank.C MuMcPrVKFV2012.C VxEff.C star-vertex-eval_Cint.cxx)
 
 install(TARGETS star-vertex-eval DESTINATION "lib")
