@@ -17,14 +17,14 @@ void VxEff(std::string fname_vtx_std_rank, std::string fname_vtx_tmva_rank)
    std::vector<std::string> fileNames = {fname_vtx_std_rank, fname_vtx_tmva_rank};
    const char *M[2] = {"old", "TMVA"};
 
-   TCanvas *c1  = new TCanvas("Eff", "Vertex Finding Efficiencies, old and TMVA ranking", 1200, 800);
+   TCanvas *c1  = new TCanvas("Eff", "Vertex Finding Efficiencies, old and TMVA ranking", 800, 800);
 
    TH1F *frame = c1->DrawFrame(0, 0, 40, 1.1);
    frame->SetTitle("Vertex Finding Efficiencies");
    frame->SetYTitle("Efficiency/Impurity");
    frame->SetXTitle("Reconstractible multiplicity");
 
-   TLegend *legend = new TLegend(0.4, 0.30, 0.9, 0.50);
+   TLegend *legend = new TLegend(0.6, 0.30, 0.98, 0.50);
 
    for (int j = 0; j < 2; j++) { // old and TMVA
       TFile file(fileNames[j].c_str());
