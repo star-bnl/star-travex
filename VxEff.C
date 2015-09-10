@@ -27,16 +27,15 @@ void VxEff(std::string fname_vtx_std_rank, std::string fname_vtx_tmva_rank)
    l = new TLegend(0.4, 0.30, 0.9, 0.50);
 
    for (Int_t j = 0; j < 2; j++) { // old and TMVA
-      TFile *f = new TFile(fileNames[j].c_str());
-      f->cd();
-      TH1D *McRecMulT    = (TH1D *) f->Get("McRecMulT");
+      TFile file(fileNames[j].c_str());
+      TH1D *McRecMulT    = (TH1D *) file.Get("McRecMulT");
 
       if (! McRecMulT) continue;
 
       Double_t T = McRecMulT->GetEntries();
-      TH1D *McRecMulAny  = (TH1D *) f->Get("McRecMulAny");  Double_t A = McRecMulAny->GetEntries();
-      TH1D *McRecMulGood = (TH1D *) f->Get("McRecMulGood"); Double_t G = McRecMulGood->GetEntries();
-      TH1D *McRecMulBad  = (TH1D *) f->Get("McRecMulBad");  Double_t B = McRecMulBad->GetEntries();
+      TH1D *McRecMulAny  = (TH1D *) file.Get("McRecMulAny");  Double_t A = McRecMulAny->GetEntries();
+      TH1D *McRecMulGood = (TH1D *) file.Get("McRecMulGood"); Double_t G = McRecMulGood->GetEntries();
+      TH1D *McRecMulBad  = (TH1D *) file.Get("McRecMulBad");  Double_t B = McRecMulBad->GetEntries();
 
       if (j == 0) {
          TEfficiency *a = new TEfficiency(*McRecMulAny, *McRecMulT);
@@ -51,7 +50,6 @@ void VxEff(std::string fname_vtx_std_rank, std::string fname_vtx_tmva_rank)
       g->Draw("same");
       TEfficiency *b = new TEfficiency(*McRecMulBad, *McRecMulT); b->SetMarkerColor(3 * j + 3); b->Draw("same");
       l->AddEntry(b, Form("%s Impurity (c) = %4.2f", M[j], B / T));
-      delete f;
    }
 
    l->Draw();
