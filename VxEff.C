@@ -7,6 +7,9 @@
 #include "TEfficiency.h"
 
 
+TCanvas gVtxEffCanvas("vtx_eff", "Vertex Finding Efficiencies, Std and TMVA ranking", 800, 800);
+TLegend gVtxEffLegend(0.6, 0.30, 0.98, 0.50);
+
 /**
  * Creates and displays histograms with vertex finding efficiency as a function
  * of track multiplicity. The function takes two ROOT file names containing
@@ -17,14 +20,11 @@ void VxEff(std::string fname_vtx_std_rank, std::string fname_vtx_tmva_rank)
    std::vector<std::string> fileNames = {fname_vtx_std_rank, fname_vtx_tmva_rank};
    const char *M[2] = {"Std", "TMVA"};
 
-   TCanvas *c1  = new TCanvas("Eff", "Vertex Finding Efficiencies, Std and TMVA ranking", 800, 800);
-
-   TH1F *frame = c1->DrawFrame(0, 0, 40, 1.1);
+   TH1F *frame = gVtxEffCanvas.DrawFrame(0, 0, 40, 1.1);
    frame->SetTitle("Vertex Finding Efficiencies");
    frame->SetYTitle("Efficiency/Impurity");
    frame->SetXTitle("Reconstractible multiplicity");
 
-   TLegend *legend = new TLegend(0.6, 0.30, 0.98, 0.50);
 
    for (int j = 0; j < 2; j++) { // Std and TMVA
       TFile file(fileNames[j].c_str());
@@ -41,19 +41,19 @@ void VxEff(std::string fname_vtx_std_rank, std::string fname_vtx_tmva_rank)
          TEfficiency *eff_total = new TEfficiency(*hMcRecMulAny, *hMcRecMulT);
          eff_total->SetMarkerColor(3 * j + 1);
          eff_total->Draw("same");
-         legend->AddEntry(eff_total, Form("Overall Efficiency (a) = %4.2f", A / T));
+         gVtxEffLegend.AddEntry(eff_total, Form("Overall Efficiency (a) = %4.2f", A / T));
       }
 
       TEfficiency *efficiency = new TEfficiency(*hMcRecMulGood, *hMcRecMulT);
       efficiency->SetMarkerColor(3 * j + 2);
-      legend->AddEntry(efficiency, Form("%s Efficiency (b) = %4.2f", M[j], G / T));
+      gVtxEffLegend.AddEntry(efficiency, Form("%s Efficiency (b) = %4.2f", M[j], G / T));
       efficiency->Draw("same");
 
       TEfficiency *impurity = new TEfficiency(*hMcRecMulBad, *hMcRecMulT);
       impurity->SetMarkerColor(3 * j + 3);
-      legend->AddEntry(impurity, Form("%s Impurity (c) = %4.2f", M[j], B / T));
+      gVtxEffLegend.AddEntry(impurity, Form("%s Impurity (c) = %4.2f", M[j], B / T));
       impurity->Draw("same");
    }
 
-   legend->Draw();
+   gVtxEffLegend.Draw();
 }
