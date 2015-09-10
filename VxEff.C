@@ -56,4 +56,6 @@ void VxEff(std::string fname_vtx_std_rank, std::string fname_vtx_tmva_rank)
    }
 
    gVtxEffLegend.Draw();
+
+   gVtxEffCanvas.SaveAs("vtx_eff.png");
 }
