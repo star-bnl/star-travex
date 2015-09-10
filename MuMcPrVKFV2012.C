@@ -110,7 +110,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
         versus corresponding MC "reconstructable"  (i.e. in n STAR acceptance,no. TPC MC hits >= 15)  tracks multiplicity.
         c.  Efficiency primary vertex reconstruction versus  MC "reconstructable"  tracks multiplicity.
       3. With pileup. repeat above (a-c) with old ranking scheme for
-          I. Any                                                 reconstructed primary vertex which is matched with MC trigger vertex (MC = 1)
+          I. Any reconstructed primary vertex which is matched with MC trigger vertex (MC = 1)
          II. The best (in sense of ranking) reconstructed primary vertex which is matched with MC trigger vertex (MC = 1)
         III. The best (in sense of ranking) reconstructed primary vertex which is not matched with MC trigger vertex (MC != 1)
       4. With pileup. repeat above (a-c) with new ranking scheme for cases I-III
@@ -168,10 +168,10 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    xMult[0] = -0.5;
 
    for (Int_t i = 1; i <= nMcRecMult; i++) {
-      if      (xMult[i - 1] <  50) xMult[i] = xMult[i - 1] +  1; //  1 - 50
-      else if (xMult[i - 1] < 100) xMult[i] = xMult[i - 1] +  2; // 51 - 75
-      else if (xMult[i - 1] < 200) xMult[i] = xMult[i - 1] + 10; // 76 - 85
-      else                       xMult[i] = xMult[i - 1] + 100; // 86 -100
+      if      (xMult[i - 1] <  50) xMult[i] = xMult[i - 1] +   1; //  1 - 50
+      else if (xMult[i - 1] < 100) xMult[i] = xMult[i - 1] +   2; // 51 - 75
+      else if (xMult[i - 1] < 200) xMult[i] = xMult[i - 1] +  10; // 76 - 85
+      else                         xMult[i] = xMult[i - 1] + 100; // 86 -100
    }
 
    TH1D *McRecMulT = new TH1D("McRecMulT", "Reconstructable multiplicity for trigger Mc Vertex", nMcRecMult, xMult.GetArray());
