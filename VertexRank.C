@@ -89,7 +89,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    //                                    filter        apply filter to filenames, multiple filters are separated by ':'
    //                                          10      maximum number of file to read
    maker->SetStatus("*", 0);
-   const Char_t *ActiveBranches[] = {
+
+   std::vector<std::string> ActiveBranches = {
       "MuEvent",
       "PrimaryVertices",
       "BTofHit",
@@ -97,9 +98,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       "StStMuMcVertex"
    };
 
-   Int_t Nb = sizeof(ActiveBranches) / sizeof(Char_t *);
-
-   for (Int_t i = 0; i < Nb; i++) maker->SetStatus(ActiveBranches[i], 1); // Set Active braches
+   for (const auto& branchName : ActiveBranches) maker->SetStatus(branchName.c_str(), 1); // Set Active braches
 
    StMuDebug::setLevel(0);
    TChain *tree = maker->chain();
