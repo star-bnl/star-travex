@@ -90,7 +90,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    //                                          10      maximum number of file to read
    maker->SetStatus("*", 0);
 
-   std::vector<std::string> ActiveBranches = {
+   std::vector<std::string> activeBranchNames = {
       "MuEvent",
       "PrimaryVertices",
       "BTofHit",
@@ -98,7 +98,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       "StStMuMcVertex"
    };
 
-   for (const auto& branchName : ActiveBranches) maker->SetStatus(branchName.c_str(), 1); // Set Active braches
+   for (const auto& branchName : activeBranchNames) maker->SetStatus(branchName.c_str(), 1); // Set Active braches
 
    StMuDebug::setLevel(0);
    TChain *tree = maker->chain();

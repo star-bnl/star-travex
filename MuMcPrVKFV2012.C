@@ -218,13 +218,13 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    std::cout << "time to load chain: " << timer.elapsedTime() << std::endl;
    maker->SetStatus("*", 0);
 
-   std::vector<std::string> ActiveBranches = {
+   std::vector<std::string> activeBranchNames = {
       "MuEvent",
       "PrimaryVertices",
       "StStMuMcVertex", "StStMuMcTrack"
    };
 
-   for (const auto& branchName : ActiveBranches) maker->SetStatus(branchName.c_str(), 1); // Set Active braches
+   for (const auto& branchName : activeBranchNames) maker->SetStatus(branchName.c_str(), 1); // Set Active braches
 
    StMuDebug::setLevel(0);
    timer.reset();

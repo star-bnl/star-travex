@@ -15,42 +15,45 @@
 void VxEff(std::string fname_vtx_std_rank, std::string fname_vtx_tmva_rank)
 {
    std::vector<std::string> fileNames = {fname_vtx_std_rank, fname_vtx_tmva_rank};
-   const Char_t *M[2] = {"old", "TMVA"};
+   const char *M[2] = {"old", "TMVA"};
 
    TCanvas *c1  = new TCanvas("Eff", "Vertex Finding Efficiencies, old and TMVA ranking", 1200, 800);
-   TLegend *l;
 
-   TH1F *frame = c1->cd()->DrawFrame(0, 0, 40, 1.1);
+   TH1F *frame = c1->DrawFrame(0, 0, 40, 1.1);
    frame->SetTitle("Vertex Finding Efficiencies");
    frame->SetYTitle("Efficiency/Impurity");
    frame->SetXTitle("Reconstractible multiplicity");
-   l = new TLegend(0.4, 0.30, 0.9, 0.50);
 
-   for (Int_t j = 0; j < 2; j++) { // old and TMVA
+   TLegend *legend = new TLegend(0.4, 0.30, 0.9, 0.50);
+
+   for (int j = 0; j < 2; j++) { // old and TMVA
       TFile file(fileNames[j].c_str());
-      TH1D *McRecMulT    = (TH1D *) file.Get("McRecMulT");
+      TH1D *hMcRecMulT    = (TH1D *) file.Get("McRecMulT");
 
-      if (! McRecMulT) continue;
+      if (! hMcRecMulT) continue;
 
-      Double_t T = McRecMulT->GetEntries();
-      TH1D *McRecMulAny  = (TH1D *) file.Get("McRecMulAny");  Double_t A = McRecMulAny->GetEntries();
-      TH1D *McRecMulGood = (TH1D *) file.Get("McRecMulGood"); Double_t G = McRecMulGood->GetEntries();
-      TH1D *McRecMulBad  = (TH1D *) file.Get("McRecMulBad");  Double_t B = McRecMulBad->GetEntries();
+      double T = hMcRecMulT->GetEntries();
+      TH1D *hMcRecMulAny  = (TH1D *) file.Get("McRecMulAny");  double A = hMcRecMulAny->GetEntries();
+      TH1D *hMcRecMulGood = (TH1D *) file.Get("McRecMulGood"); double G = hMcRecMulGood->GetEntries();
+      TH1D *hMcRecMulBad  = (TH1D *) file.Get("McRecMulBad");  double B = hMcRecMulBad->GetEntries();
 
       if (j == 0) {
-         TEfficiency *a = new TEfficiency(*McRecMulAny, *McRecMulT);
-         a->SetMarkerColor(3 * j + 1);
-         a->Draw("same");
-         l->AddEntry(a, Form("Overall Efficiency (a) = %4.2f", A / T));
+         TEfficiency *eff_total = new TEfficiency(*hMcRecMulAny, *hMcRecMulT);
+         eff_total->SetMarkerColor(3 * j + 1);
+         eff_total->Draw("same");
+         legend->AddEntry(eff_total, Form("Overall Efficiency (a) = %4.2f", A / T));
       }
 
-      TEfficiency *g = new TEfficiency(*McRecMulGood, *McRecMulT);
-      g->SetMarkerColor(3 * j + 2);
-      l->AddEntry(g, Form("%s Efficiency (b) = %4.2f", M[j], G / T));
-      g->Draw("same");
-      TEfficiency *b = new TEfficiency(*McRecMulBad, *McRecMulT); b->SetMarkerColor(3 * j + 3); b->Draw("same");
-      l->AddEntry(b, Form("%s Impurity (c) = %4.2f", M[j], B / T));
+      TEfficiency *efficiency = new TEfficiency(*hMcRecMulGood, *hMcRecMulT);
+      efficiency->SetMarkerColor(3 * j + 2);
+      legend->AddEntry(efficiency, Form("%s Efficiency (b) = %4.2f", M[j], G / T));
+      efficiency->Draw("same");
+
+      TEfficiency *impurity = new TEfficiency(*hMcRecMulBad, *hMcRecMulT);
+      impurity->SetMarkerColor(3 * j + 3);
+      legend->AddEntry(impurity, Form("%s Impurity (c) = %4.2f", M[j], B / T));
+      impurity->Draw("same");
    }
 
-   l->Draw();
+   legend->Draw();
 }
