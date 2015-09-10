@@ -22,6 +22,7 @@ if(NOT ROOT_FOUND)
    message(FATAL_ERROR "Fatal error: ROOT package not found")
 endif()
 
+add_compile_options(-std=c++0x)
 
 include_directories(
 	${ROOT_INCLUDE_DIR}
