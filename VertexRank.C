@@ -116,7 +116,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    now.Print();
 
    // Keep track of the number of events with 0 reconstructed verticies
-   Int_t noreco = 0;
+   int noreco = 0;
 
    // Main loop over events
    for (Long64_t ev = 0; ev < nevent; ev++) {
@@ -131,7 +131,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       int numPrimaryVertices = primaryVertices->GetEntriesFast();
 
       TClonesArray *MuMcVertices   = mu->mcArray(0);
-      Int_t NoMuMcVertices = MuMcVertices->GetEntriesFast();
+      int NoMuMcVertices = MuMcVertices->GetEntriesFast();
 
       ///////VPD////////////
       Float_t VpdZ = 999;
@@ -148,9 +148,9 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
       //////Max multiplicity/////////
       /////Usually the correct vertex/////
-      Int_t MaxMult = 0;
+      int MaxMult = 0;
 
-      for (Int_t l = 0; l < numPrimaryVertices; l++) {
+      for (int l = 0; l < numPrimaryVertices; l++) {
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
          Float_t numTrackPerVertex = Vtx->noTracks();
 
@@ -182,7 +182,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       double minDistance = DBL_MAX;
 
       // Loop over primary verticies in the event
-      for (Int_t l = 0; l < numPrimaryVertices; l++) {
+      for (int l = 0; l < numPrimaryVertices; l++) {
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
 
          if (!Vtx) continue;
@@ -215,7 +215,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          primVtx.McX    = 999;
          primVtx.McY    = 999;
          primVtx.McZ    = 999;
-         Int_t idd = Vtx->idTruth();
+         int idd = Vtx->idTruth();
          StMuMcVertex *mcVertex = 0;
 
          if (idd > 0 && idd < NoMuMcVertices)

@@ -175,11 +175,11 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    OutFile += ".root";
    TFile *fOut = TFile::Open(OutFile, "recreate");
    data_t data;
-   const Int_t nMcRecMult = 75;
+   const int nMcRecMult = 75;
    TArrayD xMult(nMcRecMult + 1);
    xMult[0] = -0.5;
 
-   for (Int_t i = 1; i <= nMcRecMult; i++) {
+   for (int i = 1; i <= nMcRecMult; i++) {
       if      (xMult[i - 1] <  50) xMult[i] = xMult[i - 1] +   1; //  1 - 50
       else if (xMult[i - 1] < 100) xMult[i] = xMult[i - 1] +   2; // 51 - 75
       else if (xMult[i - 1] < 200) xMult[i] = xMult[i - 1] +  10; // 76 - 85
@@ -205,8 +205,8 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    /*         h  p  */
    TH1 *hists[3][4];
 
-   for (Int_t h = 0; h < 3; h++) {
-      for (Int_t p = 0; p < 4; p++) {
+   for (int h = 0; h < 3; h++) {
+      for (int p = 0; p < 4; p++) {
          TString Name(Plots[p].Name); Name += HCases[h].Name;
          TString Title(Plots[p].Title); Title += " for "; Title += HCases[h].Title; Title += " vertex";
 
@@ -257,16 +257,16 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
 
       StMuDst *mu = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
       StMuEvent *muEvent = mu->event(); // get a pointer to the class holding event-wise information
-      Int_t referenceMultiplicity = muEvent->refMult(); // get the reference multiplicity
+      int referenceMultiplicity = muEvent->refMult(); // get the reference multiplicity
 
       TClonesArray *PrimaryVertices   = mu->primaryVertices();
-      Int_t nPrimaryVertices = PrimaryVertices->GetEntriesFast();
+      int nPrimaryVertices = PrimaryVertices->GetEntriesFast();
 
       TClonesArray *MuMcVertices   = mu->mcArray(0);
-      Int_t nMuMcVertices = MuMcVertices->GetEntriesFast();
+      int nMuMcVertices = MuMcVertices->GetEntriesFast();
 
       TClonesArray *MuMcTracks     = mu->mcArray(1);
-      Int_t nMuMcTracks = MuMcTracks->GetEntriesFast();
+      int nMuMcTracks = MuMcTracks->GetEntriesFast();
 
       if (vtxeval::gDebugFlag) {
          std::cout << "Read event #" << ev << "\tRun\t" << muEvent->runId()
@@ -286,24 +286,24 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
       }
 
       // Count number of tracks at a vertex with TPC reconstructable tracks
-      std::multimap<Int_t, Int_t> Mc2McHitTracks;
+      std::multimap<int, int> Mc2McHitTracks;
 
-      for (Int_t m = 0; m < nMuMcTracks; m++) {
+      for (int m = 0; m < nMuMcTracks; m++) {
          StMuMcTrack *McTrack = (StMuMcTrack *) MuMcTracks->UncheckedAt(m);
 
          if (McTrack->No_tpc_hit() < 15) continue;
 
-         Mc2McHitTracks.insert(std::pair<Int_t, Int_t>(McTrack->IdVx(), McTrack->Id()));
+         Mc2McHitTracks.insert(std::pair<int, int>(McTrack->IdVx(), McTrack->Id()));
       }
 
       McRecMulT->Fill(Mc2McHitTracks.count(1));
       // =============  Build map between  Rc and Mc vertices
       std::map<StMuPrimaryVertex *, StMuMcVertex *> Mc2RcVertices;
       TArrayF Ranks(nPrimaryVertices);
-      Int_t lMBest = -1; // any vertex with MC==1 and highest reconstrated multiplicity.
-      Int_t MMult  = -1;
+      int lMBest = -1; // any vertex with MC==1 and highest reconstrated multiplicity.
+      int MMult  = -1;
 
-      for (Int_t l = 0; l < nPrimaryVertices; l++) {
+      for (int l = 0; l < nPrimaryVertices; l++) {
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(l);
          Ranks[l] = -1e10;
 
@@ -324,7 +324,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
 
          Mc2RcVertices[Vtx] = mcVertex;
          Ranks[l] = Vtx->ranking();
-         Double_t nTracks = Vtx->noTracks();
+         double nTracks = Vtx->noTracks();
 
          if (Vtx->idTruth() == 1 && MMult < nTracks) {lMBest = l; MMult = nTracks;}
 
@@ -332,20 +332,20 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
 #ifdef __TMVA__
          Float_t *dataArray = &data.beam;
 
-         for (UInt_t j = 0; j < inputVec->size(); j++)
+         for (size_t j = 0; j < inputVec->size(); j++)
             (*inputVec)[j] = dataArray[j];
 
          Ranks[l] = classReader->GetMvaValue( *inputVec );
 #endif
       }
 
-      Int_t lBest = TMath::LocMax(nPrimaryVertices, Ranks.GetArray());
+      int lBest = TMath::LocMax(nPrimaryVertices, Ranks.GetArray());
 
       if (lBest >= 0 && Ranks[lBest] < RankMin) lBest = -1;
 
-      Int_t nMcTracksWithHits = Mc2McHitTracks.count(1);
+      int nMcTracksWithHits = Mc2McHitTracks.count(1);
 
-      for (Int_t l = 0; l < nPrimaryVertices; l++) {
+      for (int l = 0; l < nPrimaryVertices; l++) {
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(l);
 
          if (! Vtx) continue;
@@ -361,11 +361,11 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
 
          if (vtxeval::gDebugFlag) {
             std::cout << Form("Vx[%3i]", l) << *Vtx << " " << *mcVertex;
-            Int_t nMcTracksWithHitsatL = Mc2McHitTracks.count(Vtx->idTruth());
+            int nMcTracksWithHitsatL = Mc2McHitTracks.count(Vtx->idTruth());
             std::cout << Form("Number of McTkHit %4i rank %8.3f", nMcTracksWithHitsatL, Ranks[l]);
          }
 
-         Int_t IdPar = mcVertex->IdParTrk();
+         int IdPar = mcVertex->IdParTrk();
 
          if (IdPar > 0 && IdPar <= nMuMcTracks) {
             StMuMcTrack *mcTrack = (StMuMcTrack *) MuMcTracks->UncheckedAt(IdPar - 1);
@@ -380,8 +380,8 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
          }
 
          FillData(data, Vtx);
-         Int_t idd = mcVertex->Id();
-         Double_t nTracks = Vtx->noTracks();
+         int idd = mcVertex->Id();
+         double nTracks = Vtx->noTracks();
 
          if (idd == 1 && nTracks == MMult) {// good
             VertexG->Fill(&data.beam);//	VertexG->Fill(&data.beam);
@@ -390,8 +390,8 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
             VertexB->Fill(&data.beam);
          }
 
-         Double_t nTracksQA = nTracks * Vtx->qaTruth() / 100.;
-         Int_t h = -1;
+         double nTracksQA = nTracks * Vtx->qaTruth() / 100.;
+         int h = -1;
 
          if (l == lBest) {
             if (idd == 1) h = 1;
@@ -537,7 +537,7 @@ void TMVAClassification( TString myMethodList = "")
 
       std::vector<TString> mlist = TMVA::gTools().SplitString( myMethodList, ',' );
 
-      for (UInt_t i = 0; i < mlist.size(); i++) {
+      for (size_t i = 0; i < mlist.size(); i++) {
          std::string regMethod(mlist[i]);
 
          if (Use.find(regMethod) == Use.end()) {
@@ -584,8 +584,8 @@ void TMVAClassification( TString myMethodList = "")
    std::cout << " starts ... " << std::endl;
    // global event weights per tree (see below for setting event-wise weights)
    //   Float_t w;
-   Double_t signalWeight     = 1.0;
-   Double_t backgroundWeight = 1.0;
+   double signalWeight     = 1.0;
+   double backgroundWeight = 1.0;
 
    std::cout << " signalWeight = " << signalWeight << " backWeight = " << backgroundWeight << std::endl;
    factory->AddSignalTree( signal,    signalWeight     );
