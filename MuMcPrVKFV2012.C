@@ -6,6 +6,7 @@
 #include <utility>
 #include <cstdlib>
 #include <string>
+#include <vector>
 
 #include "TROOT.h"
 #include "TSystem.h"

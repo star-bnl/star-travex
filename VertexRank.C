@@ -8,6 +8,7 @@
 
 #ifndef __CINT__
 #include <string>
+#include <vector>
 #include "Riostream.h"
 #include "TROOT.h"
 #include "TSystem.h"
