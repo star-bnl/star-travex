@@ -21,6 +21,7 @@
 #include "TObjString.h"
 #include "TArrayF.h"
 #include "TArrayD.h"
+#include "TMath.h"
 #include "TMVA/Factory.h"
 #include "TMVA/Tools.h"
 #include "StMuDSTMaker/COMMON/StMuTimer.h"
@@ -128,8 +129,8 @@ void ForceAnimate(unsigned int times = 0, int msecDelay = 0)
 void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFile, bool fillNtuple)
 {
 #ifdef __TMVA__
-	boost::replace_last(outFile, ".root", "");
-	outFile += ".TMVArank.root";
+   boost::replace_last(outFile, ".root", "");
+   outFile += ".TMVArank.root";
 
    // create a set of variables and declare them to the reader
    // - the variable names must corresponds in name and type to
@@ -163,6 +164,8 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
 
    TFile *fOut = TFile::Open(outFile.c_str(), "recreate");
    data_t data;
+
+   // Book histograms
    const int nMcRecMult = 75;
    TArrayD xMult(nMcRecMult + 1);
    xMult[0] = -0.5;
@@ -421,10 +424,10 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
          }
       }
 
-      if (! gROOT->IsBatch()) {
+      if ( !gROOT->IsBatch() ) {
          if (vtxeval::ask_user()) return;
       }
-      else {vtxeval::gDebugFlag = false;}
+      else { vtxeval::gDebugFlag = false; }
    }
 
    fOut->Write();
@@ -432,7 +435,6 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
 
 
 //+++++++++++++++++++++ from Jonathan +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// @(#)root/tmva $Id: TMVAClassification.C 38895 2011-04-18 11:59:54Z evt $
 /**********************************************************************************
  * Project   : TMVA - a ROOT-integrated toolkit for multivariate data analysis    *
  * Package   : TMVA                                                               *
@@ -460,8 +462,6 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
  *    root -l ./TMVAGui.C                                                         *
  *                                                                                *
  **********************************************************************************/
-
-
 void TMVAClassification( TString myMethodList = "")
 {
    TTree *signal     = (TTree *)gDirectory->Get("VertexG");

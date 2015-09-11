@@ -1,9 +1,7 @@
-#
 # Basic usage:
 #
 # cd <project_dir>
-# mkdir build
-# cd build
+# mkdir build && cd build
 # cmake ../
 # make
 

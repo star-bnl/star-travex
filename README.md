@@ -13,7 +13,7 @@ Compile and build the library:
 
     cd star-vertex-eval/
     mkdir build && cd build/
-    cmake -D CMAKE_CXX_FLAGS="-m32" ../
+    cmake ../
     make
 
 The above commands should build `libstar-vertex-eval.so` in the `build`

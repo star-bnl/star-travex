@@ -140,18 +140,22 @@ void TMVAClassification( TString myMethodList = "" )
 
    // Select methods (don't look at this code - not of interest)
    if (myMethodList != "") {
-      for (std::map<std::string,int>::iterator it = Use.begin(); it != Use.end(); it++) it->second = 0;
+      for (std::map<std::string, int>::iterator it = Use.begin(); it != Use.end(); it++) it->second = 0;
 
       std::vector<TString> mlist = TMVA::gTools().SplitString( myMethodList, ',' );
-      for (UInt_t i=0; i<mlist.size(); i++) {
+
+      for (UInt_t i = 0; i < mlist.size(); i++) {
          std::string regMethod(mlist[i]);
 
          if (Use.find(regMethod) == Use.end()) {
             std::cout << "Method \"" << regMethod << "\" not known in TMVA under this name. Choose among the following:" << std::endl;
-            for (std::map<std::string,int>::iterator it = Use.begin(); it != Use.end(); it++) std::cout << it->first << " ";
+
+            for (std::map<std::string, int>::iterator it = Use.begin(); it != Use.end(); it++) std::cout << it->first << " ";
+
             std::cout << std::endl;
             return;
          }
+
          Use[regMethod] = 1;
       }
    }
@@ -162,7 +166,7 @@ void TMVAClassification( TString myMethodList = "" )
 
    // Create a ROOT output file where TMVA will store ntuples, histograms, etc.
    TString outfileName( "TMVA_vertex.root" );       //Amilkar
-   TFile* outputFile = TFile::Open( outfileName, "RECREATE" );
+   TFile *outputFile = TFile::Open( outfileName, "RECREATE" );
 
    // Create the factory object. Later you can choose the methods
    // whose performance you'd like to investigate. The factory is 
