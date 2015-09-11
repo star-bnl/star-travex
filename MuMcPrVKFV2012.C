@@ -261,27 +261,27 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
       Int_t referenceMultiplicity = muEvent->refMult(); // get the reference multiplicity
 
       TClonesArray *PrimaryVertices   = mu->primaryVertices();
-      Int_t NoPrimaryVertices = PrimaryVertices->GetEntriesFast();
+      Int_t nPrimaryVertices = PrimaryVertices->GetEntriesFast();
 
       TClonesArray *MuMcVertices   = mu->mcArray(0);
-      Int_t NoMuMcVertices = MuMcVertices->GetEntriesFast();
+      Int_t nMuMcVertices = MuMcVertices->GetEntriesFast();
 
       TClonesArray *MuMcTracks     = mu->mcArray(1);
-      Int_t NoMuMcTracks = MuMcTracks->GetEntriesFast();
+      Int_t nMuMcTracks = MuMcTracks->GetEntriesFast();
 
       if (vtxeval::gDebugFlag) {
          std::cout << "Read event #" << ev << "\tRun\t" << muEvent->runId()
                    << "\tId: " << muEvent->eventId()
                    << std::endl
                    << " refMult= " << referenceMultiplicity
-                   << "\tPrimaryVertices " << NoPrimaryVertices
-                   << "\t" << StMuArrays::mcArrayTypes[0] << " " << NoMuMcVertices
-                   << "\t" << StMuArrays::mcArrayTypes[1] << " " << NoMuMcTracks
+                   << "\tPrimaryVertices " << nPrimaryVertices
+                   << "\t" << StMuArrays::mcArrayTypes[0] << " " << nMuMcVertices
+                   << "\t" << StMuArrays::mcArrayTypes[1] << " " << nMuMcTracks
                    << std::endl;
       }
 
       //    const Double_t field = muEvent->magneticField()*kilogauss;
-      if (! NoMuMcVertices || ! NoMuMcTracks) {
+      if (! nMuMcVertices || ! nMuMcTracks) {
          std::cout << "Ev. " << ev << " has no MC information ==> skip it" << std::endl;
          continue;
       }
@@ -289,7 +289,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
       // Count no. track at a vertex with TPC reconstructable traks.
       std::multimap<Int_t, Int_t> Mc2McHitTracks;
 
-      for (Int_t m = 0; m < NoMuMcTracks; m++) {
+      for (Int_t m = 0; m < nMuMcTracks; m++) {
          StMuMcTrack *McTrack = (StMuMcTrack *) MuMcTracks->UncheckedAt(m);
 
          if (McTrack->No_tpc_hit() < 15) continue;
@@ -300,11 +300,11 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
       McRecMulT->Fill(Mc2McHitTracks.count(1));
       // =============  Build map between  Rc and Mc vertices
       std::map<StMuPrimaryVertex *, StMuMcVertex *> Mc2RcVertices;
-      TArrayF Ranks(NoPrimaryVertices);
+      TArrayF Ranks(nPrimaryVertices);
       Int_t lMBest = -1; // any vertex with MC==1 and highest reconstrated multiplicity.
       Int_t MMult  = -1;
 
-      for (Int_t l = 0; l < NoPrimaryVertices; l++) {
+      for (Int_t l = 0; l < nPrimaryVertices; l++) {
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(l);
          Ranks[l] = -1e10;
 
@@ -312,7 +312,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
 
          //      Vtx->Print();
          // Check Mc
-         if (Vtx->idTruth() < 0 || Vtx->idTruth() > NoMuMcVertices) {
+         if (Vtx->idTruth() < 0 || Vtx->idTruth() > nMuMcVertices) {
             std::cout << "Illegal idTruth " << Vtx->idTruth() << " The track is ignored" << std::endl;
             continue;
          }
@@ -327,9 +327,9 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
          //      mcVertex->Print();
          Mc2RcVertices[Vtx] = mcVertex;
          Ranks[l] = Vtx->ranking();
-         Double_t noTracks = Vtx->noTracks();
+         Double_t nTracks = Vtx->noTracks();
 
-         if (Vtx->idTruth() == 1 && MMult < noTracks) {lMBest = l; MMult = noTracks;}
+         if (Vtx->idTruth() == 1 && MMult < nTracks) {lMBest = l; MMult = nTracks;}
 
          FillData(data, Vtx);
 #ifdef __TMVA__
@@ -342,13 +342,13 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
 #endif
       }
 
-      Int_t lBest = TMath::LocMax(NoPrimaryVertices, Ranks.GetArray());
+      Int_t lBest = TMath::LocMax(nPrimaryVertices, Ranks.GetArray());
 
       if (lBest >= 0 && Ranks[lBest] < RankMin) lBest = -1;
 
-      Int_t NoMcTracksWithHits = Mc2McHitTracks.count(1);
+      Int_t nMcTracksWithHits = Mc2McHitTracks.count(1);
 
-      for (Int_t l = 0; l < NoPrimaryVertices; l++) {
+      for (Int_t l = 0; l < nPrimaryVertices; l++) {
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(l);
 
          if (! Vtx) continue;
@@ -364,13 +364,13 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
 
          if (vtxeval::gDebugFlag) {
             std::cout << Form("Vx[%3i]", l) << *Vtx << " " << *mcVertex;
-            Int_t NoMcTracksWithHitsatL = Mc2McHitTracks.count(Vtx->idTruth());
-            std::cout << Form(" No.McTkHit %4i rank %8.3f", NoMcTracksWithHitsatL, Ranks[l]);
+            Int_t nMcTracksWithHitsatL = Mc2McHitTracks.count(Vtx->idTruth());
+            std::cout << Form(" No.McTkHit %4i rank %8.3f", nMcTracksWithHitsatL, Ranks[l]);
          }
 
          Int_t IdPar = mcVertex->IdParTrk();
 
-         if (IdPar > 0 && IdPar <= NoMuMcTracks) {
+         if (IdPar > 0 && IdPar <= nMuMcTracks) {
             StMuMcTrack *mcTrack = (StMuMcTrack *) MuMcTracks->UncheckedAt(IdPar - 1);
 
             if (mcTrack && vtxeval::gDebugFlag) std::cout << " " << mcTrack->GeName();
@@ -384,16 +384,16 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
 
          FillData(data, Vtx);
          Int_t idd = mcVertex->Id();
-         Double_t noTracks = Vtx->noTracks();
+         Double_t nTracks = Vtx->noTracks();
 
-         if (idd == 1 && noTracks == MMult) {// good
+         if (idd == 1 && nTracks == MMult) {// good
             VertexG->Fill(&data.beam);//	VertexG->Fill(&data.beam);
          }
          else {   // bad
             VertexB->Fill(&data.beam);
          }
 
-         Double_t noTracksQA = noTracks * Vtx->qaTruth() / 100.;
+         Double_t nTracksQA = nTracks * Vtx->qaTruth() / 100.;
          Int_t h = -1;
 
          if (l == lBest) {
@@ -401,16 +401,16 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
             else          h = 2;
 
             if (h > 0) {
-               hists[h][0]->Fill(NoMcTracksWithHits, noTracks);
-               hists[h][1]->Fill(NoMcTracksWithHits, noTracksQA);
-               hists[h][2]->Fill(NoMcTracksWithHits);
+               hists[h][0]->Fill(nMcTracksWithHits, nTracks);
+               hists[h][1]->Fill(nMcTracksWithHits, nTracksQA);
+               hists[h][2]->Fill(nMcTracksWithHits);
             }
          }
 
          if (l == lMBest) {
-            hists[0][0]->Fill(NoMcTracksWithHits, noTracks);
-            hists[0][1]->Fill(NoMcTracksWithHits, noTracksQA);
-            hists[0][2]->Fill(NoMcTracksWithHits);
+            hists[0][0]->Fill(nMcTracksWithHits, nTracks);
+            hists[0][1]->Fill(nMcTracksWithHits, nTracksQA);
+            hists[0][2]->Fill(nMcTracksWithHits);
          }
       }
 
