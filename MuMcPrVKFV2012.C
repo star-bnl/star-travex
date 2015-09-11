@@ -258,21 +258,27 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
 
       StMuDst *mu = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
       StMuEvent *muEvent = mu->event(); // get a pointer to the class holding event-wise information
-
-      if (vtxeval::gDebugFlag) std::cout << "Read event #" << ev << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << std::endl;
-
       Int_t referenceMultiplicity = muEvent->refMult(); // get the reference multiplicity
 
-      if (vtxeval::gDebugFlag) std::cout << " refMult= " << referenceMultiplicity;
-
       TClonesArray *PrimaryVertices   = mu->primaryVertices();
-      Int_t NoPrimaryVertices = PrimaryVertices->GetEntriesFast();  if (vtxeval::gDebugFlag) std::cout << "\tPrimaryVertices " << NoPrimaryVertices;
-      TClonesArray *MuMcVertices   = mu->mcArray(0);
-      Int_t NoMuMcVertices = MuMcVertices->GetEntriesFast(); if (vtxeval::gDebugFlag) std::cout << "\t" << StMuArrays::mcArrayTypes[0] << " " << NoMuMcVertices;
-      TClonesArray *MuMcTracks     = mu->mcArray(1);
-      Int_t NoMuMcTracks = MuMcTracks->GetEntriesFast(); if (vtxeval::gDebugFlag) std::cout << "\t" << StMuArrays::mcArrayTypes[1] << " " << NoMuMcTracks;
+      Int_t NoPrimaryVertices = PrimaryVertices->GetEntriesFast();
 
-      if (vtxeval::gDebugFlag) std::cout << std::endl;
+      TClonesArray *MuMcVertices   = mu->mcArray(0);
+      Int_t NoMuMcVertices = MuMcVertices->GetEntriesFast();
+
+      TClonesArray *MuMcTracks     = mu->mcArray(1);
+      Int_t NoMuMcTracks = MuMcTracks->GetEntriesFast();
+
+      if (vtxeval::gDebugFlag) {
+         std::cout << "Read event #" << ev << "\tRun\t" << muEvent->runId()
+                   << "\tId: " << muEvent->eventId()
+                   << std::endl
+                   << " refMult= " << referenceMultiplicity
+                   << "\tPrimaryVertices " << NoPrimaryVertices
+                   << "\t" << StMuArrays::mcArrayTypes[0] << " " << NoMuMcVertices
+                   << "\t" << StMuArrays::mcArrayTypes[1] << " " << NoMuMcTracks
+                   << std::endl;
+      }
 
       //    const Double_t field = muEvent->magneticField()*kilogauss;
       if (! NoMuMcVertices || ! NoMuMcTracks) {
