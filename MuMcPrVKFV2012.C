@@ -125,7 +125,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    TString Vnames(vnames);
    TObjArray *array = Vnames.Tokenize(separator);
 
-   vector<string> inputVars;
+   std::vector<std::string> inputVars;
    TIter next(array);
    TObjString *objs;
 
@@ -144,7 +144,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    inputVars.push_back( "noEEMC");
    inputVars.push_back( "chi2");
 
-   vector<double> *inputVec = new vector<double>( inputVars.size() );
+   std::vector<double> *inputVec = new std::vector<double>( inputVars.size() );
    IClassifierReader *classReader = new ReadBDT          ( inputVars );
 
 #endif /* __TMVA__ */
@@ -265,19 +265,19 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
       }
 
       // Count no. track at a vertex with TPC reconstructable traks.
-      multimap<Int_t, Int_t> Mc2McHitTracks;
+      std::multimap<Int_t, Int_t> Mc2McHitTracks;
 
       for (Int_t m = 0; m < NoMuMcTracks; m++) {
          StMuMcTrack *McTrack = (StMuMcTrack *) MuMcTracks->UncheckedAt(m);
 
          if (McTrack->No_tpc_hit() < 15) continue;
 
-         Mc2McHitTracks.insert(pair<Int_t, Int_t>(McTrack->IdVx(), McTrack->Id()));
+         Mc2McHitTracks.insert(std::pair<Int_t, Int_t>(McTrack->IdVx(), McTrack->Id()));
       }
 
       McRecMulT->Fill(Mc2McHitTracks.count(1));
       // =============  Build map between  Rc and Mc vertices
-      map<StMuPrimaryVertex *, StMuMcVertex *> Mc2RcVertices;
+      std::map<StMuPrimaryVertex *, StMuMcVertex *> Mc2RcVertices;
       TArrayF Ranks(NoPrimaryVertices);
       Int_t lMBest = -1; // any vertex with MC==1 and highest reconstrated multiplicity.
       Int_t MMult  = -1;
@@ -448,7 +448,7 @@ void TMVAClassification( TString myMethodList = "")
    TMVA::Tools::Instance();
 
    // Default MVA methods to be trained + tested
-   map<string, int> Use;
+   std::map<std::string, int> Use;
 
    // --- Cut optimisation
    Use["Cuts"]            = 1;
@@ -514,17 +514,17 @@ void TMVAClassification( TString myMethodList = "")
 
    // Select methods (don't look at this code - not of interest)
    if (myMethodList != "") {
-      for (map<string, int>::iterator it = Use.begin(); it != Use.end(); it++) it->second = 0;
+      for (std::map<std::string, int>::iterator it = Use.begin(); it != Use.end(); it++) it->second = 0;
 
-      vector<TString> mlist = TMVA::gTools().SplitString( myMethodList, ',' );
+      std::vector<TString> mlist = TMVA::gTools().SplitString( myMethodList, ',' );
 
       for (UInt_t i = 0; i < mlist.size(); i++) {
-         string regMethod(mlist[i]);
+         std::string regMethod(mlist[i]);
 
          if (Use.find(regMethod) == Use.end()) {
             std::cout << "Method \"" << regMethod << "\" not known in TMVA under this name. Choose among the following:" << std::endl;
 
-            for (map<string, int>::iterator it = Use.begin(); it != Use.end(); it++) std::cout << it->first << " ";
+            for (std::map<std::string, int>::iterator it = Use.begin(); it != Use.end(); it++) std::cout << it->first << " ";
 
             std::cout << std::endl;
             return;
@@ -576,7 +576,7 @@ void TMVAClassification( TString myMethodList = "")
    TString Vnames(vnames);
    TObjArray *array = Vnames.Tokenize(separator);
 
-   vector<string> inputVars;
+   std::vector<std::string> inputVars;
    TIter next(array);
    TObjString *objs;
 
