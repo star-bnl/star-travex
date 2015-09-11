@@ -146,15 +146,15 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
       std::cout << objs->GetString() << std::endl;
    }
 
-   inputVars.push_back( "beam");
-   inputVars.push_back( "postx");
-   inputVars.push_back( "prompt");
-   inputVars.push_back( "cross");
-   inputVars.push_back( "tof");
-   inputVars.push_back( "notof");
-   inputVars.push_back( "EEMC");
-   inputVars.push_back( "noEEMC");
-   inputVars.push_back( "chi2");
+   inputVars.push_back("beam");
+   inputVars.push_back("postx");
+   inputVars.push_back("prompt");
+   inputVars.push_back("cross");
+   inputVars.push_back("tof");
+   inputVars.push_back("notof");
+   inputVars.push_back("EEMC");
+   inputVars.push_back("noEEMC");
+   inputVars.push_back("chi2");
 
    std::vector<double> *inputVec = new std::vector<double>( inputVars.size() );
    IClassifierReader *classReader = new ReadBDT( inputVars );

@@ -63,12 +63,16 @@ int VxEff(const std::map<std::string, std::string> & vtx_file_names)
 
       TH1D *hMcRecMulT    = (TH1D *) file.Get("McRecMulT");
 
-      if (! hMcRecMulT) continue;
+      if (!hMcRecMulT) continue;
+
+      TH1D *hMcRecMulAny  = (TH1D*) file.Get("McRecMulAny");
+      TH1D *hMcRecMulGood = (TH1D*) file.Get("McRecMulGood");
+      TH1D *hMcRecMulBad  = (TH1D*) file.Get("McRecMulBad");
 
       double T = hMcRecMulT->GetEntries();
-      TH1D *hMcRecMulAny  = (TH1D *) file.Get("McRecMulAny");  double A = hMcRecMulAny->GetEntries();
-      TH1D *hMcRecMulGood = (TH1D *) file.Get("McRecMulGood"); double G = hMcRecMulGood->GetEntries();
-      TH1D *hMcRecMulBad  = (TH1D *) file.Get("McRecMulBad");  double B = hMcRecMulBad->GetEntries();
+      double A = hMcRecMulAny->GetEntries();
+      double G = hMcRecMulGood->GetEntries();
+      double B = hMcRecMulBad->GetEntries();
 
       // Plot the overall efficiency only from the first file
       if (file_indx == 0) {
