@@ -94,7 +94,36 @@ void ForceAnimate(unsigned int times = 0, int msecDelay = 0)
 }
 
 
-//________________________________________________________________________________
+/**
+ * 1. Data sample : pp200 W->e nu with  pile-up corresponding to 1 MHz min. bias
+ * events, 50 K event y2011, 10 K event y2012.
+ *
+ * 2. Proof of principal: no pile-up for both PPV and KFV
+ *
+ *   a.  Reconstructed primary track multiplicity versus corresponding MC
+ *   "reconstructable" (i.e. in n STAR acceptance,no. TPC MC hits >= 15)  tracks
+ *   multiplicity.
+ *
+ *   b.  Corrected reconstructed primary track multiplicity (i.e. multiplied by
+ *   QA/100.) versus corresponding MC "reconstructable"  (i.e. in n STAR
+ *   acceptance,no. TPC MC hits >= 15)  tracks multiplicity.
+ *
+ *   c.  Efficiency primary vertex reconstruction versus  MC "reconstructable"
+ *   tracks multiplicity.
+ *
+ * 3. With pileup. repeat above (a-c) with old ranking scheme for
+ *
+ *     I. Any reconstructed primary vertex which is matched with MC trigger
+ *     vertex (MC = 1)
+ *
+ *    II. The best (in sense of ranking) reconstructed primary vertex which is
+ *    matched with MC trigger vertex (MC = 1)
+ *
+ *   III. The best (in sense of ranking) reconstructed primary vertex which is
+ *   not matched with MC trigger vertex (MC != 1)
+ *
+ * 4. With pileup. repeat above (a-c) with new ranking scheme for cases I-III
+ */
 void MuMcPrVKFV2012(Long64_t nevent = 999999,
                     const char *file = "/*.MuDst.root",
                     //const  char* outFile="KFV2012eff") {
@@ -102,20 +131,6 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
                     const  char *outFile = "trial")
 {
    // Initialize histograms -----------------------
-   /*
-      1. Data sample : pp200 W->e nu with  pile-up corresponding to 1 MHz min. bias events, 50 K event y2011, 10 K event y2012.
-      2. Proof of principal: no pile-up for both PPV and KFV
-        a.  Reconstructed primary track multiplicity versus corresponding MC "reconstructable"
-        (i.e. in n STAR acceptance,no. TPC MC hits >= 15)  tracks multiplicity.
-        b.  Corrected reconstructed primary track multiplicity (i.e. multiplied by  QA/100.)
-        versus corresponding MC "reconstructable"  (i.e. in n STAR acceptance,no. TPC MC hits >= 15)  tracks multiplicity.
-        c.  Efficiency primary vertex reconstruction versus  MC "reconstructable"  tracks multiplicity.
-      3. With pileup. repeat above (a-c) with old ranking scheme for
-          I. Any reconstructed primary vertex which is matched with MC trigger vertex (MC = 1)
-         II. The best (in sense of ranking) reconstructed primary vertex which is matched with MC trigger vertex (MC = 1)
-        III. The best (in sense of ranking) reconstructed primary vertex which is not matched with MC trigger vertex (MC != 1)
-      4. With pileup. repeat above (a-c) with new ranking scheme for cases I-III
-   */
    TString OutFile(outFile);
 #ifdef __TMVA__
    OutFile += "TMVArank";
