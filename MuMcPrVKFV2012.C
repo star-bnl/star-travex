@@ -126,11 +126,8 @@ void ForceAnimate(unsigned int times = 0, int msecDelay = 0)
  */
 void MuMcPrVKFV2012(Long64_t nevent = 999999,
                     const char *file = "/*.MuDst.root",
-                    //const  char* outFile="KFV2012eff") {
-                    //const  char* outFile="PPV2012eff") {
                     const  char *outFile = "trial")
 {
-   // Initialize histograms -----------------------
    TString OutFile(outFile);
 #ifdef __TMVA__
    OutFile += "TMVArank";
@@ -147,7 +144,6 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
 
    while ((objs = (TObjString *) next())) {
       std::cout << objs->GetString() << std::endl;
-      //inputVars.push_back("objs->GetString()");
    }
 
    inputVars.push_back( "beam");
@@ -161,7 +157,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    inputVars.push_back( "chi2");
 
    std::vector<double> *inputVec = new std::vector<double>( inputVars.size() );
-   IClassifierReader *classReader = new ReadBDT          ( inputVars );
+   IClassifierReader *classReader = new ReadBDT( inputVars );
 
 #endif /* __TMVA__ */
    Bool_t iPPV = kFALSE;
@@ -237,10 +233,13 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    std::vector<std::string> activeBranchNames = {
       "MuEvent",
       "PrimaryVertices",
-      "StStMuMcVertex", "StStMuMcTrack"
+      "StStMuMcVertex",
+      "StStMuMcTrack"
    };
 
-   for (const auto& branchName : activeBranchNames) maker->SetStatus(branchName.c_str(), 1); // Set Active braches
+   // Set Active braches
+   for (const auto& branchName : activeBranchNames)
+      maker->SetStatus(branchName.c_str(), 1);
 
    StMuDebug::setLevel(0);
    timer.reset();
@@ -286,7 +285,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
          continue;
       }
 
-      // Count no. track at a vertex with TPC reconstructable traks.
+      // Count number of tracks at a vertex with TPC reconstructable tracks
       std::multimap<Int_t, Int_t> Mc2McHitTracks;
 
       for (Int_t m = 0; m < nMuMcTracks; m++) {
@@ -310,7 +309,6 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
 
          if (! AcceptVX(Vtx)) continue;
 
-         //      Vtx->Print();
          // Check Mc
          if (Vtx->idTruth() < 0 || Vtx->idTruth() > nMuMcVertices) {
             std::cout << "Illegal idTruth " << Vtx->idTruth() << " The track is ignored" << std::endl;
@@ -324,7 +322,6 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
                  << " The vertex is ignored" <<  std::endl;
          }
 
-         //      mcVertex->Print();
          Mc2RcVertices[Vtx] = mcVertex;
          Ranks[l] = Vtx->ranking();
          Double_t nTracks = Vtx->noTracks();
@@ -334,9 +331,9 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
          FillData(data, Vtx);
 #ifdef __TMVA__
          Float_t *dataArray = &data.beam;
-         UInt_t N = inputVec->size();
 
-         for (UInt_t j = 0; j < N; j++) (*inputVec)[j] = dataArray[j];
+         for (UInt_t j = 0; j < inputVec->size(); j++)
+            (*inputVec)[j] = dataArray[j];
 
          Ranks[l] = classReader->GetMvaValue( *inputVec );
 #endif
@@ -365,7 +362,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
          if (vtxeval::gDebugFlag) {
             std::cout << Form("Vx[%3i]", l) << *Vtx << " " << *mcVertex;
             Int_t nMcTracksWithHitsatL = Mc2McHitTracks.count(Vtx->idTruth());
-            std::cout << Form(" No.McTkHit %4i rank %8.3f", nMcTracksWithHitsatL, Ranks[l]);
+            std::cout << Form("Number of McTkHit %4i rank %8.3f", nMcTracksWithHitsatL, Ranks[l]);
          }
 
          Int_t IdPar = mcVertex->IdParTrk();

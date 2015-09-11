@@ -47,33 +47,34 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       Float_t chi2;
       Int_t beam, postx, prompt, cross, tof, notof, EEMC, noEEMC, BEMC, noBEMC;
    };
+
    primVtxPoint_t primVtx;
 
    TTree *primaryvtx = new TTree("primaryvtx", "The Primary Vertices");
-   primaryvtx->Branch("event", &primVtx.event, "event/I");
-   primaryvtx->Branch("index", &primVtx.index, "index/I");
-   primaryvtx->Branch("rank", &primVtx.rank, "rank/I");
-   primaryvtx->Branch("mult", &primVtx.mult, "mult/I");
+   primaryvtx->Branch("event",   &primVtx.event, "event/I");
+   primaryvtx->Branch("index",   &primVtx.index, "index/I");
+   primaryvtx->Branch("rank",    &primVtx.rank, "rank/I");
+   primaryvtx->Branch("mult",    &primVtx.mult, "mult/I");
    primaryvtx->Branch("refMult", &primVtx.refMult, "refMult/I");
    primaryvtx->Branch("maxmult", &primVtx.maxmult, "maxmult/I");
-   primaryvtx->Branch("primX", &primVtx.primX, "primX/F");
-   primaryvtx->Branch("primY", &primVtx.primY, "primY/F");
-   primaryvtx->Branch("primZ", &primVtx.primZ, "primZ/F");
-   primaryvtx->Branch("zVpd", &primVtx.zVpd, "zVpd/F");
-   primaryvtx->Branch("McX", &primVtx.McX, "McX/F");
-   primaryvtx->Branch("McY", &primVtx.McY, "McY/F");
-   primaryvtx->Branch("McZ", &primVtx.McZ, "McZ/F");
-   primaryvtx->Branch("chi2", &primVtx.chi2, "chi2/F");
-   primaryvtx->Branch("beam", &primVtx.beam, "beam/I");
-   primaryvtx->Branch("postx", &primVtx.postx, "postx/I");
-   primaryvtx->Branch("prompt", &primVtx.prompt, "prompt/I");
-   primaryvtx->Branch("cross", &primVtx.cross, "cross/I");
-   primaryvtx->Branch("tof", &primVtx.tof, "tof/I");
-   primaryvtx->Branch("notof", &primVtx.notof, "notof/I");
-   primaryvtx->Branch("EEMC", &primVtx.EEMC, "EEMC/I");
-   primaryvtx->Branch("noEEMC", &primVtx.noEEMC, "noEEMC/I");
-   primaryvtx->Branch("BEMC", &primVtx.BEMC, "BEMC/I");
-   primaryvtx->Branch("noBEMC", &primVtx.noBEMC, "noBEMC/I");
+   primaryvtx->Branch("primX",   &primVtx.primX, "primX/F");
+   primaryvtx->Branch("primY",   &primVtx.primY, "primY/F");
+   primaryvtx->Branch("primZ",   &primVtx.primZ, "primZ/F");
+   primaryvtx->Branch("zVpd",    &primVtx.zVpd, "zVpd/F");
+   primaryvtx->Branch("McX",     &primVtx.McX, "McX/F");
+   primaryvtx->Branch("McY",     &primVtx.McY, "McY/F");
+   primaryvtx->Branch("McZ",     &primVtx.McZ, "McZ/F");
+   primaryvtx->Branch("chi2",    &primVtx.chi2, "chi2/F");
+   primaryvtx->Branch("beam",    &primVtx.beam, "beam/I");
+   primaryvtx->Branch("postx",   &primVtx.postx, "postx/I");
+   primaryvtx->Branch("prompt",  &primVtx.prompt, "prompt/I");
+   primaryvtx->Branch("cross",   &primVtx.cross, "cross/I");
+   primaryvtx->Branch("tof",     &primVtx.tof, "tof/I");
+   primaryvtx->Branch("notof",   &primVtx.notof, "notof/I");
+   primaryvtx->Branch("EEMC",    &primVtx.EEMC, "EEMC/I");
+   primaryvtx->Branch("noEEMC",  &primVtx.noEEMC, "noEEMC/I");
+   primaryvtx->Branch("BEMC",    &primVtx.BEMC, "BEMC/I");
+   primaryvtx->Branch("noBEMC",  &primVtx.noBEMC, "noBEMC/I");
 
    TH1I hNumVertices("hNumVertices", "Number of Vertices", 500, 0, 500);
    TH1I hNumTracksPerVertex("hNumTracksPerVertex", "Number of Tracks per Vertex", 100, 0, 100);
@@ -110,12 +111,15 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    tree->SetCacheLearnEntries(1); //one entry is sufficient to learn
    tree->SetCacheEntryRange(0, nevent);
 
-   TDatime now;                                          //Set time in Root
+   // Log current time
+   TDatime now;
    now.Print();
 
+   // Keep track of the number of events with 0 reconstructed verticies
    Int_t noreco = 0;
 
-   for (Long64_t ev = 0; ev < nevent; ev++) {         //START Events
+   // Main loop over events
+   for (Long64_t ev = 0; ev < nevent; ev++) {
       if (maker->Make()) break;
 
       StMuDst *mu = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
@@ -124,7 +128,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       if (vtxeval::gDebugFlag) std::cout << "Read event #" << ev << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << std::endl;
 
       TClonesArray *primaryVertices   = mu->primaryVertices();
-      int numPrimaryVertices = primaryVertices->GetEntriesFast();  // std::cout << "\tPrimaryVertices " << numPrimaryVertices;
+      int numPrimaryVertices = primaryVertices->GetEntriesFast();
 
       TClonesArray *MuMcVertices   = mu->mcArray(0);
       Int_t NoMuMcVertices = MuMcVertices->GetEntriesFast();
@@ -177,7 +181,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
       double minDistance = DBL_MAX;
 
-      for (Int_t l = 0; l < numPrimaryVertices; l++) {        //START Vertices
+      // Loop over primary verticies in the event
+      for (Int_t l = 0; l < numPrimaryVertices; l++) {
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
 
          if (!Vtx) continue;
@@ -197,16 +202,14 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
             minDistance =  (dist < minDistance) ? dist : minDistance;
          }
 
-         primVtx.event = ev;
-
-         primVtx.mult = Vtx->noTracks();
+         primVtx.event   = ev;
+         primVtx.mult    = Vtx->noTracks();
          primVtx.refMult = Vtx->refMult();
-
-         primVtx.primX = Vtx->position().x();
-         primVtx.primY = Vtx->position().y();
-         primVtx.primZ = Vtx->position().z();
-         primVtx.index = l;
-         primVtx.rank = Vtx->ranking();
+         primVtx.primX   = Vtx->position().x();
+         primVtx.primY   = Vtx->position().y();
+         primVtx.primZ   = Vtx->position().z();
+         primVtx.index   = l;
+         primVtx.rank    = Vtx->ranking();
 
          //////Mc info/////////
          primVtx.McX    = 999;
@@ -215,7 +218,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          Int_t idd = Vtx->idTruth();
          StMuMcVertex *mcVertex = 0;
 
-         if (idd > 0 && idd < NoMuMcVertices) mcVertex = (StMuMcVertex *) MuMcVertices->UncheckedAt(idd - 1);
+         if (idd > 0 && idd < NoMuMcVertices)
+            mcVertex = (StMuMcVertex *) MuMcVertices->UncheckedAt(idd - 1);
 
          if (mcVertex) {
             primVtx.McX    = mcVertex->XyzV().x();
@@ -249,7 +253,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          primaryvtx->Fill();
 
          if (vtxeval::gDebugFlag) {
-            std::cout << Form("[%i]", l) << Form(" %8.3f  %8.3f  %8.3f ", Vtx->position().x(), Vtx->position().y(), Vtx->position().z()) << Form("  Rank:%1.0f", Vtx->ranking()) << "    Mult: " << primVtx.mult;
+            std::cout << Form("[%i]", l) << Form(" %8.3f  %8.3f  %8.3f ", Vtx->position().x(), Vtx->position().y(), Vtx->position().z())
+                      << Form("  Rank:%1.0f", Vtx->ranking()) << "    Mult: " << primVtx.mult;
 
             if (primVtx.maxmult == 1 && l != 0) std::cout << "\t WRONG RANK" << std::endl;
             else std::cout << std::endl;
@@ -266,7 +271,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       else {vtxeval::gDebugFlag = false;}
    }     //END EVENTS
 
-   std::cout << "Number of events: " <<  nevent << "  No reconstructed events: " << noreco << std::endl;
+   std::cout << "Number of events: " <<  nevent << ", with 0 reconstructed verticies: " << noreco << std::endl;
+
    fOut.Write();
 
    TDatime now1;
