@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string>
 #include <vector>
 #include <map>
@@ -28,6 +29,21 @@ const std::map<std::string, std::string> myDefaultVertexFiles = {
  */
 int VxEff(const std::map<std::string, std::string> & vtx_file_names)
 {
+   // Check user's input
+   if (vtx_file_names.empty()) {
+      std::cout << "ERROR: No input files provided" << std::endl;
+      return EXIT_FAILURE;
+   }
+
+   // Print out user's input
+   std::cout << "User provided files with histograms:\n";
+
+   for (const auto& key2FileName : vtx_file_names) {
+      std::cout << "key => file: "
+                << key2FileName.first << " => " << key2FileName.second << "\n";
+   }
+
+   std::cout << std::endl;
 
    TH1F *frame = gVtxEffCanvas.DrawFrame(0, 0, 40, 1.1);
    frame->SetTitle("Vertex Finding Efficiencies");
