@@ -45,6 +45,10 @@ int VxEff(const std::map<std::string, std::string> & vtx_file_names)
 
    std::cout << std::endl;
 
+   // For efficiency plots we create here the default marker is unscalable dot
+   // so, change it
+   gStyle->SetMarkerStyle(kFullDotLarge);
+
    TH1F *frame = gVtxEffCanvas.DrawFrame(0, 0, 40, 1.1);
    frame->SetTitle("Vertex Finding Efficiencies");
    frame->SetYTitle("Efficiency/Impurity");
@@ -70,19 +74,19 @@ int VxEff(const std::map<std::string, std::string> & vtx_file_names)
       if (file_indx == 0) {
          TEfficiency *eff_total = new TEfficiency(*hMcRecMulAny, *hMcRecMulT);
          eff_total->SetMarkerColor(3*file_indx + 1);
-         eff_total->Draw("same");
+         eff_total->Draw("same p");
          gVtxEffLegend.AddEntry(eff_total, Form("Overall Efficiency (a) = %4.2f", A / T));
       }
 
       TEfficiency *efficiency = new TEfficiency(*hMcRecMulGood, *hMcRecMulT);
       efficiency->SetMarkerColor(3*file_indx + 2);
       gVtxEffLegend.AddEntry(efficiency, Form("%s Efficiency (b) = %4.2f", key2FileName.first.c_str(), G / T));
-      efficiency->Draw("same");
+      efficiency->Draw("same p");
 
       TEfficiency *impurity = new TEfficiency(*hMcRecMulBad, *hMcRecMulT);
       impurity->SetMarkerColor(3*file_indx + 3);
       gVtxEffLegend.AddEntry(impurity, Form("%s Impurity (c) = %4.2f", key2FileName.first.c_str(), B / T));
-      impurity->Draw("same");
+      impurity->Draw("same p");
 
       file_indx++;
    }
