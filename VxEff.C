@@ -22,6 +22,27 @@ const std::map<std::string, std::string> myDefaultVertexFiles = {
 };
 
 
+int VxEff(const std::vector<std::string> &vtx_file_keys, const std::vector<std::string> &vtx_file_names)
+{
+   // Check user's input
+   if (vtx_file_keys.size() != vtx_file_names.size()) {
+      std::cout << "ERROR: Different number of keys and files" << std::endl;
+      return EXIT_FAILURE;
+   }
+
+   std::map<std::string, std::string> myVertexFiles;
+
+   auto fname = vtx_file_names.begin();
+
+   for (auto key=vtx_file_keys.begin(); key!=vtx_file_keys.end(); ++key, ++fname)
+   {
+      myVertexFiles.insert( std::pair<std::string, std::string>(*key, *fname) );
+   }
+   
+   VxEff(myVertexFiles);
+}
+
+
 /**
  * Creates and displays histograms with vertex finding efficiency as a function
  * of track multiplicity. The function takes two ROOT file names containing
