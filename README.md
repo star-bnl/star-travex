@@ -39,7 +39,7 @@ Compile and build the tools:
     git submodule update --init --depth=1
     mkdir build && cd build
     # See "Remark about C++11 at STAR" below
-    cmake -DCMAKE_INSTALL_PREFIX=./ -DCMAKE_CXX_FLAGS="-m32 -std=c++0x" -DBOOST_ROOT=$OPTSTAR ../
+    cmake -DCMAKE_INSTALL_PREFIX=./ -DCMAKE_CXX_FLAGS="-m32" -DBOOST_ROOT=$OPTSTAR ../
     make -j4 && make install
 
 *Remark about C++11 at STAR:* Our code extensively uses the features from the
@@ -50,7 +50,7 @@ also available. To use it just provide the following options to cmake:
 
     cmake -DCMAKE_CXX_COMPILER=/afs/rhic.bnl.gov/rcassoft/x8664_sl6/gcc482/bin/g++ \
           -DCMAKE_INSTALL_PREFIX=".$STAR_HOST_SYS/" \
-          -DCMAKE_CXX_FLAGS="-m32 -std=c++0x" \
+          -DCMAKE_CXX_FLAGS="-m32" \
           -DBOOST_ROOT=$OPTSTAR ../
     export LD_LIBRARY_PATH+=":/afs/rhic.bnl.gov/rcassoft/x8664_sl6/gcc482/lib"
     make -j4 && make install

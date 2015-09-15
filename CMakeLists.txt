@@ -28,6 +28,8 @@ if(NOT ROOT_FOUND)
 endif()
 
 add_definitions(-D__ROOT__)
+# Add common compiler options
+add_compile_options(-std=c++0x)
 
 # Some external files on which this project depends
 file(COPY asps/rexe/TGeant3/TGiant3.h asps/rexe/TGeant3/StarMC.h DESTINATION inc/)

@@ -23,7 +23,7 @@ before_script:
   - rsync -auv root-src/math/mathmore/inc/Math root/include/
 script:
   - mkdir build/ && cd build/ && pwd
-  - cmake -D CMAKE_CXX_FLAGS=-std=c++0x -D CMAKE_INSTALL_PREFIX=./ -D CMAKE_BUILD_TYPE=Release ../
+  - cmake -D CMAKE_INSTALL_PREFIX=./ -D CMAKE_BUILD_TYPE=Release ../
   - make -j4 && make install && make clean
   - ls -la ./ && ls -la lib/ && ls -la bin/ && ls -la inc/
   - export PATH=$PATH:./bin
