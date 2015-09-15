@@ -48,11 +48,9 @@ compile it. As of May 2015 the default compiler in the STAR environment is
 gcc-4.4.7 does not provide full support of C++11 but a newer version 4.8.2 is
 also available. To use it just provide the following options to cmake:
 
-    cmake -DCMAKE_CXX_COMPILER=/afs/rhic.bnl.gov/rcassoft/x8664_sl6/gcc482/bin/g++ \
-          -DCMAKE_INSTALL_PREFIX=".$STAR_HOST_SYS/" \
+    cmake -DCMAKE_INSTALL_PREFIX=".$STAR_HOST_SYS/" \
           -DCMAKE_CXX_FLAGS="-m32" \
           -DBOOST_ROOT=$OPTSTAR ../
-    export LD_LIBRARY_PATH+=":/afs/rhic.bnl.gov/rcassoft/x8664_sl6/gcc482/lib"
     make -j4 && make install
 
 The make tool will place the libraries in the local `.slXX_gccXXX` directory.
