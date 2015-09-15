@@ -1,17 +1,23 @@
 language: cpp
+
 compiler:
   - gcc
+
 before_script:
+    # Install apache's liblog4cc
   - sudo apt-get update -qq
   - sudo apt-get install liblog4cxx10 liblog4cxx10-dev
+    # Install more recent version of g++
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
   - sudo apt-get -qq update
   - sudo apt-get -qq install g++-4.8
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
   - g++ --version
+    # Install some boost libraries
   - sudo add-apt-repository -y ppa:boost-latest/ppa
   - sudo apt-get -qq update
   - sudo apt-get install libboost-regex1.54-dev libboost-filesystem1.54-dev libboost-program-options1.54-dev
+    # Install more recent version of ROOT with source
   - wget http://root.cern.ch/download/root_v5.34.30.source.tar.gz -P /tmp/
   - tar -xzf /tmp/root_v5.34.30.source.tar.gz
   - mv root root-src
@@ -20,7 +26,13 @@ before_script:
   - source ./root/bin/thisroot.sh
   - root-config --libs
   - root-config --cflags
+    # Move some header files to common include directory
   - rsync -auv root-src/math/mathmore/inc/Math root/include/
+
+branch:
+  only:
+    - master
+
 script:
   - mkdir build/ && cd build/ && pwd
   - cmake -D CMAKE_INSTALL_PREFIX=./ -D CMAKE_BUILD_TYPE=Release ../
