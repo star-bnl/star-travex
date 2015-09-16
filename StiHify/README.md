@@ -1,3 +1,27 @@
+
+The efficiency to pick up a hit in an active detector volume can be described
+using the following components:
+
+    P_measured = (P_instrumental + P_background) * P_corr * P_tracking
+
+where
+
+    P_instrumental (or P_detector) is essentially the probability for the
+detector active media to produce a signal that can be recorded (Includes
+efficiency of hardware and/or low level thresholds, pedestals, ...)
+
+    P_background is the probability to have a hit within the window not
+produced by the considered track (Includes detector noise, other tracks, ...)
+
+    P_corr include cluster/hit reconstruction efficiency, uncorrected unknown
+distortions, inefficiency of known corrected distortions
+
+    P_tracking is the pure tracking efficiency, i.e. the probability to assign
+a hit to the track by the tracking algo. Includes algo specific requirements
+such as number of time hits can be used/reused, hit acceptance/rejection cuts
+(chi^2), ...
+
+
 StiHify tool and library
 ========================
 
