@@ -9,10 +9,7 @@
 #include "TDirectoryFile.h"
 
 
-typedef std::map<std::string, TH1*>                    HistMap;
-typedef std::map<std::string, TH1*>::iterator          HistMapIter;
-typedef std::map<std::string, TH1*>::const_iterator    HistMapConstIter;
-
+typedef std::map<std::string, TH1*>  HistMap;
 
 class StiHistContainer : public TDirectoryFile
 {
