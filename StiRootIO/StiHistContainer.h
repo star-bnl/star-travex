@@ -13,6 +13,9 @@ namespace tvx {
 
 typedef std::map<std::string, std::unique_ptr<TH1> >  HistMap;
 
+/**
+ * A very light container to hold and manipulate user histograms.
+ */
 class StiHistContainer : public TDirectoryFile
 {
 public:

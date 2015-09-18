@@ -54,6 +54,7 @@ void StiHifyRootFile::FillDerivedHists()
    {
       std::string hist_name = hist_iter.first;
 
+      // We select only histograms with names matching the following regex
       bool matched = boost::regex_match(hist_name, boost::regex("^hActiveLayerCounts.*$"));
 
       if (!matched) continue;
