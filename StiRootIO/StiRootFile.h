@@ -10,6 +10,8 @@
 #include "StiRootIO/StiHistContainer.h"
 
 
+namespace tvx {
+
 typedef std::map<std::string, StiHistContainer*>   StiHistContainers;
 
 
@@ -31,5 +33,7 @@ protected:
    StiHistContainers mDirs;   ///< A string-to-StiHistContainer map for convenient access to enclosed directories
    PrgOptionProcessor& fPrgOptions; ///< Command line arguments and options requested by the user
 };
+
+}
 
 #endif

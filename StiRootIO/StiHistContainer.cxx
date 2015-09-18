@@ -6,6 +6,7 @@
 
 #include "StiRootIO/StiHistContainer.h"
 
+using namespace tvx;
 
 StiHistContainer::StiHistContainer(const char* name, TDirectory* motherDir, Option_t* option) :
    TDirectoryFile(name, name, option, motherDir),

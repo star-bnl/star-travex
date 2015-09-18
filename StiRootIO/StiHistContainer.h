@@ -9,6 +9,7 @@
 #include "TH1.h"
 #include "TDirectoryFile.h"
 
+namespace tvx {
 
 typedef std::map<std::string, std::unique_ptr<TH1> >  HistMap;
 
@@ -30,5 +31,7 @@ protected:
 
    HistMap mHs;
 };
+
+}
 
 #endif
