@@ -176,7 +176,13 @@ target_link_libraries(stihify
 set_target_properties(stiscan PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 set_target_properties(stihify PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 
+# Installation section
+set(ADDITIONAL_INSTALL_PREFIX ".")
 
-install(DIRECTORY "contrib/star-db-calibrations/tracker" DESTINATION "../StarDb/Calibrations")
-install(TARGETS StiRootIO GeaRootIO AgUStep StiHify StiScan DESTINATION "lib")
-install(TARGETS stiscan stihify DESTINATION "bin")
+if(DEFINED ENV{STAR_HOST_SYS})
+   set(ADDITIONAL_INSTALL_PREFIX ".$ENV{STAR_HOST_SYS}")
+endif()
+
+install(DIRECTORY "contrib/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
+install(TARGETS StiRootIO GeaRootIO AgUStep StiHify StiScan DESTINATION "${ADDITIONAL_INSTALL_PREFIX}/lib")
+install(TARGETS stiscan stihify DESTINATION "${ADDITIONAL_INSTALL_PREFIX}/bin")
