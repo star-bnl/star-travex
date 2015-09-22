@@ -2,6 +2,7 @@
 #define StiHistContainer_h
 
 #include <map>
+#include <memory>
 #include <set>
 #include <string>
 
@@ -9,7 +10,7 @@
 #include "TDirectoryFile.h"
 
 
-typedef std::map<std::string, TH1*>  HistMap;
+typedef std::map<std::string, std::unique_ptr<TH1> >  HistMap;
 
 class StiHistContainer : public TDirectoryFile
 {
