@@ -36,8 +36,8 @@ void StiHifyHistContainer::BookHists()
    int n_z_bins = ceil( (z_max - z_min) / suggestBinWidth );
    int n_y_bins = ceil( (y_max - y_min) / suggestBinWidth );
 
-   n_z_bins = ( n_z_bins <= 10 ? 10 : (n_z_bins >  50 ? 50 : n_z_bins) );
-   n_y_bins = ( n_y_bins <= 10 ? 10 : (n_y_bins >  50 ? 50 : n_y_bins) );
+   n_z_bins = ( n_z_bins <= 10 ? 10 : (n_z_bins >  20 ? 20 : n_z_bins) );
+   n_y_bins = ( n_y_bins <= 10 ? 10 : (n_y_bins >  20 ? 20 : n_y_bins) );
 
    this->cd();
 
