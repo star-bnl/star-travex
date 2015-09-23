@@ -103,7 +103,7 @@ cat deactivate_sti_detectors.txt
 cat save_sti_detectors.txt
 
 # Create file with a TTree
-root -q -b -l 'bfc.C(1, 300, "P2014a mtd btof pxlHit istHit sstHit BEmcChkStat CorrX OSpaceZ2 OGridLeak3D -hitfilt StiHifyTreeMaker", "'$TVX_HIFY_INPUT_FILE'")' &> bfc.log
+root4star -q -b -l 'bfc.C(1, 300, "P2014a mtd btof pxlHit istHit sstHit BEmcChkStat CorrX OSpaceZ2 OGridLeak3D -hitfilt StiHifyTreeMaker", "'$TVX_HIFY_INPUT_FILE'")' &> bfc.log
 
 # Create file with histograms
 TVX_HIFY_INPUT_FILE=${TVX_HIFY_INPUT_FILE##*/}
