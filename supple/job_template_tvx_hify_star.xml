@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<job filesPerHour="1" maxFilesPerProcess="1" name="tvx_hify_&TVX_DEACT_DET_LAYER;">
+   <ResourceUsage>
+      <StorageSpace>
+         <MinStorage>20</MinStorage>
+      </StorageSpace>
+   </ResourceUsage>
+
+   <Generator>
+      <Location>/tmp/my_sums/</Location>
+   </Generator>
+
+   <command>
+      echo
+      echo "TVX_SOURCE_DIR:      " &TVX_SOURCE_DIR;
+      echo "TVX_INSTALL_DIR:     " &TVX_INSTALL_DIR;
+      echo "TVX_DEACT_DET_LAYER: " &TVX_DEACT_DET_LAYER;
+      echo "OUT_DIR:             " &OUT_DIR;
+      echo
+
+      ls -al .
+
+      # The actual command
+      TVX_INSTALL_DIR=&TVX_INSTALL_DIR; run_tvx_hify_star.sh &TVX_DEACT_DET_LAYER;
+
+      echo "End of job: tralala"
+
+   </command>
+
+   <output fromScratch="./*" toURL="file:&OUT_DIR;/"/>
+
+   <stdout URL="file:&OUT_DIR;/&TVX_DEACT_DET_LAYER;.log"/>
+   <stderr URL="file:&OUT_DIR;/&TVX_DEACT_DET_LAYER;.log"/>
+
+   <SandBox installer="ZIP">
+       <Package name="tvx_install_dir">
+          <File>file:$TVX_INSTALL_DIR/*</File>
+       </Package>
+   </SandBox>
+
+</job>
