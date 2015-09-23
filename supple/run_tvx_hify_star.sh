@@ -6,8 +6,39 @@
 #
 # or
 #
-# $ TVX_HIFY_INPUT_FILE=/path/to/my_file.daq TVX_BINARY_DIR=/my/existing/dir run_tvx_hify_star.sh pxl_1|pxl_2|ist_1|sst_1|tpc_#
+# $ TVX_INPUT_FILE=/path/to/my_file.daq TVX_INSTALL_DIR=/my/existing/dir run_tvx_hify_star.sh pxl_1|pxl_2|ist_1|sst_1|tpc_#
 #
+# TVX_INSTALL_DIR must be an installation directory for travex tools
+#
+# For example:
+#
+# $ cd my_tvx_install/
+# $ TVX_INSTALL_DIR=./ run_tvx_hify_star.sh tpc_7
+#
+
+
+# Set default values for script variables
+: ${TVX_INPUT_FILE:=/scratch/smirnovd/public/random_tests/st_physics_15164004_raw_2000022.daq}
+: ${TVX_INSTALL_DIR:=${HOME}/travex/build_install} && TVX_INSTALL_DIR=`cd "$TVX_INSTALL_DIR"; pwd`
+: ${TVX_STAR_GEO_FILE:=$TVX_INSTALL_DIR/y2014a.root}
+
+
+# Validate user's input
+if [ -d $TVX_INSTALL_DIR ]; then cd $TVX_INSTALL_DIR && echo "$ pwd" && pwd;
+else
+   echo "ERROR: Directory does not exist"
+   echo -e "\t TVX_INSTALL_DIR=$TVX_INSTALL_DIR"
+   exit 1
+fi
+
+
+if [ ! -e $TVX_STAR_GEO_FILE ]
+then
+   echo "ERROR: Geometry file does not exist"
+   echo -e "\t TVX_STAR_GEO_FILE=$TVX_STAR_GEO_FILE"
+   exit 1
+fi
+
 
 if [ -n "$1" ] && [[ $1 =~ ^([a-zA-Z]+)_([0-9]+)$ ]]
 then
@@ -16,18 +47,10 @@ then
    TVX_DEACT_LAYER_ID=$(echo $TVX_DEACT_DET_LAYER | sed 's/^\(.*\)_\([0-9]\+\)$/\2/')
    TVX_DEACT_LAYER_ID_PADDED=$(printf "%02d" $TVX_DEACT_LAYER_ID)
 else
-   echo "First parameter must be set:"
+   echo "ERROR: First parameter must be set:"
    echo "$ ${0##*/} pxl_1|pxl_2|ist_1|sst_1|tpc_#"
    exit 1
 fi
-
-
-# Set default values for script variables
-: ${TVX_HIFY_INPUT_FILE:=/scratch/smirnovd/public/random_tests/st_physics_15164004_raw_2000022.daq}
-: ${TVX_DIR:=${HOME}/star-sti-tools}
-: ${TVX_STAR_GEO_FILE:=${TVX_DIR}/y2014a.root}
-: ${OUTPUT_DIR:=${HOME}/deact_$TVX_DEACT_DET_LAYER}
-
 
 case $TVX_DEACT_DET_LAYER in
 
@@ -63,48 +86,31 @@ case $TVX_DEACT_DET_LAYER in
 
 esac
 
+
 echo "The following variables will be used:"
 echo -e "\t TVX_DEACT_DET_LAYER: $TVX_DEACT_DET_LAYER"
 echo -e "\t TVX_DEACT_DET_ID: $TVX_DEACT_DET_ID"
-echo -e "\t TVX_DEACT_LAYER_ID: $TVX_DEACT_LAYER_ID"
-echo -e "\t TVX_DEACT_LAYER_ID_PADDED: $TVX_DEACT_LAYER_ID_PADDED"
+echo -e "\t TVX_DEACT_LAYER_ID: $TVX_DEACT_LAYER_ID (pretty: $TVX_DEACT_LAYER_ID_PADDED)"
 echo -e "\t TVX_VOLUME_REGEX: $TVX_VOLUME_REGEX"
-echo -e "\t TVX_HIFY_INPUT_FILE: $TVX_HIFY_INPUT_FILE"
-echo -e "\t TVX_DIR: $TVX_DIR"
+echo -e "\t TVX_INPUT_FILE: $TVX_INPUT_FILE"
+echo -e "\t TVX_INSTALL_DIR: $TVX_INSTALL_DIR"
 echo -e "\t TVX_STAR_GEO_FILE: $TVX_STAR_GEO_FILE"
-echo -e "\t OUTPUT_DIR: $OUTPUT_DIR"
-echo -e "\t TVX_BINARY_DIR: $TVX_BINARY_DIR"
 
-# Print out all command before execution
+
+# After this 'trap' command print out all command before execution
 trap 'echo "$ $BASH_COMMAND"' DEBUG
 
-pwd
-
-if [ -n "$TVX_BINARY_DIR" ]
-then
-   mkdir -p $TVX_BINARY_DIR && cd $TVX_BINARY_DIR
-else
-   mkdir -p $OUTPUT_DIR && cd $OUTPUT_DIR
-fi
-
-pwd
-
-cmake -D CMAKE_INSTALL_PREFIX=${OUTPUT_DIR} -D CMAKE_CXX_FLAGS="-m32" -D BOOST_ROOT=$OPTSTAR ${TVX_DIR}
-make -j8 install
-
-# Create all supplementary files in the output directory
-cd $OUTPUT_DIR
-which stihify
-ln -s -f ${TVX_STAR_GEO_FILE}
+# Create supplementary files in the output directory
 echo $TVX_VOLUME_REGEX > deactivate_sti_detectors.txt
 cp deactivate_sti_detectors.txt save_sti_detectors.txt
-ls -la .
 cat deactivate_sti_detectors.txt
 cat save_sti_detectors.txt
+pwd && ls -la .
 
 # Create file with a TTree
-root4star -q -b -l 'bfc.C(1, 300, "P2014a mtd btof pxlHit istHit sstHit BEmcChkStat CorrX OSpaceZ2 OGridLeak3D -hitfilt StiHifyTreeMaker", "'$TVX_HIFY_INPUT_FILE'")' &> bfc.log
+root4star -q -b -l 'bfc.C(1, 300, "P2014a mtd btof pxlHit istHit sstHit BEmcChkStat CorrX OSpaceZ2 OGridLeak3D -hitfilt StiHifyTreeMaker", "'$TVX_INPUT_FILE'")' &> bfc.log
 
 # Create file with histograms
-TVX_HIFY_INPUT_FILE=${TVX_HIFY_INPUT_FILE##*/}
-stihify $TVX_HIFY_OPTIONS -f ${TVX_HIFY_INPUT_FILE%.*}.stihify.root -c -g -o deact_${TVX_DEACT_DET_ID}_${TVX_DEACT_LAYER_ID_PADDED}/
+which stihify
+TVX_INPUT_FILE=${TVX_INPUT_FILE##*/}
+stihify $TVX_HIFY_OPTIONS -f ${TVX_INPUT_FILE%.*}.stihify.root -c -g -o deact_${TVX_DEACT_DET_ID}_${TVX_DEACT_LAYER_ID_PADDED}/
