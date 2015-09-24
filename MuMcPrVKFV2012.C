@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
+#include <boost/algorithm/string/replace.hpp>
 
 #include "TROOT.h"
 #include "TSystem.h"
@@ -124,13 +125,12 @@ void ForceAnimate(unsigned int times = 0, int msecDelay = 0)
  *
  * 4. With pileup. repeat above (a-c) with new ranking scheme for cases I-III
  */
-void MuMcPrVKFV2012(Long64_t nevent = 999999,
-                    const char *file = "/*.MuDst.root",
-                    const  char *outFile = "trial")
+void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFile)
 {
-   TString OutFile(outFile);
 #ifdef __TMVA__
-   OutFile += "TMVArank";
+	boost::replace_last(outFile, ".root", "");
+	outFile += ".TMVArank.root";
+
    // create a set of variables and declare them to the reader
    // - the variable names must corresponds in name and type to
    // those given in the weight file(s) that you use
@@ -172,8 +172,7 @@ void MuMcPrVKFV2012(Long64_t nevent = 999999,
    else      RankMin = -0.1010;
 
 #endif /* __TMVA__ */
-   OutFile += ".root";
-   TFile *fOut = TFile::Open(OutFile, "recreate");
+   TFile *fOut = TFile::Open(outFile.c_str(), "recreate");
    data_t data;
    const int nMcRecMult = 75;
    TArrayD xMult(nMcRecMult + 1);
