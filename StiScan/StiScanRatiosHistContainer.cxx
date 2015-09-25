@@ -31,5 +31,5 @@ void StiScanRatiosHistContainer::CreateRatioHist(const TH1* hNumer, const TH1* h
    myRatio->Add(hDenom, -1);
    myRatio->Divide(hDenom);
 
-   mHs[std::string(myRatio->GetName())] = myRatio;
+   mHs[std::string(myRatio->GetName())].reset(myRatio);
 }

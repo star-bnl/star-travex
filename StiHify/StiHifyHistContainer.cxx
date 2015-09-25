@@ -41,38 +41,38 @@ void StiHifyHistContainer::BookHists()
 
    this->cd();
 
-   mHs["hDiffProjToFitPositionWRTHit"] = hDiffProjToFitPositionWRTHit
-      = new TH1I("hDiffProjToFitPositionWRTHit", " ; Diff. (Projection - Final) Position w.r.t. Hit, cm; Num. of Track Nodes; ", 50, -0.5, 0.5);
+   hDiffProjToFitPositionWRTHit = new TH1I("hDiffProjToFitPositionWRTHit", " ; Diff. (Projection - Final) Position w.r.t. Hit, cm; Num. of Track Nodes; ", 50, -0.5, 0.5);
    hDiffProjToFitPositionWRTHit->SetOption("XY hist");
+   mHs["hDiffProjToFitPositionWRTHit"].reset(hDiffProjToFitPositionWRTHit);
 
-   mHs["hDiffProjToFitError"] = hDiffProjToFitError
-      = new TH2I("hDiffProjToFitError", " ; Diff. (Projection - Final) Error_z, cm; Diff. Error_y, cm; Num. of Track Nodes; ", 50, 0, 0.25, 50, 0, 0.25);
+   hDiffProjToFitError = new TH2I("hDiffProjToFitError", " ; Diff. (Projection - Final) Error_z, cm; Diff. Error_y, cm; Num. of Track Nodes; ", 50, 0, 0.25, 50, 0, 0.25);
    hDiffProjToFitError->SetOption("colz");
+   mHs["hDiffProjToFitError"].reset(hDiffProjToFitError);
 
-   mHs["hDistClosest2AcceptedHit"] = hDistClosest2AcceptedHit
-      = new TH1I("hDistClosest2AcceptedHit", " ; Closest to Accepted Hits: Distance R, cm; Num. of Track Nodes; ", 100, 0, 0.5);
+   hDistClosest2AcceptedHit = new TH1I("hDistClosest2AcceptedHit", " ; Closest to Accepted Hits: Distance R, cm; Num. of Track Nodes; ", 50, 0, 0.5);
    hDistClosest2AcceptedHit->SetOption("XY hist");
+   mHs["hDistClosest2AcceptedHit"].reset(hDistClosest2AcceptedHit);
 
-   mHs["hPullClosestHit1D"] = hPullClosestHit1D
-      = new TH1I("hPullClosestHit1D", " ; Track Proj. to Closest Hit Pull Dist.: Distance R, #sigma-units; Num. of Track Nodes; ", 100, 0, 10);
+   hPullClosestHit1D = new TH1I("hPullClosestHit1D", " ; Track Proj. to Closest Hit Pull Dist.: Distance R, #sigma-units; Num. of Track Nodes; ", 100, 0, 10);
+   mHs["hPullClosestHit1D"].reset(hPullClosestHit1D);
 
-   mHs["hPullClosestHit2D"] = hPullClosestHit2D
-      = new TH2I("hPullClosestHit2D", " ; Track Proj. to Closest Hit Pull Dist.: Local Z, #sigma-units; Local Y, #sigma-units; Num. of Track Nodes", 50, -6, 6, 50, -6, 6);
+   hPullClosestHit2D = new TH2I("hPullClosestHit2D", " ; Track Proj. to Closest Hit Pull Dist.: Local Z, #sigma-units; Local Y, #sigma-units; Num. of Track Nodes", 50, -6, 6, 50, -6, 6);
    hPullClosestHit2D->SetOption("colz");
+   mHs["hPullClosestHit2D"].reset(hPullClosestHit2D);
 
-   mHs["hPullCandidateHits2D"] = hPullCandidateHits2D
-      = new TH2I("hPullCandidateHits2D", " ; Track Proj. to Candidate Hit Pull Dist.: Local Z, #sigma-units; Local Y, #sigma-units; Num. of Track Nodes", 50, -6, 6, 50, -6, 6);
+   hPullCandidateHits2D = new TH2I("hPullCandidateHits2D", " ; Track Proj. to Candidate Hit Pull Dist.: Local Z, #sigma-units; Local Y, #sigma-units; Num. of Track Nodes", 50, -6, 6, 50, -6, 6);
    hPullCandidateHits2D->SetOption("colz");
+   mHs["hPullCandidateHits2D"].reset(hPullCandidateHits2D);
 
-   mHs["hChi2CandidateHits"] = hChi2CandidateHits
-      = new TH1I("hChi2CandidateHits", " ; Track Proj. to Candidate Hit: #chi^{2}; Num. of Track Nodes", 100, 0, 20);
+   hChi2CandidateHits = new TH1I("hChi2CandidateHits", " ; Track Proj. to Candidate Hit: #chi^{2}; Num. of Track Nodes", 100, 0, 20);
+   mHs["hChi2CandidateHits"].reset(hChi2CandidateHits);
 
-   mHs["hCountCandidateHits"] = hCountCandidateHits
-      = new TH1I("hCountCandidateHits", " ; Num. of Candidate Hits; Num. of Track Nodes", 20, 0, 20);
+   hCountCandidateHits = new TH1I("hCountCandidateHits", " ; Num. of Candidate Hits; Num. of Track Nodes", 20, 0, 20);
+   mHs["hCountCandidateHits"].reset(hCountCandidateHits);
 
-   mHs["hActiveLayerCounts"] = hActiveLayerCounts
-      = new TH2F("hActiveLayerCounts", " ; Track Local Z, cm; Local Y, cm; Num. of Track Nodes", n_z_bins, z_min, z_max, n_y_bins, y_min, y_max);
+   hActiveLayerCounts = new TH2F("hActiveLayerCounts", " ; Track Local Z, cm; Local Y, cm; Num. of Track Nodes", n_z_bins, z_min, z_max, n_y_bins, y_min, y_max);
    hActiveLayerCounts->SetOption("colz");
+   mHs["hActiveLayerCounts"].reset(hActiveLayerCounts);
 }
 
 
@@ -156,7 +156,7 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
       hActiveLayerCounts_det = static_cast<TH1*>(hActiveLayerCounts->Clone());
       hActiveLayerCounts_det->SetName(histName.c_str());
       hActiveLayerCounts_det->SetOption("colz");
-      mHs[histName] = hActiveLayerCounts_det;
+      mHs[histName].reset(hActiveLayerCounts_det);
    }
 
    hActiveLayerCounts_det->Fill( trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y() );

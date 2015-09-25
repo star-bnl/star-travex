@@ -58,40 +58,47 @@ void StiScanHistContainer::BookHists()
 
    TH1* h;
 
-   mHs["hTrackCountVsEtaVsPhi"] = h = new TH2S("hTrackCountVsEtaVsPhi", " ; #eta; #phi, rad; Num. of Tracks", 50, -2, 2, 120, -M_PI, M_PI);
+   h = new TH2S("hTrackCountVsEtaVsPhi", " ; #eta; #phi, rad; Num. of Tracks", 50, -2, 2, 120, -M_PI, M_PI);
    h->SetOption("colz");
+   mHs["hTrackCountVsEtaVsPhi"].reset(h);
 
-   mHs["hTrackCountVsZVsPhi"]   = h = new TH2S("hTrackCountVsZVsPhi", " ; z, cm; #phi, rad; Num. of Tracks", nZBins, mNodeZMin, mNodeZMax, 120, -M_PI, M_PI);
+   h = new TH2S("hTrackCountVsZVsPhi", " ; z, cm; #phi, rad; Num. of Tracks", nZBins, mNodeZMin, mNodeZMax, 120, -M_PI, M_PI);
    h->SetOption("colz");
+   mHs["hTrackCountVsZVsPhi"].reset(h);
 
-   mHs["hELossVsEtaVsPhi_trk"] = h = new TProfile2D("hELossVsEtaVsPhi_trk", " ; Track #eta; Track #phi, rad; Energy Losses in Select Volumes, keV", 50, -2, 2, 120, -M_PI, M_PI);
+   h = new TProfile2D("hELossVsEtaVsPhi_trk", " ; Track #eta; Track #phi, rad; Energy Losses in Select Volumes, keV", 50, -2, 2, 120, -M_PI, M_PI);
    h->SetOption("colz");
+   mHs["hELossVsEtaVsPhi_trk"].reset(h);
 
-   mHs["hELossVsEtaVsPhi"] = h = new TProfile2D("hELossVsEtaVsPhi", " ; #eta; #phi, rad; Energy Losses in Select Volumes, keV", 50, -2, 2, 120, -M_PI, M_PI);
+   h = new TProfile2D("hELossVsEtaVsPhi", " ; #eta; #phi, rad; Energy Losses in Select Volumes, keV", 50, -2, 2, 120, -M_PI, M_PI);
    h->SetOption("colz");
+   mHs["hELossVsEtaVsPhi"].reset(h);
 
-   mHs["hELossVsZVsPhi"]   = h = new TProfile2D("hELossVsZVsPhi", " ; z, cm; #phi, rad; Energy Losses in Select Volumes, keV", nZBins, mNodeZMin, mNodeZMax, 120, -M_PI, M_PI);
+   h = new TProfile2D("hELossVsZVsPhi", " ; z, cm; #phi, rad; Energy Losses in Select Volumes, keV", nZBins, mNodeZMin, mNodeZMax, 120, -M_PI, M_PI);
    h->SetOption("colz");
+   mHs["hELossVsZVsPhi"].reset(h);
 
-   mHs["hELossVsZVsR"]     = h = new TProfile2D("hELossVsZVsR", " ; z, cm; r, cm; Energy Losses in Select Volumes, keV", nZBins, mNodeZMin, mNodeZMax, nRBins, mNodeRMin, mNodeRMax);
+   h = new TProfile2D("hELossVsZVsR", " ; z, cm; r, cm; Energy Losses in Select Volumes, keV", nZBins, mNodeZMin, mNodeZMax, nRBins, mNodeRMin, mNodeRMax);
    h->SetOption("colz");
+   mHs["hELossVsZVsR"].reset(h);
 
-   mHs["hELossVsPhiVsR"]   = new Profile2D("hELossVsPhiVsR", " ; #phi, rad; r, cm; Energy Losses in Select Volumes, keV", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, "colz");
+   h = new Profile2D("hELossVsPhiVsR", " ; #phi, rad; r, cm; Energy Losses in Select Volumes, keV", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, "colz");
+   mHs["hELossVsPhiVsR"].reset(h);
 
-   mHs["hNStepsVsPhiVsRVsZ"] = hNStepsVsPhiVsRVsZ =
-      new Profile3D("hNStepsVsPhiVsRVsZ", "Num. of Steps per Track ; #phi, rad; r, cm; z, cm", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);
+   hNStepsVsPhiVsRVsZ = new Profile3D("hNStepsVsPhiVsRVsZ", "Num. of Steps per Track ; #phi, rad; r, cm; z, cm", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);
+   mHs["hNStepsVsPhiVsRVsZ"].reset(hNStepsVsPhiVsRVsZ);
 
-   mHs["hELossVsPhiVsRVsZ"] = hELossVsPhiVsRVsZ =
-      new Profile3D("hELossVsPhiVsRVsZ", "Energy Losses in Select Volumes, keV ; #phi, rad; r, cm; z, cm", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);
+   hELossVsPhiVsRVsZ = new Profile3D("hELossVsPhiVsRVsZ", "Energy Losses in Select Volumes, keV ; #phi, rad; r, cm; z, cm", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);
+   mHs["hELossVsPhiVsRVsZ"].reset(hELossVsPhiVsRVsZ);
 
-   mHs["hELossVsXVsYVsZ"] = hELossVsXVsYVsZ =
-      new Profile3D("hELossVsXVsYVsZ", "Energy Losses in Select Volumes, keV ; x, cm; y, cm; z, cm", nXYBins, -mNodeRMax, mNodeRMax, nXYBins, -mNodeRMax, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);
+   hELossVsXVsYVsZ = new Profile3D("hELossVsXVsYVsZ", "Energy Losses in Select Volumes, keV ; x, cm; y, cm; z, cm", nXYBins, -mNodeRMax, mNodeRMax, nXYBins, -mNodeRMax, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);
+   mHs["hELossVsXVsYVsZ"].reset(hELossVsXVsYVsZ);
 
-   mHs["hDensityVsPhiVsRVsZ"] = hDensityVsPhiVsRVsZ =
-      new Profile3D("hDensityVsPhiVsRVsZ", "Material Density, g/cm^{3}; #phi, rad; r, cm; z, cm", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);
+   hDensityVsPhiVsRVsZ = new Profile3D("hDensityVsPhiVsRVsZ", "Material Density, g/cm^{3}; #phi, rad; r, cm; z, cm", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);
+   mHs["hDensityVsPhiVsRVsZ"].reset(hDensityVsPhiVsRVsZ);
 
-   mHs["hRelRadLengthVsPhiVsRVsZ"] = hRelRadLengthVsPhiVsRVsZ =
-      new Profile3D("hRelRadLengthVsPhiVsRVsZ", "Rel. Radiation Length, %; #phi, rad; r, cm; z, cm", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);
+   hRelRadLengthVsPhiVsRVsZ = new Profile3D("hRelRadLengthVsPhiVsRVsZ", "Rel. Radiation Length, %; #phi, rad; r, cm; z, cm", 120, -M_PI, M_PI, nRBins, mNodeRMin, mNodeRMax, nZBins, mNodeZMin, mNodeZMax);
+   mHs["hRelRadLengthVsPhiVsRVsZ"].reset(hRelRadLengthVsPhiVsRVsZ);
 }
 
 
@@ -121,64 +128,76 @@ void StiScanHistContainer::FillDerivedHists()
 
    TProfile2D* profile2D;
 
-   mHs["hNStepsVsPhiVsRVsZ_pyx"] = profile2D = hNStepsVsPhiVsRVsZ->Project3DProfile("yx");
+   profile2D = hNStepsVsPhiVsRVsZ->Project3DProfile("yx");
    profile2D->SetOption("colz");
-   mHs["hNStepsVsPhiVsRVsZ_pyx_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
+   mHs["hNStepsVsPhiVsRVsZ_pyx"].reset(profile2D);
+   mHs["hNStepsVsPhiVsRVsZ_pyx_px"].reset(mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX());
 
-   mHs["hNStepsVsPhiVsRVsZ_pyz"] = profile2D = hNStepsVsPhiVsRVsZ->Project3DProfile("yz");
+   profile2D = hNStepsVsPhiVsRVsZ->Project3DProfile("yz");
    profile2D->SetOption("colz");
-   mHs["hNStepsVsPhiVsRVsZ_pyz_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
+   mHs["hNStepsVsPhiVsRVsZ_pyz"].reset(profile2D);
+   mHs["hNStepsVsPhiVsRVsZ_pyz_px"].reset(mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX());
 
-   mHs["hNStepsVsPhiVsRVsZ_pxz"] = profile2D = hNStepsVsPhiVsRVsZ->Project3DProfile("xz");
+   profile2D = hNStepsVsPhiVsRVsZ->Project3DProfile("xz");
    profile2D->SetOption("colz");
-   mHs["hNStepsVsPhiVsRVsZ_pxz_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
+   mHs["hNStepsVsPhiVsRVsZ_pxz"].reset(profile2D);
+   mHs["hNStepsVsPhiVsRVsZ_pxz_px"].reset(mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX());
 
 
-   mHs["hELossVsPhiVsRVsZ_pyx"] = profile2D = hELossVsPhiVsRVsZ->Project3DProfile("yx");
+   profile2D = hELossVsPhiVsRVsZ->Project3DProfile("yx");
    profile2D->SetOption("colz XZ");
-   mHs["hELossVsPhiVsRVsZ_pyx_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
+   mHs["hELossVsPhiVsRVsZ_pyx"].reset(profile2D);
+   mHs["hELossVsPhiVsRVsZ_pyx_px"].reset(mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX());
    mHs["hELossVsPhiVsRVsZ_pyx_px"]->SetOption("XY");
 
-   mHs["hELossVsPhiVsRVsZ_pyz"] = profile2D = hELossVsPhiVsRVsZ->Project3DProfile("yz");
+   profile2D = hELossVsPhiVsRVsZ->Project3DProfile("yz");
    profile2D->SetOption("colz XZ");
-   mHs["hELossVsPhiVsRVsZ_pyz_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
+   mHs["hELossVsPhiVsRVsZ_pyz"].reset(profile2D);
+   mHs["hELossVsPhiVsRVsZ_pyz_px"].reset(mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX());
 
-   mHs["hELossVsPhiVsRVsZ_pxz"] = profile2D = hELossVsPhiVsRVsZ->Project3DProfile("xz");
+   profile2D = hELossVsPhiVsRVsZ->Project3DProfile("xz");
    profile2D->SetOption("colz XZ");
-   mHs["hELossVsPhiVsRVsZ_pxz_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
+   mHs["hELossVsPhiVsRVsZ_pxz"].reset(profile2D);
+   mHs["hELossVsPhiVsRVsZ_pxz_px"].reset(mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX());
 
 
-   mHs["hELossVsXVsYVsZ_pyx"] = profile2D = hELossVsXVsYVsZ->Project3DProfile("yx");
-   profile2D->SetOption("colz XZ");
+   mHs["hELossVsXVsYVsZ_pyx"].reset(hELossVsXVsYVsZ->Project3DProfile("yx"));
+   mHs["hELossVsXVsYVsZ_pyx"]->SetOption("colz XZ");
 
 
    // For 1D density profiles we always calculate the average density
-   mHs["hDensityVsPhiVsRVsZ_pyx"] = profile2D = hDensityVsPhiVsRVsZ->Project3DProfile("yx");
+   profile2D = hDensityVsPhiVsRVsZ->Project3DProfile("yx");
    profile2D->SetOption("colz");
-   mHs["hDensityVsPhiVsRVsZ_pyx_px"] = profile2D->ProfileX();
+   mHs["hDensityVsPhiVsRVsZ_pyx"].reset(profile2D);
+   mHs["hDensityVsPhiVsRVsZ_pyx_px"].reset(profile2D->ProfileX());
    mHs["hDensityVsPhiVsRVsZ_pyx_px"]->SetOption("XY");
 
-   mHs["hDensityVsPhiVsRVsZ_pyz"] = profile2D = hDensityVsPhiVsRVsZ->Project3DProfile("yz");
+   profile2D = hDensityVsPhiVsRVsZ->Project3DProfile("yz");
    profile2D->SetOption("colz");
-   mHs["hDensityVsPhiVsRVsZ_pyz_px"] = profile2D->ProfileX();
+   mHs["hDensityVsPhiVsRVsZ_pyz"].reset(profile2D);
+   mHs["hDensityVsPhiVsRVsZ_pyz_px"].reset(profile2D->ProfileX());
 
-   mHs["hDensityVsPhiVsRVsZ_pxz"] = profile2D = hDensityVsPhiVsRVsZ->Project3DProfile("xz");
+   profile2D = hDensityVsPhiVsRVsZ->Project3DProfile("xz");
    profile2D->SetOption("colz");
-   mHs["hDensityVsPhiVsRVsZ_pxz_px"] = profile2D->ProfileX();
+   mHs["hDensityVsPhiVsRVsZ_pxz"].reset(profile2D);
+   mHs["hDensityVsPhiVsRVsZ_pxz_px"].reset(profile2D->ProfileX());
 
 
-   mHs["hRelRadLengthVsPhiVsRVsZ_pyx"] = profile2D = hRelRadLengthVsPhiVsRVsZ->Project3DProfile("yx");
+   profile2D = hRelRadLengthVsPhiVsRVsZ->Project3DProfile("yx");
    profile2D->SetOption("colz");
-   mHs["hRelRadLengthVsPhiVsRVsZ_pyx_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
+   mHs["hRelRadLengthVsPhiVsRVsZ_pyx"].reset(profile2D);
+   mHs["hRelRadLengthVsPhiVsRVsZ_pyx_px"].reset(mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX());
    mHs["hRelRadLengthVsPhiVsRVsZ_pyx_px"]->SetOption("XY");
 
-   mHs["hRelRadLengthVsPhiVsRVsZ_pyz"] = profile2D = hRelRadLengthVsPhiVsRVsZ->Project3DProfile("yz");
+   profile2D = hRelRadLengthVsPhiVsRVsZ->Project3DProfile("yz");
    profile2D->SetOption("colz");
-   mHs["hRelRadLengthVsPhiVsRVsZ_pyz_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
+   mHs["hRelRadLengthVsPhiVsRVsZ_pyz"].reset(profile2D);
+   mHs["hRelRadLengthVsPhiVsRVsZ_pyz_px"].reset(mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX());
 
-   mHs["hRelRadLengthVsPhiVsRVsZ_pxz"] = profile2D = hRelRadLengthVsPhiVsRVsZ->Project3DProfile("xz");
+   profile2D = hRelRadLengthVsPhiVsRVsZ->Project3DProfile("xz");
    profile2D->SetOption("colz");
-   mHs["hRelRadLengthVsPhiVsRVsZ_pxz_px"] = mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX();
+   mHs["hRelRadLengthVsPhiVsRVsZ_pxz"].reset(profile2D);
+   mHs["hRelRadLengthVsPhiVsRVsZ_pxz_px"].reset(mDoProjection ? profile2D->ProjectionX() : profile2D->ProfileX());
 }
 
 
