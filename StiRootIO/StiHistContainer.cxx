@@ -26,14 +26,14 @@ StiHistContainer::~StiHistContainer()
 const TH1* StiHistContainer::FindHist(const std::string& hist_name) const
 {
    auto iter = mHs.find(hist_name);
-   return ( iter != mHs.end() ) ? iter->second : nullptr;
+   return ( iter != mHs.end() ) ? iter->second.get() : nullptr;
 }
 
 
 TH1* StiHistContainer::FindHist(const std::string& hist_name)
 {
    auto iter = mHs.find(hist_name);
-   return ( iter != mHs.end() ) ? iter->second : nullptr;
+   return ( iter != mHs.end() ) ? iter->second.get() : nullptr;
 }
 
 
@@ -44,10 +44,10 @@ void StiHistContainer::SaveAllAs(std::string prefix)
    canvas.SetGridx(true);
    canvas.SetGridy(true);
 
-   for (const std::pair<std::string, TH1*>& iHist : mHs)
+   for (auto& iHist : mHs)
    {
       std::string histName = iHist.first;
-      TH1*   hist     = iHist.second;
+      std::unique_ptr<TH1>& hist = iHist.second;
 
       if (!hist) {
          Error("SaveAllAs", "No object found for key %s. Skipping...", histName.c_str());
