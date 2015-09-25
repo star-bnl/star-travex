@@ -14,15 +14,6 @@ StiHistContainer::StiHistContainer(const char* name, TDirectory* motherDir, Opti
 }
 
 
-StiHistContainer::~StiHistContainer()
-{
-   while (!mHs.empty()) {
-      delete mHs.begin()->second;
-      mHs.erase(mHs.begin());
-   }
-}
-
-
 const TH1* StiHistContainer::FindHist(const std::string& hist_name) const
 {
    auto iter = mHs.find(hist_name);

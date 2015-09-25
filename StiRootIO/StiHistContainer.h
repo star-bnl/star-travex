@@ -17,7 +17,6 @@ class StiHistContainer : public TDirectoryFile
 public:
 
    StiHistContainer(const char* name, TDirectory* motherDir=nullptr, Option_t* option="");
-   ~StiHistContainer();
 
    const HistMap& GetHists() const { return mHs; }
    const TH1*     FindHist(const std::string& hist_name) const;
