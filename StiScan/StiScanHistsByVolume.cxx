@@ -25,12 +25,12 @@ void StiScanHistsByVolume::FillHists(const TStiKalmanTrack &kalmTrack, const std
       if (volumeList && volumeList->size() && !kalmNode.MatchedVolName(*volumeList) ) continue;
 
       hNStepsVsPhiVsRVsZ->FillAsCumulative(kalmNode.GetNodeCenterRefAngle(), kalmNode.GetNodeRadius(), kalmNode.GetPosition().Z(), 1);
-      ((TProfile2D*) mHs["hELossVsEtaVsPhi_trk"])->Fill(kalmNode.GetTrackP().Eta(), kalmNode.GetTrackP().Phi(), kalmNode.GetEnergyLosses());
+      dynamic_cast<TProfile2D&>( *mHs["hELossVsEtaVsPhi_trk"]).Fill(kalmNode.GetTrackP().Eta(), kalmNode.GetTrackP().Phi(), kalmNode.GetEnergyLosses());
 
-      ((TProfile2D*) mHs["hELossVsEtaVsPhi"])->Fill(kalmNode.GetPosition().Eta(), kalmNode.GetNodeCenterRefAngle(), kalmNode.GetEnergyLosses());
-      ((TProfile2D*) mHs["hELossVsZVsPhi"])->Fill(kalmNode.GetPosition().Z(), kalmNode.GetNodeCenterRefAngle(), kalmNode.GetEnergyLosses());
-      ((TProfile2D*) mHs["hELossVsZVsR"])->Fill(kalmNode.GetPosition().Z(), kalmNode.GetNodeRadius(), kalmNode.GetEnergyLosses());
-      ((TProfile2D*) mHs["hELossVsPhiVsR"])->Fill(kalmNode.GetNodeCenterRefAngle(), kalmNode.GetNodeRadius(), kalmNode.GetEnergyLosses());
+      dynamic_cast<TProfile2D&>( *mHs["hELossVsEtaVsPhi"]).Fill(kalmNode.GetPosition().Eta(), kalmNode.GetNodeCenterRefAngle(), kalmNode.GetEnergyLosses());
+      dynamic_cast<TProfile2D&>( *mHs["hELossVsZVsPhi"]).Fill(kalmNode.GetPosition().Z(), kalmNode.GetNodeCenterRefAngle(), kalmNode.GetEnergyLosses());
+      dynamic_cast<TProfile2D&>( *mHs["hELossVsZVsR"]).Fill(kalmNode.GetPosition().Z(), kalmNode.GetNodeRadius(), kalmNode.GetEnergyLosses());
+      dynamic_cast<TProfile2D&>( *mHs["hELossVsPhiVsR"]).Fill(kalmNode.GetNodeCenterRefAngle(), kalmNode.GetNodeRadius(), kalmNode.GetEnergyLosses());
       hELossVsPhiVsRVsZ->FillAsCumulative(kalmNode.GetNodeCenterRefAngle(), kalmNode.GetNodeRadius(), kalmNode.GetPosition().Z(), kalmNode.GetEnergyLosses());
       hELossVsXVsYVsZ->FillAsCumulative(kalmNode.GetNodeCenterRefAngle(), kalmNode.GetNodeRadius(), kalmNode.GetPosition().Z(), kalmNode.GetEnergyLosses());
       hDensityVsPhiVsRVsZ->Fill(kalmNode.GetNodeCenterRefAngle(), kalmNode.GetNodeRadius(), kalmNode.GetPosition().Z(), kalmNode.GetNodeMaterialDensity());

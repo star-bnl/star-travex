@@ -216,12 +216,12 @@ void StiScanHistContainer::FillHists(const TStiKalmanTrack &kalmTrack, const std
       if (kalmNode.GetNodeMaterialDensity() <= 0) continue;
 
       hNStepsVsPhiVsRVsZ->FillAsCumulative(kalmNode.GetPosition().Phi(), kalmNode.GetPosition().Perp(), kalmNode.GetPosition().Z(), 1);
-      ((TProfile2D*) mHs["hELossVsEtaVsPhi_trk"])->Fill(kalmNode.GetTrackP().Eta(), kalmNode.GetTrackP().Phi(), kalmNode.GetEnergyLosses());
+      dynamic_cast<TProfile2D&>( *mHs["hELossVsEtaVsPhi_trk"]).Fill(kalmNode.GetTrackP().Eta(), kalmNode.GetTrackP().Phi(), kalmNode.GetEnergyLosses());
 
-      ((TProfile2D*) mHs["hELossVsEtaVsPhi"])->Fill(kalmNode.GetPosition().Eta(), kalmNode.GetPosition().Phi(),  kalmNode.GetEnergyLosses());
-      ((TProfile2D*) mHs["hELossVsZVsPhi"])  ->Fill(kalmNode.GetPosition().Z(),   kalmNode.GetPosition().Phi(),  kalmNode.GetEnergyLosses());
-      ((TProfile2D*) mHs["hELossVsZVsR"])    ->Fill(kalmNode.GetPosition().Z(),   kalmNode.GetPosition().Perp(), kalmNode.GetEnergyLosses());
-      ((TProfile2D*) mHs["hELossVsPhiVsR"])  ->Fill(kalmNode.GetPosition().Phi(), kalmNode.GetPosition().Perp(), kalmNode.GetEnergyLosses());
+      dynamic_cast<TProfile2D&>( *mHs["hELossVsEtaVsPhi"]).Fill(kalmNode.GetPosition().Eta(), kalmNode.GetPosition().Phi(),  kalmNode.GetEnergyLosses());
+      dynamic_cast<TProfile2D&>( *mHs["hELossVsZVsPhi"]  ).Fill(kalmNode.GetPosition().Z(),   kalmNode.GetPosition().Phi(),  kalmNode.GetEnergyLosses());
+      dynamic_cast<TProfile2D&>( *mHs["hELossVsZVsR"]    ).Fill(kalmNode.GetPosition().Z(),   kalmNode.GetPosition().Perp(), kalmNode.GetEnergyLosses());
+      dynamic_cast<TProfile2D&>( *mHs["hELossVsPhiVsR"]  ).Fill(kalmNode.GetPosition().Phi(), kalmNode.GetPosition().Perp(), kalmNode.GetEnergyLosses());
       // Record the total energy deposited by this track
       hELossVsPhiVsRVsZ->FillAsCumulative(kalmNode.GetPosition().Phi(), kalmNode.GetPosition().Perp(), kalmNode.GetPosition().Z(), kalmNode.GetEnergyLosses());
       hELossVsXVsYVsZ->FillAsCumulative(kalmNode.GetPosition().X(), kalmNode.GetPosition().Y(), kalmNode.GetPosition().Z(), kalmNode.GetEnergyLosses());
@@ -250,9 +250,9 @@ void StiScanHistContainer::FillHists(const TGeaTrack &trackG, const std::set<std
 
       hNStepsVsPhiVsRVsZ->FillAsCumulative(step_pos.Phi(), step_pos.Perp(), step_pos.Z(), 1);
 
-      ((TProfile2D*) mHs["hELossVsZVsPhi"])->Fill(step_pos.Z(),   step_pos.Phi(),  dEStep);
-      ((TProfile2D*) mHs["hELossVsZVsR"])  ->Fill(step_pos.Z(),   step_pos.Perp(), dEStep);
-      ((TProfile2D*) mHs["hELossVsPhiVsR"])->Fill(step_pos.Phi(), step_pos.Perp(), dEStep);
+      dynamic_cast<TProfile2D&>( *mHs["hELossVsZVsPhi"] ).Fill(step_pos.Z(),   step_pos.Phi(),  dEStep);
+      dynamic_cast<TProfile2D&>( *mHs["hELossVsZVsR"]   ).Fill(step_pos.Z(),   step_pos.Perp(), dEStep);
+      dynamic_cast<TProfile2D&>( *mHs["hELossVsPhiVsR"] ).Fill(step_pos.Phi(), step_pos.Perp(), dEStep);
       hELossVsPhiVsRVsZ->FillAsCumulative(step_pos.Phi(), step_pos.Perp(), step_pos.Z(), dEStep);
       hELossVsXVsYVsZ->FillAsCumulative(step_pos.X(), step_pos.Y(), step_pos.Z(), dEStep);
       hDensityVsPhiVsRVsZ->Fill(step_pos.Phi(), step_pos.Perp(), step_pos.Z(), stepG->dens);
