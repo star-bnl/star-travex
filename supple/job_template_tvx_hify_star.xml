@@ -13,7 +13,6 @@
    <command>
       echo
       echo "TVX_SOURCE_DIR:      " &TVX_SOURCE_DIR;
-      echo "TVX_INSTALL_DIR:     " &TVX_INSTALL_DIR;
       echo "TVX_DEACT_DET_LAYER: " &TVX_DEACT_DET_LAYER;
       echo "OUT_DIR:             " &OUT_DIR;
       echo
@@ -21,7 +20,8 @@
       ls -al .
 
       # The actual command
-      TVX_INSTALL_DIR=&TVX_INSTALL_DIR; run_tvx_hify_star.sh &TVX_DEACT_DET_LAYER;
+      setenv TVX_INSTALL_DIR `pwd`
+      run_tvx_hify_star.sh &TVX_DEACT_DET_LAYER;
 
       echo "End of job: tralala"
 

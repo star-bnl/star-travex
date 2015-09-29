@@ -8,16 +8,18 @@
 
 : ${TVX_SOURCE_DIR:=${HOME}/travex}
 : ${TVX_BUILD_DIR:=${TVX_SOURCE_DIR}/build2}
+: ${TVX_INSTALL_DIR:=${TVX_BUILD_DIR}_install}
 : ${TVX_OUT_PREFIX:=${TVX_BUILD_DIR}_out}
 
 
 echo "The following variables will be used:"
-echo -e "\t TVX_SOURCE_DIR:     $TVX_SOURCE_DIR"
-echo -e "\t TVX_BUILD_DIR:      $TVX_BUILD_DIR"
+echo -e "\t TVX_SOURCE_DIR:   $TVX_SOURCE_DIR"
+echo -e "\t TVX_BUILD_DIR:    $TVX_BUILD_DIR"
+echo -e "\t TVX_INSTALL_DIR:  $TVX_INSTALL_DIR"
 
+export TVX_INSTALL_DIR
 
 TVX_DEACT_DET_LAYER="pxl_1"
-export TVX_INSTALL_DIR="${TVX_INSTALL_PREFIX}_$TVX_DEACT_DET_LAYER"
 
 OUT_DIR="${TVX_OUT_PREFIX}_$TVX_DEACT_DET_LAYER"
 mkdir -p $OUT_DIR
@@ -36,5 +38,5 @@ mkdir -p /tmp/my_sums/
 echo
 echo "Submitting job for $TVX_DEACT_DET_LAYER"
 star-submit-template -template $TVX_SOURCE_DIR/supple/job_template_tvx_hify_star.xml \
-   -entities TVX_SOURCE_DIR=$TVX_SOURCE_DIR,TVX_INSTALL_DIR=$TVX_INSTALL_DIR,TVX_DEACT_DET_LAYER=$TVX_DEACT_DET_LAYER,OUT_DIR=$OUT_DIR
+   -entities TVX_SOURCE_DIR=$TVX_SOURCE_DIR,OUT_DIR=$OUT_DIR,TVX_DEACT_DET_LAYER=$TVX_DEACT_DET_LAYER
 echo
