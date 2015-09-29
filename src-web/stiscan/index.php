@@ -106,17 +106,6 @@ include_once(BASE_DIR."/common/head.php");
 </ul>
 
 
-<h2 class="colsep">stiscan_1.11.a (Sti code as of 2014-10-18) </h2>
-
-<p>z = +3 cm, Switched back to old TGeo volume averaging routine, half of usual input statistics
-
-<ul>
-   <li><a href="plots.php?pfx=stiscan_1.11.a/volumes_pxl">PXL</a>
-   <li><a href="plots.php?pfx=stiscan_1.11.a/volumes_ist">IST</a>
-   <li><a href="plots.php?pfx=stiscan_1.11.a/volumes_sst">SST</a>
-</ul>
-
-
 <h2 class="colsep">stiscan_1.11 (Sti code as of 2014-10-18) </h2>
 
 <p>z = +3 cm
@@ -190,17 +179,6 @@ terminate called after throwing an instance of 'std::runtime_error'
    <li><a href="plots.php?pfx=stiscan_1.4/volumes_pxl">PXL</a>
    <li><a href="plots.php?pfx=stiscan_1.4/volumes_ist">IST</a>
    <li><a href="plots.php?pfx=stiscan_1.4/volumes_sst">SST</a>
-</ul>
-
-
-<h2 class="colsep">stiscan_1.1.1 (Sti code as of 2014-08-28)</h2>
-
-<p>z = +3 cm 
-
-<ul>
-   <li><a href="plots.php?pfx=stiscan_1.1.1/volumes_pxl">PXL</a>
-   <li><a href="plots.php?pfx=stiscan_1.1.1/volumes_ist">IST</a> simple tube from the mother volume
-   <li><a href="plots.php?pfx=stiscan_1.1.1/volumes_sst">SST</a> simple tube from the mother volume
 </ul>
 
 
