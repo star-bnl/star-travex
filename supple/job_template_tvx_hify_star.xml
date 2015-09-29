@@ -11,12 +11,16 @@
    </Generator>
 
    <command>
+
+      starver dev
+
       echo
       echo "TVX_SOURCE_DIR:      " &TVX_SOURCE_DIR;
-      echo "TVX_DEACT_DET_LAYER: " &TVX_DEACT_DET_LAYER;
       echo "OUT_DIR:             " &OUT_DIR;
+      echo "TVX_DEACT_DET_LAYER: " &TVX_DEACT_DET_LAYER;
       echo
 
+      pwd
       ls -al .
 
       # The actual command
@@ -35,6 +39,7 @@
    <SandBox installer="ZIP">
        <Package name="tvx_install_dir">
           <File>file:$TVX_INSTALL_DIR/*</File>
+          <File>file:$TVX_INSTALL_DIR/.sl*</File>
        </Package>
    </SandBox>
 

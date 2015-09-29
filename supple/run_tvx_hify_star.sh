@@ -108,7 +108,7 @@ cat save_sti_detectors.txt
 pwd && ls -la .
 
 # Create file with a TTree
-root4star -q -b -l 'bfc.C(1, 300, "P2014a mtd btof pxlHit istHit sstHit BEmcChkStat CorrX OSpaceZ2 OGridLeak3D -hitfilt StiHifyTreeMaker", "'$TVX_INPUT_FILE'")' &> bfc.log
+root4star -q -b -l 'bfc.C(1, 300, "P2014a mtd btof pxlHit istHit sstHit BEmcChkStat CorrX OSpaceZ2 OGridLeak3D -hitfilt StiHifyTreeMaker", "'$TVX_INPUT_FILE'")'
 
 # Create file with histograms
 which stihify
