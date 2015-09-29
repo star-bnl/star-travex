@@ -33,7 +33,7 @@ make -j8 install
 
 cp $TVX_SOURCE_DIR/y2014a.root $TVX_INSTALL_DIR/
 cp $TVX_SOURCE_DIR/supple/run_tvx_hify_star.sh $TVX_INSTALL_DIR/
-mkdir -p /tmp/my_sums/
+mkdir -p ./sums/
 
 echo
 echo "Submitting job for $TVX_DEACT_DET_LAYER"

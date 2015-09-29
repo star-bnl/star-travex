@@ -7,7 +7,7 @@
    </ResourceUsage>
 
    <Generator>
-      <Location>/tmp/my_sums/</Location>
+      <Location>./sums/</Location>
    </Generator>
 
    <command>
