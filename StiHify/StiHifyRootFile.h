@@ -11,7 +11,7 @@
 class StiHifyPrgOptions;
 
 
-class StiHifyRootFile : public StiRootFile
+class StiHifyRootFile : public tvx::StiRootFile
 {
 public:
 

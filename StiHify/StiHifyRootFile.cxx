@@ -48,7 +48,7 @@ void StiHifyRootFile::FillDerivedHists()
    mDirs["sti_hit_ratio"] = ratios = new StiHifyRatiosHistContainer("sti_hit_ratio", this);
 
 
-   const HistMap& hists = mDirs["sti_hit_any_node"]->GetHists();
+   const tvx::HistMap& hists = mDirs["sti_hit_any_node"]->GetHists();
 
    for (const auto& hist_iter : hists)
    {
@@ -58,8 +58,8 @@ void StiHifyRootFile::FillDerivedHists()
 
       if (!matched) continue;
 
-      const StiHistContainer& hitsNumer(*mDirs["sti_hit_accepted"]);
-      const StiHistContainer& hitsDenom(*mDirs["sti_hit_any_node"]);
+      const tvx::StiHistContainer& hitsNumer(*mDirs["sti_hit_accepted"]);
+      const tvx::StiHistContainer& hitsDenom(*mDirs["sti_hit_any_node"]);
 
       const TH1* hitsAcc = hitsNumer.FindHist(hist_name);
       const TH1* hitsAll = hitsDenom.FindHist(hist_name);

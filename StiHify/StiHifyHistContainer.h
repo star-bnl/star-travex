@@ -14,7 +14,7 @@
 #include "StiRootIO/TStiKalmanTrackNode.h"
 
 
-class StiHifyHistContainer : public StiHistContainer
+class StiHifyHistContainer : public tvx::StiHistContainer
 {
 public:
 

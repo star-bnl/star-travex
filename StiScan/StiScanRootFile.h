@@ -12,7 +12,7 @@
 class StiScanPrgOptions;
 
 
-class StiScanRootFile : public StiRootFile
+class StiScanRootFile : public tvx::StiRootFile
 {
 public:
 

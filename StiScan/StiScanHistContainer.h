@@ -13,7 +13,7 @@
 #include "GeaRootIO/TGeaEvent.h"
 
 
-class StiScanHistContainer : public StiHistContainer
+class StiScanHistContainer : public tvx::StiHistContainer
 {
 public:
 

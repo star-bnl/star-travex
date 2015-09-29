@@ -4,7 +4,7 @@
 #include "StiRootIO/StiHistContainer.h"
 
 
-class StiScanRatiosHistContainer : public StiHistContainer
+class StiScanRatiosHistContainer : public tvx::StiHistContainer
 {
 public:
 
