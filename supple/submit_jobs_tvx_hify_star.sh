@@ -38,5 +38,5 @@ mkdir -p ./sums/
 echo
 echo "Submitting job for $TVX_DEACT_DET_LAYER"
 star-submit-template -template $TVX_SOURCE_DIR/supple/job_template_tvx_hify_star.xml \
-   -entities TVX_SOURCE_DIR=$TVX_SOURCE_DIR,OUT_DIR=$OUT_DIR,TVX_DEACT_DET_LAYER=$TVX_DEACT_DET_LAYER
+   -entities OUT_DIR=$OUT_DIR,TVX_DEACT_DET_LAYER=$TVX_DEACT_DET_LAYER
 echo
