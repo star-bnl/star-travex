@@ -6,8 +6,9 @@
 #
 
 
+# Set typical default values for script variables
 : ${TVX_SOURCE_DIR:=${HOME}/travex}
-: ${TVX_BUILD_DIR:=${TVX_SOURCE_DIR}/build2}
+: ${TVX_BUILD_DIR:=${TVX_SOURCE_DIR}/build}
 : ${TVX_INSTALL_DIR:=${TVX_BUILD_DIR}_install}
 : ${TVX_OUT_PREFIX:=${TVX_BUILD_DIR}_out}
 
