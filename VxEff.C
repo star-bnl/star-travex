@@ -76,9 +76,9 @@ int VxEff(const std::map<std::string, std::string> & vtx_file_names)
    gStyle->SetMarkerStyle(kFullDotLarge);
 
    TH1F *frame = gVtxEffCanvas.DrawFrame(0, 0, 40, 1.1);
-   frame->SetTitle("Vertex Finding Efficiencies");
+   frame->SetTitle("Vertex Finding Efficiency");
    frame->SetYTitle("Efficiency/Impurity");
-   frame->SetXTitle("Reconstractible multiplicity");
+   frame->SetXTitle("Vertex Track Multiplicity");
 
 
    int file_indx = 0;
@@ -105,12 +105,12 @@ int VxEff(const std::map<std::string, std::string> & vtx_file_names)
          TEfficiency *eff_total = new TEfficiency(*hMcRecMulAny, *hMcRecMulT);
          eff_total->SetMarkerColor(3*file_indx + 1);
          eff_total->Draw("same p");
-         gVtxEffLegend.AddEntry(eff_total, Form("Overall Efficiency (a) = %4.2f", A / T));
+         gVtxEffLegend.AddEntry(eff_total, Form("%s Overall Efficiency = %4.2f", key2FileName.first.c_str(), A / T));
       }
 
       TEfficiency *efficiency = new TEfficiency(*hMcRecMulGood, *hMcRecMulT);
       efficiency->SetMarkerColor(3*file_indx + 2);
-      gVtxEffLegend.AddEntry(efficiency, Form("%s Efficiency (b) = %4.2f", key2FileName.first.c_str(), G / T));
+      gVtxEffLegend.AddEntry(efficiency, Form("%s Max Rank Efficiency = %4.2f", key2FileName.first.c_str(), G / T));
       efficiency->Draw("same p");
 
       TEfficiency *impurity = new TEfficiency(*hMcRecMulBad, *hMcRecMulT);
