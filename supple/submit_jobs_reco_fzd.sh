@@ -14,7 +14,11 @@
 : ${OUT_DIR:="/star/institutions/bnl_me/smirnovd/public/w_sim_nopileup_kfv"}
 : ${STAR_VERSION:="SL15j"}
 
-BFC_OPTIONS="tpcRS y2014a AgML MakeEvent KFVertex ITTF StiHftC Idst BAna l0 Tree logger Sti tpcDB TpcHitMover TpxClu bbcSim btofsim tags emcY2 EEfs evout IdTruth geantout big fzin McEvOut McAss McEvent clearmem"
+# We use chain options similar to those used for 2014 MC reconstruction
+# See http://www.star.bnl.gov/devcgi/weekDEVjobStatus.pl
+#           "fzin tpcRS y2014a AgML pxlFastSim istFastSim usexgeom FieldOn MakeEvent Sti NoSsdIt NoSvtIt StiHftC TpcHitMover TpxClu Idst BAna l0 Tree logger genvtx tpcDB bbcSim btofsim mtdSim tags emcY2 EEfs geantout evout -dstout IdTruth big MiniMcMk clearmem"
+#
+BFC_OPTIONS="fzin tpcRS y2014a AgML pxlFastSim istFastSim usexgeom FieldOn MakeEvent VFPPVnoCTB beamline Sti NoSsdIt NoSvtIt StiHftC TpcHitMover TpxClu Idst BAna l0 Tree logger genvtx tpcDB bbcSim btofsim tags emcY2 EEfs geantout evout -dstout IdTruth big clearmem"
 
 # Replace all spaces with underscores
 # Will not work with options containing a _
