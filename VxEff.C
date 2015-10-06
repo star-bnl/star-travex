@@ -101,6 +101,7 @@ int VxEff(const std::map<std::string, std::string> & vtx_file_names)
       // For efficiency plots we create here the default marker is unscalable dot
       // so, change it
       gStyle->SetMarkerStyle(myMarkerStyles[file_indx++]);
+      gStyle->SetMarkerSize(1.5);
 
       // Plot the overall efficiency only from the first file
       TEfficiency *eff_total = new TEfficiency(*hMcRecMulAny, *hMcRecMulT);
