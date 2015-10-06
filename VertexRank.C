@@ -125,20 +125,20 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    for (Long64_t ev = 0; ev < nevent; ev++) {
       if (maker->Make()) break;
 
-      StMuDst *mu = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
-      StMuEvent *muEvent = mu->event(); // get a pointer to the class holding event-wise information
+      StMuDst *muDst = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
+      StMuEvent *muEvent = muDst->event(); // get a pointer to the class holding event-wise information
 
       if (vtxeval::gDebugFlag) std::cout << "Read event #" << ev << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << std::endl;
 
-      TClonesArray *primaryVertices   = mu->primaryVertices();
+      TClonesArray *primaryVertices   = muDst->primaryVertices();
       int numPrimaryVertices = primaryVertices->GetEntriesFast();
 
-      TClonesArray *MuMcVertices   = mu->mcArray(0);
+      TClonesArray *MuMcVertices   = muDst->mcArray(0);
       int NoMuMcVertices = MuMcVertices->GetEntriesFast();
 
       ///////VPD////////////
       Float_t VpdZ = 999;
-      StBTofHeader *BTofHeader = mu->btofHeader();
+      StBTofHeader *BTofHeader = muDst->btofHeader();
 
       if (BTofHeader) {
          VpdZ = BTofHeader->vpdVz();
