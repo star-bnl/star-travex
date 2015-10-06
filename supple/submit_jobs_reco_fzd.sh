@@ -36,7 +36,7 @@ do
    JOB_NAME_UID=`basename $JOB_INPUT_FILE .fzd`
    echo
    echo "Submitting job for JOB_INPUT_FILE =" $JOB_INPUT_FILE \($JOB_NAME_UID\)
-   echo star-submit-template -template $SOURCE_DIR/supple/job_template_reco_fzd.xml \
+   star-submit-template -template $SOURCE_DIR/supple/job_template_reco_fzd.xml \
       -entities JOB_NAME_UID=$JOB_NAME_UID,JOB_INPUT_FILE=$JOB_INPUT_FILE,OUT_DIR=$OUT_DIR,STAR_VERSION=$STAR_VERSION,BFC_OPTIONS=$BFC_OPTIONS
    echo
 done
