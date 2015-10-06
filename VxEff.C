@@ -30,6 +30,11 @@ int VxEff(const std::vector<std::string> &vtx_file_keys, const std::vector<std::
       return EXIT_FAILURE;
    }
 
+   if (vtx_file_keys.size() > 4) {
+      std::cout << "ERROR: Too many histograms to overlay on one plot. Specify at most four files" << std::endl;
+      return EXIT_FAILURE;
+   }
+
    std::map<std::string, std::string> myVertexFiles;
 
    auto fname = vtx_file_names.begin();
