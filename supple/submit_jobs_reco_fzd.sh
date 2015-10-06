@@ -4,14 +4,14 @@
 #
 # JOB_FILE_LIST=../path/to/filelist_fz.txt submit_jobs_hftree.sh 
 #
-# JOB_FILE_LIST is the full path to a text file with a list of *.fz files
+# JOB_FILE_LIST is the full path to a text file with a list of *.fz/fzd files
 #
 
 
 # Set typical default values for script variables
 : ${SOURCE_DIR:=${HOME}/star-vertex-eval}
-: ${JOB_FILE_LIST:=${HOME}/star-vertex-eval/supple/w_sim_nopileup_fzd_short.txt}
-: ${OUT_DIR:="/star/institutions/bnl_me/smirnovd/public/w_sim_nopileup_kfv"}
+: ${JOB_FILE_LIST:=/path/to/file_with_list_of_fzd_files.txt}
+: ${OUT_DIR:=/path/to/some_dir/}
 : ${STAR_VERSION:="SL15j"}
 
 # We use chain options similar to those used for 2014 MC reconstruction
