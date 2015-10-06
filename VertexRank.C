@@ -78,6 +78,9 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
    TH1I hNumVertices("hNumVertices", "Number of Vertices", 500, 0, 500);
    TH1I hNumTracksPerVertex("hNumTracksPerVertex", "Number of Tracks per Vertex", 100, 0, 100);
+   TH1I hVertexX("hVertexX", "Vertex X Position", 60, -10, 10);
+   TH1I hVertexY("hVertexY", "Vertex Y Position", 60, -10, 10);
+   TH1I hVertexZ("hVertexZ", "Vertex Z Position", 60, -30, 30);
    TH1F hMinDistBetweenVertices("hMinDistBetweenVertices", "Min Distance Between Vertices", 100, 0, 20);
    TH1F h1("h1", "Rank Max", 100, -3, 3);
    TH1F h2("h2", "Max Mult", 100, -3, 3);
@@ -155,6 +158,9 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          Float_t numTrackPerVertex = Vtx->noTracks();
 
          hNumTracksPerVertex.Fill(numTrackPerVertex);
+         hVertexX.Fill(Vtx->position().x());
+         hVertexY.Fill(Vtx->position().y());
+         hVertexZ.Fill(Vtx->position().z());
 
          if (MaxMult < numTrackPerVertex) {                               //Amilkar: check if the numTrackPerVertex is higher than previous
             MaxMult = numTrackPerVertex;                                   //Amilkar: asign the new maximum value
