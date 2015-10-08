@@ -38,11 +38,10 @@
    <stdout URL="file:&OUT_DIR;/&TVX_DEACT_DET_LAYER;.log"/>
    <stderr URL="file:&OUT_DIR;/&TVX_DEACT_DET_LAYER;.log"/>
 
-   <!-- Environment variable $TVX_INSTALL_DIR must be known and exported -->
    <SandBox installer="ZIP">
        <Package name="tvx_install_dir">
-          <File>file:$TVX_INSTALL_DIR/*</File>
-          <File>file:$TVX_INSTALL_DIR/.sl*</File>
+          <File>file:&TVX_INSTALL_DIR;/*</File>
+          <File>file:&TVX_INSTALL_DIR;/.sl*</File>
        </Package>
    </SandBox>
 
