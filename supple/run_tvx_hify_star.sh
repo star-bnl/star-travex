@@ -6,7 +6,7 @@
 #
 # or
 #
-# $ TVX_INPUT_FILE=/path/to/my_file.daq TVX_INSTALL_DIR=/my/existing/dir run_tvx_hify_star.sh pxl_1|pxl_2|ist_1|sst_1|tpc_#
+# $ TVX_BFC_INPUT_FILE=/path/to/my_file.daq TVX_INSTALL_DIR=/my/existing/dir run_tvx_hify_star.sh pxl_1|pxl_2|ist_1|sst_1|tpc_#
 #
 # TVX_INSTALL_DIR must be an installation directory for travex tools
 #
@@ -18,7 +18,10 @@
 
 
 # Set default values for script variables
-: ${TVX_INPUT_FILE:=/scratch/smirnovd/public/random_tests/st_physics_15164004_raw_2000022.daq}
+: ${TVX_BFC_INPUT_FILE:=/scratch/smirnovd/public/random_tests/st_physics_15164004_raw_2000022.daq}
+: ${TVX_BFC_NEVENTS:=1000000}
+# These default BFC options should be good for reconstructing real data
+: ${TVX_BFC_OPTIONS:="P2014a mtd btof pxlHit istHit sstHit BEmcChkStat CorrX OSpaceZ2 OGridLeak3D -hitfilt StiHifyTreeMaker"}
 : ${TVX_INSTALL_DIR:=${HOME}/travex/build_install} && TVX_INSTALL_DIR=`cd "$TVX_INSTALL_DIR"; pwd`
 : ${TVX_STAR_GEO_FILE:=$TVX_INSTALL_DIR/y2014a.root}
 
@@ -92,7 +95,9 @@ echo -e "\t TVX_DEACT_DET_LAYER: $TVX_DEACT_DET_LAYER"
 echo -e "\t TVX_DEACT_DET_ID: $TVX_DEACT_DET_ID"
 echo -e "\t TVX_DEACT_LAYER_ID: $TVX_DEACT_LAYER_ID (pretty: $TVX_DEACT_LAYER_ID_PADDED)"
 echo -e "\t TVX_VOLUME_REGEX: $TVX_VOLUME_REGEX"
-echo -e "\t TVX_INPUT_FILE: $TVX_INPUT_FILE"
+echo -e "\t TVX_BFC_NEVENTS: $TVX_BFC_NEVENTS"
+echo -e "\t TVX_BFC_OPTIONS: $TVX_BFC_OPTIONS"
+echo -e "\t TVX_BFC_INPUT_FILE: $TVX_BFC_INPUT_FILE"
 echo -e "\t TVX_INSTALL_DIR: $TVX_INSTALL_DIR"
 echo -e "\t TVX_STAR_GEO_FILE: $TVX_STAR_GEO_FILE"
 
@@ -108,9 +113,9 @@ cat save_sti_detectors.txt
 pwd && ls -la .
 
 # Create file with a TTree
-root4star -q -b -l 'bfc.C(1, 300, "P2014a mtd btof pxlHit istHit sstHit BEmcChkStat CorrX OSpaceZ2 OGridLeak3D -hitfilt StiHifyTreeMaker", "'$TVX_INPUT_FILE'")'
+root4star -q -b -l 'bfc.C('$TVX_BFC_NEVENTS', "'$TVX_BFC_OPTIONS'", "'$TVX_BFC_INPUT_FILE'")'
 
 # Create file with histograms
 which stihify
-TVX_INPUT_FILE=${TVX_INPUT_FILE##*/}
-stihify $TVX_HIFY_OPTIONS -f ${TVX_INPUT_FILE%.*}.stihify.root -c -g -o deact_${TVX_DEACT_DET_ID}_${TVX_DEACT_LAYER_ID_PADDED}/
+TVX_BFC_INPUT_FILE=${TVX_BFC_INPUT_FILE##*/}
+stihify $TVX_HIFY_OPTIONS -f ${TVX_BFC_INPUT_FILE%.*}.stihify.root -c -g -o deact_${TVX_DEACT_DET_ID}_${TVX_DEACT_LAYER_ID_PADDED}/
