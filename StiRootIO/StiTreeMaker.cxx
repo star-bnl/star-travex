@@ -46,11 +46,6 @@ Int_t StiTreeMaker::Init()
 
    TString fileName( gSystem->BaseName(bfChain->GetFileIn().Data()) );
 
-   // Removed possible extensions from the file name
-   fileName.ReplaceAll(".event", "");
-   fileName.ReplaceAll(".daq", "");
-   fileName.ReplaceAll(".fz", "");
-
    // Form a new name for the output file
    fileName += "." + fSuffix + ".root";
 
