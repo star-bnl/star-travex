@@ -262,8 +262,9 @@ void PrgOptionProcessor::AddToInputChains(std::string stiTreeRootFileName)
 
 
 /**
- * Form a name of the output file from the input file name by adding a suffix.
- * The following rules are applied depending on the input file extension:
+ * Form the name of the output file from the input file name by appending
+ * a suffix to it. The following rules applied depending on the input file
+ * extension:
  *
  * input_file_name      -> input_file_name.<suffix>.root
  * input_file_name.blah -> input_file_name.blah.<suffix>.root
@@ -271,17 +272,11 @@ void PrgOptionProcessor::AddToInputChains(std::string stiTreeRootFileName)
  */
 std::string PrgOptionProcessor::GetOutFileName(std::string suffix) const
 {
-   std::string outFileName = fInFilePath;
+   boost::regex extension_regex("^(.*)\\.root$");
 
-   std::string extension(".root");
-   std::size_t extension_pos = outFileName.find(extension);
-
-   if (extension_pos != std::string::npos)
-   {
-      outFileName.replace( extension_pos, extension.length(), "." + suffix + extension);
+   if ( boost::regex_match(fInFilePath, extension_regex) ) {
+      return boost::regex_replace(fInFilePath, extension_regex, "\\1." + suffix + ".root");
    } else {
-      outFileName += "." + suffix + ".root";
+      return fInFilePath + "." + suffix + ".root";
    }
-
-   return outFileName;
 }
