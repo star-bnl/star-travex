@@ -4,6 +4,8 @@
 #
 # $ submit_jobs_tvx_hify_star.sh
 #
+# JOB_INPUT_FILE can be a text file with a list of actual files to process. In
+# this case the full path must be prepended with an '@' symbol
 
 
 # Set typical default values for script variables

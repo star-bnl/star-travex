@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 #
-# Usage:
+# It is recommended to examine and set the appropriate values for the script's
+# named arguments before running this script. Search for "NAMED ARGUMENTS" to
+# find their input values below.
+#
+# With default values the script can be simply executed as:
 #
 # $ run_tvx_hify_star.sh pxl_1|pxl_2|ist_1|sst_1|tpc_#
 #
-# or
+# or, one can overwrite selected arguments as:
 #
-# $ TVX_BFC_INPUT_FILE=/path/to/my_file.daq TVX_INSTALL_DIR=/my/existing/dir run_tvx_hify_star.sh pxl_1|pxl_2|ist_1|sst_1|tpc_#
-#
-# TVX_INSTALL_DIR must be an installation directory for travex tools
+# $ TVX_BFC_INPUT_FILE=/path/to/my_file.daq TVX_INSTALL_DIR=/my/existing/dir \
+#   run_tvx_hify_star.sh pxl_1|pxl_2|ist_1|sst_1|tpc_#
 #
 # For example:
 #
@@ -17,16 +20,24 @@
 #
 
 
-# Set default values for script variables
+# NAMED ARGUMENTS: Set default values for script variables
 
 # A flag to chose between two running modes
 : ${TVX_DEACTIVATE_DETECTOR:=true}
 
+# Path to input file or a list of files. XXX: Need to deal with relative paths
 : ${TVX_BFC_INPUT_FILE:=/scratch/smirnovd/public/random_tests/st_physics_15164004_raw_2000022.daq}
+
+# The maximum number of events to process (assuming we start from the first event)
 : ${TVX_BFC_NEVENTS:=1000000}
+
 # These default BFC options should be good for reconstructing real data
 : ${TVX_BFC_OPTIONS:="P2014a mtd btof pxlHit istHit sstHit BEmcChkStat CorrX OSpaceZ2 OGridLeak3D -hitfilt StiHifyTreeMaker"}
+
+# TVX_INSTALL_DIR is the directory where star-sti-tools was installed
 : ${TVX_INSTALL_DIR:=${HOME}/travex/build_install} && TVX_INSTALL_DIR=`cd "$TVX_INSTALL_DIR"; pwd`
+
+# A path to the ROOT file with detector's TGeo geometry
 : ${TVX_STAR_GEO_FILE:=$TVX_INSTALL_DIR/y2014a.root}
 
 
@@ -94,7 +105,7 @@ case $TVX_DEACT_DET_LAYER in
 esac
 
 
-echo "The following variables will be used:"
+echo -e "Named arguments and their values:"
 echo -e "\t TVX_DEACT_DET_LAYER: $TVX_DEACT_DET_LAYER"
 echo -e "\t TVX_DEACT_DET_ID: $TVX_DEACT_DET_ID"
 echo -e "\t TVX_DEACT_LAYER_ID: $TVX_DEACT_LAYER_ID (pretty: $TVX_DEACT_LAYER_ID_PADDED)"
