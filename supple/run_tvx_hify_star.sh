@@ -138,5 +138,10 @@ root4star -q -b -l 'bfc.C('$TVX_BFC_NEVENTS', "'$TVX_BFC_OPTIONS'", "'$TVX_BFC_I
 
 # Create file with histograms
 which stihify
+
+# Do some clean up of the file name
+TVX_BFC_INPUT_FILE=`echo ${TVX_BFC_INPUT_FILE} | sed 's/^@//g'`
+TVX_BFC_INPUT_FILE=`echo ${TVX_BFC_INPUT_FILE} | sed 's/\.list//g'`
 TVX_BFC_INPUT_FILE=${TVX_BFC_INPUT_FILE##*/}
+
 stihify $TVX_HIFY_OPTIONS -f ${TVX_BFC_INPUT_FILE%.*}.stihify.root -c -g -o deact_${TVX_DEACT_DET_ID}_${TVX_DEACT_LAYER_ID_PADDED}/
