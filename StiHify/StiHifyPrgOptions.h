@@ -36,7 +36,8 @@ public:
 
 private:
 
-   bool    fAcceptCandidateHit;   ///< A flag to force closest candidate hit to be the accepted track node hit
+   /// A flag to force closest candidate hit to be the accepted track node hit
+   bool  fAcceptCandidateHit;
 
    /// A flag to produce separate histograms for each volume matching the regex
    bool  fSplitHistsByVolume;
