@@ -60,17 +60,17 @@ fi
 
 if [ -n "$1" ] && [[ $1 =~ ^([a-zA-Z]+)_([0-9]+)$ ]]
 then
-   TVX_DEACT_DET_LAYER=$1
-   TVX_DEACT_DET_ID=$(echo $TVX_DEACT_DET_LAYER | sed 's/^\(.*\)_\([0-9]\+\)$/\1/')
-   TVX_DEACT_LAYER_ID=$(echo $TVX_DEACT_DET_LAYER | sed 's/^\(.*\)_\([0-9]\+\)$/\2/')
-   TVX_DEACT_LAYER_ID_PADDED=$(printf "%02d" $TVX_DEACT_LAYER_ID)
+   TVX_DETECTOR=$1
+   TVX_DETECTOR_ID=$(echo $TVX_DETECTOR | sed 's/^\(.*\)_\([0-9]\+\)$/\1/')
+   TVX_DETECTOR_LAYER_ID=$(echo $TVX_DETECTOR | sed 's/^\(.*\)_\([0-9]\+\)$/\2/')
+   TVX_DETECTOR_LAYER_ID_PADDED=$(printf "%02d" $TVX_DETECTOR_LAYER_ID)
 else
    echo "ERROR: First parameter must be set:"
    echo "$ ${0##*/} pxl_1|pxl_2|ist_1|sst_1|tpc_#"
    exit 1
 fi
 
-case $TVX_DEACT_DET_LAYER in
+case $TVX_DETECTOR in
 
    pxl_1)
    TVX_VOLUME_REGEX='^.*IDSM_1/PXMO_1/PXLA_[\d]+/LADR_1/PXSI_[\d]+/PLAC_1.*$'
@@ -93,12 +93,12 @@ case $TVX_DEACT_DET_LAYER in
    ;;
 
    tpc_*)
-   TVX_VOLUME_REGEX='^.*Tpc/Padrow_'$TVX_DEACT_LAYER_ID'/Sector_[\d]+.*$'
+   TVX_VOLUME_REGEX='^.*Tpc/Padrow_'$TVX_DETECTOR_LAYER_ID'/Sector_[\d]+.*$'
    TVX_HIFY_OPTIONS="--z-min=-250 --z-max=250 --y-min=-50 --y-max=50"
    ;;
 
    *)
-   echo "ERROR: Unknown detector layer $TVX_DEACT_DET_LAYER specified"
+   echo "ERROR: Unknown detector $TVX_DETECTOR specified"
    exit 1
    ;;
 
@@ -106,9 +106,9 @@ esac
 
 
 echo -e "Named arguments and their values:"
-echo -e "\t TVX_DEACT_DET_LAYER: $TVX_DEACT_DET_LAYER"
-echo -e "\t TVX_DEACT_DET_ID: $TVX_DEACT_DET_ID"
-echo -e "\t TVX_DEACT_LAYER_ID: $TVX_DEACT_LAYER_ID (pretty: $TVX_DEACT_LAYER_ID_PADDED)"
+echo -e "\t TVX_DETECTOR: $TVX_DETECTOR"
+echo -e "\t TVX_DETECTOR_ID: $TVX_DETECTOR_ID"
+echo -e "\t TVX_DETECTOR_LAYER_ID: $TVX_DETECTOR_LAYER_ID (pretty: $TVX_DETECTOR_LAYER_ID_PADDED)"
 echo -e "\t TVX_VOLUME_REGEX: $TVX_VOLUME_REGEX"
 echo -e "\t TVX_BFC_NEVENTS: $TVX_BFC_NEVENTS"
 echo -e "\t TVX_BFC_OPTIONS: $TVX_BFC_OPTIONS"
@@ -126,7 +126,7 @@ echo $TVX_VOLUME_REGEX > save_sti_detectors.txt
 cat save_sti_detectors.txt
 
 if [ "$TVX_DEACTIVATE_DETECTOR" = true ] ; then
-   echo "Deactivated detector: $TVX_DEACT_DET_LAYER"
+   echo "Deactivated detector: $TVX_DETECTOR"
    cp save_sti_detectors.txt deactivate_sti_detectors.txt
    cat deactivate_sti_detectors.txt
 fi
@@ -144,4 +144,4 @@ TVX_BFC_INPUT_FILE=`echo ${TVX_BFC_INPUT_FILE} | sed 's/^@//g'`
 TVX_BFC_INPUT_FILE=`echo ${TVX_BFC_INPUT_FILE} | sed 's/\.list//g'`
 TVX_BFC_INPUT_FILE=${TVX_BFC_INPUT_FILE##*/}
 
-stihify $TVX_HIFY_OPTIONS -f ${TVX_BFC_INPUT_FILE%.*}.stihify.root -c -g -o deact_${TVX_DEACT_DET_ID}_${TVX_DEACT_LAYER_ID_PADDED}/
+stihify $TVX_HIFY_OPTIONS -f ${TVX_BFC_INPUT_FILE%.*}.stihify.root -c -g -o deact_${TVX_DETECTOR_ID}_${TVX_DETECTOR_LAYER_ID_PADDED}/
