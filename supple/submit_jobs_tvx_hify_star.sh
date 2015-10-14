@@ -9,6 +9,7 @@
 # Set typical default values for script variables
 : ${JOB_INPUT_FILE:=/star/data99/reco/AuAu200/hijing_382/b0_20/minbias/y2014a/gheisha_on/pileup_eval_Oct05/rcf15005_10_10evts.event.root}
 : ${JOB_NEVENTS:=1000000}
+: ${TVX_DEACTIVATE_DETECTOR:=true}
 : ${TVX_SOURCE_DIR:=${HOME}/star-sti-tools} && TVX_SOURCE_DIR=`cd "$TVX_SOURCE_DIR"; pwd`
 : ${TVX_INSTALL_DIR:=${HOME}/star-sti-tools/build4condor_install} && TVX_INSTALL_DIR=`cd "$TVX_INSTALL_DIR"; pwd`
 : ${TVX_OUT_PREFIX:=/path/to/some_dir} && mkdir -p $TVX_OUT_PREFIX && TVX_OUT_PREFIX=`cd "$TVX_OUT_PREFIX"; pwd`
@@ -63,6 +64,6 @@ do
    echo
    echo "Submitting job for $TVX_DETECTOR_LAYER"
    echo "star-submit-template -template $TVX_SOURCE_DIR/supple/job_template_tvx_hify_star.xml \
-      -entities JOB_INPUT_FILE=$JOB_INPUT_FILE,JOB_NEVENTS=$JOB_NEVENTS,JOB_BFC_OPTIONS=$JOB_BFC_OPTIONS,OUT_DIR=$OUT_DIR,TVX_DETECTOR_LAYER=$TVX_DETECTOR_LAYER"
+      -entities JOB_INPUT_FILE=$JOB_INPUT_FILE,JOB_NEVENTS=$JOB_NEVENTS,JOB_BFC_OPTIONS=$JOB_BFC_OPTIONS,OUT_DIR=$OUT_DIR,TVX_DETECTOR_LAYER=$TVX_DETECTOR_LAYER,TVX_DEACTIVATE_DETECTOR=$TVX_DEACTIVATE_DETECTOR"
    echo
 done

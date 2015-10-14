@@ -18,6 +18,10 @@
 
 
 # Set default values for script variables
+
+# A flag to chose between two running modes
+: ${TVX_DEACTIVATE_DETECTOR:=true}
+
 : ${TVX_BFC_INPUT_FILE:=/scratch/smirnovd/public/random_tests/st_physics_15164004_raw_2000022.daq}
 : ${TVX_BFC_NEVENTS:=1000000}
 # These default BFC options should be good for reconstructing real data
@@ -97,6 +101,7 @@ echo -e "\t TVX_DEACT_LAYER_ID: $TVX_DEACT_LAYER_ID (pretty: $TVX_DEACT_LAYER_ID
 echo -e "\t TVX_VOLUME_REGEX: $TVX_VOLUME_REGEX"
 echo -e "\t TVX_BFC_NEVENTS: $TVX_BFC_NEVENTS"
 echo -e "\t TVX_BFC_OPTIONS: $TVX_BFC_OPTIONS"
+echo -e "\t TVX_DEACTIVATE_DETECTOR: $TVX_DEACTIVATE_DETECTOR"
 echo -e "\t TVX_BFC_INPUT_FILE: $TVX_BFC_INPUT_FILE"
 echo -e "\t TVX_INSTALL_DIR: $TVX_INSTALL_DIR"
 echo -e "\t TVX_STAR_GEO_FILE: $TVX_STAR_GEO_FILE"
@@ -106,10 +111,15 @@ echo -e "\t TVX_STAR_GEO_FILE: $TVX_STAR_GEO_FILE"
 trap 'echo "$ $BASH_COMMAND"' DEBUG
 
 # Create supplementary files in the output directory
-echo $TVX_VOLUME_REGEX > deactivate_sti_detectors.txt
-cp deactivate_sti_detectors.txt save_sti_detectors.txt
-cat deactivate_sti_detectors.txt
+echo $TVX_VOLUME_REGEX > save_sti_detectors.txt
 cat save_sti_detectors.txt
+
+if [ "$TVX_DEACTIVATE_DETECTOR" = true ] ; then
+   echo "Deactivated detector: $TVX_DEACT_DET_LAYER"
+   cp save_sti_detectors.txt deactivate_sti_detectors.txt
+   cat deactivate_sti_detectors.txt
+fi
+
 pwd && ls -la .
 
 # Create file with a TTree

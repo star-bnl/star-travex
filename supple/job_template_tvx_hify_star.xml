@@ -20,6 +20,7 @@
       echo "JOB_BFC_OPTIONS:     " &JOB_BFC_OPTIONS;
       echo "OUT_DIR:             " &OUT_DIR;
       echo "TVX_DETECTOR_LAYER:  " &TVX_DETECTOR_LAYER;
+      echo "TVX_DEACTIVATE_DETECTOR:   " &TVX_DEACTIVATE_DETECTOR;
       echo
 
       pwd
@@ -30,6 +31,7 @@
       setenv TVX_BFC_NEVENTS      &JOB_NEVENTS;
       setenv TVX_BFC_OPTIONS      `echo &JOB_BFC_OPTIONS; | sed 's/_/,/g'`
       setenv TVX_BFC_INPUT_FILE   &JOB_INPUT_FILE;
+      setenv TVX_DEACTIVATE_DETECTOR   &TVX_DEACTIVATE_DETECTOR;
 
       echo 'run_tvx_hify_star.sh &TVX_DETECTOR_LAYER; >&amp; &OUT_DIR;/&TVX_DETECTOR_LAYER;_hify.log'
       run_tvx_hify_star.sh &TVX_DETECTOR_LAYER; >&amp; &OUT_DIR;/&TVX_DETECTOR_LAYER;_hify.log
