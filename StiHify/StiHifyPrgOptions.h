@@ -33,15 +33,13 @@ public:
    void   SetHistZRange(double minZ, double maxZ) { fHistZMin = minZ; fHistZMax = maxZ; }
    void   SetHistYRange(double minY, double maxY) { fHistYMin = minY; fHistYMax = maxY; }
 
-protected:
+private:
 
    bool    fAcceptCandidateHit;   ///< A flag to force closest candidate hit to be the accepted track node hit
    double  fHistZMin;
    double  fHistZMax;
    double  fHistYMin;
    double  fHistYMax;
-
-private:
 
    void InitOptions();
 };
