@@ -146,20 +146,24 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
 
    hActiveLayerCounts->Fill(trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y());
 
+   // Fill individual histograms for each volume matching the regex only when
+   // requested by the user
+   if ( fPrgOptions.SplitHistsByVolume() )
+   {
+      std::string histName("hActiveLayerCounts_" + boost::replace_all_copy<string>(trkNode.GetVolumeName(), "/", "__"));
 
-   std::string histName("hActiveLayerCounts_" + boost::replace_all_copy<string>(trkNode.GetVolumeName(), "/", "__"));
+      TH1* hActiveLayerCounts_det = FindHist(histName);
 
-   TH1* hActiveLayerCounts_det = FindHist(histName);
+      if (!hActiveLayerCounts_det) {
+         this->cd();
+         hActiveLayerCounts_det = static_cast<TH1*>(hActiveLayerCounts->Clone());
+         hActiveLayerCounts_det->SetName(histName.c_str());
+         hActiveLayerCounts_det->SetOption("colz");
+         mHs[histName].reset(hActiveLayerCounts_det);
+      }
 
-   if (!hActiveLayerCounts_det) {
-      this->cd();
-      hActiveLayerCounts_det = static_cast<TH1*>(hActiveLayerCounts->Clone());
-      hActiveLayerCounts_det->SetName(histName.c_str());
-      hActiveLayerCounts_det->SetOption("colz");
-      mHs[histName].reset(hActiveLayerCounts_det);
+      hActiveLayerCounts_det->Fill( trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y() );
    }
-
-   hActiveLayerCounts_det->Fill( trkNode.GetPositionLocal().Z(), trkNode.GetPositionLocal().Y() );
 }
 
 
