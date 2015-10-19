@@ -254,17 +254,17 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
    for (Long64_t ev = 0; ev < nevent; ev++) {
       if (maker->Make()) break;
 
-      StMuDst *mu = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
-      StMuEvent *muEvent = mu->event(); // get a pointer to the class holding event-wise information
+      StMuDst *muDst = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
+      StMuEvent *muEvent = muDst->event(); // get a pointer to the class holding event-wise information
       int referenceMultiplicity = muEvent->refMult(); // get the reference multiplicity
 
-      TClonesArray *PrimaryVertices   = mu->primaryVertices();
+      TClonesArray *PrimaryVertices   = muDst->primaryVertices();
       int nPrimaryVertices = PrimaryVertices->GetEntriesFast();
 
-      TClonesArray *MuMcVertices   = mu->mcArray(0);
+      TClonesArray *MuMcVertices   = muDst->mcArray(0);
       int nMuMcVertices = MuMcVertices->GetEntriesFast();
 
-      TClonesArray *MuMcTracks     = mu->mcArray(1);
+      TClonesArray *MuMcTracks     = muDst->mcArray(1);
       int nMuMcTracks = MuMcTracks->GetEntriesFast();
 
       if (vtxeval::gDebugFlag) {
@@ -298,13 +298,13 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
       McRecMulT->Fill(Mc2McHitTracks.count(1));
       // =============  Build map between  Rc and Mc vertices
       std::map<StMuPrimaryVertex *, StMuMcVertex *> Mc2RcVertices;
-      TArrayF Ranks(nPrimaryVertices);
+      TArrayF vertexRanks(nPrimaryVertices);
       int lMBest = -1; // any vertex with MC==1 and highest reconstrated multiplicity.
-      int MMult  = -1;
+      int vertexMaxMultiplicity  = -1;
 
-      for (int l = 0; l < nPrimaryVertices; l++) {
-         StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(l);
-         Ranks[l] = -1e10;
+      for (int vtxIndex = 0; vtxIndex < nPrimaryVertices; vtxIndex++) {
+         StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(vtxIndex);
+         vertexRanks[vtxIndex] = -1e10;
 
          if (! AcceptVX(Vtx)) continue;
 
@@ -322,30 +322,34 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
          }
 
          Mc2RcVertices[Vtx] = mcVertex;
-         Ranks[l] = Vtx->ranking();
+         vertexRanks[vtxIndex] = Vtx->ranking();
          double nTracks = Vtx->noTracks();
 
-         if (Vtx->idTruth() == 1 && MMult < nTracks) {lMBest = l; MMult = nTracks;}
+         if (Vtx->idTruth() == 1 && vertexMaxMultiplicity < nTracks) {
+            lMBest = vtxIndex;
+            vertexMaxMultiplicity = nTracks;
+         }
 
          FillData(data, Vtx);
+
 #ifdef __TMVA__
          Float_t *dataArray = &data.beam;
 
          for (size_t j = 0; j < inputVec->size(); j++)
             (*inputVec)[j] = dataArray[j];
 
-         Ranks[l] = classReader->GetMvaValue( *inputVec );
+         vertexRanks[vtxIndex] = classReader->GetMvaValue( *inputVec );
 #endif
       }
 
-      int lBest = TMath::LocMax(nPrimaryVertices, Ranks.GetArray());
+      int lBest = TMath::LocMax(nPrimaryVertices, vertexRanks.GetArray());
 
-      if (lBest >= 0 && Ranks[lBest] < RankMin) lBest = -1;
+      if (lBest >= 0 && vertexRanks[lBest] < RankMin) lBest = -1;
 
       int nMcTracksWithHits = Mc2McHitTracks.count(1);
 
-      for (int l = 0; l < nPrimaryVertices; l++) {
-         StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(l);
+      for (int vtxIndex = 0; vtxIndex < nPrimaryVertices; vtxIndex++) {
+         StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(vtxIndex);
 
          if (! Vtx) continue;
 
@@ -359,9 +363,9 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
          }
 
          if (vtxeval::gDebugFlag) {
-            std::cout << Form("Vx[%3i]", l) << *Vtx << " " << *mcVertex;
+            std::cout << Form("Vx[%3i]", vtxIndex) << *Vtx << " " << *mcVertex;
             int nMcTracksWithHitsatL = Mc2McHitTracks.count(Vtx->idTruth());
-            std::cout << Form("Number of McTkHit %4i rank %8.3f", nMcTracksWithHitsatL, Ranks[l]);
+            std::cout << Form("Number of McTkHit %4i rank %8.3f", nMcTracksWithHitsatL, vertexRanks[vtxIndex]);
          }
 
          int IdPar = mcVertex->IdParTrk();
@@ -373,7 +377,7 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
          }
 
          if (vtxeval::gDebugFlag) {
-            if (l == lBest) std::cout << "  === Best ===";
+            if (vtxIndex == lBest) std::cout << "  === Best ===";
 
             std::cout << std::endl;
          }
@@ -382,7 +386,7 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
          int idd = mcVertex->Id();
          double nTracks = Vtx->noTracks();
 
-         if (idd == 1 && nTracks == MMult) {// good
+         if (idd == 1 && nTracks == vertexMaxMultiplicity) {// good
             VertexG->Fill(&data.beam);//	VertexG->Fill(&data.beam);
          }
          else {   // bad
@@ -392,7 +396,7 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
          double nTracksQA = nTracks * Vtx->qaTruth() / 100.;
          int h = -1;
 
-         if (l == lBest) {
+         if (vtxIndex == lBest) {
             if (idd == 1) h = 1;
             else          h = 2;
 
@@ -403,11 +407,12 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
             }
          }
 
-         if (l == lMBest) {
+         if (vtxIndex == lMBest) {
             hists[0][0]->Fill(nMcTracksWithHits, nTracks);
             hists[0][1]->Fill(nMcTracksWithHits, nTracksQA);
             hists[0][2]->Fill(nMcTracksWithHits);
          }
+
       }
 
       if (! gROOT->IsBatch()) {
