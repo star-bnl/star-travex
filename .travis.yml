@@ -1,20 +1,28 @@
+sudo: false
+
 language: cpp
 compiler:
   - gcc
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      - kubuntu-backports
+    packages:
+      - g++-4.8
+      - cmake
+      - libboost-dev
+      - libboost-algorithm-dev
+
 git:
   depth: 1
   submodules: false
 before_install:
   - git submodule update --init --recursive --depth=1
 before_script:
-  - sudo add-apt-repository -y ppa:kubuntu-ppa/backports
-  - sudo apt-get -qq update
-  - sudo apt-get -qq install cmake
-  - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
-  - sudo apt-get -qq update
-  - sudo apt-get -qq install g++-4.8
-  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
   - g++ --version
+  - cmake --version
   - wget http://root.cern.ch/download/root_v5.34.30.source.tar.gz -P /tmp/
   - tar -xzf /tmp/root_v5.34.30.source.tar.gz
   - mv root root-src
