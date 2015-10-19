@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<job filesPerHour="&filesPerHour;" maxFilesPerProcess="1" fileListSyntax="paths" simulateSubmission="false">
+    <command>
+
+	umask 2
+	limit coredumpsize 0
+	limit
+	starver SL14a
+	STAR_LEVELS
+	pwd
+	set daqfile = &daqFile;
+	set fzdfile=R&runNumber;_$JOBINDEX.fzd
+	set seed=`expr &nIndex; \* 1000`
+	echo &codePath;      
+
+	ln -s &codePath;/GenerateVertex.C
+	ln -s &codePath;/simWRequest.kumac
+	ln -s &codePath;/closeDecays.F
+	ln -s &codePath;/bfcMixer_pythia.C
+	ln -s &codePath;/.sl64_gcc482
+
+	ls -al
+
+	/usr/bin/time root4star -q -b GenerateVertex.C\(&nEvents;,$seed,\"@$FILELIST\",\"vertex.txt\"\) > R&runNumber;_$JOBINDEX.log
+
+	/usr/bin/time starsim -w 0 -b simWRequest.kumac nevents=&nEvents; config=&sample; run=&runNumber; seed=$seed file=$fzdfile vertexfile=vertex.txt >> R&runNumber;_$JOBINDEX.log
+
+	set DbVoption="DbV20140222"
+	set proName="P14iapp510"
+	/usr/bin/time root4star -q -b bfcMixer_pythia.C\(&nEvents;,\"@$FILELIST\",\"$fzdfile\",\"$proName\",\"$DbVoption\",\"W\"\) >> R&runNumber;_$JOBINDEX.log
+
+	ls -al
+
+	</command>
+	<input URL="file:&inPath;/*&runNumber;*.daq" />
+	<stdout URL="file:&outPath;/out/R&runNumber;_$JOBINDEX.out" />
+	<stderr URL="file:&outPath;/out/R&runNumber;_$JOBINDEX.err" />
+	<output fromScratch="*.log"  toURL="file:&outPath;/log/" />
+	<output fromScratch="*.fzd" toURL="file:&outPath;/fzd/" />
+	<output fromScratch="*root" toURL="file:&outPath;/root/" />
+	<SandBox>
+	<Package>
+	<File>file:/star/u/jlzhang/KFVF/embedding/.sl64_gcc482</File>
+	</Package>
+	</SandBox>
+	</job>
