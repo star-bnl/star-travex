@@ -383,10 +383,10 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
          }
 
          FillData(data, Vtx);
-         int idd = mcVertex->Id();
+
          double nTracks = Vtx->noTracks();
 
-         if (idd == 1 && nTracks == vertexMaxMultiplicity) {// good
+         if (mcVertex->Id() == 1 && nTracks == vertexMaxMultiplicity) {// good
             VertexG->Fill(&data.beam);//	VertexG->Fill(&data.beam);
          }
          else {   // bad
@@ -394,17 +394,15 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
          }
 
          double nTracksQA = nTracks * Vtx->qaTruth() / 100.;
-         int h = -1;
 
          if (vtxIndex == lBest) {
-            if (idd == 1) h = 1;
-            else          h = 2;
 
-            if (h > 0) {
-               hists[h][0]->Fill(nMcTracksWithHits, nTracks);
-               hists[h][1]->Fill(nMcTracksWithHits, nTracksQA);
-               hists[h][2]->Fill(nMcTracksWithHits);
-            }
+            // If simulated vertex
+            int h = mcVertex->Id() == 1 ? h = 1 : h = 2;
+
+            hists[h][0]->Fill(nMcTracksWithHits, nTracks);
+            hists[h][1]->Fill(nMcTracksWithHits, nTracksQA);
+            hists[h][2]->Fill(nMcTracksWithHits);
          }
 
          if (vtxIndex == lMBest) {
