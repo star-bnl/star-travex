@@ -41,14 +41,27 @@ set nevents=`grep $FILEBASENAME $daqevents | awk '{print $2}'`
 echo nevents = $nevents, random = $random, kumac = $kumac, fzdFile=$fzdFile, ptmin = $ptmin, ptmax = $ptmax
 set vertex=vertex.txt
 set data=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/UPCAuAu200_Jpsi_04242015_zDistributions.root
-root4star -b -q /star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/GenerateVertex.C\($nevents,$seed,\"@$FILELIST\",\"$vertex\",\"Jet\",\"$data\"\)
-starsim -w 0 -b $kumac $vertex $fzdFile $random $nevents $ptmin $ptmax
+set my_command='root4star -b -q /star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/GenerateVertex.C('$nevents','$seed',"@'$FILELIST'","'$vertex'","Jet","'$data'")'
+echo
+echo "Executing..."
+echo  $my_command
+eval '$my_command'
 
-echo 'Executing bfcMixer_UPCAuAu200_P10ik(1000, "$INPUTFILE0", "$EMBEDTAGDIR/${FILEBASENAME}.tags.root", 0, 30, -1.5, 1.5, -200, 200, 100, 8, 1, 0, "P10ikAuAu200", "FlatPt", 1, "${FILEBASENAME}.fzd"); ...'
+set my_command="starsim -w 0 -b $kumac $vertex $fzdFile $random $nevents $ptmin $ptmax"
+echo
+echo "Executing..."
+echo  $my_command
+eval '$my_command'
+
+
+set my_command='bfcMixer_UPCAuAu200_P10ik(1000, "'$INPUTFILE0'", "'$EMBEDTAGDIR/${FILEBASENAME}'.tags.root", 0, 30, -1.5, 1.5, -200, 200, 100, 8, 1, 0, "P10ikAuAu200", "FlatPt", 1, "'$fzdFile'");'
+echo
+echo "Executing..."
+echo  $my_command
 
 root4star -b &lt;&lt;EOF
   .L StRoot/macros/embedding/bfcMixer_UPCAuAu200_P10ik.C
-  bfcMixer_UPCAuAu200_P10ik(1000, "$INPUTFILE0", "$EMBEDTAGDIR/${FILEBASENAME}.tags.root", 0, 30, -1.5, 1.5, -200, 200, 100, 8, 1, 0, "P10ikAuAu200", "FlatPt", 1, "${FILEBASENAME}.fzd");
+  $my_command
   .q
 EOF
 ls -la .
