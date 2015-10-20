@@ -64,16 +64,12 @@ eval '$my_command'
 
 set BFC_MIXER_DIR=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/StRoot/macros/embedding/
 
-set my_command='bfcMixer_UPCAuAu200_P10ik('$nevents', "'$INPUTFILE0'", "'$EMBEDTAGDIR/${FILEBASENAME}'.tags.root", 0, 30, -1.5, 1.5, -200, 200, 100, 8, 1, 0, "P10ikAuAu200", "FlatPt", 1, "'$fzdFile'");'
+set my_command='root4star -l -b -q '$BFC_MIXER_DIR'/bfcMixer_UPCAuAu200_P10ik.C('$nevents',"'$INPUTFILE0'","'$EMBEDTAGDIR/${FILEBASENAME}'.tags.root",0,30,-1.5,1.5,-200,200,100,8,1,0,"P10ikAuAu200","FlatPt",1,"'$fzdFile'")'
 echo
 echo "Executing..."
 echo  $my_command
+eval '$my_command'
 
-root4star -b &lt;&lt;EOF
-  .L $BFC_MIXER_DIR/bfcMixer_UPCAuAu200_P10ik.C
-  $my_command
-  .q
-EOF
 
 ls -la .
 
