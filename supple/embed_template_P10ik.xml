@@ -44,19 +44,18 @@ if ( "$JOB_MAX_EVENTS" != "" ) then
 endif
 
 echo nevents = $nevents, random = $random, kumac = $kumac, fzdFile=$fzdFile, ptmin = $ptmin, ptmax = $ptmax
-set vertex=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/vertex.txt
 set data=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/UPCAuAu200_Jpsi_04242015_zDistributions.root
 
 pwd
 ls -la .
 
-set my_command='root4star -l -b -q /star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/GenerateVertex.C('$nevents','$seed',"@'$FILELIST'","'$vertex'","Jet","'$data'")'
+set my_command='root4star -l -b -q /star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/GenerateVertex.C('$nevents','$seed',"@'$FILELIST'","vertex.txt","Jet","'$data'")'
 echo
 echo "Executing..."
 echo  $my_command
 eval '$my_command'
 
-set my_command="starsim -w 0 -b $kumac $vertex $fzdFile $random $nevents $ptmin $ptmax"
+set my_command="starsim -w 0 -b $kumac vertex.txt $fzdFile $random $nevents $ptmin $ptmax"
 echo
 echo "Executing..."
 echo  $my_command
