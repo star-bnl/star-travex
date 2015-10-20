@@ -29,6 +29,7 @@ echo EMLIST   : $EMLIST
 <!-- Start job -->
 
 <!-- Run starsim with kumac file -->
+set JOB_MAX_EVENTS = &JOB_MAX_EVENTS;
 set daqevents=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/daq_AuAu200_SL10k_zerobias_nevents.list
 set kumac=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/starlight_Jpsi_ee.kumac
 set fzdFile=${FILEBASENAME}.fzd
@@ -37,6 +38,11 @@ set seed=`echo $random | awk '{print $1}'`
 set ptmin=0
 set ptmax=30
 set nevents=`grep $FILEBASENAME $daqevents | awk '{print $2}'`
+
+if ( "$JOB_MAX_EVENTS" != "" ) then
+   set nevents = $JOB_MAX_EVENTS
+endif
+
 echo nevents = $nevents, random = $random, kumac = $kumac, fzdFile=$fzdFile, ptmin = $ptmin, ptmax = $ptmax
 set vertex=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/vertex.txt
 set data=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/UPCAuAu200_Jpsi_04242015_zDistributions.root
@@ -58,7 +64,7 @@ eval '$my_command'
 
 set BFC_MIXER_DIR=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/StRoot/macros/embedding/
 
-set my_command='bfcMixer_UPCAuAu200_P10ik(1000, "'$INPUTFILE0'", "'$EMBEDTAGDIR/${FILEBASENAME}'.tags.root", 0, 30, -1.5, 1.5, -200, 200, 100, 8, 1, 0, "P10ikAuAu200", "FlatPt", 1, "'$fzdFile'");'
+set my_command='bfcMixer_UPCAuAu200_P10ik('$nevents', "'$INPUTFILE0'", "'$EMBEDTAGDIR/${FILEBASENAME}'.tags.root", 0, 30, -1.5, 1.5, -200, 200, 100, 8, 1, 0, "P10ikAuAu200", "FlatPt", 1, "'$fzdFile'");'
 echo
 echo "Executing..."
 echo  $my_command
