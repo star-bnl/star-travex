@@ -9,7 +9,12 @@ if ( $#argv != 1 ) then
 endif
 
 set template = "/star/u/smirnovd/star-vertex-eval/supple/embed_template_P10ik.xml"
+set INPUT_FILES = "/star/data20/embedding/reco/2010_zerobias/daq/st_zerobias_adc_11063039_raw_2590003.daq"
+set OUTPUT_DIR = "/star/u/smirnovd/bnl_me/public/jpsi_sim/"
+
+mkdir -p $OUTPUT_DIR/sums
+mkdir -p $OUTPUT_DIR/log
 
 set FSET = "$1"
 
-star-submit-template -template ${template} -entities FSET=$FSET
+star-submit-template -template ${template} -entities FSET=$FSET,INPUT_FILES=$INPUT_FILES,OUTPUT_DIR=$OUTPUT_DIR

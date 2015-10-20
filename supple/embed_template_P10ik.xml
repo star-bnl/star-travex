@@ -17,8 +17,8 @@ setenv EMDAY `perl StRoot/macros/embedding/getYearDayFromFile.pl -d ${FILEBASENA
 setenv EMLOGS /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedLogs/
 
 <!-- Set output directory path -->
-setenv EMOUTPUT /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/KFV/firstPass/Jpsi2ee_STARlight_&FSET;_KFV/P10ik.SL10k_embed/$EMYEAR/$EMDAY
-setenv EMLIST /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/KFV/firstPass/Jpsi2ee_STARlight_KFV/FSET&FSET;_P10ik.SL10k_embed_$EMYEAR
+setenv EMOUTPUT &OUTPUT_DIR;/Jpsi2ee_STARlight_&FSET;_KFV/P10ik.SL10k_embed/$EMYEAR/$EMDAY
+setenv EMLIST   &OUTPUT_DIR;/Jpsi2ee_STARlight_KFV/FSET&FSET;_P10ik.SL10k_embed_$EMYEAR
 
 <!-- Print out EMYEAR and EMDAY and EMLOGS -->
 echo EMYEAR   : $EMYEAR
@@ -84,15 +84,15 @@ rm -v /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedLogs/P10ik/
 <output fromScratch="*.fzd" toURL="$EMOUTPUT/"/>
 
 <!-- Define locations of log/elog files -->
-<stdout URL="file:/star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedLogs/P10ik/LOG/$JOBID.log"/>
-<stderr URL="file:/star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedLogs/P10ik/LOG/$JOBID.elog"/>
+<stdout URL="file:&OUTPUT_DIR;/log/$JOBID.log"/>
+<stderr URL="file:&OUTPUT_DIR;/log/$JOBID.elog"/>
 
 <!-- Input daq files -->
-<input URL="file:/star/data20/embedding/reco/2010_zerobias/daq/st_zerobias_adc_*.daq"/>
+<input URL="file:&INPUT_FILES;"/>
 
 <!-- csh/list files -->
 <Generator>
-  <Location>/star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedLogs/P10ik/Jpsi_ee_STARlight_20142801/LIST/</Location>
+  <Location>&OUTPUT_DIR;/sums/</Location>
 </Generator>
 
 <!-- Put any locally-compiled stuffs into a sand-box -->
