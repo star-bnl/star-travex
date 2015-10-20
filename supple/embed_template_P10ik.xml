@@ -87,9 +87,7 @@ endif
 
 <!-- Move LOG files and csh to eliza disk, remove list files -->
 mv -v $EMLOGS/P10ik/LOG/$JOBID.log $EMOUTPUT/${FILEBASENAME}.$JOBID.log
-mv -v $EMLOGS/P10ik/LOG/$JOBID.elog $EMOUTPUT/${FILEBASENAME}.$JOBID.elog
 gzip -f $EMOUTPUT/${FILEBASENAME}.$JOBID.log
-gzip -f $EMOUTPUT/${FILEBASENAME}.$JOBID.elog
 mv -v /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedLogs/P10ik/Jpsi_ee_STARlight_20142801/LIST/sched$JOBID.csh $EMLIST/
 rm -v /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedLogs/P10ik/Jpsi_ee_STARlight_20142801/LIST/sched$JOBID.list
 
@@ -101,9 +99,8 @@ rm -v /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedLogs/P10ik/
 <output fromScratch="*.root" toURL="$EMOUTPUT/"/>
 <output fromScratch="*.fzd" toURL="$EMOUTPUT/"/>
 
-<!-- Define locations of log/elog files -->
+<!-- Define locations of log files -->
 <stdout URL="file:&OUTPUT_DIR;/log/$JOBID.log"/>
-<stderr URL="file:&OUTPUT_DIR;/log/$JOBID.elog"/>
 
 <!-- Input daq files -->
 <input URL="file:&INPUT_FILES;"/>
