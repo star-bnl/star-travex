@@ -8,7 +8,7 @@ if ( $#argv != 1 ) then
   exit
 endif
 
-set template = "embed_template_P10ik.xml"
+set template = "/star/u/smirnovd/star-vertex-eval/supple/embed_template_P10ik.xml"
 
 set FSET = "$1"
 
