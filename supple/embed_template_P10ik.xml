@@ -6,9 +6,6 @@
 <!-- Load library -->
 starver dev
 
-<!-- Set tags file directory -->
-setenv EMBEDTAGDIR /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedDir/
-
 <!-- Set year and day from filename -->
 setenv EMYEAR `perl $STAR/StRoot/macros/embedding/getYearDayFromFile.pl -y ${FILEBASENAME}`
 setenv EMDAY `perl $STAR/StRoot/macros/embedding/getYearDayFromFile.pl -d ${FILEBASENAME}`
@@ -62,7 +59,7 @@ echo "Executing..."
 echo  $my_command
 eval '$my_command'
 
-set my_command='root4star -l -b -q ./bfcMixer_Tpx.C('$nevents',"'$INPUTFILE0'","'$EMBEDTAGDIR/${FILEBASENAME}'.tags.root",0,30,-1.5,1.5,-200,200,100,8,1,0,"P14iiAuAu15","FlatPt",1,"'$fzdFile'")'
+set my_command='root4star -l -b -q ./bfcMixer_Tpx.C('$nevents',"'$INPUTFILE0'","",0,30,-1.5,1.5,-200,200,100,8,1,0,"P14iiAuAu15","FlatPt",1,"'$fzdFile'")'
 echo
 echo "Executing..."
 echo  $my_command
