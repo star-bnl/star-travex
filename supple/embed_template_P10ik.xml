@@ -4,7 +4,7 @@
 
 <command>
 <!-- Load library -->
-starver SL13c
+starver dev
 
 <!-- Set tags file directory -->
 setenv EMBEDTAGDIR /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedDir/
