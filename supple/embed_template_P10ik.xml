@@ -62,7 +62,7 @@ echo "Executing..."
 echo  $my_command
 eval '$my_command'
 
-set my_command='root4star -l -b -q ./bfcMixer_UPCAuAu200_P10ik.C('$nevents',"'$INPUTFILE0'","'$EMBEDTAGDIR/${FILEBASENAME}'.tags.root",0,30,-1.5,1.5,-200,200,100,8,1,0,"P10ikAuAu200","FlatPt",1,"'$fzdFile'")'
+set my_command='root4star -l -b -q ./bfcMixer_Tpx.C('$nevents',"'$INPUTFILE0'","'$EMBEDTAGDIR/${FILEBASENAME}'.tags.root",0,30,-1.5,1.5,-200,200,100,8,1,0,"P10ikAuAu200","FlatPt",1,"'$fzdFile'")'
 echo
 echo "Executing..."
 echo  $my_command
@@ -116,7 +116,7 @@ rm -v /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedLogs/P10ik/
     <File>file:./.sl64_gcc447/</File>
     <File>file:./StRoot/</File>
     <File>file:./pams/</File>
-    <File>file:./bfcMixer_UPCAuAu200_P10ik.C</File>
+    <File>file:./bfcMixer_Tpx.C</File>
   </Package>
 </SandBox>
 </job>

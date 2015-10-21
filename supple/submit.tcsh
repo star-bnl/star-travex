@@ -12,7 +12,7 @@ set template = "/star/u/smirnovd/star-vertex-eval/supple/embed_template_P10ik.xm
 set INPUT_FILES = "/star/data20/embedding/reco/2010_zerobias/daq/st_zerobias_adc_11063039_raw_2590003.daq"
 set OUTPUT_DIR = "/star/u/smirnovd/bnl_me/public/jpsi_sim/"
 set JOB_MAX_EVENTS = 10
-set BFC_MIXER_MACRO = "/star/u/smirnovd/star-vertex-eval/ext/star-macros/macros/embedding/bfcMixer_UPCAuAu200_P10ik.C"
+set BFC_MIXER_MACRO = "/star/u/smirnovd/star-vertex-eval/ext/star-macros/macros/embedding/bfcMixer_Tpx.C"
 
 mkdir -p $OUTPUT_DIR/sums
 mkdir -p $OUTPUT_DIR/log
