@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+#
+# It is recommended to examine and set the appropriate values for the script's
+# named arguments before running this script. Search for "NAMED ARGUMENTS" to
+# find their input values below.
 
 if [ -z "${1+x}" ]; then
   echo ""
@@ -7,6 +11,8 @@ if [ -z "${1+x}" ]; then
   exit 1
 fi
 
+
+# NAMED ARGUMENTS: Set default values for script variables
 
 : ${FSET:="$1"}
 : ${SOURCE_DIR:="${HOME}/star-vertex-eval"}
