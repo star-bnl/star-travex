@@ -6,8 +6,8 @@ How to build and use the library in ROOT session
 
 Checkout the code using one of the following commands:
 
-    git clone https://github.com/star-bnl/star-vertex-eval.git   # If you do not have an account on github.com
-    git clone git@github.com:star-bnl/star-vertex-eval.git       # otherwise.
+    git clone git@github.com:star-bnl/star-vertex-eval.git       # If you have an account on github.com
+    git clone https://github.com/star-bnl/star-vertex-eval.git   # otherwise.
 
 Compile and build the library:
 
@@ -26,6 +26,41 @@ follow up with a call to `VxEff()` as in the snipped below:
     root [0] MuMcPrVKFV2012(<num_events>, "path/to/*.MuDst.root", "my_output_file.root");
     root [1] std::vector<std::string> myKeys, myFiles; myKeys.push_back("DFLT"); myFiles.push_back("my_output_file.root");
     root [2] VxEff(myKeys, myFiles);
+
+
+How to create embedding samples
+===============================
+
+Checkout the code using one of the following commands:
+
+    git clone git@github.com:star-bnl/star-vertex-eval.git       # If you have an account on github.com
+    git clone https://github.com/star-bnl/star-vertex-eval.git   # otherwise.
+
+Get the code dependencies by issuing the following commands:
+
+    cd star-vertex-eval/
+    git submodule update --init --depth=1
+
+
+J/psi
+-----
+
+Now create a directory from where condor jobs will be submitted and run the
+script as:
+
+    mkdir submit_jpsi && cd submit_jpsi
+    /path/to/star-vertex-eval/supple/submit_jobs_embedding_jpsi.sh 200
+
+If the package was not checked out in the default location of
+${HOME}/star-vertex-eval/ then you should specify the correct location as:
+
+    SOURCE_DIR=/path/to/star-vertex-eval/ \
+    OUTPUT_DIR=/tmp/jpsi_embed \
+    /path/to/star-vertex-eval/supple/submit_jobs_embedding_jpsi.sh 200
+
+There is a number of other script parameters which can be modified if the
+default values are not appropriate. Search for "NAMED ARGUMENTS" to find these
+values.
 
 
 Study the ranking scheme in STAR
