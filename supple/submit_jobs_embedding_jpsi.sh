@@ -1,20 +1,30 @@
-#!/bin/tcsh
+#!/usr/bin/env bash
 
-if ( $#argv != 1 ) then
+if [ -z "${1+x}" ]; then
   echo ""
   echo " Usage : $0 [FSET number, 109 or something like that]"
   echo ""
-  echo ""
   exit 1
-endif
+fi
 
 
-set FSET = "$1"
-set TEMPLATE = "/star/u/smirnovd/star-vertex-eval/supple/embed_template_P10ik.xml"
-set INPUT_FILES = "/star/data20/embedding/reco/2010_zerobias/daq/st_zerobias_adc_11063039_raw_2590003.daq"
-set OUTPUT_DIR = "/star/u/smirnovd/bnl_me/public/jpsi_sim/"
-set JOB_MAX_EVENTS = 10
-set BFC_MIXER_MACRO = "/star/u/smirnovd/star-vertex-eval/ext/star-macros/macros/embedding/bfcMixer_Tpx.C"
+: ${FSET:="$1"}
+: ${SOURCE_DIR:="${HOME}/star-vertex-eval"}
+: ${TEMPLATE:="$SOURCE_DIR/supple/embed_template_P10ik.xml"}
+: ${INPUT_FILES:="/star/data20/embedding/reco/2010_zerobias/daq/st_zerobias_adc_11063039_raw_2590003.daq"}
+: ${OUTPUT_DIR:="/star/u/smirnovd/bnl_me/public/jpsi_sim/"}
+: ${JOB_MAX_EVENTS:=10}
+: ${BFC_MIXER_MACRO:="$SOURCE_DIR/ext/star-macros/macros/embedding/bfcMixer_Tpx.C"}
+
+
+echo -e "Named arguments and their values:"
+echo -e "\t FSET: $FSET"
+echo -e "\t SOURCE_DIR: $SOURCE_DIR"
+echo -e "\t TEMPLATE: $TEMPLATE"
+echo -e "\t INPUT_FILES: $INPUT_FILES"
+echo -e "\t OUTPUT_DIR: $OUTPUT_DIR"
+echo -e "\t JOB_MAX_EVENTS: $JOB_MAX_EVENTS"
+echo -e "\t BFC_MIXER_MACRO: $BFC_MIXER_MACRO"
 
 
 mkdir -p $OUTPUT_DIR/sums
