@@ -46,7 +46,7 @@ set data=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/UPCAuAu200_Jp
 pwd
 ls -la .
 
-set my_command='root4star -l -b -q /star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/GenerateVertex.C('$nevents','$seed',"@'$FILELIST'","vertex.txt","Jet","'$data'")'
+set my_command='root4star -l -b -q ./GenerateVertex.C("'$data'",'$nevents','$seed',"@'$FILELIST'","vertex.txt","Jet")'
 echo
 echo "Executing..."
 echo  $my_command
@@ -112,6 +112,7 @@ rm -v /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedLogs/P10ik/
     <File>file:./StRoot/</File>
     <File>file:./pams/</File>
     <File>file:./bfcMixer_Tpx.C</File>
+    <File>file:./GenerateVertex.C</File>
   </Package>
 </SandBox>
 </job>
