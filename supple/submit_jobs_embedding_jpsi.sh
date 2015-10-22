@@ -16,9 +16,9 @@ fi
 
 : ${FSET:="$1"}
 : ${SOURCE_DIR:="${HOME}/star-vertex-eval"}
-: ${TEMPLATE:="$SOURCE_DIR/supple/embed_template_P10ik.xml"}
+: ${TEMPLATE:="$SOURCE_DIR/supple/job_template_embedding_jpsi.xml"}
 : ${INPUT_FILES:="/star/data20/embedding/reco/2010_zerobias/daq/st_zerobias_adc_11063039_raw_2590003.daq"}
-: ${OUTPUT_DIR:="/star/u/smirnovd/bnl_me/public/jpsi_sim/"}
+: ${OUTPUT_DIR:="/tmp/jpsi_embed/"}
 : ${JOB_MAX_EVENTS:=10}
 : ${BFC_MIXER_MACRO:="$SOURCE_DIR/ext/star-macros/macros/embedding/bfcMixer_Tpx.C"}
 : ${VERTEX_GEN_MACRO:="$SOURCE_DIR/ext/star-macros/macros/embedding/GenerateVertex.C"}
