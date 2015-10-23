@@ -39,7 +39,7 @@ Checkout the code using one of the following commands:
 Get the code dependencies by issuing the following commands:
 
     cd star-vertex-eval/
-    git submodule update --init --depth=1
+    git submodule update --init
 
 
 J/psi
