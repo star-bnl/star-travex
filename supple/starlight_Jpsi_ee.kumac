@@ -1,8 +1,8 @@
 MACRO starlight vertexfile outfile rndm1 rndm2 trig ptmin ptmax
 
 ** Create the geometry
-   detp geom y2010c field=-5
-   gexe $STAR_LIB/geometry.so
+   detp geom y2014a field=-5
+   gexec $STAR_LIB/xgeometry.so
    gclos all
 
 ** Load the STARLIGHT generator
