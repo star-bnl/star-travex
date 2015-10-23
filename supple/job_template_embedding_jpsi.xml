@@ -107,9 +107,6 @@ rm -v /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedLogs/P10ik/
 <!-- Put any locally-compiled stuffs into a sand-box -->
 <SandBox installer="ZIP">
   <Package name="Localmakerlibs">
-    <File>file:./.sl64_gcc447/</File>
-    <File>file:./StRoot/</File>
-    <File>file:./pams/</File>
     <File>file:./bfcMixer_Tpx.C</File>
     <File>file:./GenerateVertex.C</File>
     <File>file:./starlight_Jpsi_ee.kumac</File>
