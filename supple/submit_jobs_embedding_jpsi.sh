@@ -22,6 +22,7 @@ fi
 : ${JOB_MAX_EVENTS:=10}
 : ${BFC_MIXER_MACRO:="$SOURCE_DIR/ext/star-macros/macros/embedding/bfcMixer_Tpx.C"}
 : ${VERTEX_GEN_MACRO:="$SOURCE_DIR/ext/star-macros/macros/embedding/GenerateVertex.C"}
+: ${STARSIM_KUMAC:="$SOURCE_DIR/supple/starlight_Jpsi_ee.kumac"}
 
 
 echo -e "Named arguments and their values:"
@@ -41,5 +42,6 @@ mkdir -p $OUTPUT_DIR/log
 # Copy the bfcMixer script to the current directory so it can be used by the job
 cp $BFC_MIXER_MACRO ./
 cp $VERTEX_GEN_MACRO ./
+cp $STARSIM_KUMAC ./
 
 star-submit-template -template ${TEMPLATE} -entities FSET=$FSET,INPUT_FILES=$INPUT_FILES,OUTPUT_DIR=$OUTPUT_DIR,JOB_MAX_EVENTS=$JOB_MAX_EVENTS

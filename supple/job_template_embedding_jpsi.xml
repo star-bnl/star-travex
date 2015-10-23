@@ -28,7 +28,6 @@ echo EMLIST   : $EMLIST
 <!-- Run starsim with kumac file -->
 set JOB_MAX_EVENTS = &JOB_MAX_EVENTS;
 set daqevents=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/daq_AuAu200_SL10k_zerobias_nevents.list
-set kumac=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/starlight_Jpsi_ee.kumac
 set fzdFile=${FILEBASENAME}.fzd
 set random=`/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/get_random_seed`
 set seed=`echo $random | awk '{print $1}'`
@@ -40,7 +39,7 @@ if ( "$JOB_MAX_EVENTS" != "" ) then
    set nevents = $JOB_MAX_EVENTS
 endif
 
-echo nevents = $nevents, random = $random, kumac = $kumac, fzdFile=$fzdFile, ptmin = $ptmin, ptmax = $ptmax
+echo nevents = $nevents, random = $random, fzdFile=$fzdFile, ptmin = $ptmin, ptmax = $ptmax
 set data=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/UPCAuAu200_Jpsi_04242015_zDistributions.root
 
 pwd
@@ -52,7 +51,7 @@ echo "Executing..."
 echo  $my_command
 eval '$my_command'
 
-set my_command="starsim -w 0 -b $kumac vertex.txt $fzdFile $random $nevents $ptmin $ptmax"
+set my_command="starsim -w 0 -b ./starlight_Jpsi_ee.kumac vertex.txt $fzdFile $random $nevents $ptmin $ptmax"
 echo
 echo "Executing..."
 echo  $my_command
@@ -113,6 +112,7 @@ rm -v /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedLogs/P10ik/
     <File>file:./pams/</File>
     <File>file:./bfcMixer_Tpx.C</File>
     <File>file:./GenerateVertex.C</File>
+    <File>file:./starlight_Jpsi_ee.kumac</File>
   </Package>
 </SandBox>
 </job>
