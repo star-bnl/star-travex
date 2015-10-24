@@ -56,7 +56,7 @@ do
   fi
   echo $filesPerHour
 
-  star-submit-template -template ../EMBEDDING_TEMPLATE.xml -entities  nEvents=$nEvents,inPath=$inPath,outPath=$outPath,codePath=$codePath,runNumber=$runNumber,daqFile=$daqFile,sample=$sample,nIndex=$index,filesPerHour=$filesPerHour
+  star-submit-template -template job_template_embedding_wbos.xml -entities  nEvents=$nEvents,inPath=$inPath,outPath=$outPath,codePath=$codePath,runNumber=$runNumber,daqFile=$daqFile,sample=$sample,nIndex=$index,filesPerHour=$filesPerHour
 
   index=`expr $index \+ 1`
 
