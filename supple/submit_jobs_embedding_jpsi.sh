@@ -18,7 +18,7 @@ fi
 : ${SOURCE_DIR:="${HOME}/star-vertex-eval"}
 : ${TEMPLATE:="$SOURCE_DIR/supple/job_template_embedding_jpsi.xml"}
 : ${INPUT_FILES:="/star/data05/daq/2014/152/15152001/st_zerobias_adc_15152001_raw_5000050.daq"}
-: ${OUTPUT_DIR:="/tmp/jpsi_embed/"}
+: ${OUTPUT_DIR:="${HOME}/jpsi_embed/"}
 : ${JOB_MAX_EVENTS:=10}
 : ${BFC_MIXER_MACRO:="$SOURCE_DIR/ext/star-macros/macros/embedding/bfcMixer_Tpx.C"}
 : ${VERTEX_GEN_MACRO:="$SOURCE_DIR/ext/star-macros/macros/embedding/GenerateVertex.C"}
