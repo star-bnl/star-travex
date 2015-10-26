@@ -61,9 +61,4 @@ do
   index=`expr $index \+ 1`
 
 # exit
-#done < ../test2.csv
-#done < ../test3.csv
-#done < /star/u/jlzhang/run13w/period2/embeddinglist/missWp.csv
-done <  ../Test.csv
-#done < /star/u/jlzhang/run13w/period2/embeddinglist/goodL2BW_ZB.csv
-
+done <  ../runlist_wbos.csv
