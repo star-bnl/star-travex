@@ -26,6 +26,7 @@ echo -e "\t STARSIM_KUMAC: $STARSIM_KUMAC"
 mkdir -p $outPath/root/
 mkdir -p $outPath/log/
 mkdir -p $outPath/fzd/
+mkdir -p $outPath/sums/
 
 cp $VERTEX_GEN_MACRO ./
 cp $STARSIM_KUMAC ./

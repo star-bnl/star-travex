@@ -45,6 +45,11 @@
 	<output fromScratch="*.log"  toURL="file:&outPath;/log/" />
 	<output fromScratch="*.fzd" toURL="file:&outPath;/fzd/" />
 	<output fromScratch="*root" toURL="file:&outPath;/root/" />
+
+<Generator>
+  <Location>&outPath;/sums/</Location>
+</Generator>
+
 	<SandBox>
 	<Package>
 	<File>file:./GenerateVertex.C</File>
