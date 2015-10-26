@@ -6,11 +6,18 @@ sample=Wplus_enu
 #sample=Wminus_taunu
 #sample=Z_eplus_eminus_inter
 #sample=QCD
-codePath=/star/u/jlzhang/KFVF/embedding
+codePath=$HOME/star-vertex-eval/
 #outPath=/star/u/jlzhang/data05/wEmbedding2013/${sample}_2013/
-outPath=/star/data19/KFVertex/${sample}_2013
-inPath=/star/data19/KFVertex/daq
+outPath=$HOME/scratch/wbos_embed/
+inPath=/star/data05/daq/2014/152/15152001/
 cd JOBS
+
+
+echo -e "Named arguments and their values:"
+echo -e "\t sample: $sample"
+echo -e "\t codePath: $codePath"
+echo -e "\t outPath: $outPath"
+echo -e "\t inPath: $inPath"
 
 #create output directories
 mkdir -p $outPath/
