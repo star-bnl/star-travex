@@ -51,11 +51,12 @@
   <Location>&outPath;/sums/</Location>
 </Generator>
 
-	<SandBox>
-	<Package>
+<SandBox installer="ZIP">
+	<Package name="tarball_wbos_embed">
 	<File>file:./bfcMixer_pythia.C</File>
 	<File>file:./GenerateVertex.C</File>
 	<File>file:./simWRequest.kumac</File>
 	</Package>
-	</SandBox>
-	</job>
+</SandBox>
+
+</job>

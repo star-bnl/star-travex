@@ -45,16 +45,12 @@ IFS=, #set comma as delimeter
 while read fillNumber runNumber m2 m3 m4 m5 m6 m7 nEvents nEventTau nEventZ 
 do
 
-  echo $index
-  echo $nEvents
-  nEvents=$(expr $nEvents*$norm |tr -d $'\r'| bc)
-  echo $nEvents
-  nEvents=`echo $nEvents | awk '{printf("%d\n",$1+0.5)}'`
-  echo $nEvents
+  nEventsScaled=$(expr $nEvents*$norm |tr -d $'\r'| bc)
+  nEventsPretty=`echo $nEventsScaled | awk '{printf("%d\n",$1+0.5)}'`
+  nEvents=$nEventsPretty
+
   runNumber=${runNumber:1:8}
-  echo $runNumber 
   daqFile=`ls $inPath/*$runNumber*.daq`
-  echo $daqFile
 
   #set queue length by # of target events
   filesPerHour=0.01 
@@ -66,10 +62,16 @@ do
   then
     filesPerHour=0.34
   fi
-  echo $filesPerHour
+
+  echo -e "\nProcessing new line from input .csv file"
+  echo -e "\t index: $index"
+  echo -e "\t nEvents [nEventsScaled, nEventsPretty]: $nEvents [$nEventsScaled, $nEventsPretty]"
+  echo -e "\t runNumber: $runNumber"
+  echo -e "\t daqFile: $daqFile"
+  echo -e "\t filesPerHour: $filesPerHour"
 
   star-submit-template -template job_template_embedding_wbos.xml -entities  nEvents=$nEvents,inPath=$inPath,outPath=$outPath,codePath=$codePath,runNumber=$runNumber,daqFile=$daqFile,sample=$sample,nIndex=$index,filesPerHour=$filesPerHour
 
   index=`expr $index \+ 1`
 
-done <  ../runlist_wbos.csv
+done <  $codePath/supple/runlist_wbos.csv
