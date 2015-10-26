@@ -14,7 +14,6 @@
 	echo &codePath;      
 
 	ln -s &codePath;/closeDecays.F
-	ln -s &codePath;/bfcMixer_pythia.C
 	ln -s &codePath;/.sl64_gcc482
 
 	ls -al
@@ -32,9 +31,11 @@
 	echo  $my_command
 	eval '$my_command'
 
-	set DbVoption="DbV20140222"
-	set proName="P14iapp510"
-	/usr/bin/time root4star -q -b bfcMixer_pythia.C\(&nEvents;,\"@$FILELIST\",\"$fzdfile\",\"$proName\",\"$DbVoption\",\"W\"\) >> R&runNumber;_$JOBINDEX.log
+	set my_command='root4star -q -b ./bfcMixer_pythia.C(&nEvents;,"@'$FILELIST'","'$fzdfile'","P14iapp510","","W")'
+	echo
+	echo "Executing..."
+	echo  $my_command
+	eval '$my_command'
 
 	ls -al
 
@@ -52,6 +53,7 @@
 
 	<SandBox>
 	<Package>
+	<File>file:./bfcMixer_pythia.C</File>
 	<File>file:./GenerateVertex.C</File>
 	<File>file:./simWRequest.kumac</File>
 	</Package>
