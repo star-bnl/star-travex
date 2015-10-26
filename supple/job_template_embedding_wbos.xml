@@ -33,8 +33,8 @@
 
 	</command>
 	<input URL="file:&inPath;/*&runNumber;*.daq" />
-	<stdout URL="file:&outPath;/out/R&runNumber;_$JOBINDEX.out" />
-	<stderr URL="file:&outPath;/out/R&runNumber;_$JOBINDEX.err" />
+	<stdout URL="file:&outPath;/log/R&runNumber;_$JOBINDEX.out" />
+
 	<output fromScratch="*.log"  toURL="file:&outPath;/log/" />
 	<output fromScratch="*.fzd" toURL="file:&outPath;/fzd/" />
 	<output fromScratch="*root" toURL="file:&outPath;/root/" />

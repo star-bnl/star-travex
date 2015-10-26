@@ -21,7 +21,6 @@ echo -e "\t inPath: $inPath"
 #create output directories
 mkdir -p $outPath/root/
 mkdir -p $outPath/log/
-mkdir -p $outPath/out/
 mkdir -p $outPath/fzd/
 
 
