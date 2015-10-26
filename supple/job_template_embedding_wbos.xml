@@ -13,7 +13,6 @@
 	set seed=`expr &nIndex; \* 1000`
 	echo &codePath;      
 
-	ln -s &codePath;/simWRequest.kumac
 	ln -s &codePath;/closeDecays.F
 	ln -s &codePath;/bfcMixer_pythia.C
 	ln -s &codePath;/.sl64_gcc482
@@ -27,7 +26,11 @@
 	echo  $my_command
 	eval '$my_command'
 
-	/usr/bin/time starsim -w 0 -b simWRequest.kumac nevents=&nEvents; config=&sample; run=&runNumber; seed=$seed file=$fzdfile vertexfile=vertex.txt >> R&runNumber;_$JOBINDEX.log
+	set my_command="starsim -w 0 -b ./simWRequest.kumac nevents=&nEvents; config=&sample; run=&runNumber; seed=$seed file=$fzdfile vertexfile=vertex.txt"
+	echo
+	echo "Executing..."
+	echo  $my_command
+	eval '$my_command'
 
 	set DbVoption="DbV20140222"
 	set proName="P14iapp510"
@@ -45,6 +48,7 @@
 	<SandBox>
 	<Package>
 	<File>file:./GenerateVertex.C</File>
+	<File>file:./simWRequest.kumac</File>
 	</Package>
 	</SandBox>
 	</job>

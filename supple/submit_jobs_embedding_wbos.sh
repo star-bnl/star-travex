@@ -11,6 +11,7 @@ codePath=$HOME/star-vertex-eval/
 outPath=$HOME/scratch/wbos_embed/
 inPath=/star/data05/daq/2014/152/15152001/
 VERTEX_GEN_MACRO="$codePath/ext/star-macros/macros/embedding/GenerateVertex.C"
+STARSIM_KUMAC="$codePath/supple/simWRequest.kumac"
 
 
 echo -e "Named arguments and their values:"
@@ -19,6 +20,7 @@ echo -e "\t codePath: $codePath"
 echo -e "\t outPath: $outPath"
 echo -e "\t inPath: $inPath"
 echo -e "\t VERTEX_GEN_MACRO: $VERTEX_GEN_MACRO"
+echo -e "\t STARSIM_KUMAC: $STARSIM_KUMAC"
 
 #create output directories
 mkdir -p $outPath/root/
@@ -26,6 +28,7 @@ mkdir -p $outPath/log/
 mkdir -p $outPath/fzd/
 
 cp $VERTEX_GEN_MACRO ./
+cp $STARSIM_KUMAC ./
 
 
 index=2000
