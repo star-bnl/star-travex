@@ -10,6 +10,7 @@ codePath=$HOME/star-vertex-eval/
 #outPath=/star/u/jlzhang/data05/wEmbedding2013/${sample}_2013/
 outPath=$HOME/scratch/wbos_embed/
 inPath=/star/data05/daq/2014/152/15152001/
+VERTEX_GEN_MACRO="$codePath/ext/star-macros/macros/embedding/GenerateVertex.C"
 
 
 echo -e "Named arguments and their values:"
@@ -17,11 +18,14 @@ echo -e "\t sample: $sample"
 echo -e "\t codePath: $codePath"
 echo -e "\t outPath: $outPath"
 echo -e "\t inPath: $inPath"
+echo -e "\t VERTEX_GEN_MACRO: $VERTEX_GEN_MACRO"
 
 #create output directories
 mkdir -p $outPath/root/
 mkdir -p $outPath/log/
 mkdir -p $outPath/fzd/
+
+cp $VERTEX_GEN_MACRO ./
 
 
 index=2000

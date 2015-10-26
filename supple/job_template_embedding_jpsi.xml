@@ -45,7 +45,8 @@ set data=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/UPCAuAu200_Jp
 pwd
 ls -la .
 
-set my_command='root4star -l -b -q ./GenerateVertex.C("'$data'",'$nevents','$seed',"@'$FILELIST'","vertex.txt","Jet")'
+ln -s ./GenerateVertex.C ./GenerateVertex4Jpsi.C
+set my_command='root4star -l -b -q ./GenerateVertex4Jpsi.C("'$data'",'$nevents','$seed',"@'$FILELIST'","vertex.txt","Jet")'
 echo
 echo "Executing..."
 echo  $my_command

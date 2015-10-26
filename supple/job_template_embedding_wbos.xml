@@ -13,7 +13,6 @@
 	set seed=`expr &nIndex; \* 1000`
 	echo &codePath;      
 
-	ln -s &codePath;/GenerateVertex.C
 	ln -s &codePath;/simWRequest.kumac
 	ln -s &codePath;/closeDecays.F
 	ln -s &codePath;/bfcMixer_pythia.C
@@ -21,7 +20,12 @@
 
 	ls -al
 
-	/usr/bin/time root4star -q -b GenerateVertex.C\(&nEvents;,$seed,\"@$FILELIST\",\"vertex.txt\"\) > R&runNumber;_$JOBINDEX.log
+	ln -s ./GenerateVertex.C ./GenerateVertex4WBoson.C
+	set my_command='root4star -q -b ./GenerateVertex4WBoson.C(0,&nEvents;,'$seed',"@'$FILELIST'","vertex.txt")'
+	echo
+	echo "Executing..."
+	echo  $my_command
+	eval '$my_command'
 
 	/usr/bin/time starsim -w 0 -b simWRequest.kumac nevents=&nEvents; config=&sample; run=&runNumber; seed=$seed file=$fzdfile vertexfile=vertex.txt >> R&runNumber;_$JOBINDEX.log
 
@@ -40,7 +44,7 @@
 	<output fromScratch="*root" toURL="file:&outPath;/root/" />
 	<SandBox>
 	<Package>
-	<File>file:/star/u/jlzhang/KFVF/embedding/.sl64_gcc482</File>
+	<File>file:./GenerateVertex.C</File>
 	</Package>
 	</SandBox>
 	</job>
