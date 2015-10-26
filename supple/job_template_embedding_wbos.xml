@@ -32,7 +32,7 @@
 	ls -al
 
 	</command>
-	<input URL="file:&inPath;/*&runNumber;*.daq" />
+	<input URL="file:&daqFile;"/>
 	<stdout URL="file:&outPath;/log/R&runNumber;_$JOBINDEX.out" />
 
 	<output fromScratch="*.log"  toURL="file:&outPath;/log/" />
