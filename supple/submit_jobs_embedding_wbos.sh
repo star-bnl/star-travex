@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 sample=Wplus_enu
 #sample=Wplus_taunu
@@ -10,7 +10,6 @@ codePath=$HOME/star-vertex-eval/
 #outPath=/star/u/jlzhang/data05/wEmbedding2013/${sample}_2013/
 outPath=$HOME/scratch/wbos_embed/
 inPath=/star/data05/daq/2014/152/15152001/
-cd JOBS
 
 
 echo -e "Named arguments and their values:"
@@ -20,15 +19,11 @@ echo -e "\t outPath: $outPath"
 echo -e "\t inPath: $inPath"
 
 #create output directories
-mkdir -p $outPath/
-outPath=$outPath/
-mkdir -p $outPath/
 mkdir -p $outPath/root/
 mkdir -p $outPath/log/
 mkdir -p $outPath/out/
 mkdir -p $outPath/fzd/
 
-echo outPath=$outPath= 
 
 index=2000
 norm=1.0
@@ -67,5 +62,4 @@ do
 
   index=`expr $index \+ 1`
 
-# exit
 done <  ../runlist_wbos.csv
