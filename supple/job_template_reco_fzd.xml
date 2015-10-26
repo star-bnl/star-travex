@@ -40,6 +40,7 @@
 
       root4star -b -q -l bfc.C\(1,100000,\"${BFC_OPTIONS}\",\"${BFC_INPFILE}\"\) >&amp; &OUT_DIR;/&JOB_NAME_UID;_bfc.log
 
+      # Cleanup before transfering the files to the output dir
       mv pythia8.starsim.MuDst.root &JOB_NAME_UID;.MuDst.root
       rm *.geom.root *.geant.root *.event.root *.hist.root *.tags.root *.runco.root *.minimc.root
 

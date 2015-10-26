@@ -39,7 +39,7 @@ for JOB_INPUT_FILE in `cat $JOB_FILE_LIST`
 do
    JOB_NAME_UID=`basename $JOB_INPUT_FILE .fzd`
    echo
-   echo "Submitting job for JOB_INPUT_FILE =" $JOB_INPUT_FILE \($JOB_NAME_UID\)
+   echo "Submitting job for JOB_INPUT_FILE = $JOB_INPUT_FILE (Job UID: $JOB_NAME_UID)"
    star-submit-template -template $SOURCE_DIR/supple/job_template_reco_fzd.xml \
       -entities JOB_NAME_UID=$JOB_NAME_UID,JOB_INPUT_FILE=$JOB_INPUT_FILE,OUT_DIR=$OUT_DIR,STAR_VERSION=$STAR_VERSION,BFC_OPTIONS=$BFC_OPTIONS
    echo
