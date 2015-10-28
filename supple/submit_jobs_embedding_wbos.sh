@@ -42,15 +42,13 @@ norm=1.0
 #norm=0.23 for 25K events (Z/gamma*)
 
 IFS=, #set comma as delimeter
-while read fillNumber runNumber m2 m3 m4 m5 m6 m7 nEvents nEventTau nEventZ 
+while read daqFile nEvents
 do
 
   nEventsScaled=$(expr $nEvents*$norm |tr -d $'\r'| bc)
   nEventsPretty=`echo $nEventsScaled | awk '{printf("%d\n",$1+0.5)}'`
   nEvents=$nEventsPretty
 
-  runNumber=${runNumber:1:8}
-  daqFile=`ls $inPath/*$runNumber*.daq`
 
   #set queue length by # of target events
   filesPerHour=0.01 
@@ -66,7 +64,6 @@ do
   echo -e "\nProcessing new line from input .csv file"
   echo -e "\t index: $index"
   echo -e "\t nEvents [nEventsScaled, nEventsPretty]: $nEvents [$nEventsScaled, $nEventsPretty]"
-  echo -e "\t runNumber: $runNumber"
   echo -e "\t daqFile: $daqFile"
   echo -e "\t filesPerHour: $filesPerHour"
 
