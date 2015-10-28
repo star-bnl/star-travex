@@ -5,7 +5,7 @@
 	umask 2
 	limit coredumpsize 0
 	limit
-	starver SL14a
+	starver dev
 	STAR_LEVELS
 	pwd
 	set daqfile = &daqFile;
