@@ -128,7 +128,7 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
   }
   chain3Opt.Prepend(' ');
   chain3Opt.Prepend(DbVoption);
-  chain3Opt += ",Embedding,TpcMixer,GeantOut,MiniMcMk,McAna,-in,NoInput,useInTracker,nodefault"; 
+  chain3Opt += ",Embedding,TpcMixer,GeantOut,McAna,-in,NoInput,useInTracker,nodefault"; 
   chain3Opt += ",";
   //chain3Opt += " ";
 
