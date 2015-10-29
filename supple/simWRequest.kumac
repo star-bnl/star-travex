@@ -36,8 +36,8 @@ MACRO simWRequest NEVENTS=100 RUN=1 SEED=1 CONFIG=Wplus_taunu FILE=test.fzd VERT
    gclose  all
    
    ** manually configure pythia instead of select_pythia macro
-   gexec .sl64_gcc482/lib/Pythia6_4_22.so
-   gexec .sl64_gcc482/lib/bpythia.so
+   gexec [LIBRARY]/Pythia6_4_22.so
+   gexec [LIBRARY]/bpythia.so
    MDCY (15,1)=0
 
 **   exec select_pythia [PYTHIA] [LIBRARY]                        ** select pythia version 
