@@ -8,7 +8,7 @@
 	starver dev
 	STAR_LEVELS
 	pwd
-	set fzdfile=R&runNumber;_$JOBINDEX.fzd
+	set fzdfile=$FILEBASENAME.fzd
 	set seed=`expr &nIndex; \* 1000`
 	echo &codePath;      
 
@@ -40,9 +40,8 @@
 
 	</command>
 	<input URL="file:&daqFile;" nFiles="1" />
-	<stdout URL="file:&outPath;/log/R&runNumber;_$JOBINDEX.out" />
+	<stdout URL="file:&outPath;/log/$FILEBASENAME.log" />
 
-	<output fromScratch="*.log"  toURL="file:&outPath;/log/" />
 	<output fromScratch="*.fzd" toURL="file:&outPath;/fzd/" />
 	<output fromScratch="*root" toURL="file:&outPath;/root/" />
 
