@@ -7,7 +7,7 @@ MACRO simWRequest NEVENTS=100 RUN=1 SEED=1 CONFIG=Wplus_taunu FILE=test.fzd VERT
                                                               
    ** run configuration, y2013 & B=-5
    LIBRARY  =                   $STAR_LIB 
-   TAG      =                      y2013_2c
+   TAG      =                    y2013_1c
 
    ** pythia configuration, Perugia 0=320
    LIBRARY =                    $STAR_LIB
