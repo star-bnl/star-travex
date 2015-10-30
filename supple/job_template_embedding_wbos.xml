@@ -30,7 +30,7 @@
 	echo  $my_command
 	eval '$my_command'
 
-	set my_command='root4star -q -b ./bfcMixer_pythia.C(&nEvents;,"@'$FILELIST'","'$fzdfile'","P14iapp510","","W")'
+	set my_command='root4star -q -b ./bfcMixer_pythia.C(&nEvents;,"@'$FILELIST'","'$fzdfile'","P14igpp510","","W")'
 	echo
 	echo "Executing..."
 	echo  $my_command
