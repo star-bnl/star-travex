@@ -302,7 +302,9 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
       int lMBest = -1; // any vertex with MC==1 and highest reconstrated multiplicity.
       int vertexMaxMultiplicity  = -1;
 
-      for (int vtxIndex = 0; vtxIndex < nPrimaryVertices; vtxIndex++) {
+      // First loop over all verticies in this event
+      for (int vtxIndex = 0; vtxIndex < nPrimaryVertices; vtxIndex++)
+      {
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(vtxIndex);
          vertexRanks[vtxIndex] = -1e10;
 
@@ -348,7 +350,9 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
 
       int nMcTracksWithHits = Mc2McHitTracks.count(1);
 
-      for (int vtxIndex = 0; vtxIndex < nPrimaryVertices; vtxIndex++) {
+      // Second loop over all verticies in this event
+      for (int vtxIndex = 0; vtxIndex < nPrimaryVertices; vtxIndex++)
+      {
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(vtxIndex);
 
          if (! Vtx) continue;

@@ -126,7 +126,6 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
     cout << "Choice prodName " << prodName << " does not correspond to known chain. Processing impossible." << endl;
     return;
   }
-  chain3Opt.Prepend(' ');
   chain3Opt.Prepend(DbVoption);
   chain3Opt += ",Embedding,TpcMixer,GeantOut,McAna,-in,NoInput,useInTracker";
   chain3Opt += ",";

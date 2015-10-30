@@ -1,15 +1,14 @@
 #!/usr/bin/env sh
 
-sample=Wplus_enu
+sample="Wplus_enu"
 #sample=Wplus_taunu
 #sample=Wminus_enu
 #sample=Wminus_taunu
 #sample=Z_eplus_eminus_inter
 #sample=QCD
-codePath=$HOME/star-vertex-eval/
-#outPath=/star/u/jlzhang/data05/wEmbedding2013/${sample}_2013/
-outPath=$HOME/scratch/wbos_embed/
-inPath=/star/data05/daq/2014/152/15152001/
+
+codePath="$HOME/star-vertex-eval/"
+outPath="$HOME/scratch/wbos_embed/"
 BFC_MIXER_MACRO="$codePath/supple/bfcMixer_pythia.C"
 VERTEX_GEN_MACRO="$codePath/ext/star-macros/macros/embedding/GenerateVertex.C"
 STARSIM_KUMAC="$codePath/supple/simWRequest.kumac"
@@ -19,10 +18,10 @@ echo -e "Named arguments and their values:"
 echo -e "\t sample: $sample"
 echo -e "\t codePath: $codePath"
 echo -e "\t outPath: $outPath"
-echo -e "\t inPath: $inPath"
 echo -e "\t BFC_MIXER_MACRO: $BFC_MIXER_MACRO"
 echo -e "\t VERTEX_GEN_MACRO: $VERTEX_GEN_MACRO"
 echo -e "\t STARSIM_KUMAC: $STARSIM_KUMAC"
+
 
 #create output directories
 mkdir -p $outPath/root/
@@ -61,13 +60,14 @@ do
     filesPerHour=0.34
   fi
 
-  echo -e "\nProcessing new line from input .csv file"
+
+  echo -e "\nProcessing new line from input file list"
   echo -e "\t index: $index"
   echo -e "\t nEvents [nEventsScaled, nEventsPretty]: $nEvents [$nEventsScaled, $nEventsPretty]"
   echo -e "\t daqFile: $daqFile"
   echo -e "\t filesPerHour: $filesPerHour"
 
-  star-submit-template -template job_template_embedding_wbos.xml -entities  nEvents=$nEvents,inPath=$inPath,outPath=$outPath,codePath=$codePath,runNumber=$runNumber,daqFile=$daqFile,sample=$sample,nIndex=$index,filesPerHour=$filesPerHour
+  star-submit-template -template $codePath/supple/job_template_embedding_wbos.xml -entities  nEvents=$nEvents,outPath=$outPath,codePath=$codePath,daqFile=$daqFile,sample=$sample,nIndex=$index,filesPerHour=$filesPerHour
 
   index=`expr $index \+ 1`
 

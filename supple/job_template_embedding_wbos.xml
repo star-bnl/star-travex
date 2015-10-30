@@ -12,8 +12,6 @@
 	set seed=`expr &nIndex; \* 1000`
 	echo &codePath;      
 
-	ln -s &codePath;/.sl64_gcc482
-
 	ls -al
 
 	ln -s ./GenerateVertex.C ./GenerateVertex4WBoson.C
@@ -41,8 +39,8 @@
 	<input URL="file:&daqFile;" nFiles="1" />
 	<stdout URL="file:&outPath;/log/$FILEBASENAME.log" />
 
-	<output fromScratch="*.fzd" toURL="file:&outPath;/fzd/" />
-	<output fromScratch="*root" toURL="file:&outPath;/root/" />
+	<output fromScratch="*.fzd"  toURL="file:&outPath;/fzd/" />
+	<output fromScratch="*.root" toURL="file:&outPath;/root/" />
 
 <Generator>
   <Location>&outPath;/sums/</Location>
