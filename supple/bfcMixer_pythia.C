@@ -67,7 +67,10 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
   //TString prodP14iapp510("DbV20140222 pp2013a Sti mtd btof fmsDat fgt fgtPoint VFPPVnoCTB beamline -evout BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt"); // Run 13 pp510 chain as best I can figure
   //TString prodP14iapp510("DbV20140222 pp2013a btof fmsDat fgt fgtPoint VFMCE TpxClu BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt"); // Run 13 pp510 chain as best I can figure
   TString prodP14iapp510("DbV20140222 pp2013a btof fmsDat fgt fgtPoint KFVertex BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt"); // chain for KFvertex from Lidia
-  TString prodP14igpp510("DbV20140905 pp2013b Sti StiHftP mtd btof fmsDat fgt fgtPoint VFPPVnoCTB beamline -evout BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt"); // add -evout as Jim D.
+  // Construct our embedding option list based on official production chain for
+  // pp 500GeV run 2013 production for days129-161 (part 2) with HFT inserted in STAR detector:
+  //                      DbV20140905 pp2013b mtd btof fmsDat fgt fgtPoint VFPPVnoCTB beamline StiHftP BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt
+  TString prodP14igpp510("DbV20140905 pp2013b mtd btof fmsDat fgt fgtPoint VFPPVnoCTB beamline StiHftP BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt");
   //added by S.F. 2013; Sti added by J.D. 20130729
   TString prodP11idpp500("DbV20110923 pp2011a Sti btof mtddat fmsdat VFPPVnoCTB beamline -evout BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt");
   //  TString prodP11idpp500("DbV20110923 pp2011a btof mtddat fmsdat BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D VFMCE TpxClu -hitfilt"); // from Lidia
