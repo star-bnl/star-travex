@@ -138,7 +138,6 @@ MACRO Wplus_enu
    msel  12
 
    ** close all decay channels
-   gexec closeDecays.F
    call closeDecays(24)
 
    ** enable W+ --> e+ nu
@@ -157,7 +156,6 @@ MACRO Wminus_enu
    msel  12
 
    ** close all decay channels
-   gexec closeDecays.F
    call closeDecays(24)
 
    ** enable W- --> e- nu
@@ -176,7 +174,6 @@ MACRO W_tau_nu
    msel  12
 
    ** close all decay channels
-   gexec closeDecays.F
    call closeDecays(24)
 
    ** enable W --> tau nu
@@ -190,7 +187,6 @@ MACRO Wplus_taunu
    ** select W --> e nu production
    msel  12
    ** close all decay channels
-   gexec closeDecays.F
    call closeDecays(24)
    ** enable W --> tau nu
    call openDecay(24,208,2)
@@ -201,7 +197,6 @@ MACRO Wminus_taunu
    ** select W --> e nu production
    msel  12
    ** close all decay channels
-   gexec closeDecays.F
    call closeDecays(24)
    ** enable W --> tau nu
    call openDecay(24,208,3)
@@ -229,7 +224,6 @@ MACRO W_jet
    msel 14                     ! selects isub 16 and 31 
 
    ** close all decay channels
-   gexec closeDecays.F
    call closeDecays(24)
 
    ** enable W+/- --> e+/- nu
@@ -248,7 +242,6 @@ MACRO Z_eplus_eminus
    mstp 43=2                  ! Z0 only, no DY interference :(
 
    ** close all decay channels
-   gexec closeDecays.F
    call closeDecays(23)
 
    ** Z --> e+ e- only   
@@ -267,7 +260,6 @@ MACRO Z_eplus_eminus_inter
    mstp 43=3                  ! Z0 only and gamma* with interference
 
    ** close all decay channels
-   gexec closeDecays.F
    call closeDecays(23)
 
    ** Z --> e+ e- only

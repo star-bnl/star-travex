@@ -12,7 +12,6 @@
 	set seed=`expr &nIndex; \* 1000`
 	echo &codePath;      
 
-	ln -s &codePath;/closeDecays.F
 	ln -s &codePath;/.sl64_gcc482
 
 	ls -al
