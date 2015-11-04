@@ -305,34 +305,34 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
       // First loop over all verticies in this event
       for (int vtxIndex = 0; vtxIndex < nPrimaryVertices; vtxIndex++)
       {
-         StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(vtxIndex);
+         StMuPrimaryVertex *recoPrimaryVertex = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(vtxIndex);
          vertexRanks[vtxIndex] = -1e10;
 
-         if (! AcceptVX(Vtx)) continue;
+         if (! AcceptVX(recoPrimaryVertex)) continue;
 
          // Check Mc
-         if (Vtx->idTruth() < 0 || Vtx->idTruth() > nMuMcVertices) {
-            std::cout << "Illegal idTruth " << Vtx->idTruth() << " The track is ignored" << std::endl;
+         if (recoPrimaryVertex->idTruth() < 0 || recoPrimaryVertex->idTruth() > nMuMcVertices) {
+            std::cout << "Illegal idTruth " << recoPrimaryVertex->idTruth() << " The track is ignored" << std::endl;
             continue;
          }
 
-         StMuMcVertex *mcVertex = (StMuMcVertex *) MuMcVertices->UncheckedAt(Vtx->idTruth() - 1);
+         StMuMcVertex *mcVertex = (StMuMcVertex *) MuMcVertices->UncheckedAt(recoPrimaryVertex->idTruth() - 1);
 
-         if (mcVertex->Id() != Vtx->idTruth()) {
-            std::cout << "Mismatched idTruth " << Vtx->idTruth() << " and mcVertex Id " <<  mcVertex->Id()
+         if (mcVertex->Id() != recoPrimaryVertex->idTruth()) {
+            std::cout << "Mismatched idTruth " << recoPrimaryVertex->idTruth() << " and mcVertex Id " <<  mcVertex->Id()
                  << " The vertex is ignored" <<  std::endl;
          }
 
-         Mc2RcVertices[Vtx] = mcVertex;
-         vertexRanks[vtxIndex] = Vtx->ranking();
-         double nTracks = Vtx->noTracks();
+         Mc2RcVertices[recoPrimaryVertex] = mcVertex;
+         vertexRanks[vtxIndex] = recoPrimaryVertex->ranking();
+         double nTracks = recoPrimaryVertex->noTracks();
 
-         if (Vtx->idTruth() == 1 && vertexMaxMultiplicity < nTracks) {
+         if (recoPrimaryVertex->idTruth() == 1 && vertexMaxMultiplicity < nTracks) {
             lMBest = vtxIndex;
             vertexMaxMultiplicity = nTracks;
          }
 
-         FillData(data, Vtx);
+         FillData(data, recoPrimaryVertex);
 
 #ifdef __TMVA__
          Float_t *dataArray = &data.beam;
