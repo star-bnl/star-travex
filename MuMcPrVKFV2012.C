@@ -160,18 +160,7 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
    IClassifierReader *classReader = new ReadBDT( inputVars );
 
 #endif /* __TMVA__ */
-   Bool_t iPPV = kFALSE;
-   TString CDir(gSystem->pwd());
 
-   if (CDir.Contains("PPV")) iPPV = kTRUE;
-
-   Float_t RankMin = 0;
-#ifdef __TMVA__
-
-   if (iPPV) RankMin = -0.0712;
-   else      RankMin = -0.1010;
-
-#endif /* __TMVA__ */
    TFile *fOut = TFile::Open(outFile.c_str(), "recreate");
    data_t data;
    const int nMcRecMult = 75;
@@ -345,8 +334,6 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
       }
 
       int lBest = TMath::LocMax(nPrimaryVertices, vertexRanks.GetArray());
-
-      if (lBest >= 0 && vertexRanks[lBest] < RankMin) lBest = -1;
 
       int nMcTracksWithHits = Mc2McHitTracks.count(1);
 
