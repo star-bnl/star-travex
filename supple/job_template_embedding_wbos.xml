@@ -19,19 +19,19 @@
 	echo
 	echo "Executing..."
 	echo  $my_command
-	eval '$my_command'
+	eval '$my_command' >&amp;! &outPath;/log/${FILEBASENAME}_vertex.log
 
 	set my_command="starsim -w 0 -b ./simWRequest.kumac nevents=&nEvents; config=&sample; run=&runNumber; seed=$seed file=$fzdfile vertexfile=vertex.txt"
 	echo
 	echo "Executing..."
 	echo  $my_command
-	eval '$my_command'
+	eval '$my_command' >&amp;! &outPath;/log/${FILEBASENAME}_starsim.log
 
 	set my_command='root4star -q -b ./bfcMixer_pythia.C(&nEvents;,"@'$FILELIST'","'$fzdfile'","P14igpp510","","W")'
 	echo
 	echo "Executing..."
 	echo  $my_command
-	eval '$my_command'
+	eval '$my_command' >&amp;! &outPath;/log/${FILEBASENAME}_bfcMixer.log
 
 	ls -al
 
