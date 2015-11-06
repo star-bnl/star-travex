@@ -284,7 +284,12 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
          Mc2McHitTracks.insert(std::pair<int, int>(McTrack->IdVx(), McTrack->Id()));
       }
 
-      McRecMulT->Fill(Mc2McHitTracks.count(1));
+      // This is the "reconstructable" track multiplicity
+      int nMcTracksWithHits = Mc2McHitTracks.count(1);
+
+      // This is our denominator histogram for efficiencies
+      McRecMulT->Fill(nMcTracksWithHits);
+
       // =============  Build map between  Rc and Mc vertices
       std::map<StMuPrimaryVertex *, StMuMcVertex *> Mc2RcVertices;
       TArrayF vertexRanks(nPrimaryVertices);
@@ -335,7 +340,6 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
 
       int lBest = TMath::LocMax(nPrimaryVertices, vertexRanks.GetArray());
 
-      int nMcTracksWithHits = Mc2McHitTracks.count(1);
 
       // Second loop over all verticies in this event
       for (int vtxIndex = 0; vtxIndex < nPrimaryVertices; vtxIndex++)
