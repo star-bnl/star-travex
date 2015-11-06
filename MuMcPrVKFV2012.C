@@ -274,7 +274,7 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
          continue;
       }
 
-      // Count number of tracks at a vertex with TPC reconstructable tracks
+      // Count number of MC tracks at a vertex with TPC reconstructable tracks
       std::multimap<int, int> Mc2McHitTracks;
 
       for (int m = 0; m < nMuMcTracks; m++) {
@@ -299,9 +299,10 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
       std::map<StMuPrimaryVertex *, StMuMcVertex *> reco2McVertices;
       TArrayF vertexRanks(nPrimaryVertices);
       int mcMatchedVertexIndex  = -1; // any vertex with MC==1 and highest reconstrated multiplicity.
-      int vertexMaxMultiplicity  = -1;
+      int vertexMaxMultiplicity = -1;
 
-      // First loop over all verticies in this event
+      // First loop over all verticies in this event. There is at least one
+      // must be available
       for (int recoVertexIndex = 0; recoVertexIndex < nPrimaryVertices; recoVertexIndex++)
       {
          vertexRanks[recoVertexIndex] = -1e10;
@@ -312,24 +313,24 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
 
          // Check Mc
          if (recoVertex->idTruth() < 0 || recoVertex->idTruth() > nMuMcVertices) {
-            std::cout << "Illegal idTruth " << recoVertex->idTruth() << " The track is ignored" << std::endl;
+            std::cout << "ERROR: Illegal idTruth " << recoVertex->idTruth() << " The track is ignored" << std::endl;
             continue;
          }
 
          StMuMcVertex *mcVertex = (StMuMcVertex *) MuMcVertices->UncheckedAt(recoVertex->idTruth() - 1);
 
          if (mcVertex->Id() != recoVertex->idTruth()) {
-            std::cout << "Mismatched idTruth " << recoVertex->idTruth() << " and mcVertex Id " <<  mcVertex->Id()
+            std::cout << "ERROR: Mismatched idTruth " << recoVertex->idTruth() << " and mcVertex Id " <<  mcVertex->Id()
                  << " The vertex is ignored" <<  std::endl;
          }
 
          reco2McVertices[recoVertex] = mcVertex;
          vertexRanks[recoVertexIndex] = recoVertex->ranking();
-         double nTracks = recoVertex->noTracks();
 
-         if (recoVertex->idTruth() == 1 && vertexMaxMultiplicity < nTracks) {
+         if (recoVertex->idTruth() == 1 && recoVertex->noTracks() > vertexMaxMultiplicity)
+         {
             mcMatchedVertexIndex  = recoVertexIndex;
-            vertexMaxMultiplicity = nTracks;
+            vertexMaxMultiplicity = recoVertex->noTracks();
          }
 
          FillData(data, recoVertex);
@@ -344,6 +345,8 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
 #endif
       }
 
+
+      // Now prepare for ranked efficiencies
       int maxRankVertexIndex = TMath::LocMax(nPrimaryVertices, vertexRanks.GetArray());
 
 
@@ -352,13 +355,11 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
       {
          StMuPrimaryVertex *recoVertex = (StMuPrimaryVertex *) PrimaryVertices->UncheckedAt(recoVertexIndex);
 
-         if (! recoVertex) continue;
-
-         if (! AcceptVX(recoVertex)) continue;
+         if ( !AcceptVX(recoVertex) ) continue;
 
          StMuMcVertex *mcVertex = reco2McVertices[recoVertex];
 
-         if (! mcVertex) {
+         if ( !mcVertex ) {
             std::cout << "No Match from RC to MC" << std::endl;
             continue;
          }
@@ -377,18 +378,12 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
             if (mcTrack && vtxeval::gDebugFlag) std::cout << " " << mcTrack->GeName();
          }
 
-         if (vtxeval::gDebugFlag) {
-            if (vtxIndex == lBest) std::cout << "  === Best ===";
-
-            std::cout << std::endl;
-         }
-
          FillData(data, recoVertex);
 
          double nTracks = recoVertex->noTracks();
 
          if (mcVertex->Id() == 1 && nTracks == vertexMaxMultiplicity) {// good
-            VertexG->Fill(&data.beam);//	VertexG->Fill(&data.beam);
+            VertexG->Fill(&data.beam);
          }
          else {   // bad
             VertexB->Fill(&data.beam);
@@ -397,6 +392,9 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
          double nTracksQA = nTracks * recoVertex->qaTruth() / 100.;
 
          if (recoVertexIndex == maxRankVertexIndex) {
+
+            if (vtxeval::gDebugFlag)
+               std::cout << "=== Best ===" << std::endl;
 
             // If simulated vertex
             int h = mcVertex->Id() == 1 ? h = 1 : h = 2;
