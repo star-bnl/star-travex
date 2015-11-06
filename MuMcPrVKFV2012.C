@@ -256,10 +256,10 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
       TClonesArray *MuMcTracks     = muDst->mcArray(1);
       int nMuMcTracks = MuMcTracks->GetEntriesFast();
 
-      if (vtxeval::gDebugFlag) {
-         std::cout << "Read event #" << ev << "\tRun\t" << muEvent->runId()
+      if ( nevent >= 10 && ev % int(nevent*0.1) == 0 )
+      {
+         std::cout << "Event #" << ev << "\tRun\t" << muEvent->runId()
                    << "\tId: " << muEvent->eventId()
-                   << std::endl
                    << " refMult= " << referenceMultiplicity
                    << "\tPrimaryVertices " << nPrimaryVertices
                    << "\t" << StMuArrays::mcArrayTypes[0] << " " << nMuMcVertices
