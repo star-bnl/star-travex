@@ -268,8 +268,9 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
       }
 
       //    const Double_t field = muEvent->magneticField()*kilogauss;
-      if (! nMuMcVertices || ! nMuMcTracks) {
+      if (! nMuMcVertices || ! nMuMcTracks || nPrimaryVertices <= 0) {
          std::cout << "Ev. " << ev << " has no MC information ==> skip it" << std::endl;
+         std::cout << "OR no reconstructed verticies found" << std::endl;
          continue;
       }
 
@@ -286,6 +287,10 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
 
       // This is the "reconstructable" track multiplicity
       int nMcTracksWithHits = Mc2McHitTracks.count(1);
+
+      // Let's skip events in which we do not expect to reconstruct any tracks
+      // (and thus vertex) from the primary vertex
+      if (nMcTracksWithHits <= 0) continue;
 
       // This is our denominator histogram for efficiencies
       McRecMulT->Fill(nMcTracksWithHits);
