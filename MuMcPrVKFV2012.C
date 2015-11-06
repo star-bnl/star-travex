@@ -125,7 +125,7 @@ void ForceAnimate(unsigned int times = 0, int msecDelay = 0)
  *
  * 4. With pileup. repeat above (a-c) with new ranking scheme for cases I-III
  */
-void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFile)
+void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFile, bool fillNtuple)
 {
 #ifdef __TMVA__
 	boost::replace_last(outFile, ".root", "");
@@ -375,6 +375,10 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
       hists[h][0]->Fill(nMcTracksWithHits, nTracks);
       hists[h][1]->Fill(nMcTracksWithHits, nTracksQA);
       hists[h][2]->Fill(nMcTracksWithHits);
+
+
+      // Proceed with filling ntuple only if requested by the user
+      if ( !fillNtuple ) continue;
 
 
       // Second loop over all verticies in this event
