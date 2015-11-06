@@ -346,9 +346,35 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
 #endif
       }
 
+      // If we reconstructed a vertex which matches the MC one we fill the
+      // numerator of the "Any" efficiency histogram
+      if (mcMatchedVertexIndex != -1) {
 
-      // Now prepare for ranked efficiencies
+         StMuPrimaryVertex *recoVertexMatchedMc = (StMuPrimaryVertex*) PrimaryVertices->UncheckedAt(mcMatchedVertexIndex);
+
+         double nTracks = recoVertexMatchedMc->noTracks();
+         double nTracksQA = nTracks * recoVertexMatchedMc->qaTruth() / 100.;
+
+         hists[0][0]->Fill(nMcTracksWithHits, nTracks);
+         hists[0][1]->Fill(nMcTracksWithHits, nTracksQA);
+         hists[0][2]->Fill(nMcTracksWithHits);
+      }
+
+      // Now deal with the highest rank vertex
       int maxRankVertexIndex = TMath::LocMax(nPrimaryVertices, vertexRanks.GetArray());
+
+      StMuPrimaryVertex *recoVertexMaxRank = (StMuPrimaryVertex*) PrimaryVertices->UncheckedAt(maxRankVertexIndex);
+      StMuMcVertex *mcVertex = reco2McVertices[recoVertexMaxRank];
+
+      double nTracks = recoVertexMaxRank->noTracks();
+      double nTracksQA = nTracks * recoVertexMaxRank->qaTruth() / 100.;
+
+      // Fill numerator for "good" and "bad" efficiencies
+      int h = ( mcVertex && mcVertex->Id() == 1) ? 1 : 2;
+
+      hists[h][0]->Fill(nMcTracksWithHits, nTracks);
+      hists[h][1]->Fill(nMcTracksWithHits, nTracksQA);
+      hists[h][2]->Fill(nMcTracksWithHits);
 
 
       // Second loop over all verticies in this event
@@ -389,28 +415,6 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
          else {   // bad
             VertexB->Fill(&data.beam);
          }
-
-         double nTracksQA = nTracks * recoVertex->qaTruth() / 100.;
-
-         if (recoVertexIndex == maxRankVertexIndex) {
-
-            if (vtxeval::gDebugFlag)
-               std::cout << "=== Best ===" << std::endl;
-
-            // If simulated vertex
-            int h = mcVertex->Id() == 1 ? h = 1 : h = 2;
-
-            hists[h][0]->Fill(nMcTracksWithHits, nTracks);
-            hists[h][1]->Fill(nMcTracksWithHits, nTracksQA);
-            hists[h][2]->Fill(nMcTracksWithHits);
-         }
-
-         if (recoVertexIndex == mcMatchedVertexIndex) {
-            hists[0][0]->Fill(nMcTracksWithHits, nTracks);
-            hists[0][1]->Fill(nMcTracksWithHits, nTracksQA);
-            hists[0][2]->Fill(nMcTracksWithHits);
-         }
-
       }
 
       if (! gROOT->IsBatch()) {
