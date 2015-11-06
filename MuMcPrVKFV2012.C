@@ -322,6 +322,7 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
          if (mcVertex->Id() != recoVertex->idTruth()) {
             std::cout << "ERROR: Mismatched idTruth " << recoVertex->idTruth() << " and mcVertex Id " <<  mcVertex->Id()
                  << " The vertex is ignored" <<  std::endl;
+            continue;
          }
 
          reco2McVertices[recoVertex] = mcVertex;
