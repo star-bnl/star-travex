@@ -11,6 +11,7 @@ codePath="$HOME/star-vertex-eval/"
 outPath="$HOME/scratch/wbos_embed/"
 BFC_MIXER_MACRO="$codePath/supple/bfcMixer_pythia.C"
 VERTEX_GEN_MACRO="$codePath/ext/star-macros/macros/embedding/GenerateVertex.C"
+VERTEX_PARAMS_DB_FILE="$codePath/ext/star-db-calibrations/tracker/PrimaryVertexCuts.20121221.000000.C"
 STARSIM_KUMAC="$codePath/supple/simWRequest.kumac"
 
 
@@ -20,6 +21,7 @@ echo -e "\t codePath: $codePath"
 echo -e "\t outPath: $outPath"
 echo -e "\t BFC_MIXER_MACRO: $BFC_MIXER_MACRO"
 echo -e "\t VERTEX_GEN_MACRO: $VERTEX_GEN_MACRO"
+echo -e "\t VERTEX_PARAMS_DB_FILE: $VERTEX_PARAMS_DB_FILE"
 echo -e "\t STARSIM_KUMAC: $STARSIM_KUMAC"
 
 
@@ -28,9 +30,11 @@ mkdir -p $outPath/root/
 mkdir -p $outPath/log/
 mkdir -p $outPath/fzd/
 mkdir -p $outPath/sums/
+mkdir -p ./StarDb/Calibrations/tracker/
 
 cp $BFC_MIXER_MACRO ./
 cp $VERTEX_GEN_MACRO ./
+cp $VERTEX_PARAMS_DB_FILE ./StarDb/Calibrations/tracker/
 cp $STARSIM_KUMAC ./
 
 
