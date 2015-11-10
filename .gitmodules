@@ -13,3 +13,18 @@
 [submodule "ext/star-macros"]
 	path = ext/star-macros
 	url = https://github.com/star-bnl/star-macros.git
+[submodule "ext/star-sim"]
+	path = ext/star-sim
+	url = https://github.com/star-bnl/star-sim.git
+[submodule "ext/star-emc"]
+	path = ext/star-emc
+	url = https://github.com/star-bnl/star-emc.git
+[submodule "ext/star-daq"]
+	path = ext/star-daq
+	url = https://github.com/star-bnl/star-daq.git
+[submodule "ext/star-fgt"]
+	path = ext/star-fgt
+	url = https://github.com/star-bnl/star-fgt.git
+[submodule "ext/star-pams"]
+	path = ext/star-pams
+	url = https://github.com/star-bnl/star-pams.git

@@ -31,6 +31,11 @@ include_directories(
 	contrib/star-muDst
 	contrib/star-stevent
 	contrib/star-tables
+	ext/star-daq
+	ext/star-emc
+	ext/star-fgt
+	ext/star-pams/global/inc
+	ext/star-sim
 )
 
 root_generate_dictionary(star-vertex-eval_Cint MuMcPrVKFV2012.h VertexRank.h VxEff.h LINKDEF VertexEvalLinkDef.h)
