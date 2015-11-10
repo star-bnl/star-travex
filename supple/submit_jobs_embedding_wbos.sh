@@ -45,7 +45,7 @@ norm=1.0
 #norm=0.23 for 25K events (Z/gamma*)
 
 IFS=, #set comma as delimeter
-while read daqFile nEvents
+while read daqFile runNumber nEvents
 do
 
   nEventsScaled=$(expr $nEvents*$norm |tr -d $'\r'| bc)
@@ -69,9 +69,10 @@ do
   echo -e "\t index: $index"
   echo -e "\t nEvents [nEventsScaled, nEventsPretty]: $nEvents [$nEventsScaled, $nEventsPretty]"
   echo -e "\t daqFile: $daqFile"
+  echo -e "\t runNumber: $runNumber"
   echo -e "\t filesPerHour: $filesPerHour"
 
-  star-submit-template -template $codePath/supple/job_template_embedding_wbos.xml -entities  nEvents=$nEvents,outPath=$outPath,codePath=$codePath,daqFile=$daqFile,sample=$sample,nIndex=$index,filesPerHour=$filesPerHour
+  star-submit-template -template $codePath/supple/job_template_embedding_wbos.xml -entities  nEvents=$nEvents,outPath=$outPath,codePath=$codePath,daqFile=$daqFile,runNumber=$runNumber,sample=$sample,nIndex=$index,filesPerHour=$filesPerHour
 
   index=`expr $index \+ 1`
 
