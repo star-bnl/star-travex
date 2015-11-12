@@ -7,6 +7,7 @@
 # ROOT_LIBRARIES      Most common libraries
 # ROOT_<name>_LIBRARY Full path to the library <name>
 # ROOT_LIBRARY_DIR    PATH to the library directory
+# ROOT_DEFINITIONS    Compiler definitions and flags
 #
 # Updated by K. Smith (ksmith37@nd.edu) to properly handle
 #  dependencies in ROOT_GENERATE_DICTIONARY
@@ -49,9 +50,16 @@ endforeach()
 list(REMOVE_DUPLICATES ROOT_LIBRARIES)
 
 execute_process(
+    COMMAND ${ROOT_CONFIG_EXECUTABLE} --cflags
+    OUTPUT_VARIABLE ROOT_DEFINITIONS
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+string(REGEX REPLACE "(^|[ ]*)-I[^ ]*" "" ROOT_DEFINITIONS ${ROOT_DEFINITIONS})
+
+execute_process(
   COMMAND ${ROOT_CONFIG_EXECUTABLE} --features
   OUTPUT_VARIABLE _root_options
   OUTPUT_STRIP_TRAILING_WHITESPACE)
+separate_arguments(_root_options)
 foreach(_opt ${_root_options})
   set(ROOT_${_opt}_FOUND TRUE)
 endforeach()
@@ -105,7 +113,7 @@ function(ROOT_GENERATE_DICTIONARY dictionary)
     unset(linkFile CACHE)
   endforeach()
   #---call rootcint------------------------------------------
-  add_custom_command(OUTPUT ${dictionary}.cxx ${dictionary}.h
+  add_custom_command(OUTPUT ${dictionary}.cxx
                      COMMAND ${ROOTCINT_EXECUTABLE} -cint -f  ${dictionary}.cxx
                                           -c ${ARG_OPTIONS} ${includedirs} ${headerfiles} ${linkdefs}
                      DEPENDS ${headerfiles} ${linkdefs} VERBATIM)
