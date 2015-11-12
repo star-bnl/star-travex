@@ -78,6 +78,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
    TH1I hNumVertices("hNumVertices", "Number of Vertices", 500, 0, 500);
    TH1I hNumTracksPerVertex("hNumTracksPerVertex", "Number of Tracks per Vertex", 100, 0, 100);
+   TH1I hNumTracksToMaxRankVertex("hNumTracksToMaxRankVertex", "Number of Tracks to Max Rank Vertex", 100, 0, 100);
    TH1I hVertexX("hVertexX", "Vertex X Position", 60, -10, 10);
    TH1I hVertexY("hVertexY", "Vertex Y Position", 60, -10, 10);
    TH1I hVertexZ("hVertexZ", "Vertex Z Position", 60, -30, 30);
@@ -152,6 +153,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       //////Max multiplicity/////////
       /////Usually the correct vertex/////
       int MaxMult = 0;
+      StMuPrimaryVertex *maxRankVertex = 0;
+      float vertexMaxRank = -1e10;
 
       for (int l = 0; l < numPrimaryVertices; l++) {
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
@@ -165,6 +168,17 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          if (MaxMult < numTrackPerVertex) {                               //Amilkar: check if the numTrackPerVertex is higher than previous
             MaxMult = numTrackPerVertex;                                   //Amilkar: asign the new maximum value
          }
+
+         // Find the highest rank vertex
+         if (Vtx->ranking() > vertexMaxRank )
+         {
+            vertexMaxRank = Vtx->ranking();
+            maxRankVertex = Vtx;
+         }
+      }
+
+      if (maxRankVertex) {
+         hNumTracksToMaxRankVertex.Fill(maxRankVertex->noTracks());
       }
 
       ////////No reconstructed///////////
