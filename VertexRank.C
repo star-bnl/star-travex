@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include "Riostream.h"
+#include "TCanvas.h"
 #include "TROOT.h"
 #include "TSystem.h"
 #include "TH1.h"
@@ -292,6 +293,19 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    }     //END EVENTS
 
    std::cout << "Number of events: " <<  nevent << ", with 0 reconstructed verticies: " << noreco << std::endl;
+
+   gSystem->mkdir(outFile, true);
+
+   TCanvas myCanvas("mycanvas", "mycanvas", 0, 0, 800, 800);
+
+   hNumVertices.Draw();
+   myCanvas.SaveAs( (std::string(outFile) + "/hNumVertices.png").c_str() );
+
+   hNumTracksToVertex.Draw();
+   myCanvas.SaveAs( (std::string(outFile) + "/hNumTracksToVertex.png").c_str() );
+
+   hNumTracksToMaxRankVertex.Draw();
+   myCanvas.SaveAs( (std::string(outFile) + "/hNumTracksToMaxRankVertex.png").c_str() );
 
    fOut.Write();
 
