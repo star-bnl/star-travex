@@ -1,8 +1,12 @@
 sudo: false
-
 language: cpp
+
 compiler:
   - gcc
+
+# Make sure cmake picks up the compiler we want
+install:
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
 
 addons:
   apt:
@@ -18,11 +22,11 @@ addons:
 git:
   depth: 1
   submodules: false
+
 before_install:
   - git submodule update --init
+
 before_script:
-  - g++ --version
-  - cmake --version
   - wget http://root.cern.ch/download/root_v5.34.30.source.tar.gz -P /tmp/
   - tar -xzf /tmp/root_v5.34.30.source.tar.gz
   - mv root root-src
@@ -31,13 +35,17 @@ before_script:
   - source ./root/bin/thisroot.sh
   - root-config --libs
   - root-config --cflags
+    # Move some ROOT header files to common include directory
   - rsync -auv root-src/math/mathmore/inc/Math root/include/
+
 branch:
   only:
     - master
+
 script:
   - mkdir build/ && cd build/
   - pwd
-  - cmake ../
+  - cmake -D CMAKE_INSTALL_PREFIX=./ ../
   - make -j4
-  - ls -la
+  - make install
+  - pwd && ls -la . && pwd && ls -la lib/
