@@ -78,6 +78,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    primaryvtx->Branch("noBEMC",  &primVtx.noBEMC, "noBEMC/I");
 
    TH1I hNumVertices("hNumVertices", "Number of Vertices", 100, 0, 700);
+   TH1I hNumTracksPerEventGlobal("hNumTracksPerEventGlobal", "Number of Global Tracks in Event", 100, 0, 5000);
+   TH1I hNumTracksPerEventPrimary("hNumTracksPerEventPrimary", "Number of Primary Tracks in Event", 100, 0, 100);
    TH1I hNumTracksToVertex("hNumTracksToVertex", "Number of Tracks per Vertex", 100, 0, 100);
    TH1I hNumTracksToMaxRankVertex("hNumTracksToMaxRankVertex", "Number of Tracks to Max Rank Vertex", 100, 0, 100);
    TH1I hVertexX("hVertexX", "Vertex X Position", 60, -10, 10);
@@ -100,6 +102,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    std::vector<std::string> activeBranchNames = {
       "MuEvent",
       "PrimaryVertices",
+      "PrimaryTracks",
+      "GlobalTracks",
       "BTofHit",
       "BTofHeader",
       "StStMuMcVertex"
@@ -285,6 +289,8 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
       hNumVertices.Fill(numPrimaryVertices);
       hMinDistBetweenVertices.Fill(minDistance);
+      hNumTracksPerEventGlobal.Fill( muDst->globalTracks()->GetEntriesFast() );
+      hNumTracksPerEventPrimary.Fill( muDst->primaryTracks()->GetEntriesFast() );
 
       if ( !gROOT->IsBatch() ) {
          if (vtxeval::ask_user()) return;
@@ -300,6 +306,12 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
    hNumVertices.Draw();
    myCanvas.SaveAs( (std::string(outFile) + "/hNumVertices.png").c_str() );
+
+   hNumTracksPerEventGlobal.Draw();
+   myCanvas.SaveAs( (std::string(outFile) + "/hNumTracksPerEventGlobal.png").c_str() );
+
+   hNumTracksPerEventPrimary.Draw();
+   myCanvas.SaveAs( (std::string(outFile) + "/hNumTracksPerEventPrimary.png").c_str() );
 
    hNumTracksToVertex.Draw();
    myCanvas.SaveAs( (std::string(outFile) + "/hNumTracksToVertex.png").c_str() );
