@@ -85,7 +85,6 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    TH1I hVertexX("hVertexX", "Vertex X Position", 60, -10, 10);
    TH1I hVertexY("hVertexY", "Vertex Y Position", 60, -10, 10);
    TH1I hVertexZ("hVertexZ", "Vertex Z Position", 60, -30, 30);
-   TH1F hMinDistBetweenVertices("hMinDistBetweenVertices", "Min Distance Between Vertices", 100, 0, 20);
    TH1F h1("h1", "Rank Max", 100, -3, 3);
    TH1F h2("h2", "Max Mult", 100, -3, 3);
 
@@ -204,28 +203,12 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          if (vtxeval::gDebugFlag) std::cout << "No reconstructed vertex" << std::endl;
       }
 
-      double minDistance = DBL_MAX;
 
       // Loop over primary verticies in the event
       for (int l = 0; l < numPrimaryVertices; l++) {
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
 
          if (!Vtx) continue;
-
-         for (int iVertex2 = l+1; iVertex2 < numPrimaryVertices; iVertex2++)
-         {
-            StMuPrimaryVertex *vertex2 = (StMuPrimaryVertex*) primaryVertices->UncheckedAt(iVertex2);
-
-            if (!vertex2) continue;
-
-            double dist = std::sqrt((Vtx->position().x() - vertex2->position().x()) * (Vtx->position().x() - vertex2->position().x()) +
-                                    (Vtx->position().y() - vertex2->position().y()) * (Vtx->position().y() - vertex2->position().y()) +
-                                    (Vtx->position().z() - vertex2->position().z()) * (Vtx->position().z() - vertex2->position().z()) );
-
-            if (minDistance < 1) continue;
-
-            minDistance =  (dist < minDistance) ? dist : minDistance;
-         }
 
          primVtx.event   = ev;
          primVtx.mult    = Vtx->noTracks();
@@ -288,7 +271,6 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
       }// END VERTICES
 
       hNumVertices.Fill(numPrimaryVertices);
-      hMinDistBetweenVertices.Fill(minDistance);
       hNumTracksPerEventGlobal.Fill( muDst->globalTracks()->GetEntriesFast() );
       hNumTracksPerEventPrimary.Fill( muDst->primaryTracks()->GetEntriesFast() );
 
