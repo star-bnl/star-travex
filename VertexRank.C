@@ -77,7 +77,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    primaryvtx->Branch("noBEMC",  &primVtx.noBEMC, "noBEMC/I");
 
    TH1I hNumVertices("hNumVertices", "Number of Vertices", 500, 0, 500);
-   TH1I hNumTracksPerVertex("hNumTracksPerVertex", "Number of Tracks per Vertex", 100, 0, 100);
+   TH1I hNumTracksToVertex("hNumTracksToVertex", "Number of Tracks per Vertex", 100, 0, 100);
    TH1I hNumTracksToMaxRankVertex("hNumTracksToMaxRankVertex", "Number of Tracks to Max Rank Vertex", 100, 0, 100);
    TH1I hVertexX("hVertexX", "Vertex X Position", 60, -10, 10);
    TH1I hVertexY("hVertexY", "Vertex Y Position", 60, -10, 10);
@@ -158,15 +158,15 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
       for (int l = 0; l < numPrimaryVertices; l++) {
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
-         Float_t numTrackPerVertex = Vtx->noTracks();
+         Float_t numTracksToVertex = Vtx->noTracks();
 
-         hNumTracksPerVertex.Fill(numTrackPerVertex);
+         hNumTracksToVertex.Fill(numTracksToVertex);
          hVertexX.Fill(Vtx->position().x());
          hVertexY.Fill(Vtx->position().y());
          hVertexZ.Fill(Vtx->position().z());
 
-         if (MaxMult < numTrackPerVertex) {                               //Amilkar: check if the numTrackPerVertex is higher than previous
-            MaxMult = numTrackPerVertex;                                   //Amilkar: asign the new maximum value
+         if (MaxMult < numTracksToVertex) {                               //Amilkar: check if the numTracksToVertex is higher than previous
+            MaxMult = numTracksToVertex;                                   //Amilkar: asign the new maximum value
          }
 
          // Find the highest rank vertex
