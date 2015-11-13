@@ -77,7 +77,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    primaryvtx->Branch("BEMC",    &primVtx.BEMC, "BEMC/I");
    primaryvtx->Branch("noBEMC",  &primVtx.noBEMC, "noBEMC/I");
 
-   TH1I hNumVertices("hNumVertices", "Number of Vertices", 500, 0, 500);
+   TH1I hNumVertices("hNumVertices", "Number of Vertices", 100, 0, 700);
    TH1I hNumTracksToVertex("hNumTracksToVertex", "Number of Tracks per Vertex", 100, 0, 100);
    TH1I hNumTracksToMaxRankVertex("hNumTracksToMaxRankVertex", "Number of Tracks to Max Rank Vertex", 100, 0, 100);
    TH1I hVertexX("hVertexX", "Vertex X Position", 60, -10, 10);
