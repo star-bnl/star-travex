@@ -27,16 +27,22 @@ add_compile_options(-std=c++0x)
 include_directories(
 	${ROOT_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}
-	contrib/star-base
-	contrib/star-muDst
-	contrib/star-stevent
-	contrib/star-tables
+	ext/star-base
+	ext/star-muDst
+	ext/star-stevent
+	ext/star-stdb
+	ext/star-tables
 	ext/star-daq
+	ext/star-tof
 	ext/star-emc
 	ext/star-fgt
+	ext/star-sti
+	ext/star-bfchain
 	ext/star-pams/global/inc
 	ext/star-sim
 )
+
+add_subdirectory(ext/star-vertex)
 
 root_generate_dictionary(star-vertex-eval_Cint MuMcPrVKFV2012.h VertexRank.h VxEff.h LINKDEF VertexEvalLinkDef.h)
 

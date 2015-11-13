@@ -1,14 +1,14 @@
-[submodule "contrib/star-base"]
-	path = contrib/star-base
+[submodule "ext/star-base"]
+	path = ext/star-base
 	url = https://github.com/star-bnl/star-base.git
-[submodule "contrib/star-stevent"]
-	path = contrib/star-stevent
+[submodule "ext/star-stevent"]
+	path = ext/star-stevent
 	url = https://github.com/star-bnl/star-stevent.git
-[submodule "contrib/star-muDst"]
-	path = contrib/star-muDst
+[submodule "ext/star-muDst"]
+	path = ext/star-muDst
 	url = https://github.com/star-bnl/star-muDst.git
-[submodule "contrib/star-tables"]
-	path = contrib/star-tables
+[submodule "ext/star-tables"]
+	path = ext/star-tables
 	url = https://github.com/star-bnl/star-tables.git
 [submodule "ext/star-macros"]
 	path = ext/star-macros
@@ -28,3 +28,21 @@
 [submodule "ext/star-pams"]
 	path = ext/star-pams
 	url = https://github.com/star-bnl/star-pams.git
+[submodule "ext/star-vertex"]
+	path = ext/star-vertex
+	url = https://github.com/star-bnl/star-vertex.git
+[submodule "ext/star-db-calibrations"]
+	path = ext/star-db-calibrations
+	url = https://github.com/star-bnl/star-db-calibrations.git
+[submodule "ext/star-stdb"]
+	path = ext/star-stdb
+	url = https://github.com/star-bnl/star-stdb.git
+[submodule "ext/star-tof"]
+	path = ext/star-tof
+	url = https://github.com/star-bnl/star-tof.git
+[submodule "ext/star-sti"]
+	path = ext/star-sti
+	url = https://github.com/star-bnl/star-sti.git
+[submodule "ext/star-bfchain"]
+	path = ext/star-bfchain
+	url = https://github.com/star-bnl/star-bfchain.git
