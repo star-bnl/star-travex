@@ -48,4 +48,12 @@ root_generate_dictionary(star-vertex-eval_Cint MuMcPrVKFV2012.h VertexRank.h VxE
 
 add_library( star-vertex-eval SHARED VertexRank.C MuMcPrVKFV2012.C VxEff.C star-vertex-eval_Cint.cxx)
 
-install(TARGETS star-vertex-eval DESTINATION "lib")
+
+# Installation section
+set(ADDITIONAL_INSTALL_PREFIX ".")
+
+if(DEFINED ENV{STAR_HOST_SYS})
+	set(ADDITIONAL_INSTALL_PREFIX ".$ENV{STAR_HOST_SYS}")
+endif()
+
+install(TARGETS star-vertex-eval DESTINATION "${ADDITIONAL_INSTALL_PREFIX}/lib")
