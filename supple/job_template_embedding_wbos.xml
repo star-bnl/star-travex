@@ -52,6 +52,7 @@
 	<File>file:./GenerateVertex.C</File>
 	<File>file:./simWRequest.kumac</File>
 	<File>file:./StarDb/Calibrations/tracker/</File>
+	<File>file:./.$STAR_HOST_SYS/</File>
 	</Package>
 </SandBox>
 
