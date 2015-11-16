@@ -70,7 +70,7 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
   // Construct our embedding option list based on official production chain for
   // pp 500GeV run 2013 production for days129-161 (part 2) with HFT inserted in STAR detector:
   //                      DbV20140905 pp2013b mtd btof fmsDat fgt fgtPoint VFPPVnoCTB beamline StiHftP BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt
-  TString prodP14igpp510("DbV20140905 pp2013b mtd btof fmsDat fgt fgtPoint KFVertex   beamline StiHftP BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt -evout IdTruth");
+  TString prodP14igpp510("DbV20140905 pp2013b mtd btof fmsDat fgt fgtPoint VFPPVnoCTB beamline StiHftP BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt -evout IdTruth");
   //added by S.F. 2013; Sti added by J.D. 20130729
   TString prodP11idpp500("DbV20110923 pp2011a Sti btof mtddat fmsdat VFPPVnoCTB beamline -evout BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt");
   //  TString prodP11idpp500("DbV20110923 pp2011a btof mtddat fmsdat BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D VFMCE TpxClu -hitfilt"); // from Lidia
