@@ -298,7 +298,7 @@ void H3D::Print(Option_t *option) const
       for (biny=firsty;biny<=lasty;biny++) {
          y = fYaxis.GetBinCenter(biny);
          for (binx=firstx;binx<=lastx;binx++) {
-            bin = GetBin(binx,biny);
+            bin = GetBin(binx,biny,0);
             x = fXaxis.GetBinCenter(binx);
             w = GetBinContent(bin);
             e = GetBinError(bin);
