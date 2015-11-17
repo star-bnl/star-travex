@@ -59,6 +59,7 @@ include_directories(
 	contrib/star-tof
 	contrib/star-tpc
 	contrib/star-vertex
+	contrib/star-pams/global/inc   # required by star-vertex
 )
 
 add_subdirectory(contrib/star-base)
