@@ -102,7 +102,7 @@ TH2D *H3D::DoProject2D(const char* name, const char * title, TAxis* projX, TAxis
    if ( computeErrors) h2->Sumw2();
 
    // Set references to the axis, so that the bucle has no branches.
-   TAxis* out = 0;
+   const TAxis* out = 0;
    if ( projX != GetXaxis() && projY != GetXaxis() ) {
       out = GetXaxis();
    } else if ( projX != GetYaxis() && projY != GetYaxis() ) {

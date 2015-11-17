@@ -93,7 +93,7 @@ Int_t Profile3D::FillAsCumulative(Double_t x, Double_t y, Double_t z, Double_t t
 }
 
 
-Profile2D *Profile3D::DoProjectProfile2D(const char* name, const char * title, TAxis* projX, TAxis* projY,
+Profile2D *Profile3D::DoProjectProfile2D(const char* name, const char * title, const TAxis* projX, const TAxis* projY,
                                            bool originalRange, bool useUF, bool useOF) const
 {
    // internal method to project to a 2D Profile

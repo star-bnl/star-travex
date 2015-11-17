@@ -20,7 +20,7 @@ public:
 
    void  ResetBinCumulMode();
    Int_t FillAsCumulative(Double_t x, Double_t y, Double_t z, Double_t t);
-   virtual Profile2D *DoProjectProfile2D(const char* name, const char * title, TAxis* projX, TAxis* projY,
+   virtual Profile2D *DoProjectProfile2D(const char* name, const char * title, const TAxis* projX, const TAxis* projY,
                                            bool originalRange, bool useUF, bool useOF) const;
    Profile2D *Project3DProfile(Option_t *option) const;
    virtual Double_t RetrieveBinContent(Int_t bin) const { return (fBinEntries.fArray[bin] > 0) ? fArray[bin]/fBinEntries.fArray[bin] : 0; }
