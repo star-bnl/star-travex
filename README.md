@@ -46,7 +46,6 @@ following environment variables can be set if needed:
 
     $STAR_LIB        # Used in supple/starsim_zslice_*.kumac
     $OPTSTAR         # The prefix path to installed boost release
-    $STAR_HOST_SYS
 
 Checkout the code using one of the following commands:
 
@@ -60,15 +59,6 @@ Compile and build the tools:
     mkdir build && cd build
     # See "Remark about C++11 at STAR" below
     cmake -D CMAKE_INSTALL_PREFIX=./ -D CMAKE_CXX_FLAGS="-m32" -D BOOST_ROOT=$OPTSTAR ../
-    make -j4 && make install
-
-*Remark about C++11 at STAR:* Our code extensively uses the features from the
-C++11 standard and, therefore, a compiler with C++11 support is required to
-compile it. As of May 2015 the default compiler in the STAR environment is
-gcc-4.4.7 does not provide full support of C++11 but a newer version 4.8.2 is
-also available. To use it just provide the following options to cmake:
-
-    cmake -D CMAKE_INSTALL_PREFIX=".$STAR_HOST_SYS/" -D CMAKE_CXX_FLAGS="-m32" -D BOOST_ROOT=$OPTSTAR ../
     make -j4 && make install
 
 The make tool will place the libraries in the local `.slXX_gccXXX` directory.
