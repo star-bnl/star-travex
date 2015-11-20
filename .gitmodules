@@ -52,9 +52,6 @@
 [submodule "contrib/star-vertex"]
 	path = contrib/star-vertex
 	url = https://github.com/star-bnl/star-vertex.git
-[submodule "contrib/star-hbt"]
-	path = contrib/star-hbt
-	url = https://github.com/star-bnl/star-hbt.git
 [submodule "contrib/star-pams"]
 	path = contrib/star-pams
 	url = https://github.com/star-bnl/star-pams.git

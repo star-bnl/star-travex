@@ -46,7 +46,6 @@ include_directories(
 	contrib/star-db-calibrations
 	contrib/star-emc
 	contrib/star-geant
-	contrib/star-hbt
 	contrib/star-ist
 	contrib/star-pxl
 	contrib/star-RTS
