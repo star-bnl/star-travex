@@ -55,9 +55,8 @@ Checkout the code using one of the following commands:
 Compile and build the tools:
 
     cd star-sti-tools/
-    git submodule update --init --depth=1
+    git submodule update --init --depth=50
     mkdir build && cd build
-    # See "Remark about C++11 at STAR" below
     cmake -D CMAKE_INSTALL_PREFIX=./ -D CMAKE_CXX_FLAGS="-m32" -D BOOST_ROOT=$OPTSTAR ../
     make -j4 && make install
 
