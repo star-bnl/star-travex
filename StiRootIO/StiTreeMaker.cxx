@@ -44,7 +44,7 @@ Int_t StiTreeMaker::Init()
    // Authorize Trees up to 2 Terabytes (if the system can do it)
    TTree::SetMaxTreeSize(1000 * Long64_t(2000000000));
 
-   TString fileName( gSystem->BaseName(bfChain->GetFileIn().Data()) );
+   TString fileName( gSystem->BaseName(bfChain->GetFileOut().Data()) );
 
    // Form a new name for the output file
    fileName += "." + fSuffix + ".root";
