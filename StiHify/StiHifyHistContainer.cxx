@@ -76,12 +76,16 @@ void StiHifyHistContainer::BookHists()
 }
 
 
-void StiHifyHistContainer::FillHists(const StiHifyEvent &event, StiNodeHitStatus hitStatus, const std::set<std::string> *volumeList)
+void StiHifyHistContainer::FillHists(const StiHifyEvent &event, StiNodeHitStatus hitStatus, const std::set<std::string> *volumeList, bool onlyNodesWithCandidates)
 {
    for (const auto& kalmTrack : event.GetTStiKalmanTracks())
    {
       for (const auto& trkNode : kalmTrack.GetNodes())
       {
+         // Ignore nodes with 0 candidate hits when requested by user
+         if ( onlyNodesWithCandidates && !trkNode.GetCandidateProxyHits().size() )
+            continue;
+
          switch (hitStatus)
          {
          case StiNodeHitStatus::Any:
