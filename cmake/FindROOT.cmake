@@ -258,6 +258,6 @@ function(ROOT_GENERATE_LINKDEF_AND_DICTIONARY user_base_file_name)
    CMAKE_PARSE_ARGUMENTS(ARG "" "" "HEADERS" ${ARGN})
 
    root_generate_linkdef(${user_base_file_name}_LinkDef.h HEADERS ${ARG_HEADERS})
-   root_generate_dictionary(${user_base_file_name}_Cint ${ARG_HEADERS} LINKDEF ${user_base_file_name}_LinkDef.h OPTIONS "-p")
+   root_generate_dictionary(${user_base_file_name}_dict ${ARG_HEADERS} LINKDEF ${user_base_file_name}_LinkDef.h OPTIONS "-p")
 
 endfunction()
