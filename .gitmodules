@@ -55,3 +55,6 @@
 [submodule "contrib/star-pams"]
 	path = contrib/star-pams
 	url = https://github.com/star-bnl/star-pams.git
+[submodule "star-cmake"]
+	path = star-cmake
+	url = https://github.com/star-bnl/star-cmake.git
