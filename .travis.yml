@@ -1,12 +1,9 @@
 sudo: false
+
 language: cpp
 
 compiler:
   - gcc
-
-# Make sure cmake picks up the compiler we want
-install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
 
 addons:
   apt:
@@ -19,33 +16,35 @@ addons:
       - libboost-dev
       - libboost-algorithm-dev
 
+branch:
+  only:
+    - master
+
 git:
   depth: 1
   submodules: false
 
 before_install:
-  - git submodule update --init
+  - git submodule update --init --recursive
+
+# Make sure cmake picks up the compiler we want
+install:
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
 
 before_script:
-  - wget http://root.cern.ch/download/root_v5.34.30.source.tar.gz -P /tmp/
-  - tar -xzf /tmp/root_v5.34.30.source.tar.gz
-  - mv root root-src
+    # Install desired version of ROOT
   - wget http://root.cern.ch/download/root_v5.34.30.Linux-ubuntu12-x86_64-gcc4.6.tar.gz -P /tmp/
   - tar -xzf /tmp/root_v5.34.30.Linux-ubuntu12-x86_64-gcc4.6.tar.gz
   - source ./root/bin/thisroot.sh
   - root-config --libs
   - root-config --cflags
     # Move some ROOT header files to common include directory
-  - rsync -auv root-src/math/mathmore/inc/Math root/include/
-
-branch:
-  only:
-    - master
+  - wget http://root.cern.ch/download/root_v5.34.30.source.tar.gz -P /tmp/
+  - tar -xzf /tmp/root_v5.34.30.source.tar.gz
+  - rsync -auv root/math/mathmore/inc/Math root/include/
 
 script:
-  - mkdir build/ && cd build/
-  - pwd
-  - cmake -D CMAKE_INSTALL_PREFIX=./ ../
-  - make -j4
-  - make install
-  - pwd && ls -la . && pwd && ls -la lib/
+  - mkdir build/ && cd build/ && pwd
+  - cmake -D CMAKE_INSTALL_PREFIX=./ -D CMAKE_BUILD_TYPE=Release ../
+  - make -j4 && make install && make clean
+  - pwd && ls -la ./ && ls -la lib/
