@@ -22,7 +22,9 @@ if(NOT ROOT_FOUND)
    message(FATAL_ERROR "Fatal error: ROOT package not found")
 endif()
 
-add_compile_options(-std=c++0x)
+# Perform some setup standard to STAR experiment environment
+include(StarCommon)
+
 
 include_directories(
 	${ROOT_INCLUDE_DIR}
@@ -50,10 +52,4 @@ add_library( star-vertex-eval SHARED VertexRank.C MuMcPrVKFV2012.C VxEff.C star-
 
 
 # Installation section
-set(ADDITIONAL_INSTALL_PREFIX ".")
-
-if(DEFINED ENV{STAR_HOST_SYS})
-	set(ADDITIONAL_INSTALL_PREFIX ".$ENV{STAR_HOST_SYS}")
-endif()
-
-install(TARGETS star-vertex-eval DESTINATION "${ADDITIONAL_INSTALL_PREFIX}/lib")
+install(TARGETS star-vertex-eval DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
