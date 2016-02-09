@@ -42,30 +42,30 @@ include_directories(
 	${ROOT_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR}/inc
-	contrib/star-base
-	contrib/star-bfchain
-	contrib/star-daq
-	contrib/star-db-calibrations
-	contrib/star-emc
-	contrib/star-geant
-	contrib/star-ist
-	contrib/star-pxl
-	contrib/star-RTS
-	contrib/star-ssd
-	contrib/star-stdb
-	contrib/star-stevent
-	contrib/star-sti
-	contrib/star-svt
-	contrib/star-tables
-	contrib/star-tof
-	contrib/star-tpc
-	contrib/star-vertex
-	contrib/star-pams/global/inc   # required by star-vertex
+	ext/star-base
+	ext/star-bfchain
+	ext/star-daq
+	ext/star-db-calibrations
+	ext/star-emc
+	ext/star-geant
+	ext/star-ist
+	ext/star-pxl
+	ext/star-RTS
+	ext/star-ssd
+	ext/star-stdb
+	ext/star-stevent
+	ext/star-sti
+	ext/star-svt
+	ext/star-tables
+	ext/star-tof
+	ext/star-tpc
+	ext/star-vertex
+	ext/star-pams/global/inc   # required by star-vertex
 )
 
-add_subdirectory(contrib/star-base)
-add_subdirectory(contrib/star-sti)
-add_subdirectory(contrib/star-bfchain)
+add_subdirectory(ext/star-base)
+add_subdirectory(ext/star-sti)
+add_subdirectory(ext/star-bfchain)
 
 root_generate_dictionary(
 	StiRootIO_Cint
@@ -180,6 +180,6 @@ set_target_properties(stihify PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbo
 
 
 # Installation section
-install(DIRECTORY "contrib/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
+install(DIRECTORY "ext/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
 install(TARGETS StiRootIO GeaRootIO AgUStep StiHify StiScan DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
 install(TARGETS stiscan stihify DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/bin")
