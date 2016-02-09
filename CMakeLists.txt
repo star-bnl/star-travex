@@ -27,20 +27,10 @@ if(NOT ROOT_FOUND)
    message(FATAL_ERROR "Fatal error: ROOT package not found")
 endif()
 
+# Perform some setup standard to STAR experiment environment
+include(StarCommon)
+
 add_definitions(-D__ROOT__)
-
-
-# Check whether the compiler supports c++11
-include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-if(COMPILER_SUPPORTS_CXX11)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif(COMPILER_SUPPORTS_CXX0X)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-else()
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
-endif()
 
 
 # Some external files on which this project depends
@@ -188,13 +178,8 @@ target_link_libraries(stihify
 set_target_properties(stiscan PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 set_target_properties(stihify PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 
+
 # Installation section
-set(ADDITIONAL_INSTALL_PREFIX ".")
-
-if(DEFINED ENV{STAR_HOST_SYS})
-   set(ADDITIONAL_INSTALL_PREFIX ".$ENV{STAR_HOST_SYS}")
-endif()
-
 install(DIRECTORY "contrib/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
-install(TARGETS StiRootIO GeaRootIO AgUStep StiHify StiScan DESTINATION "${ADDITIONAL_INSTALL_PREFIX}/lib")
-install(TARGETS stiscan stihify DESTINATION "${ADDITIONAL_INSTALL_PREFIX}/bin")
+install(TARGETS StiRootIO GeaRootIO AgUStep StiHify StiScan DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
+install(TARGETS stiscan stihify DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/bin")
