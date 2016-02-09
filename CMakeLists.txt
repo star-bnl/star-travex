@@ -1,9 +1,7 @@
-#
-# Usage:
+# Basic usage:
 #
 # cd <project_dir>
-# mkdir build
-# cd build
+# mkdir build && cd build
 # cmake ../
 # make
 # make install
@@ -68,7 +66,7 @@ add_subdirectory(ext/star-sti)
 add_subdirectory(ext/star-bfchain)
 
 root_generate_dictionary(
-	StiRootIO_Cint
+	StiRootIO_dict
 	StiRootIO/H2D.h
 	StiRootIO/H3D.h
 	StiRootIO/Profile2D.h
@@ -83,26 +81,26 @@ root_generate_dictionary(
 )
 
 root_generate_dictionary(
-	GeaRootIO_Cint
+	GeaRootIO_dict
 	GeaRootIO/TGeaEvent.h
 	LINKDEF GeaRootIO/GeaRootIOLinkDef.h
 )
 
 root_generate_dictionary(
-	AgUStep_Cint
+	AgUStep_dict
 	GeaRootIO/AgUStep.h
 	LINKDEF GeaRootIO/AgUStepLinkDef.h
 )
 
 root_generate_dictionary(
-	StiHify_Cint
+	StiHify_dict
 	StiHify/StiHifyEvent.h
 	StiHify/StiHifyTreeMaker.h
 	LINKDEF StiHify/StiHifyLinkDef.h
 )
 
 root_generate_dictionary(
-	StiScan_Cint
+	StiScan_dict
 	StiScan/StiScanEvent.h
 	StiScan/StiScanTreeMaker.h
 	LINKDEF StiScan/StiScanLinkDef.h
@@ -125,11 +123,11 @@ add_library(
 	StiRootIO/TStiHitProxy.cxx
 	StiRootIO/TStiKalmanTrack.cxx
 	StiRootIO/TStiKalmanTrackNode.cxx
-	StiRootIO_Cint.cxx
+	StiRootIO_dict.cxx
 )
 
-add_library( GeaRootIO SHARED GeaRootIO/TGeaEvent.cxx GeaRootIO_Cint.cxx)
-add_library( AgUStep SHARED GeaRootIO/AgUStep.cxx AgUStep_Cint.cxx)
+add_library( GeaRootIO SHARED GeaRootIO/TGeaEvent.cxx GeaRootIO_dict.cxx)
+add_library( AgUStep SHARED GeaRootIO/AgUStep.cxx AgUStep_dict.cxx)
 
 add_library(
 	StiHify
@@ -140,7 +138,7 @@ add_library(
 	StiHify/StiHifyRatiosHistContainer.cxx
 	StiHify/StiHifyPrgOptions.cxx
 	StiHify/StiHifyRootFile.cxx
-	StiHify_Cint.cxx
+	StiHify_dict.cxx
 )
 
 add_library(
@@ -153,7 +151,7 @@ add_library(
 	StiScan/StiScanHistsByVolume.cxx
 	StiScan/StiScanPrgOptions.cxx
 	StiScan/StiScanRootFile.cxx
-	StiScan_Cint.cxx
+	StiScan_dict.cxx
 )
 
 
