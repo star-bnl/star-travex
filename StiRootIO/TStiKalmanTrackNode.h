@@ -63,7 +63,7 @@ public:
 protected:
 
    const StiKalmanTrackNode* fStiTrackNode;  //!< Transient pointer to original StiKalmanTrackNode to access non-persistent info
-   TStiKalmanTrack * const fTrack;    //!< Pointer to parent track containing this node
+   TStiKalmanTrack *  fTrack;         //!< Pointer to parent track containing this node
    float       fValid;                ///< A flag taken directly from StiKalmanTrackNode
    int         fIsInsideVolume;       ///< A flag taken directly from StiKalmanTrackNode
    TVector3    fPosition;             ///< Coordinates of the track state/node position
