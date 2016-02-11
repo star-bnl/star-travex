@@ -172,8 +172,10 @@ target_link_libraries(sti-hify
 )
 
 
-set_target_properties(sti-scan PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
-set_target_properties(sti-hify PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+	set_target_properties(sti-scan PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
+	set_target_properties(sti-hify PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
+endif()
 
 
 # Installation section
