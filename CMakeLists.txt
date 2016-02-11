@@ -158,25 +158,25 @@ link_directories( ${Boost_LIBRARY_DIR} ${ROOT_LIBRARY_DIR} )
 
 configure_file(src-tools/config.h.in inc/src-tools/config.h)
 
-add_executable(stiscan src-tools/stiscan.cc)
-add_executable(stihify src-tools/stihify.cc)
+add_executable(sti-scan src-tools/stiscan.cc)
+add_executable(sti-hify src-tools/stihify.cc)
 
-target_link_libraries(stiscan
+target_link_libraries(sti-scan
 	StiScan GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
 	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table Geom HistPainter EG pthread
 )
 
-target_link_libraries(stihify
+target_link_libraries(sti-hify
 	StiHify StiScan GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
 	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table Geom HistPainter EG pthread
 )
 
 
-set_target_properties(stiscan PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
-set_target_properties(stihify PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
+set_target_properties(sti-scan PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
+set_target_properties(sti-hify PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 
 
 # Installation section
 install(DIRECTORY "ext/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
 install(TARGETS StiRootIO GeaRootIO AgUStep StiHify StiScan DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
-install(TARGETS stiscan stihify DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/bin")
+install(TARGETS sti-scan sti-hify DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/bin")
