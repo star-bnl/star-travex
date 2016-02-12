@@ -41,20 +41,6 @@ void StiRootFile::FillDerivedHists()
 }
 
 
-Int_t StiRootFile::Write(const char* name, Int_t opt, Int_t bufsiz)
-{
-   Info("Write", "%s", GetName());
-
-   return TFile::Write(name, opt, bufsiz);
-}
-
-
-Int_t StiRootFile::Write(const char* name, Int_t opt, Int_t bufsiz) const
-{
-   return TFile::Write(name, opt, bufsiz);
-}
-
-
 void StiRootFile::Close(Option_t *option)
 {
    if (fPrgOptions.SaveGraphics()) {

@@ -23,8 +23,6 @@ public:
 
    void FillDerivedHists();
 
-   virtual Int_t Write(const char* name = 0, Int_t opt = 0, Int_t bufsiz = 0);
-   virtual Int_t Write(const char* name = 0, Int_t opt = 0, Int_t bufsiz = 0) const;
    virtual void Close(Option_t *option="");
    void SaveAllAs(std::string prefix="./");
 
