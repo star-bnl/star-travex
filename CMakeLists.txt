@@ -129,7 +129,7 @@ add_library( GeaRootIO SHARED GeaRootIO/TGeaEvent.cxx GeaRootIO_dict.cxx)
 add_library( AgUStep SHARED GeaRootIO/AgUStep.cxx AgUStep_dict.cxx)
 
 add_library(
-	StiHify
+	StiHifyLib
 	SHARED
 	StiHify/StiHifyEvent.cxx
 	StiHify/StiHifyTreeMaker.cxx
@@ -141,7 +141,7 @@ add_library(
 )
 
 add_library(
-	StiScan
+	StiScanLib
 	SHARED
 	StiScan/StiScanEvent.cxx
 	StiScan/StiScanTreeMaker.cxx
@@ -162,12 +162,12 @@ add_executable(stiscan src-tools/stiscan.cc)
 add_executable(stihify src-tools/stihify.cc)
 
 target_link_libraries(stiscan
-	StiScan GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
+	StiScanLib GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
 	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table Geom HistPainter EG pthread
 )
 
 target_link_libraries(stihify
-	StiHify StiScan GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
+	StiHifyLib StiScanLib GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
 	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table Geom HistPainter EG pthread
 )
 
@@ -180,5 +180,5 @@ endif()
 
 # Installation section
 install(DIRECTORY "ext/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
-install(TARGETS StiRootIO GeaRootIO AgUStep StiHify StiScan DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
+install(TARGETS StiRootIO GeaRootIO AgUStep StiHifyLib StiScanLib DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
 install(TARGETS stiscan stihify DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/bin")
