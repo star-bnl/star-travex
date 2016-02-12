@@ -15,6 +15,10 @@ namespace tvx {
 typedef std::map<std::string, StiHistContainer*>   StiHistContainers;
 
 
+/**
+ * A basic extention of the ROOT's TFile class to manage a set of user defined
+ * histogram containers by arranging them in subdirectories.
+ */
 class StiRootFile : public TFile
 {
 public:
@@ -28,8 +32,11 @@ public:
 
 protected:
 
-   StiHistContainers mDirs;   ///< A string-to-StiHistContainer map for convenient access to enclosed directories
-   PrgOptionProcessor& fPrgOptions; ///< Command line arguments and options requested by the user
+   /// A string-to-StiHistContainer map for convenient access to enclosed directories
+   StiHistContainers mDirs;
+
+   /// Command line arguments and options requested by the user
+   PrgOptionProcessor& fPrgOptions;
 };
 
 }

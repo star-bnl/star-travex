@@ -50,7 +50,7 @@ void loop_over_tree(StiHifyPrgOptions &prgOpts)
 
    TRandom myRandom;
 
-   Info("loop_over_tree", "Loop over tree/chain...");
+   Info("loop_over_tree", "Looping over tree/chain...");
 
    for (int iEvent = 1; iEvent <= nTreeEvents; iEvent++, nProcEvents++)
    {
@@ -61,6 +61,9 @@ void loop_over_tree(StiHifyPrgOptions &prgOpts)
 
       treeChain->GetEntry(iEvent-1);
 
+      // If requested by the user modify the event read from the input tree such
+      // that the closest within certain window hit for each track node is
+      // defined as the accepted one
       if (prgOpts.AcceptCandidateHit())
          stiHifyEvent->AssignClosestCandidateHit();
 

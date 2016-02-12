@@ -12,6 +12,7 @@
 
 using namespace tvx;
 
+
 StiRootFile::StiRootFile(PrgOptionProcessor& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
    TFile(prgOpts.GetOutFileName().c_str(), option, ftitle, compress),
    mDirs(),
@@ -24,6 +25,10 @@ StiRootFile::StiRootFile(PrgOptionProcessor& prgOpts, Option_t *option, const ch
 }
 
 
+/**
+ * For each histogram container calls the method of the same name in order to
+ * produce new histograms from already filled histograms.
+ */
 void StiRootFile::FillDerivedHists()
 {
    for (const std::pair<std::string, StiHistContainer*>& subDir : mDirs)
@@ -32,7 +37,7 @@ void StiRootFile::FillDerivedHists()
       StiHistContainer *container = subDir.second;
 
       if (!container) {
-         Error("FillDerivedHists", "No container/directory found for key %s. Skipping...", dirName.c_str());
+         Error("FillDerivedHists", "No histogram container found for directory '%s'. Skipping...", dirName.c_str());
          continue;
       }
 

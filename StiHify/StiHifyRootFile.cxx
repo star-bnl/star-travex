@@ -40,6 +40,9 @@ void StiHifyRootFile::FillHists(const StiHifyEvent &event, const std::set<std::s
 }
 
 
+/**
+ * Create ratios for all histograms whose name starts with hActiveLayerCounts.
+ */
 void StiHifyRootFile::FillDerivedHists()
 {
    StiRootFile::FillDerivedHists();

@@ -17,6 +17,10 @@ StiHifyEvent::StiHifyEvent(const StiVolumeFilter& stiVolumeFilter) : TStiEvent(s
 }
 
 
+/**
+ * Fills internal event container with track states/nodes provided by Sti
+ * tracking (some requirements on track quality may be applied at this point).
+ */
 EReturnCodes StiHifyEvent::Fill(const StiTrackContainer &stiTrackContainer)
 {
    auto acceptTrack = [] (const StiTrack* stiTrack) -> bool
@@ -25,9 +29,12 @@ EReturnCodes StiHifyEvent::Fill(const StiTrackContainer &stiTrackContainer)
       return (stiKTrack.getFitPointCount(kTpcId) > 40);
    };
 
+   // First, create an empty container to keep track states provided directly by Sti
    StiTrackContainer filtered(stiTrackContainer.getName(), stiTrackContainer.getDescription());
    filtered.resize(stiTrackContainer.size());
 
+   // Second, copy in the new container those Sti tracks that satisfy certain
+   // requirements (currently, the condition is simply hard coded above)
    auto new_end = std::copy_if(stiTrackContainer.begin(), stiTrackContainer.end(), filtered.begin(), acceptTrack);
    // Shrink container to new size
    filtered.resize(std::distance(filtered.begin(), new_end));

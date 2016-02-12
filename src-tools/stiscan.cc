@@ -77,7 +77,7 @@ void loop_over_tree(StiScanPrgOptions &prgOpts)
 
    TRandom myRandom;
 
-   Info("loop_over_tree", "Loop over tree/chain...");
+   Info("loop_over_tree", "Looping over tree/chain...");
 
    for (int iEvent = 1; iEvent <= nTreeEvents; iEvent++, nProcEvents++)
    {

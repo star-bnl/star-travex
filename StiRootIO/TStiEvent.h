@@ -39,9 +39,16 @@ public:
 
 protected:
 
-   const StiVolumeFilter&        fStiVolumeFilter;
-   std::vector<TStiKalmanTrack>  fTStiKalmanTracks;   ///< A collection of all Sti tracks of interest in this event
-   std::set<TStiHit>             fTStiHits;           ///< A collection of all Sti hits of interest in this event
+   /// A singleton allowing to impose various requirements on tracks and/or
+   /// track nodes. Usually, tracks crossing only specific detector volumes are
+   /// processed and saved
+   const StiVolumeFilter&  fStiVolumeFilter;
+
+   /// A collection of all Sti tracks of interest in this event
+   std::vector<TStiKalmanTrack>  fTStiKalmanTracks;
+
+   /// A collection of all Sti hits of interest in this event
+   std::set<TStiHit>  fTStiHits;
 
    ClassDef(TStiEvent, 1)
 };

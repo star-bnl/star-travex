@@ -198,6 +198,10 @@ void PrgOptionProcessor::VerifyOptions()
 }
 
 
+/**
+ * Note that the function returns true when the internal list of regex'es formed
+ * by the user specified options is empty.
+ */
 bool PrgOptionProcessor::MatchedVolName(std::string & volName) const
 {
    if (volName.empty() || fVolumeList.empty())

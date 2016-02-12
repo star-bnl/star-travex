@@ -98,8 +98,8 @@ void StiHifyHistContainer::FillHists(const StiHifyEvent &event, StiNodeHitStatus
             FillHistsHitsRejected(trkNode, volumeList);
             break;
          default:
-            Error("FillHists", "Internal type of Sti hit assigned to this node is not specified. "
-                  "Histograms won't be filled");
+            Error("FillHists", "Internal type of Sti hit assigned to this node "
+                  "is not specified or implemented. Histograms won't be filled");
             break;
          }
       }

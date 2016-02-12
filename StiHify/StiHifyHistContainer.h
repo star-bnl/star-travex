@@ -39,7 +39,7 @@ protected:
    TH2I* hPullCandidateHits2D;
    TH1I* hChi2CandidateHits;
    TH1I* hCountCandidateHits;
-   TH2F* hActiveLayerCounts;
+   TH2F* hActiveLayerCounts; // Defined as float because we calculate a ratio
 
 private:
 
