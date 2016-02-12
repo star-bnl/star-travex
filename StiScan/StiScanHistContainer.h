@@ -21,7 +21,7 @@ public:
 
    void FillHists(const StiScanEvent &eventT, const std::set<std::string> *volumeList=0);
    void FillHists(const TGeaEvent &eventG, const std::set<std::string> *volumeList=0);
-   void FillDerivedHists();
+   virtual void FillDerivedHists();
    void SetZRange(double minZ, double maxZ) { mNodeZMin = minZ; mNodeZMax = maxZ; }
    double GetZMin() const { return mNodeZMin; }
    double GetZMax() const { return mNodeZMax; }
