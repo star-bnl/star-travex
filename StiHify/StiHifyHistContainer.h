@@ -40,6 +40,8 @@ protected:
    TH1I* hChi2CandidateHits;
    TH1I* hCountCandidateHits;
    TH2F* hActiveLayerCounts;
+   // Added ZWM
+   TH1I* hProjErrorMag;
 
 private:
 

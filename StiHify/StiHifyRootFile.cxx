@@ -19,6 +19,7 @@ StiHifyRootFile::StiHifyRootFile(StiHifyPrgOptions& prgOpts, Option_t *option, c
 
 void StiHifyRootFile::BookHists(const StiHifyPrgOptions& prgOpts)
 {
+   treeMaker = new StiHifyAnalysisTreeMaker();
    mDirs["sti_hit_any_node"] = new StiHifyHistContainer(prgOpts, "sti_hit_any_node", this);
    mDirs["sti_hit_accepted"] = new StiHifyHistContainer(prgOpts, "sti_hit_accepted", this);
    mDirs["sti_hit_rejected"] = new StiHifyHistContainer(prgOpts, "sti_hit_rejected", this);
@@ -27,6 +28,10 @@ void StiHifyRootFile::BookHists(const StiHifyPrgOptions& prgOpts)
 
 void StiHifyRootFile::FillHists(const StiHifyEvent &event, const std::set<std::string> *volumeList)
 {
+   treeMaker->FillTree(event, StiNodeHitStatus::Any, volumeList);
+   treeMaker->FillTree(event, StiNodeHitStatus::Accepted, volumeList);
+   treeMaker->FillTree(event, StiNodeHitStatus::Rejected, volumeList);
+
    StiHifyHistContainer* container;
 
    container = static_cast<StiHifyHistContainer*> (mDirs["sti_hit_any_node"]);

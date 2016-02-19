@@ -7,9 +7,10 @@
 
 #include "StiRootIO/StiRootFile.h"
 #include "StiHify/StiHifyEvent.h"
+#include "StiHify/StiHifyAnalysisTreeMaker.h"
 
 class StiHifyPrgOptions;
-
+class StiHifyAnalysisTreeMaker;
 
 class StiHifyRootFile : public tvx::StiRootFile
 {
@@ -18,11 +19,13 @@ public:
    StiHifyRootFile(StiHifyPrgOptions& prgOpts, Option_t* option="", const char* ftitle="", Int_t compress=1);
 
    void FillHists(const StiHifyEvent &event, const std::set<std::string> *volumeList=0);
+   void FillTree(const StiHifyEvent &event, const std::set<std::string> *volumeList=0);
    void FillDerivedHists();
 
 private:
 
    void BookHists(const StiHifyPrgOptions& prgOpts);
+   StiHifyAnalysisTreeMaker* treeMaker;
 };
 
 #endif

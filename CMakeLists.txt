@@ -147,6 +147,7 @@ add_library(
 	StiHify/StiHifyEvent.cxx
 	StiHify/StiHifyTreeMaker.cxx
 	StiHify/StiHifyHistContainer.cxx
+	StiHify/StiHifyAnalysisTreeMaker.cxx
 	StiHify/StiHifyRatiosHistContainer.cxx
 	StiHify/StiHifyPrgOptions.cxx
 	StiHify/StiHifyRootFile.cxx

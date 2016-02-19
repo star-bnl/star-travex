@@ -18,7 +18,8 @@ StiHifyHistContainer::StiHifyHistContainer(const StiHifyPrgOptions& prgOpts, con
    hPullCandidateHits2D(nullptr),
    hChi2CandidateHits(nullptr),
    hCountCandidateHits(nullptr),
-   hActiveLayerCounts(nullptr)
+   hActiveLayerCounts(nullptr),
+   hProjErrorMag(nullptr)
 {
    BookHists();
 }
@@ -73,6 +74,9 @@ void StiHifyHistContainer::BookHists()
    hActiveLayerCounts = new TH2F("hActiveLayerCounts", " ; Track Local Z, cm; Local Y, cm; Num. of Track Nodes", n_z_bins, z_min, z_max, n_y_bins, y_min, y_max);
    hActiveLayerCounts->SetOption("colz");
    mHs["hActiveLayerCounts"].reset(hActiveLayerCounts);
+
+   hProjErrorMag = new TH1I("hProjErrorMag", "Projection Error; Projection Error Mag",200,0.,1.0);
+   mHs["hProjErrorMag"].reset(hProjErrorMag);
 }
 
 
@@ -120,6 +124,9 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
    }
 
    hPullClosestHit1D->Fill(trkNode.CalcDistanceToClosestHit() < 0 ? -1 : (trkNode.CalcDistanceToClosestHit()/trkNode.GetProjError().Mag()) );
+
+   // Add by ZWM
+   hProjErrorMag -> Fill(trkNode.GetProjError().Mag() );
 
    const std::set<TStiHitProxy>& hitCandidates = trkNode.GetCandidateProxyHits();
 
