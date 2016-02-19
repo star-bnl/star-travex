@@ -15,6 +15,8 @@ StiHifyAnalysisTreeMaker::StiHifyAnalysisTreeMaker()
 
 void StiHifyAnalysisTreeMaker::createTree()
 {
+  // This creates the tree object, than populates 3 different branches, each with the same leaves
+  // Each of the branches corresponds to either Any hit, a hit accepted by Sti, or a hit rejected by Sti
   aTree = new TTree("pullAnaTree","Tree for Pull Error Analysis");
   aTree->Branch("AnyHit",&errorInfo.errorMag,"errorMag/F:pull/F:residual/F:eta/F:pT/F:phi/F:z/F");
   aTree->Branch("AcceptedHit",&errorInfoAcc.errorMag,"errorMag/F:pull/F:residual/F:eta/F:pT/F:phi/F:z/F");
@@ -24,21 +26,21 @@ void StiHifyAnalysisTreeMaker::createTree()
 
 void StiHifyAnalysisTreeMaker::FillTree(const StiHifyEvent &event, StiNodeHitStatus hitStatus, const std::set<std::string> *volumeList)
 {
-  for (const auto& kalmTrack : event.GetTStiKalmanTracks())
+  for (const auto& kalmTrack : event.GetTStiKalmanTracks()) // Loop over tracks in event
   {
-    for (const auto& trkNode : kalmTrack.GetNodes())
+    for (const auto& trkNode : kalmTrack.GetNodes()) // Loop over nodes in track
     {
-      switch (hitStatus)
+      switch (hitStatus) // Decide what type of nodes you want to look at in FillTree iteration
       {
         case StiNodeHitStatus::Any:
           FillTree(trkNode, volumeList, errorInfo);
           break;
         case StiNodeHitStatus::Accepted:
-          if(trkNode.GetHit())
+          if(trkNode.GetHit()) // Check if accepted
             FillTree(trkNode, volumeList, errorInfoAcc);
           break;
         case StiNodeHitStatus::Rejected:
-          if(!trkNode.GetHit())
+          if(!trkNode.GetHit()) //Check if not accepted
             FillTree(trkNode, volumeList, errorInfoRej);
           break;
         default:
@@ -52,13 +54,13 @@ void StiHifyAnalysisTreeMaker::FillTree(const StiHifyEvent &event, StiNodeHitSta
 
 void StiHifyAnalysisTreeMaker::FillTree(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList, errorInfo_t &eI )
 {
-  if (volumeList && volumeList->size() && !trkNode.MatchedVolName(*volumeList) )
+  if (volumeList && volumeList->size() && !trkNode.MatchedVolName(*volumeList) ) // Limit to only volumes in volumeList
     return;
 
   if (trkNode.GetVolumeName().empty() || !trkNode.IsInsideVolume())
     return;
 
-  // Set variables needed by tree
+  // Set variables needed by tree in the structure. All others are -999.
   eI.errorMag = trkNode.GetProjError().Mag();
   eI.residual = trkNode.CalcDistanceToClosestHit();
   eI.pull     = eI.residual/eI.errorMag;
@@ -67,8 +69,8 @@ void StiHifyAnalysisTreeMaker::FillTree(const TStiKalmanTrackNode &trkNode, cons
   eI.phi      = trkNode.GetTrackP().Phi();
   eI.z        = trkNode.GetTrackP().z();
 
-  aTree->Fill();
-  clearTreeStructs();
+  aTree->Fill(); // push structures to tree
+  clearTreeStructs(); // reset structure for next node
 
 }
 
