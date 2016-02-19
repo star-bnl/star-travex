@@ -103,6 +103,21 @@ void StiHifyHistContainer::FillHists(const StiHifyEvent &event, StiNodeHitStatus
 }
 
 
+/**
+ * Creates X and Y projections from filled 2D histograms.
+ */
+void StiHifyHistContainer::FillDerivedHists()
+{
+   this->cd();
+
+   mHs["hPullCandidateHits2D_px"].reset( hPullCandidateHits2D->ProjectionX() );
+   mHs["hPullCandidateHits2D_py"].reset( hPullCandidateHits2D->ProjectionY() );
+
+   mHs["hActiveLayerCounts_px"].reset( hActiveLayerCounts->ProjectionX() );
+   mHs["hActiveLayerCounts_py"].reset( hActiveLayerCounts->ProjectionY() );
+}
+
+
 void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList)
 {
    if (volumeList && volumeList->size() && !trkNode.MatchedVolName(*volumeList) )
