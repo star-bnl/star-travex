@@ -81,6 +81,7 @@ void StiHifyAnalysisTreeMaker::writeTree()
 
 void StiHifyAnalysisTreeMaker::clearTreeStructs()
 {
+  // Set all values to default for next node
   errorInfoRej.errorMag = -999;
   errorInfoRej.residual = -999;
   errorInfoRej.pull     = -999;
