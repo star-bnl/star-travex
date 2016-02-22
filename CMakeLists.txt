@@ -1,9 +1,7 @@
-#
-# Usage:
+# Basic usage:
 #
 # cd <project_dir>
-# mkdir build
-# cd build
+# mkdir build && cd build
 # cmake ../
 # make
 # make install
@@ -14,10 +12,9 @@ project(star-sti-tools)
 
 
 # Add to path in order to pick up the FindXXX.cmake files included in this project
-list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/star-cmake")
 
 # This project depends on Boost
-set(Boost_USE_MULTITHREADED OFF)
 find_package( Boost 1.54.0 REQUIRED COMPONENTS program_options regex filesystem)
 
 # This project depends on ROOT
@@ -27,20 +24,10 @@ if(NOT ROOT_FOUND)
    message(FATAL_ERROR "Fatal error: ROOT package not found")
 endif()
 
+# Perform some setup standard to STAR experiment environment
+include(StarCommon)
+
 add_definitions(-D__ROOT__)
-
-
-# Check whether the compiler supports c++11
-include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-if(COMPILER_SUPPORTS_CXX11)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif(COMPILER_SUPPORTS_CXX0X)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-else()
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
-endif()
 
 
 # Some external files on which this project depends
@@ -52,33 +39,33 @@ include_directories(
 	${ROOT_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR}/inc
-	contrib/star-base
-	contrib/star-bfchain
-	contrib/star-daq
-	contrib/star-db-calibrations
-	contrib/star-emc
-	contrib/star-geant
-	contrib/star-ist
-	contrib/star-pxl
-	contrib/star-RTS
-	contrib/star-ssd
-	contrib/star-stdb
-	contrib/star-stevent
-	contrib/star-sti
-	contrib/star-svt
-	contrib/star-tables
-	contrib/star-tof
-	contrib/star-tpc
-	contrib/star-vertex
-	contrib/star-pams/global/inc   # required by star-vertex
+	ext/star-base
+	ext/star-bfchain
+	ext/star-daq
+	ext/star-db-calibrations
+	ext/star-emc
+	ext/star-geant
+	ext/star-ist
+	ext/star-pxl
+	ext/star-RTS
+	ext/star-ssd
+	ext/star-stdb
+	ext/star-stevent
+	ext/star-sti
+	ext/star-svt
+	ext/star-tables
+	ext/star-tof
+	ext/star-tpc
+	ext/star-vertex
+	ext/star-pams/global/inc   # required by star-vertex
 )
 
-add_subdirectory(contrib/star-base)
-add_subdirectory(contrib/star-sti)
-add_subdirectory(contrib/star-bfchain)
+add_subdirectory(ext/star-base)
+add_subdirectory(ext/star-sti)
+add_subdirectory(ext/star-bfchain)
 
 root_generate_dictionary(
-	StiRootIO_Cint
+	StiRootIO_dict
 	StiRootIO/H2D.h
 	StiRootIO/H3D.h
 	StiRootIO/Profile2D.h
@@ -93,26 +80,26 @@ root_generate_dictionary(
 )
 
 root_generate_dictionary(
-	GeaRootIO_Cint
+	GeaRootIO_dict
 	GeaRootIO/TGeaEvent.h
 	LINKDEF GeaRootIO/GeaRootIOLinkDef.h
 )
 
 root_generate_dictionary(
-	AgUStep_Cint
+	AgUStep_dict
 	GeaRootIO/AgUStep.h
 	LINKDEF GeaRootIO/AgUStepLinkDef.h
 )
 
 root_generate_dictionary(
-	StiHify_Cint
+	StiHify_dict
 	StiHify/StiHifyEvent.h
 	StiHify/StiHifyTreeMaker.h
 	LINKDEF StiHify/StiHifyLinkDef.h
 )
 
 root_generate_dictionary(
-	StiScan_Cint
+	StiScan_dict
 	StiScan/StiScanEvent.h
 	StiScan/StiScanTreeMaker.h
 	LINKDEF StiScan/StiScanLinkDef.h
@@ -135,14 +122,14 @@ add_library(
 	StiRootIO/TStiHitProxy.cxx
 	StiRootIO/TStiKalmanTrack.cxx
 	StiRootIO/TStiKalmanTrackNode.cxx
-	StiRootIO_Cint.cxx
+	StiRootIO_dict.cxx
 )
 
-add_library( GeaRootIO SHARED GeaRootIO/TGeaEvent.cxx GeaRootIO_Cint.cxx)
-add_library( AgUStep SHARED GeaRootIO/AgUStep.cxx AgUStep_Cint.cxx)
+add_library( GeaRootIO SHARED GeaRootIO/TGeaEvent.cxx GeaRootIO_dict.cxx)
+add_library( AgUStep SHARED GeaRootIO/AgUStep.cxx AgUStep_dict.cxx)
 
 add_library(
-	StiHify
+	StiHifyLib
 	SHARED
 	StiHify/StiHifyEvent.cxx
 	StiHify/StiHifyTreeMaker.cxx
@@ -151,11 +138,11 @@ add_library(
 	StiHify/StiHifyRatiosHistContainer.cxx
 	StiHify/StiHifyPrgOptions.cxx
 	StiHify/StiHifyRootFile.cxx
-	StiHify_Cint.cxx
+	StiHify_dict.cxx
 )
 
 add_library(
-	StiScan
+	StiScanLib
 	SHARED
 	StiScan/StiScanEvent.cxx
 	StiScan/StiScanTreeMaker.cxx
@@ -164,7 +151,7 @@ add_library(
 	StiScan/StiScanHistsByVolume.cxx
 	StiScan/StiScanPrgOptions.cxx
 	StiScan/StiScanRootFile.cxx
-	StiScan_Cint.cxx
+	StiScan_dict.cxx
 )
 
 
@@ -176,26 +163,23 @@ add_executable(stiscan src-tools/stiscan.cc)
 add_executable(stihify src-tools/stihify.cc)
 
 target_link_libraries(stiscan
-	StiScan GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
+	StiScanLib GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
 	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table Geom HistPainter EG pthread
 )
 
 target_link_libraries(stihify
-	StiHify StiScan GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
+	StiHifyLib StiScanLib GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
 	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table Geom HistPainter EG pthread
 )
 
 
-set_target_properties(stiscan PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
-set_target_properties(stihify PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
-
-# Installation section
-set(ADDITIONAL_INSTALL_PREFIX ".")
-
-if(DEFINED ENV{STAR_HOST_SYS})
-   set(ADDITIONAL_INSTALL_PREFIX ".$ENV{STAR_HOST_SYS}")
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+	set_target_properties(stiscan PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
+	set_target_properties(stihify PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 endif()
 
-install(DIRECTORY "contrib/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
-install(TARGETS StiRootIO GeaRootIO AgUStep StiHify StiScan DESTINATION "${ADDITIONAL_INSTALL_PREFIX}/lib")
-install(TARGETS stiscan stihify DESTINATION "${ADDITIONAL_INSTALL_PREFIX}/bin")
+
+# Installation section
+install(DIRECTORY "ext/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
+install(TARGETS StiRootIO GeaRootIO AgUStep StiHifyLib StiScanLib DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
+install(TARGETS stiscan stihify DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/bin")
