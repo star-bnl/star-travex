@@ -27,6 +27,12 @@
    gSystem->Load("StPreEclMaker");
    gSystem->Load("StStrangeMuDstMaker");
    gSystem->Load("StMuDSTMaker");
+   gSystem->Load("libSti");
 
+   gSystem->Load("$OPTSTAR/lib/libboost_filesystem");
+   gSystem->Load("$OPTSTAR/lib/libboost_program_options");
+   gSystem->Load("$OPTSTAR/lib/libboost_regex");
+
+   gSystem->Load("libtravex");
    gSystem->Load("libstar-vertex-eval");
 }
