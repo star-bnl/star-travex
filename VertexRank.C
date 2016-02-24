@@ -31,26 +31,18 @@
 #endif
 
 #include "utils.h"
+#include "VertexRank.h"
 
 
 
 
-void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", const  char *outFile = "test")
+void VertexRank(Long64_t nevent, const char *file, const  char *outFile)
 {
    TString OutFile(outFile);
    OutFile += ".root";
    TFile fOut(OutFile, "recreate");        //Create the file to save the data
 
-   struct primVtxPoint_t {
-      Int_t event, index, rank, mult, refMult, maxmult;
-      Float_t primX, primY, primZ, zVpd;
-      StThreeVectorF positionError;
-      Float_t McX, McY, McZ;
-      Float_t chi2;
-      Int_t beam, postx, prompt, cross, tof, notof, EEMC, noEEMC, BEMC, noBEMC;
-   };
-
-   primVtxPoint_t primVtx;
+   VertexData primVtx;
 
    TTree *primaryvtx = new TTree("primaryvtx", "The Primary Vertices");
    primaryvtx->Branch("event",   &primVtx.event, "event/I");
