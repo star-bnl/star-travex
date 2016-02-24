@@ -44,6 +44,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    struct primVtxPoint_t {
       Int_t event, index, rank, mult, refMult, maxmult;
       Float_t primX, primY, primZ, zVpd;
+      StThreeVectorF positionError;
       Float_t McX, McY, McZ;
       Float_t chi2;
       Int_t beam, postx, prompt, cross, tof, notof, EEMC, noEEMC, BEMC, noBEMC;
@@ -61,6 +62,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    primaryvtx->Branch("primX",   &primVtx.primX, "primX/F");
    primaryvtx->Branch("primY",   &primVtx.primY, "primY/F");
    primaryvtx->Branch("primZ",   &primVtx.primZ, "primZ/F");
+   primaryvtx->Branch("positionError", &primVtx.positionError);
    primaryvtx->Branch("zVpd",    &primVtx.zVpd, "zVpd/F");
    primaryvtx->Branch("McX",     &primVtx.McX, "McX/F");
    primaryvtx->Branch("McY",     &primVtx.McY, "McY/F");
@@ -85,6 +87,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
    TH1I hVertexX("hVertexX", "Vertex X Position", 60, -10, 10);
    TH1I hVertexY("hVertexY", "Vertex Y Position", 60, -10, 10);
    TH1I hVertexZ("hVertexZ", "Vertex Z Position", 60, -30, 30);
+   TH1I hVertexErrorMag("hVertexErrorMag", "Vertex Position Error Magnitude; sqrt(#sigma_{x}^{2} + #sigma_{y}^{2} + #sigma_{z}^{2}), cm", 50, 0, 1);
    TH1F h1("h1", "Rank Max", 100, -3, 3);
    TH1F h2("h2", "Max Mult", 100, -3, 3);
 
@@ -183,6 +186,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
       if (maxRankVertex) {
          hNumTracksToMaxRankVertex.Fill(maxRankVertex->noTracks());
+         hVertexErrorMag.Fill(maxRankVertex->posError().mag());
       }
 
       ////////No reconstructed///////////
@@ -216,6 +220,7 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
          primVtx.primX   = Vtx->position().x();
          primVtx.primY   = Vtx->position().y();
          primVtx.primZ   = Vtx->position().z();
+         primVtx.positionError  = Vtx->posError();
          primVtx.index   = l;
          primVtx.rank    = Vtx->ranking();
 
@@ -300,6 +305,9 @@ void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", c
 
    hNumTracksToMaxRankVertex.Draw();
    myCanvas.SaveAs( (std::string(outFile) + "/hNumTracksToMaxRankVertex.png").c_str() );
+
+   hVertexErrorMag.Draw();
+   myCanvas.SaveAs( (std::string(outFile) + "/hVertexErrorMag.png").c_str() );
 
    fOut.Write();
 
