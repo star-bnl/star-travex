@@ -12,7 +12,8 @@ StiHifyHistContainer::StiHifyHistContainer(const StiHifyPrgOptions& prgOpts, con
    fPrgOptions(prgOpts),
    hDiffProjToFitPositionWRTHit(nullptr),
    hDiffProjToFitError(nullptr),
-   hDistClosest2AcceptedHit(nullptr),
+   hDist2AcceptedHit(nullptr),
+   hDist2ClosestHit(nullptr),
    hPullClosestHit1D(nullptr),
    hPullClosestHit2D(nullptr),
    hPullCandidateHits2D(nullptr),
@@ -43,9 +44,13 @@ StiHifyHistContainer::StiHifyHistContainer(const StiHifyPrgOptions& prgOpts, con
    hDiffProjToFitError->SetOption("colz");
    mHs["hDiffProjToFitError"].reset(hDiffProjToFitError);
 
-   hDistClosest2AcceptedHit = new TH1I("hDistClosest2AcceptedHit", " ; Closest to Accepted Hits: Distance R, cm; Num. of Track Nodes; ", 50, 0, 0.5);
-   hDistClosest2AcceptedHit->SetOption("XY hist");
-   mHs["hDistClosest2AcceptedHit"].reset(hDistClosest2AcceptedHit);
+   hDist2AcceptedHit = new TH1I("hDist2AcceptedHit", " ; Closest to Accepted Hits: Distance R, cm; Num. of Track Nodes; ", 100, 0, 1);
+   hDist2AcceptedHit->SetOption("XY hist");
+   mHs["hDist2AcceptedHit"].reset(hDist2AcceptedHit);
+
+   hDist2ClosestHit = new TH1I("hDist2ClosestHit", " ; Closest to Accepted Hits: Distance R, cm; Num. of Track Nodes; ", 100, 0, 1);
+   hDist2ClosestHit->SetOption("XY hist");
+   mHs["hDist2ClosestHit"].reset(hDist2ClosestHit);
 
    hPullClosestHit1D = new TH1I("hPullClosestHit1D", " ; Track Proj. to Closest Hit Pull Dist.: Distance R, #sigma-units; Num. of Track Nodes; ", 100, 0, 10);
    mHs["hPullClosestHit1D"].reset(hPullClosestHit1D);
@@ -127,10 +132,8 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode)
    // Start filling histograms
    hDiffProjToFitPositionWRTHit->Fill( trkNode.CalcDiffProjToFitPositionWRTHit() );
    hDiffProjToFitError->Fill( trkNode.CalcDiffProjToFitError().Z(), trkNode.CalcDiffProjToFitError().Y() );
-
-   if (trkNode.GetHit()) {
-      hDistClosest2AcceptedHit->Fill( fabs(trkNode.CalcDistanceToHit() - trkNode.CalcDistanceToClosestHit()) );
-   }
+   hDist2AcceptedHit->Fill( trkNode.CalcDistanceToHit() );
+   hDist2ClosestHit->Fill( trkNode.CalcDistanceToClosestHit() );
 
    hPullClosestHit1D->Fill(trkNode.CalcDistanceToClosestHit() < 0 ? -1 : (trkNode.CalcDistanceToClosestHit()/trkNode.GetProjError().Mag()) );
 

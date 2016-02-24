@@ -32,7 +32,8 @@ protected:
    // These are only aliases to created histograms
    TH1I* hDiffProjToFitPositionWRTHit;
    TH2I* hDiffProjToFitError;
-   TH1I* hDistClosest2AcceptedHit;
+   TH1I* hDist2AcceptedHit;
+   TH1I* hDist2ClosestHit;
    TH1I* hPullClosestHit1D;
    TH2I* hPullClosestHit2D;
    TH2I* hPullCandidateHits2D;
