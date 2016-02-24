@@ -7,7 +7,7 @@
 
 
 StiScanRatiosHistContainer::StiScanRatiosHistContainer(const char* name, TDirectory* motherDir, Option_t* option) :
-   StiHistContainer(name, motherDir, option)
+   tvx::HistContainer(name, motherDir, option)
 {
 }
 
@@ -31,5 +31,5 @@ void StiScanRatiosHistContainer::CreateRatioHist(const TH1* hNumer, const TH1* h
    myRatio->Add(hDenom, -1);
    myRatio->Divide(hDenom);
 
-   mHs[std::string(myRatio->GetName())].reset(myRatio);
+   Add(myRatio);
 }

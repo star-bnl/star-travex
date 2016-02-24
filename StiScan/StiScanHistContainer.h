@@ -4,16 +4,17 @@
 #include <set>
 #include <string>
 
+#include "travex/HistContainer.h"
+
 #include "StiScan/StiScanEvent.h"
 #include "StiScan/StiScanPrgOptions.h"
-#include "StiRootIO/StiHistContainer.h"
 #include "StiRootIO/Profile2D.h"
 #include "StiRootIO/Profile3D.h"
 #include "StiRootIO/TStiKalmanTrack.h"
 #include "GeaRootIO/TGeaEvent.h"
 
 
-class StiScanHistContainer : public tvx::StiHistContainer
+class StiScanHistContainer : public tvx::HistContainer
 {
 public:
 

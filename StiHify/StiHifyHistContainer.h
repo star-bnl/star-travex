@@ -8,13 +8,13 @@
 #include "TH2I.h"
 #include "TH2F.h"
 
+#include "travex/HistContainer.h"
 #include "StiHify/StiHifyEvent.h"
 #include "StiHify/StiHifyPrgOptions.h"
-#include "StiRootIO/StiHistContainer.h"
 #include "StiRootIO/TStiKalmanTrackNode.h"
 
 
-class StiHifyHistContainer : public tvx::StiHistContainer
+class StiHifyHistContainer : public tvx::HistContainer
 {
 public:
 

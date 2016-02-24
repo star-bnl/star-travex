@@ -1,10 +1,10 @@
 #ifndef StiHifyRatiosHistContainer_h
 #define StiHifyRatiosHistContainer_h
 
-#include "StiRootIO/StiHistContainer.h"
+#include "travex/HistContainer.h"
 
 
-class StiHifyRatiosHistContainer : public tvx::StiHistContainer
+class StiHifyRatiosHistContainer : public tvx::HistContainer
 {
 public:
 

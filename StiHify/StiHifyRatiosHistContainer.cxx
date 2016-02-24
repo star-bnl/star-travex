@@ -4,7 +4,7 @@
 
 
 StiHifyRatiosHistContainer::StiHifyRatiosHistContainer(const char* name, TDirectory* motherDir, Option_t* option) :
-   StiHistContainer(name, motherDir, option)
+   tvx::HistContainer(name, motherDir, option)
 {
 }
 
@@ -30,5 +30,5 @@ void StiHifyRatiosHistContainer::CreateRatioHist(const TH1* hNumer, const TH1* h
       myRatio->Fit("pol0", "Q"); // Fit a line to the data points
    }
 
-   mHs[ std::string(myRatio->GetName()) ].reset(myRatio);
+   Add(myRatio);
 }
