@@ -27,6 +27,7 @@ include(StarCommon)
 include_directories(
 	${ROOT_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}
+	ext/travex/include
 	ext/star-base
 	ext/star-muDst
 	ext/star-stevent
@@ -42,6 +43,7 @@ include_directories(
 	ext/star-sim
 )
 
+add_subdirectory(ext/travex)
 add_subdirectory(ext/star-vertex)
 
 root_generate_dictionary(star-vertex-eval_dict MuMcPrVKFV2012.h VertexRank.h VxEff.h LINKDEF VertexEvalLinkDef.h)
