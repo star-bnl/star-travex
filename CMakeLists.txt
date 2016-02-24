@@ -48,7 +48,8 @@ add_subdirectory(ext/star-vertex)
 
 root_generate_dictionary(star-vertex-eval_dict MuMcPrVKFV2012.h VertexRank.h VxEff.h LINKDEF VertexEvalLinkDef.h)
 
-add_library( star-vertex-eval SHARED VertexRank.C MuMcPrVKFV2012.C VxEff.C star-vertex-eval_dict.cxx)
+add_library( star-vertex-eval SHARED VertexRank.C MuMcPrVKFV2012.C VxEff.C
+	StarEventHistContainer.cxx star-vertex-eval_dict.cxx)
 
 
 # Installation section
