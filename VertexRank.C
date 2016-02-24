@@ -32,7 +32,8 @@
 
 #include "utils.h"
 #include "VertexRank.h"
-
+#include "StarEventHistContainer.h"
+#include "StarVertexHistContainer.h"
 
 
 
@@ -73,6 +74,10 @@ void VertexRank(Long64_t nevent, const char *file, const  char *outFile)
 
    TH1F h1("h1", "Rank Max", 100, -3, 3);
    TH1F h2("h2", "Max Mult", 100, -3, 3);
+
+   StarEventHistContainer  starEventHistContainer("event", &fOut);
+   StarVertexHistContainer starVertexHistContainer("vertex", &fOut);
+   StarVertexHistContainer starMaxRankVertexHistContainer("vertex_maxrank", &fOut);
 
 
    StMuDebug::setLevel(0);
@@ -150,6 +155,7 @@ void VertexRank(Long64_t nevent, const char *file, const  char *outFile)
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
          Float_t numTracksToVertex = Vtx->noTracks();
 
+         starVertexHistContainer.FillHists(*Vtx);
 
          if (MaxMult < numTracksToVertex) {                               //Amilkar: check if the numTracksToVertex is higher than previous
             MaxMult = numTracksToVertex;                                   //Amilkar: asign the new maximum value
@@ -164,6 +170,8 @@ void VertexRank(Long64_t nevent, const char *file, const  char *outFile)
       }
 
       if (maxRankVertex) {
+         // Fill vertex hist container for max rank vertex
+         starMaxRankVertexHistContainer.FillHists(*maxRankVertex);
       }
 
       ////////No reconstructed///////////
@@ -252,6 +260,7 @@ void VertexRank(Long64_t nevent, const char *file, const  char *outFile)
 
       }// END VERTICES
 
+      starEventHistContainer.FillHists(*muDst);
 
       if ( !gROOT->IsBatch() ) {
          if (vtxeval::ask_user()) return;
@@ -261,6 +270,9 @@ void VertexRank(Long64_t nevent, const char *file, const  char *outFile)
 
    std::cout << "Number of events: " <<  nevent << ", with 0 reconstructed verticies: " << noreco << std::endl;
 
+   starEventHistContainer.SaveAllAs(std::string(outFile) + "_event");
+   starVertexHistContainer.SaveAllAs(std::string(outFile) + "_vertex");
+   starMaxRankVertexHistContainer.SaveAllAs(std::string(outFile) + "_vertex_max_rank");
 
    fOut.Write();
 
