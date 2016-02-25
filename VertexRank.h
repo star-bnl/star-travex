@@ -1,10 +1,12 @@
 #ifndef VertexRank_h
 #define VertexRank_h
 
+#include <string>
+
 #include "StarClassLibrary/StThreeVectorF.hh"
 
 
-void VertexRank(Long64_t nevent = 999999, const char *file = "./*.MuDst.root", const  char *outFile = "test");
+void VertexRank(Long64_t nevent=1000, const std::string& fileName="./*.MuDst.root", const std::string& outFile="my_output_file");
 
 // A structure to hold info about a vertex
 struct VertexData {
