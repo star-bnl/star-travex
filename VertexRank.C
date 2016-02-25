@@ -72,8 +72,6 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
    primaryvtx->Branch("BEMC",    &primVtx.BEMC, "BEMC/I");
    primaryvtx->Branch("noBEMC",  &primVtx.noBEMC, "noBEMC/I");
 
-   TH1F h1("h1", "Rank Max", 100, -3, 3);
-   TH1F h2("h2", "Max Mult", 100, -3, 3);
 
    StarEventHistContainer  starEventHistContainer("event", &fOut);
    StarVertexHistContainer starVertexHistContainer("vertex", &fOut);
@@ -237,14 +235,8 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
          primVtx.noEEMC =  Vtx->nEEMCNotMatch();
          primVtx.chi2   =  Vtx->chiSquared();
 
-         if (l == 0 && abs(primVtx.primZ - VpdZ) < 3)
-            h1.Fill(primVtx.primZ - VpdZ);
-
          if (MaxMult == primVtx.mult) {
             primVtx.maxmult = 1;
-
-            if (abs(primVtx.primZ - VpdZ) < 3)
-               h2.Fill(primVtx.primZ - VpdZ);
          }
          else primVtx.maxmult = 0;
 
