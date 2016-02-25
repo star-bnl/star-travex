@@ -242,11 +242,6 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
       }// END VERTICES
 
       starEventHistContainer.FillHists(*muDst);
-
-      if ( !gROOT->IsBatch() ) {
-         if (vtxeval::ask_user()) return;
-      }
-      else {vtxeval::gDebugFlag = false;}
    }     //END EVENTS
 
    std::cout << "Number of events: " <<  nevent << ", with 0 reconstructed verticies: " << noreco << std::endl;
