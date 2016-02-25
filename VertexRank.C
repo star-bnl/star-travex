@@ -71,15 +71,6 @@ void VertexRank(Long64_t nevent, const char *file, const  char *outFile)
    primaryvtx->Branch("BEMC",    &primVtx.BEMC, "BEMC/I");
    primaryvtx->Branch("noBEMC",  &primVtx.noBEMC, "noBEMC/I");
 
-   TH1I hNumVertices("hNumVertices", "Number of Vertices", 100, 0, 700);
-   TH1I hNumTracksPerEventGlobal("hNumTracksPerEventGlobal", "Number of Global Tracks in Event", 100, 0, 5000);
-   TH1I hNumTracksPerEventPrimary("hNumTracksPerEventPrimary", "Number of Primary Tracks in Event", 100, 0, 100);
-   TH1I hNumTracksToVertex("hNumTracksToVertex", "Number of Tracks per Vertex", 100, 0, 100);
-   TH1I hNumTracksToMaxRankVertex("hNumTracksToMaxRankVertex", "Number of Tracks to Max Rank Vertex", 100, 0, 100);
-   TH1I hVertexX("hVertexX", "Vertex X Position", 60, -10, 10);
-   TH1I hVertexY("hVertexY", "Vertex Y Position", 60, -10, 10);
-   TH1I hVertexZ("hVertexZ", "Vertex Z Position", 60, -30, 30);
-   TH1I hVertexErrorMag("hVertexErrorMag", "Vertex Position Error Magnitude; sqrt(#sigma_{x}^{2} + #sigma_{y}^{2} + #sigma_{z}^{2}), cm", 50, 0, 1);
    TH1F h1("h1", "Rank Max", 100, -3, 3);
    TH1F h2("h2", "Max Mult", 100, -3, 3);
 
@@ -159,10 +150,6 @@ void VertexRank(Long64_t nevent, const char *file, const  char *outFile)
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
          Float_t numTracksToVertex = Vtx->noTracks();
 
-         hNumTracksToVertex.Fill(numTracksToVertex);
-         hVertexX.Fill(Vtx->position().x());
-         hVertexY.Fill(Vtx->position().y());
-         hVertexZ.Fill(Vtx->position().z());
 
          if (MaxMult < numTracksToVertex) {                               //Amilkar: check if the numTracksToVertex is higher than previous
             MaxMult = numTracksToVertex;                                   //Amilkar: asign the new maximum value
@@ -177,8 +164,6 @@ void VertexRank(Long64_t nevent, const char *file, const  char *outFile)
       }
 
       if (maxRankVertex) {
-         hNumTracksToMaxRankVertex.Fill(maxRankVertex->noTracks());
-         hVertexErrorMag.Fill(maxRankVertex->posError().mag());
       }
 
       ////////No reconstructed///////////
@@ -267,9 +252,6 @@ void VertexRank(Long64_t nevent, const char *file, const  char *outFile)
 
       }// END VERTICES
 
-      hNumVertices.Fill(numPrimaryVertices);
-      hNumTracksPerEventGlobal.Fill( muDst->globalTracks()->GetEntriesFast() );
-      hNumTracksPerEventPrimary.Fill( muDst->primaryTracks()->GetEntriesFast() );
 
       if ( !gROOT->IsBatch() ) {
          if (vtxeval::ask_user()) return;
@@ -279,27 +261,6 @@ void VertexRank(Long64_t nevent, const char *file, const  char *outFile)
 
    std::cout << "Number of events: " <<  nevent << ", with 0 reconstructed verticies: " << noreco << std::endl;
 
-   gSystem->mkdir(outFile, true);
-
-   TCanvas myCanvas("mycanvas", "mycanvas", 0, 0, 800, 800);
-
-   hNumVertices.Draw();
-   myCanvas.SaveAs( (std::string(outFile) + "/hNumVertices.png").c_str() );
-
-   hNumTracksPerEventGlobal.Draw();
-   myCanvas.SaveAs( (std::string(outFile) + "/hNumTracksPerEventGlobal.png").c_str() );
-
-   hNumTracksPerEventPrimary.Draw();
-   myCanvas.SaveAs( (std::string(outFile) + "/hNumTracksPerEventPrimary.png").c_str() );
-
-   hNumTracksToVertex.Draw();
-   myCanvas.SaveAs( (std::string(outFile) + "/hNumTracksToVertex.png").c_str() );
-
-   hNumTracksToMaxRankVertex.Draw();
-   myCanvas.SaveAs( (std::string(outFile) + "/hNumTracksToMaxRankVertex.png").c_str() );
-
-   hVertexErrorMag.Draw();
-   myCanvas.SaveAs( (std::string(outFile) + "/hVertexErrorMag.png").c_str() );
 
    fOut.Write();
 
