@@ -9,13 +9,6 @@
 #ifndef __CINT__
 #include <string>
 #include <vector>
-#include "Riostream.h"
-#include "TCanvas.h"
-#include "TROOT.h"
-#include "TSystem.h"
-#include "TH1.h"
-#include "TH2.h"
-#include "TNtuple.h"
 #include "TTree.h"
 #include "TChain.h"
 #include "TFile.h"
@@ -234,11 +227,7 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
          primVtx.EEMC   =  Vtx->nEEMCMatch();
          primVtx.noEEMC =  Vtx->nEEMCNotMatch();
          primVtx.chi2   =  Vtx->chiSquared();
-
-         if (MaxMult == primVtx.mult) {
-            primVtx.maxmult = 1;
-         }
-         else primVtx.maxmult = 0;
+         primVtx.maxmult = (MaxMult == primVtx.mult ? 1 : 0);
 
          primaryvtx->Fill();
 
