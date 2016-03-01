@@ -145,8 +145,6 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
          StMuPrimaryVertex *stVertex = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
          Float_t numTracksToVertex = stVertex->noTracks();
 
-         fOut.FillHists(*stVertex);
-
          if (MaxMult < numTracksToVertex) {                               //Amilkar: check if the numTracksToVertex is higher than previous
             MaxMult = numTracksToVertex;                                   //Amilkar: asign the new maximum value
          }
@@ -229,6 +227,8 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
          primVtx.maxmult = (MaxMult == primVtx.mult ? 1 : 0);
 
          vertexTree->Fill();
+
+         fOut.FillHists(*stVertex);
 
          if (vtxeval::gDebugFlag) {
             std::cout << Form("[%i]", l) << Form(" %8.3f  %8.3f  %8.3f ", stVertex->position().x(), stVertex->position().y(), stVertex->position().z())
