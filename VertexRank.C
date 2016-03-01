@@ -210,22 +210,22 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
             mcVertex = (StMuMcVertex *) MuMcVertices->UncheckedAt(idd - 1);
 
          if (mcVertex) {
-            primVtx.McX    = mcVertex->XyzV().x();
-            primVtx.McY    = mcVertex->XyzV().y();
-            primVtx.McZ    = mcVertex->XyzV().z();
+            primVtx.McX = mcVertex->XyzV().x();
+            primVtx.McY = mcVertex->XyzV().y();
+            primVtx.McZ = mcVertex->XyzV().z();
          }
 
-         primVtx.beam   =  stVertex->isBeamConstrained() ? 1 : 0;
-         primVtx.postx  =  stVertex->nPostXtracks();
-         primVtx.prompt =  stVertex->nPromptTracks();
-         primVtx.cross  =  stVertex->nCrossCentralMembrane();
-         primVtx.tof    = (stVertex->nCTBMatch()     + stVertex->nBTOFMatch());
-         primVtx.notof  = (stVertex->nCTBNotMatch()  + stVertex->nBTOFNotMatch());
-         primVtx.BEMC   =  stVertex->nBEMCMatch();
-         primVtx.noBEMC =  stVertex->nBEMCNotMatch();
-         primVtx.EEMC   =  stVertex->nEEMCMatch();
-         primVtx.noEEMC =  stVertex->nEEMCNotMatch();
-         primVtx.chi2   =  stVertex->chiSquared();
+         primVtx.beam    =  stVertex->isBeamConstrained() ? 1 : 0;
+         primVtx.postx   =  stVertex->nPostXtracks();
+         primVtx.prompt  =  stVertex->nPromptTracks();
+         primVtx.cross   =  stVertex->nCrossCentralMembrane();
+         primVtx.tof     = (stVertex->nCTBMatch()     + stVertex->nBTOFMatch());
+         primVtx.notof   = (stVertex->nCTBNotMatch()  + stVertex->nBTOFNotMatch());
+         primVtx.BEMC    =  stVertex->nBEMCMatch();
+         primVtx.noBEMC  =  stVertex->nBEMCNotMatch();
+         primVtx.EEMC    =  stVertex->nEEMCMatch();
+         primVtx.noEEMC  =  stVertex->nEEMCNotMatch();
+         primVtx.chi2    =  stVertex->chiSquared();
          primVtx.maxmult = (MaxMult == primVtx.mult ? 1 : 0);
 
          vertexTree->Fill();
@@ -237,14 +237,12 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
             if (primVtx.maxmult == 1 && l != 0) std::cout << "\t WRONG RANK" << std::endl;
             else std::cout << std::endl;
          }
-
-      }// END VERTICES
+      }
 
       fOut.FillHists(*muDst);
-   }     //END EVENTS
+   }
 
    std::cout << "Number of events: " <<  nevent << ", with 0 reconstructed verticies: " << noreco << std::endl;
-
 
    fOut.Write();
 
