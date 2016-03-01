@@ -25,16 +25,19 @@
 
 #include "utils.h"
 #include "VertexRank.h"
-#include "StarEventHistContainer.h"
-#include "StarVertexHistContainer.h"
+#include "VertexRootFile.h"
+#include "travex/ProgramOptions.h"
 
 
 
 void VertexRank(Long64_t nevent, const std::string& fileName, const std::string& outFile)
 {
-   TString OutFile(outFile);
-   OutFile += ".root";
-   TFile fOut(OutFile, "recreate");        //Create the file to save the data
+   const char* options[] = {"VertexRank", "-f", (outFile+".root").c_str(), "-g"};
+
+   tvx::ProgramOptions prgOpts(4, const_cast<char**>(options));
+   prgOpts.ProcessOptions();
+
+   VertexRootFile fOut(prgOpts, "recreate");
 
    VertexData primVtx;
 
@@ -65,10 +68,6 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
    primaryvtx->Branch("BEMC",    &primVtx.BEMC, "BEMC/I");
    primaryvtx->Branch("noBEMC",  &primVtx.noBEMC, "noBEMC/I");
 
-
-   StarEventHistContainer  starEventHistContainer("event", &fOut);
-   StarVertexHistContainer starVertexHistContainer("vertex", &fOut);
-   StarVertexHistContainer starMaxRankVertexHistContainer("vertex_maxrank", &fOut);
 
 
    StMuDebug::setLevel(0);
@@ -146,7 +145,7 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
          StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
          Float_t numTracksToVertex = Vtx->noTracks();
 
-         starVertexHistContainer.FillHists(*Vtx);
+         fOut.FillHists(*Vtx);
 
          if (MaxMult < numTracksToVertex) {                               //Amilkar: check if the numTracksToVertex is higher than previous
             MaxMult = numTracksToVertex;                                   //Amilkar: asign the new maximum value
@@ -162,7 +161,7 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
 
       if (maxRankVertex) {
          // Fill vertex hist container for max rank vertex
-         starMaxRankVertexHistContainer.FillHists(*maxRankVertex);
+         fOut.FillHistsMaxRank(*maxRankVertex);
       }
 
       ////////No reconstructed///////////
@@ -241,14 +240,11 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
 
       }// END VERTICES
 
-      starEventHistContainer.FillHists(*muDst);
+      fOut.FillHists(*muDst);
    }     //END EVENTS
 
    std::cout << "Number of events: " <<  nevent << ", with 0 reconstructed verticies: " << noreco << std::endl;
 
-   starEventHistContainer.SaveAllAs(std::string(outFile) + "_event");
-   starVertexHistContainer.SaveAllAs(std::string(outFile) + "_vertex");
-   starMaxRankVertexHistContainer.SaveAllAs(std::string(outFile) + "_vertex_max_rank");
 
    fOut.Write();
 
