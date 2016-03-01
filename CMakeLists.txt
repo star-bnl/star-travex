@@ -33,6 +33,7 @@ include_directories(
 	ext/star-stevent
 	ext/star-stdb
 	ext/star-tables
+	ext/star-tables/tables
 	ext/star-daq
 	ext/star-tof
 	ext/star-emc
