@@ -2,6 +2,8 @@
 #define VertexRootFile_h
 
 #include "travex/RootFile.h"
+#include "StMuDSTMaker/COMMON/StMuDst.h"
+#include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
 
 
 class VertexRootFile : public tvx::RootFile
@@ -10,7 +12,9 @@ public:
 
    VertexRootFile(tvx::ProgramOptions& prgOpts, Option_t* option="", const char* ftitle="", Int_t compress=1);
 
-   void FillHists();
+   void FillHists(const StMuDst &event);
+   void FillHists(const StMuPrimaryVertex &vertex);
+   void FillHistsMaxRank(const StMuPrimaryVertex &vertex);
 
 };
 
