@@ -41,32 +41,32 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
 
    VertexData primVtx;
 
-   TTree *primaryvtx = new TTree("primaryvtx", "The Primary Vertices");
-   primaryvtx->Branch("event",   &primVtx.event, "event/I");
-   primaryvtx->Branch("index",   &primVtx.index, "index/I");
-   primaryvtx->Branch("rank",    &primVtx.rank, "rank/I");
-   primaryvtx->Branch("mult",    &primVtx.mult, "mult/I");
-   primaryvtx->Branch("refMult", &primVtx.refMult, "refMult/I");
-   primaryvtx->Branch("maxmult", &primVtx.maxmult, "maxmult/I");
-   primaryvtx->Branch("primX",   &primVtx.primX, "primX/F");
-   primaryvtx->Branch("primY",   &primVtx.primY, "primY/F");
-   primaryvtx->Branch("primZ",   &primVtx.primZ, "primZ/F");
-   primaryvtx->Branch("positionError", &primVtx.positionError);
-   primaryvtx->Branch("zVpd",    &primVtx.zVpd, "zVpd/F");
-   primaryvtx->Branch("McX",     &primVtx.McX, "McX/F");
-   primaryvtx->Branch("McY",     &primVtx.McY, "McY/F");
-   primaryvtx->Branch("McZ",     &primVtx.McZ, "McZ/F");
-   primaryvtx->Branch("chi2",    &primVtx.chi2, "chi2/F");
-   primaryvtx->Branch("beam",    &primVtx.beam, "beam/I");
-   primaryvtx->Branch("postx",   &primVtx.postx, "postx/I");
-   primaryvtx->Branch("prompt",  &primVtx.prompt, "prompt/I");
-   primaryvtx->Branch("cross",   &primVtx.cross, "cross/I");
-   primaryvtx->Branch("tof",     &primVtx.tof, "tof/I");
-   primaryvtx->Branch("notof",   &primVtx.notof, "notof/I");
-   primaryvtx->Branch("EEMC",    &primVtx.EEMC, "EEMC/I");
-   primaryvtx->Branch("noEEMC",  &primVtx.noEEMC, "noEEMC/I");
-   primaryvtx->Branch("BEMC",    &primVtx.BEMC, "BEMC/I");
-   primaryvtx->Branch("noBEMC",  &primVtx.noBEMC, "noBEMC/I");
+   TTree *vertexTree = new TTree("vertexTree", "The Primary Vertices");
+   vertexTree->Branch("event",   &primVtx.event, "event/I");
+   vertexTree->Branch("index",   &primVtx.index, "index/I");
+   vertexTree->Branch("rank",    &primVtx.rank, "rank/I");
+   vertexTree->Branch("mult",    &primVtx.mult, "mult/I");
+   vertexTree->Branch("refMult", &primVtx.refMult, "refMult/I");
+   vertexTree->Branch("maxmult", &primVtx.maxmult, "maxmult/I");
+   vertexTree->Branch("primX",   &primVtx.primX, "primX/F");
+   vertexTree->Branch("primY",   &primVtx.primY, "primY/F");
+   vertexTree->Branch("primZ",   &primVtx.primZ, "primZ/F");
+   vertexTree->Branch("positionError", &primVtx.positionError);
+   vertexTree->Branch("zVpd",    &primVtx.zVpd, "zVpd/F");
+   vertexTree->Branch("McX",     &primVtx.McX, "McX/F");
+   vertexTree->Branch("McY",     &primVtx.McY, "McY/F");
+   vertexTree->Branch("McZ",     &primVtx.McZ, "McZ/F");
+   vertexTree->Branch("chi2",    &primVtx.chi2, "chi2/F");
+   vertexTree->Branch("beam",    &primVtx.beam, "beam/I");
+   vertexTree->Branch("postx",   &primVtx.postx, "postx/I");
+   vertexTree->Branch("prompt",  &primVtx.prompt, "prompt/I");
+   vertexTree->Branch("cross",   &primVtx.cross, "cross/I");
+   vertexTree->Branch("tof",     &primVtx.tof, "tof/I");
+   vertexTree->Branch("notof",   &primVtx.notof, "notof/I");
+   vertexTree->Branch("EEMC",    &primVtx.EEMC, "EEMC/I");
+   vertexTree->Branch("noEEMC",  &primVtx.noEEMC, "noEEMC/I");
+   vertexTree->Branch("BEMC",    &primVtx.BEMC, "BEMC/I");
+   vertexTree->Branch("noBEMC",  &primVtx.noBEMC, "noBEMC/I");
 
 
 
@@ -142,20 +142,20 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
       float vertexMaxRank = -1e10;
 
       for (int l = 0; l < numPrimaryVertices; l++) {
-         StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
-         Float_t numTracksToVertex = Vtx->noTracks();
+         StMuPrimaryVertex *stVertex = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
+         Float_t numTracksToVertex = stVertex->noTracks();
 
-         fOut.FillHists(*Vtx);
+         fOut.FillHists(*stVertex);
 
          if (MaxMult < numTracksToVertex) {                               //Amilkar: check if the numTracksToVertex is higher than previous
             MaxMult = numTracksToVertex;                                   //Amilkar: asign the new maximum value
          }
 
          // Find the highest rank vertex
-         if (Vtx->ranking() > vertexMaxRank )
+         if (stVertex->ranking() > vertexMaxRank )
          {
-            vertexMaxRank = Vtx->ranking();
-            maxRankVertex = Vtx;
+            vertexMaxRank = stVertex->ranking();
+            maxRankVertex = stVertex;
          }
       }
 
@@ -185,25 +185,25 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
 
       // Loop over primary verticies in the event
       for (int l = 0; l < numPrimaryVertices; l++) {
-         StMuPrimaryVertex *Vtx = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
+         StMuPrimaryVertex *stVertex = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
 
-         if (!Vtx) continue;
+         if (!stVertex) continue;
 
          primVtx.event   = ev;
-         primVtx.mult    = Vtx->noTracks();
-         primVtx.refMult = Vtx->refMult();
-         primVtx.primX   = Vtx->position().x();
-         primVtx.primY   = Vtx->position().y();
-         primVtx.primZ   = Vtx->position().z();
-         primVtx.positionError  = Vtx->posError();
+         primVtx.mult    = stVertex->noTracks();
+         primVtx.refMult = stVertex->refMult();
+         primVtx.primX   = stVertex->position().x();
+         primVtx.primY   = stVertex->position().y();
+         primVtx.primZ   = stVertex->position().z();
+         primVtx.positionError  = stVertex->posError();
          primVtx.index   = l;
-         primVtx.rank    = Vtx->ranking();
+         primVtx.rank    = stVertex->ranking();
 
          //////Mc info/////////
          primVtx.McX    = 999;
          primVtx.McY    = 999;
          primVtx.McZ    = 999;
-         int idd = Vtx->idTruth();
+         int idd = stVertex->idTruth();
          StMuMcVertex *mcVertex = 0;
 
          if (idd > 0 && idd < NoMuMcVertices)
@@ -215,24 +215,24 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
             primVtx.McZ    = mcVertex->XyzV().z();
          }
 
-         primVtx.beam   =  Vtx->isBeamConstrained() ? 1 : 0;
-         primVtx.postx  =  Vtx->nPostXtracks();
-         primVtx.prompt =  Vtx->nPromptTracks();
-         primVtx.cross  =  Vtx->nCrossCentralMembrane();
-         primVtx.tof    = (Vtx->nCTBMatch()     + Vtx->nBTOFMatch());
-         primVtx.notof  = (Vtx->nCTBNotMatch()  + Vtx->nBTOFNotMatch());
-         primVtx.BEMC   =  Vtx->nBEMCMatch();
-         primVtx.noBEMC =  Vtx->nBEMCNotMatch();
-         primVtx.EEMC   =  Vtx->nEEMCMatch();
-         primVtx.noEEMC =  Vtx->nEEMCNotMatch();
-         primVtx.chi2   =  Vtx->chiSquared();
+         primVtx.beam   =  stVertex->isBeamConstrained() ? 1 : 0;
+         primVtx.postx  =  stVertex->nPostXtracks();
+         primVtx.prompt =  stVertex->nPromptTracks();
+         primVtx.cross  =  stVertex->nCrossCentralMembrane();
+         primVtx.tof    = (stVertex->nCTBMatch()     + stVertex->nBTOFMatch());
+         primVtx.notof  = (stVertex->nCTBNotMatch()  + stVertex->nBTOFNotMatch());
+         primVtx.BEMC   =  stVertex->nBEMCMatch();
+         primVtx.noBEMC =  stVertex->nBEMCNotMatch();
+         primVtx.EEMC   =  stVertex->nEEMCMatch();
+         primVtx.noEEMC =  stVertex->nEEMCNotMatch();
+         primVtx.chi2   =  stVertex->chiSquared();
          primVtx.maxmult = (MaxMult == primVtx.mult ? 1 : 0);
 
-         primaryvtx->Fill();
+         vertexTree->Fill();
 
          if (vtxeval::gDebugFlag) {
-            std::cout << Form("[%i]", l) << Form(" %8.3f  %8.3f  %8.3f ", Vtx->position().x(), Vtx->position().y(), Vtx->position().z())
-                      << Form("  Rank:%1.0f", Vtx->ranking()) << "    Mult: " << primVtx.mult;
+            std::cout << Form("[%i]", l) << Form(" %8.3f  %8.3f  %8.3f ", stVertex->position().x(), stVertex->position().y(), stVertex->position().z())
+                      << Form("  Rank:%1.0f", stVertex->ranking()) << "    Mult: " << primVtx.mult;
 
             if (primVtx.maxmult == 1 && l != 0) std::cout << "\t WRONG RANK" << std::endl;
             else std::cout << std::endl;
