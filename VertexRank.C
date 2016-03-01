@@ -228,7 +228,7 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
 
          vertexTree->Fill();
 
-         fOut.FillHists(*stVertex);
+         fOut.FillHists(*stVertex, mcVertex);
 
          if (vtxeval::gDebugFlag) {
             std::cout << Form("[%i]", l) << Form(" %8.3f  %8.3f  %8.3f ", stVertex->position().x(), stVertex->position().y(), stVertex->position().z())
