@@ -21,9 +21,9 @@ void VertexRootFile::FillHists(const StMuDst &event)
 }
 
 
-void VertexRootFile::FillHists(const StMuPrimaryVertex &vertex)
+void VertexRootFile::FillHists(const StMuPrimaryVertex &vertex, const StMuMcVertex* mcVertex)
 {
-   static_cast<StarVertexHistContainer*>(fDirs["vertex"])->FillHists(vertex);
+   static_cast<StarVertexHistContainer*>(fDirs["vertex"])->FillHists(vertex, mcVertex);
 }
 
 
