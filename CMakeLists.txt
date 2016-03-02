@@ -52,6 +52,14 @@ root_generate_dictionary(star-vertex-eval_dict MuMcPrVKFV2012.h VertexRank.h VxE
 add_library( star-vertex-eval SHARED VertexRank.C MuMcPrVKFV2012.C VxEff.C
 	StarEventHistContainer.cxx StarVertexHistContainer.cxx VertexRootFile.cxx star-vertex-eval_dict.cxx)
 
+link_directories( ${Boost_LIBRARY_DIR} ${ROOT_LIBRARY_DIR} )
+
+add_executable(vtxhist vtxhist.cc)
+
+target_link_libraries(vtxhist
+	travex
+	${Boost_LIBRARIES} ${ROOT_LIBRARIES} HistPainter pthread
+)
 
 # Installation section
 install(TARGETS star-vertex-eval DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
