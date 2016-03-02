@@ -13,6 +13,9 @@ project(star-vertex-eval)
 # Add to path in order to pick up the FindXXX.cmake files included in this project
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/star-cmake")
 
+# This project depends on Boost
+find_package( Boost 1.54.0 REQUIRED COMPONENTS program_options regex filesystem)
+
 # This project depends on ROOT
 find_package(ROOT)
 
@@ -25,6 +28,7 @@ include(StarCommon)
 
 
 include_directories(
+	${Boost_INCLUDE_DIR}
 	${ROOT_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}
 	ext/travex/include
