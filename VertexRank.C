@@ -244,7 +244,7 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
 
    std::cout << "Number of events: " <<  nevent << ", with 0 reconstructed verticies: " << noreco << std::endl;
 
-   fOut.Write();
+   fOut.Close();
 
    TDatime now1;
    now1.Print();
