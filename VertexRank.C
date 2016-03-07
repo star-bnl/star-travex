@@ -72,11 +72,11 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
 
    StMuDebug::setLevel(0);
    StMuDstMaker *maker = new StMuDstMaker(0, 0, "", fileName.c_str(), "st:MuDst.root", 1e9); // set up maker in read mode
-   //                       0,0                        this mean read mode
-   //                           dir                    read all files in this directory
-   //                               file               bla.lis real all file in this list, if (file!="") dir is ignored
-   //                                    filter        apply filter to filenames, multiple filters are separated by ':'
-   //                                          10      maximum number of file to read
+   //                                     0, 0                        this mean read mode
+   //                                           dir                    read all files in this directory
+   //                                               file               bla.lis real all file in this list, if (file!="") dir is ignored
+   //                                                    filter        apply filter to filenames, multiple filters are separated by ':'
+   //                                                           10      maximum number of file to read
    maker->SetStatus("*", 0);
 
    std::vector<std::string> activeBranchNames = {
@@ -135,15 +135,16 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
       //////Max multiplicity/////////
       /////Usually the correct vertex/////
       int MaxMult = 0;
-      StMuPrimaryVertex *maxRankVertex = 0;
+      StMuPrimaryVertex *maxRankVertex = nullptr;
       float vertexMaxRank = -1e10;
 
-      for (int l = 0; l < numPrimaryVertices; l++) {
+      for (int l = 0; l < numPrimaryVertices; l++)
+      {
          StMuPrimaryVertex *stVertex = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
          Float_t numTracksToVertex = stVertex->noTracks();
 
-         if (MaxMult < numTracksToVertex) {                               //Amilkar: check if the numTracksToVertex is higher than previous
-            MaxMult = numTracksToVertex;                                   //Amilkar: asign the new maximum value
+         if (MaxMult < numTracksToVertex) {   //Amilkar: check if the numTracksToVertex is higher than previous
+            MaxMult = numTracksToVertex;      //Amilkar: asign the new maximum value
          }
 
          // Find the highest rank vertex
@@ -174,7 +175,8 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
 
 
       // Loop over primary verticies in the event
-      for (int l = 0; l < numPrimaryVertices; l++) {
+      for (int l = 0; l < numPrimaryVertices; l++)
+      {
          StMuPrimaryVertex *stVertex = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
 
          if (!stVertex) continue;
@@ -195,11 +197,11 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
          primVtx.McX    = 999;
          primVtx.McY    = 999;
          primVtx.McZ    = 999;
-         int idd = stVertex->idTruth();
+         int idTruth = stVertex->idTruth();
          StMuMcVertex *mcVertex = 0;
 
-         if (idd > 0 && idd < NoMuMcVertices)
-            mcVertex = (StMuMcVertex *) MuMcVertices->UncheckedAt(idd - 1);
+         if (idTruth > 0 && idTruth <= NoMuMcVertices)
+            mcVertex = (StMuMcVertex *) MuMcVertices->UncheckedAt(idTruth - 1);
 
          if (mcVertex) {
             primVtx.McX = mcVertex->XyzV().x();

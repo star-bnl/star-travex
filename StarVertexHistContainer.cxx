@@ -59,6 +59,7 @@ void StarVertexHistContainer::FillHists(const StMuPrimaryVertex &vertex, const S
 {
    fHs["hNumTracksToVertex"]->Fill(vertex.noTracks());
    fHs["hVertexRank"]->Fill(vertex.ranking());
+
    fHs["hVertexX"]->Fill(vertex.position().x());
    fHs["hVertexY"]->Fill(vertex.position().y());
    fHs["hVertexZ"]->Fill(vertex.position().z());
