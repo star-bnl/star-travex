@@ -70,6 +70,7 @@ environment variables should be set if needed:
     git submodule update --init --depth=50
     mkdir build && cd build
     cmake -D CMAKE_INSTALL_PREFIX=./ -D BOOST_ROOT=$OPTSTAR ../
+    make -j4 && make install
 
 The make tool will place the libraries in the local `.slXX_gccXXX` directory.
 
