@@ -5,18 +5,26 @@ include_once("config.php");
 
 class PlotHelper
 {
-   var $img_base_dir;
+   private $img_base_dir;
+   private $img_name_prefix;
+   private $img_extension;
 
 
-   function PlotHelper($img_base_dir) {
+   function __construct($img_base_dir, $img_name_prefix="c_", $img_extension=".png")
+   {
       $this->img_base_dir = $img_base_dir;
+      $this->img_name_prefix = $img_name_prefix;
+      $this->img_extension = $img_extension;
    }
 
 
    function fileExists($pName)
    {
       $pi = pathinfo($pName);
-      $imgSrc  = STISCAN_RESULTS_DIR."/{$pi['dirname']}/c_{$pi['basename']}.png";
+      $pfx = $this->img_name_prefix;
+      $ext = $this->img_extension;
+
+      $imgSrc  = STISCAN_RESULTS_DIR."/{$pi['dirname']}/$pfx{$pi['basename']}$ext";
       return file_exists($imgSrc);
    }
 
@@ -24,10 +32,12 @@ class PlotHelper
    function img($pName, $w=null, $href=null)
    {
       $pi = pathinfo($pName);
+      $pfx = $this->img_name_prefix;
+      $ext = $this->img_extension;
 
       $strWidth = empty($w) ? "width=300" : "width=$w";
-      $imgSrc   = "{$this->img_base_dir}/{$pi['dirname']}/c_{$pi['basename']}.png";
-      $imgHref  = empty($href) ? "{$this->img_base_dir}/{$pi['dirname']}/c_{$pi['basename']}.png" : $href;
+      $imgSrc   = "{$this->img_base_dir}/{$pi['dirname']}/$pfx{$pi['basename']}$ext";
+      $imgHref  = empty($href) ? "{$this->img_base_dir}/{$pi['dirname']}/$pfx{$pi['basename']}$ext" : $href;
 
       return "<a href='$imgHref'><img $strWidth src='$imgSrc'></a>";
    }
