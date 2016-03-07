@@ -157,11 +157,6 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
          }
       }
 
-      if (maxRankVertex) {
-         // Fill vertex hist container for max rank vertex
-         fOut.FillHistsMaxRank(*maxRankVertex);
-      }
-
       ////////No reconstructed///////////
       if (numPrimaryVertices == 0) {
          noreco++;
@@ -237,6 +232,16 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
             if (primVtx.maxmult == 1 && l != 0) std::cout << "\t WRONG RANK" << std::endl;
             else std::cout << std::endl;
          }
+      }
+
+      if (maxRankVertex)
+      {
+         int idTruth = maxRankVertex->idTruth();
+         StMuMcVertex* mcVertex = (idTruth > 0 && idTruth < NoMuMcVertices) ?
+            (StMuMcVertex *) MuMcVertices->UncheckedAt(idTruth - 1) : nullptr;
+
+         // Fill vertex hist container for max rank vertex
+         fOut.FillHistsMaxRank(*maxRankVertex, mcVertex);
       }
 
       fOut.FillHists(*muDst);

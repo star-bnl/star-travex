@@ -27,7 +27,7 @@ void VertexRootFile::FillHists(const StMuPrimaryVertex &vertex, const StMuMcVert
 }
 
 
-void VertexRootFile::FillHistsMaxRank(const StMuPrimaryVertex &vertex)
+void VertexRootFile::FillHistsMaxRank(const StMuPrimaryVertex &vertex, const StMuMcVertex* mcVertex)
 {
-   static_cast<StarVertexHistContainer*>(fDirs["vertex_maxrank"])->FillHists(vertex);
+   static_cast<StarVertexHistContainer*>(fDirs["vertex_maxrank"])->FillHists(vertex, mcVertex);
 }
