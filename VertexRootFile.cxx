@@ -7,11 +7,12 @@
 VertexRootFile::VertexRootFile(tvx::ProgramOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
    tvx::RootFile(prgOpts, option, ftitle, compress)
 {
-   cd();
-
    fDirs["event"] = new StarEventHistContainer("event", this);
    fDirs["vertex"] = new StarVertexHistContainer("vertex", this);
    fDirs["vertex_maxrank"] = new StarVertexHistContainer("vertex_maxrank", this);
+
+   // When done creating hist containers make parent TDirectoryFile the current one
+   cd();
 }
 
 
