@@ -13,7 +13,6 @@ public:
    StarVertexHistContainer(const std::string name, TDirectory* motherDir=nullptr, const std::string option="");
 
    void FillHists(const StMuPrimaryVertex &vertex, const StMuMcVertex* mcVertex=nullptr);
-   virtual void FillDerivedHists() {}
 
 protected:
 
