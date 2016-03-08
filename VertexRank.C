@@ -18,7 +18,6 @@
 #include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
 #include "StMuDSTMaker/COMMON/StMuMcVertex.h"
 #include "StMuDSTMaker/COMMON/StMuDstMaker.h"
-#include "TDatime.h"
 #include "TMath.h"
 #include "StEvent/StBTofHeader.h"
 #endif
@@ -100,9 +99,6 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
    tree->SetCacheLearnEntries(1); //one entry is sufficient to learn
    tree->SetCacheEntryRange(0, nevent);
 
-   // Log current time
-   TDatime now;
-   now.Print();
 
    // Keep track of the number of events with 0 reconstructed verticies
    int noreco = 0;
@@ -250,7 +246,4 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
    std::cout << "Number of events: " <<  nevent << ", with 0 reconstructed verticies: " << noreco << std::endl;
 
    fOut.Close();
-
-   TDatime now1;
-   now1.Print();
 }
