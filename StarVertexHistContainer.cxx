@@ -6,20 +6,20 @@ StarVertexHistContainer::StarVertexHistContainer(const std::string name, TDirect
 {
    fHs["hNumTracksToVertex"].reset( new TH1I("hNumTracksToVertex", "Number of Tracks Assigned to Vertex", 50, 0, 50) );
    fHs["hVertexRank"].reset( new TH1F("hVertexRank", "Vertex Rank", 100, -100, 100) );
-   fHs["hVertexX"].reset( new TH1I("hVertexX", "Vertex X Position, cm", 50, -1, 1) );
-   fHs["hVertexY"].reset( new TH1I("hVertexY", "Vertex Y Position, cm", 50, -1, 1) );
-   fHs["hVertexZ"].reset( new TH1I("hVertexZ", "Vertex Z Position, cm", 50, -30, 30) );
+   fHs["hVertexX"].reset( new TH1I("hVertexX", "; Reco Vertex X Position, cm; Counts; ", 50, -1, 1) );
+   fHs["hVertexY"].reset( new TH1I("hVertexY", "; Reco Vertex Y Position, cm; Counts; ", 50, -1, 1) );
+   fHs["hVertexZ"].reset( new TH1I("hVertexZ", "; Reco Vertex Z Position, cm; Counts; ", 50, -30, 30) );
 
    TH1* h = new TH1I("hVertexErrorMag", "Vertex Position Error Magnitude; sqrt(#sigma_{x}^{2} + #sigma_{y}^{2} + #sigma_{z}^{2}), cm", 50, 0, 1);
    fHs["hVertexErrorMag"].reset(h);
-   fHs["hVertexErrorX"].reset( new TH1I("hVertexErrorX", "Vertex X Position Error, cm", 50, 0, 0.35) );
-   fHs["hVertexErrorY"].reset( new TH1I("hVertexErrorY", "Vertex Y Position Error, cm", 50, 0, 0.35) );
-   fHs["hVertexErrorZ"].reset( new TH1I("hVertexErrorZ", "Vertex Z Position Error, cm", 50, 0, 0.50) );
+   fHs["hVertexErrorX"].reset( new TH1I("hVertexErrorX", "; Reco Vertex X Position Error, cm; Counts; ", 50, 0, 0.35) );
+   fHs["hVertexErrorY"].reset( new TH1I("hVertexErrorY", "; Reco Vertex Y Position Error, cm; Counts; ", 50, 0, 0.35) );
+   fHs["hVertexErrorZ"].reset( new TH1I("hVertexErrorZ", "; Reco Vertex Z Position Error, cm; Counts; ", 50, 0, 0.50) );
 
    // The following histograms require info from simulated vertex
-   fHs["hVertexPullX"].reset( new TH1I("hVertexPullX", "Vertex Pull Distribution in X", 50, -5, 5) );
-   fHs["hVertexPullY"].reset( new TH1I("hVertexPullY", "Vertex Pull Distribution in Y", 50, -5, 5) );
-   fHs["hVertexPullZ"].reset( new TH1I("hVertexPullZ", "Vertex Pull Distribution in Z", 50, -5, 5) );
+   fHs["hVertexPullX"].reset( new TH1I("hVertexPullX", "; Vertex Pull Distribution in X; Counts; ", 50, -5, 5) );
+   fHs["hVertexPullY"].reset( new TH1I("hVertexPullY", "; Vertex Pull Distribution in Y; Counts; ", 50, -5, 5) );
+   fHs["hVertexPullZ"].reset( new TH1I("hVertexPullZ", "; Vertex Pull Distribution in Z; Counts; ", 50, -5, 5) );
 }
 
 
