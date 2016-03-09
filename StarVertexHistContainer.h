@@ -2,9 +2,9 @@
 #define StarVertexHistContainer_h
 
 #include "travex/HistContainer.h"
-#include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
-#include "StMuDSTMaker/COMMON/StMuMcVertex.h"
 
+class StMuPrimaryVertex;
+class StMuMcVertex;
 
 class StarVertexHistContainer : public tvx::HistContainer
 {

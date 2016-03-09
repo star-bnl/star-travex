@@ -3,6 +3,9 @@
 
 #include "StarVertexHistContainer.h"
 
+#include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
+#include "StMuDSTMaker/COMMON/StMuMcVertex.h"
+
 
 StarVertexHistContainer::StarVertexHistContainer(const std::string name, TDirectory* motherDir, const std::string option) :
    tvx::HistContainer(name, motherDir, option)
