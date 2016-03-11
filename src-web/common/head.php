@@ -6,7 +6,7 @@ include_once("config.php");
 
 <html>
 <head>
-  <title><?= isset($page_title) ? $page_title : "Stiscan Project" ?></title>
+  <title><?= isset($page_title) ? $page_title : "Evaluation of Track and Vertex Reconstrucion at STAR" ?></title>
   <meta HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
   <link REL="STYLESHEET" TYPE="text/css" HREF="<?=BASE_URL?>/css/main.css">
   <script language="javascript" src="<?=BASE_URL?>/common/toc.js"></script>
@@ -34,11 +34,11 @@ Contact
 &nbsp;
 &nbsp;
 &nbsp;
-<a href="https://github.com/plexoos/star-sti-tools" class="s120">Source Code</a>
+<a href="<?=VTXEVAL_BASE_URL?>" class="s120">vtxeval</a>
 &nbsp;
 &nbsp;
 &nbsp;
-<a href="https://github.com/plexoos/star-sti-tools/blob/master/README.md" class="s120">About</a>
+<a href="https://github.com/plexoos/star-sti-tools" class="s120">Home</a>
 
 </div>
 
