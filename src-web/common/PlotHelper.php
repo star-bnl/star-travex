@@ -7,11 +7,13 @@ class PlotHelper
 {
    private $img_base_dir;
    private $img_name_prefix;
+   private $img_width;
    private $img_extension;
 
 
-   function __construct($img_base_dir, $img_name_prefix="c_", $img_extension=".png")
+   function __construct($img_base_dir, $img_name_prefix="c_", $img_width=500, $img_extension=".png")
    {
+      $this->img_width = $img_width;
       $this->img_base_dir = $img_base_dir;
       $this->img_name_prefix = $img_name_prefix;
       $this->img_extension = $img_extension;
@@ -35,7 +37,7 @@ class PlotHelper
       $pfx = $this->img_name_prefix;
       $ext = $this->img_extension;
 
-      $strWidth = empty($w) ? "width=300" : "width=$w";
+      $strWidth = empty($w) ? "width={$this->img_width}" : "width=$w";
       $imgSrc   = "{$this->img_base_dir}/{$pi['dirname']}/$pfx{$pi['basename']}$ext";
       $imgHref  = empty($href) ? "{$this->img_base_dir}/{$pi['dirname']}/$pfx{$pi['basename']}$ext" : $href;
 
