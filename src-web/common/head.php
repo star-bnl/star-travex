@@ -9,6 +9,7 @@ include_once("config.php");
   <title><?= isset($page_title) ? $page_title : "Stiscan Project" ?></title>
   <meta HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
   <link REL="STYLESHEET" TYPE="text/css" HREF="<?=BASE_URL?>/css/main.css">
+  <script language="javascript" src="<?=BASE_URL?>/common/toc.js"></script>
 </head>
 
 <body bgcolor="#ffffff">
