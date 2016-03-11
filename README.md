@@ -1,26 +1,34 @@
 [![Build Status](https://travis-ci.org/plexoos/star-sti-tools.svg?branch=master)](https://travis-ci.org/plexoos/star-sti-tools)
 
-This package includes a collection of tools which can be used to evaluate and
-validate reconstruction of charged particle tracks measured by tracking
-detectors. The main objective of this toolkit is to design and implement
-a detector independent utilities that can be applied to most common detector
-configurations and reconstruction frameworks used in particle physics
-experiments.
+This package includes a collection of tools used by the STAR experiment to
+evaluate reconstruction of charged particle tracks and vertices. The STAR
+detector at the Relativistic Heavy Ion Collider (RHIC) in Brookhaven National
+Laboratory is a multipurpose experiment designed to study properties of high and
+medium energy nuclear collisions.
 
-Currently we provide two tools `stiscan`
-([StiScan/README.md](StiScan/README.md)) and `stihify`
-([StiHify/README.md](StiHify/README.md)):
+Although, the code in this package is mainly tested with and designed to support
+reconstruction and analysis of the data collected by the STAR experiment we hope
+other new or existing experiments will find it useful as well. This project can
+also serve as an example for other implementations of track and vertex
+evaluation toolkits who chose to save time and effort by building around
+`travex`, a detector-independent suite for track and vertex reconstruction
+evaluation [https://github.com/plexoos/travex].
 
-- `stiscan` is used to verify the accuracy of the modeled detector material
+The following individual tools are available:
 
-- `stihify` is used to measure the efficiency of hits assigned to the track by a
-track reconstruction algorithm. For single hit efficiency studies with `stihify`
-we developed a method independent of the actual reconstruction algorithm used
-for finding particle tracks.
+- `stiscan` ([StiScan/README.md](StiScan/README.md)) is used to verify the
+accuracy of the modeled detector material
 
-The code in this package is mainly tested with and designed to support
-reconstruction and analysis of the data collected by the STAR experiment at RHIC
-but we hope other experiments will find it useful as well.
+- `stihify` ([StiHify/README.md](StiHify/README.md)) is used to measure the
+efficiency of hits assigned to the track by a track reconstruction algorithm.
+For single hit efficiency studies with `stihify` we developed a method
+independent of the actual reconstruction algorithm used for finding particle
+tracks.
+
+- `vtxeval` is aimed to evaluate the performance of vertex finding algorithms.
+Currently, the source code can be found in a separate repository
+[https://github.com/star-bnl/star-vertex-eval] but we plan to transfer the code
+into here, possibly renaming the entire project to `star-travex`.
 
 
 How to build and install libraries and tools
