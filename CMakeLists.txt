@@ -105,6 +105,12 @@ root_generate_dictionary(
 	LINKDEF StiScan/StiScanLinkDef.h
 )
 
+root_generate_dictionary(
+	StMcAnalysisMaker_dict
+	StiHify/StMcAnalysisMaker.h
+   LINKDEF StiHify/StMcAnalysisMakerLinkDef.h
+)
+
 add_library(
 	StiRootIO
 	SHARED
@@ -127,6 +133,8 @@ add_library(
 
 add_library( GeaRootIO SHARED GeaRootIO/TGeaEvent.cxx GeaRootIO_dict.cxx)
 add_library( AgUStep SHARED GeaRootIO/AgUStep.cxx AgUStep_dict.cxx)
+
+add_library( StMcAnalysisMaker SHARED StiHify/StMcAnalysisMaker.cxx StMcAnalysisMaker_dict.cxx)
 
 add_library(
 	StiHifyLib
@@ -181,5 +189,6 @@ endif()
 
 # Installation section
 install(DIRECTORY "ext/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
-install(TARGETS StiRootIO GeaRootIO AgUStep StiHifyLib StiScanLib DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
+install(TARGETS StiRootIO GeaRootIO AgUStep StiHifyLib StiScanLib
+  StMcAnalysisMaker DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
 install(TARGETS stiscan stihify DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/bin")

@@ -21,6 +21,9 @@ public:
    virtual void  Clear(Option_t *opt = "");
    virtual Int_t Finish();
 
+   //Added ZWM - 3/11/16
+   void setOutputFileName(TString);
+
 protected:
 
    virtual void SetEventTree() = 0;
@@ -30,6 +33,8 @@ protected:
    TTree     *fTree;
    TStiEvent *fEvent;
 
+   // Added ZWM - 3/11/16
+   TString fileName;
    ClassDef(StiTreeMaker, 0)
 };
 
