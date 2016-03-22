@@ -19,7 +19,7 @@ StiHifyRootFile::StiHifyRootFile(StiHifyPrgOptions& prgOpts, Option_t *option, c
 
 void StiHifyRootFile::BookHists(const StiHifyPrgOptions& prgOpts)
 {
-   treeMaker = new StiHifyAnalysisTreeMaker();
+   treeMaker = new StiHifyAnalysisTreeMaker(prgOpts);
    mDirs["sti_hit_any_node"] = new StiHifyHistContainer(prgOpts, "sti_hit_any_node", this);
    mDirs["sti_hit_accepted"] = new StiHifyHistContainer(prgOpts, "sti_hit_accepted", this);
    mDirs["sti_hit_rejected"] = new StiHifyHistContainer(prgOpts, "sti_hit_rejected", this);

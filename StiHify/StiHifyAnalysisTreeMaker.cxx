@@ -6,7 +6,7 @@
 #include "StiHify/StiHifyAnalysisTreeMaker.h"
 #include "StiRootIO/TStiHitProxy.h"
 
-StiHifyAnalysisTreeMaker::StiHifyAnalysisTreeMaker()
+StiHifyAnalysisTreeMaker::StiHifyAnalysisTreeMaker(const StiHifyPrgOptions& prgOpts) :fPrgOptions(prgOpts)
 {
   createTree();
   clearTreeStructs(); // prep the structures for running

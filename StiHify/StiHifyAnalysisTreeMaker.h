@@ -19,7 +19,7 @@ class StiHifyAnalysisTreeMaker
 {
 public:
 
-    StiHifyAnalysisTreeMaker();
+    StiHifyAnalysisTreeMaker(const StiHifyPrgOptions& );
 
     struct errorInfo_t {
       float errorMag;
@@ -48,6 +48,7 @@ protected:
 
 private:
 
+   const StiHifyPrgOptions& fPrgOptions; ///< Command line arguments and options requested by the user
 };
 
 #endif
