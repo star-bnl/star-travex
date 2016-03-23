@@ -76,7 +76,7 @@ void StiHifyHistContainer::BookHists()
 }
 
 
-void StiHifyHistContainer::FillHists(const StiHifyEvent &event, StiNodeHitStatus hitStatus, const std::set<std::string> *volumeList, bool onlyNodesWithCandidates)
+void StiHifyHistContainer::FillHists(const StiHifyEvent &event, StiNodeHitStatus hitStatus, bool onlyNodesWithCandidates)
 {
    for (const auto& kalmTrack : event.GetTStiKalmanTracks())
    {
@@ -89,13 +89,13 @@ void StiHifyHistContainer::FillHists(const StiHifyEvent &event, StiNodeHitStatus
          switch (hitStatus)
          {
          case StiNodeHitStatus::Any:
-            FillHists(trkNode, volumeList);
+            FillHists(trkNode);
             break;
          case StiNodeHitStatus::Accepted:
-            FillHistsHitsAccepted(trkNode, volumeList);
+            FillHistsHitsAccepted(trkNode);
             break;
          case StiNodeHitStatus::Rejected:
-            FillHistsHitsRejected(trkNode, volumeList);
+            FillHistsHitsRejected(trkNode);
             break;
          default:
             Error("FillHists", "Internal type of Sti hit assigned to this node "
@@ -122,12 +122,12 @@ void StiHifyHistContainer::FillDerivedHists()
 }
 
 
-void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList)
+void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode)
 {
-   if (volumeList && volumeList->size() && !trkNode.MatchedVolName(*volumeList) )
+   if (trkNode.GetVolumeName().empty() || !trkNode.IsInsideVolume())
       return;
 
-   if (trkNode.GetVolumeName().empty() || !trkNode.IsInsideVolume())
+   if ( !fPrgOptions.MatchedVolName(trkNode.GetVolumeName()) )
       return;
 
    // Start filling histograms
@@ -186,19 +186,19 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
 }
 
 
-void StiHifyHistContainer::FillHistsHitsAccepted(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList)
+void StiHifyHistContainer::FillHistsHitsAccepted(const TStiKalmanTrackNode &trkNode)
 {
    if (!trkNode.GetHit())
       return;
 
-   FillHists(trkNode, volumeList);
+   FillHists(trkNode);
 }
 
 
-void StiHifyHistContainer::FillHistsHitsRejected(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList)
+void StiHifyHistContainer::FillHistsHitsRejected(const TStiKalmanTrackNode &trkNode)
 {
    if (trkNode.GetHit())
       return;
 
-   FillHists(trkNode, volumeList);
+   FillHists(trkNode);
 }
