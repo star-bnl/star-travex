@@ -42,6 +42,10 @@ void loop_over_tree(StiHifyPrgOptions &prgOpts)
 
    Info("loop_over_tree", "Found tree/chain with N entries: %d", nTreeEvents);
 
+   nTreeEvents = (prgOpts.GetMaxEventsUser() < nTreeEvents) ? prgOpts.GetMaxEventsUser() : nTreeEvents;
+
+   Info("loop_over_tree", "Will process %d events", nTreeEvents);
+
    StiHifyEvent *stiHifyEvent = new StiHifyEvent();
    treeChain->SetBranchAddress("e.", &stiHifyEvent);
    treeChain->SetBranchStatus("e.*", false);
