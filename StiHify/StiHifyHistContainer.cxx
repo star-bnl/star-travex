@@ -80,26 +80,30 @@ void StiHifyHistContainer::BookHists()
 }
 
 
-void StiHifyHistContainer::FillHists(const StiHifyEvent &event, StiNodeHitStatus hitStatus, const std::set<std::string> *volumeList)
+void StiHifyHistContainer::FillHists(const StiHifyEvent &event, StiNodeHitStatus hitStatus, bool onlyNodesWithCandidates)
 {
    for (const auto& kalmTrack : event.GetTStiKalmanTracks())
    {
       for (const auto& trkNode : kalmTrack.GetNodes())
       {
+         // Ignore nodes with 0 candidate hits when requested by user
+         if ( onlyNodesWithCandidates && !trkNode.GetCandidateProxyHits().size() )
+            continue;
+
          switch (hitStatus)
          {
          case StiNodeHitStatus::Any:
-            FillHists(trkNode, volumeList);
+            FillHists(trkNode);
             break;
          case StiNodeHitStatus::Accepted:
-            FillHistsHitsAccepted(trkNode, volumeList);
+            FillHistsHitsAccepted(trkNode);
             break;
          case StiNodeHitStatus::Rejected:
-            FillHistsHitsRejected(trkNode, volumeList);
+            FillHistsHitsRejected(trkNode);
             break;
          default:
-            Error("FillHists", "Internal type of Sti hit assigned to this node is not specified. "
-                  "Histograms won't be filled");
+            Error("FillHists", "Internal type of Sti hit assigned to this node "
+                  "is not specified or implemented. Histograms won't be filled");
             break;
          }
       }
@@ -107,12 +111,27 @@ void StiHifyHistContainer::FillHists(const StiHifyEvent &event, StiNodeHitStatus
 }
 
 
-void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList)
+/**
+ * Creates X and Y projections from filled 2D histograms.
+ */
+void StiHifyHistContainer::FillDerivedHists()
 {
-   if (volumeList && volumeList->size() && !trkNode.MatchedVolName(*volumeList) )
+   this->cd();
+
+   mHs["hPullCandidateHits2D_px"].reset( hPullCandidateHits2D->ProjectionX() );
+   mHs["hPullCandidateHits2D_py"].reset( hPullCandidateHits2D->ProjectionY() );
+
+   mHs["hActiveLayerCounts_px"].reset( hActiveLayerCounts->ProjectionX() );
+   mHs["hActiveLayerCounts_py"].reset( hActiveLayerCounts->ProjectionY() );
+}
+
+
+void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode)
+{
+   if (trkNode.GetVolumeName().empty() || !trkNode.IsInsideVolume())
       return;
 
-   if (trkNode.GetVolumeName().empty() || !trkNode.IsInsideVolume())
+   if ( !fPrgOptions.MatchedVolName(trkNode.GetVolumeName()) )
       return;
 
    // Start filling histograms
@@ -174,19 +193,19 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode, const s
 }
 
 
-void StiHifyHistContainer::FillHistsHitsAccepted(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList)
+void StiHifyHistContainer::FillHistsHitsAccepted(const TStiKalmanTrackNode &trkNode)
 {
    if (!trkNode.GetHit())
       return;
 
-   FillHists(trkNode, volumeList);
+   FillHists(trkNode);
 }
 
 
-void StiHifyHistContainer::FillHistsHitsRejected(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList)
+void StiHifyHistContainer::FillHistsHitsRejected(const TStiKalmanTrackNode &trkNode)
 {
    if (trkNode.GetHit())
       return;
 
-   FillHists(trkNode, volumeList);
+   FillHists(trkNode);
 }

@@ -1,7 +1,6 @@
 #include "StiHify/StiHifyRatiosHistContainer.h"
 
 #include "TH1.h"
-#include "StiRootIO/Profile2D.h"
 
 
 StiHifyRatiosHistContainer::StiHifyRatiosHistContainer(const char* name, TDirectory* motherDir, Option_t* option) :
@@ -26,23 +25,10 @@ void StiHifyRatiosHistContainer::CreateRatioHist(const TH1* hNumer, const TH1* h
    myRatio->Sumw2();
    myRatio->Divide(hNumer, hDenom, 1, 1, "B");
 
-   mHs[std::string(myRatio->GetName())].reset(myRatio);
-
-   // Create a 2D profile form the 2D ratio histogram
-   if (myRatio->GetDimension() == 2)
+   if (myRatio->GetDimension() == 1)
    {
-      std::string ratioHistName(myRatio->GetName());
-      ratioHistName += "_pxy";
-
-      Profile2D* myRatioProfile = new Profile2D(static_cast<TH2D&>(*myRatio));
-
-      myRatioProfile->SetName( ratioHistName.c_str() );
-      mHs[ratioHistName].reset(myRatioProfile);
-
-      // Create a profile from a 2D profile
-      TProfile* myRatioProfileX   = myRatioProfile->ProfileX();
-
-      myRatioProfileX->Fit("pol0", "Q"); // Fit a line to the data points
-      mHs[ratioHistName + "_pfx"].reset(myRatioProfileX);
+      myRatio->Fit("pol0", "Q"); // Fit a line to the data points
    }
+
+   mHs[ std::string(myRatio->GetName()) ].reset(myRatio);
 }

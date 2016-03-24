@@ -12,6 +12,7 @@
 
 using namespace tvx;
 
+
 StiRootFile::StiRootFile(PrgOptionProcessor& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
    TFile(prgOpts.GetOutFileName().c_str(), option, ftitle, compress),
    mDirs(),
@@ -24,34 +25,24 @@ StiRootFile::StiRootFile(PrgOptionProcessor& prgOpts, Option_t *option, const ch
 }
 
 
+/**
+ * For each histogram container calls the method of the same name in order to
+ * produce new histograms from already filled histograms.
+ */
 void StiRootFile::FillDerivedHists()
 {
-   for (const std::pair<std::string, StiHistContainer*>& iDir : mDirs)
+   for (const std::pair<std::string, StiHistContainer*>& subDir : mDirs)
    {
-      std::string  dirName = iDir.first;
-      StiHistContainer *container = iDir.second;
+      std::string  dirName = subDir.first;
+      StiHistContainer *container = subDir.second;
 
       if (!container) {
-         Error("FillDerivedHists", "No container/directory found for key %s. Skipping...", dirName.c_str());
+         Error("FillDerivedHists", "No histogram container found for directory '%s'. Skipping...", dirName.c_str());
          continue;
       }
 
       container->FillDerivedHists();
    }
-}
-
-
-Int_t StiRootFile::Write(const char* name, Int_t opt, Int_t bufsiz)
-{
-   Info("Write", "%s", GetName());
-
-   return TFile::Write(name, opt, bufsiz);
-}
-
-
-Int_t StiRootFile::Write(const char* name, Int_t opt, Int_t bufsiz) const
-{
-   return TFile::Write(name, opt, bufsiz);
 }
 
 
@@ -76,10 +67,10 @@ void StiRootFile::SaveAllAs(std::string prefix)
    else
       Warning("SaveAllAs", "Perhaps dir already exists: %s", prefix.c_str());
 
-   for (const std::pair<std::string, StiHistContainer*>& iDir : mDirs)
+   for (const std::pair<std::string, StiHistContainer*>& subDir : mDirs)
    {
-      std::string  dirName = iDir.first;
-      StiHistContainer *container = iDir.second;
+      std::string  dirName = subDir.first;
+      StiHistContainer *container = subDir.second;
 
       if (!container) {
          Error("SaveAllAs", "No container/directory found for key %s. Skipping...", dirName.c_str());

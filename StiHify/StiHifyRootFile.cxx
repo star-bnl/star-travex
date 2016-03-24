@@ -26,7 +26,7 @@ void StiHifyRootFile::BookHists(const StiHifyPrgOptions& prgOpts)
 }
 
 
-void StiHifyRootFile::FillHists(const StiHifyEvent &event, const std::set<std::string> *volumeList)
+void StiHifyRootFile::FillHists(const StiHifyEvent &event)
 {
    treeMaker->FillTree(event, StiNodeHitStatus::Any, volumeList);
    treeMaker->FillTree(event, StiNodeHitStatus::Accepted, volumeList);
@@ -35,16 +35,19 @@ void StiHifyRootFile::FillHists(const StiHifyEvent &event, const std::set<std::s
    StiHifyHistContainer* container;
 
    container = static_cast<StiHifyHistContainer*> (mDirs["sti_hit_any_node"]);
-   container->FillHists(event, StiNodeHitStatus::Any, volumeList);
+   container->FillHists(event, StiNodeHitStatus::Any);
 
    container = static_cast<StiHifyHistContainer*> (mDirs["sti_hit_accepted"]);
-   container->FillHists(event, StiNodeHitStatus::Accepted, volumeList);
+   container->FillHists(event, StiNodeHitStatus::Accepted);
 
    container = static_cast<StiHifyHistContainer*> (mDirs["sti_hit_rejected"]);
-   container->FillHists(event, StiNodeHitStatus::Rejected, volumeList);
+   container->FillHists(event, StiNodeHitStatus::Rejected);
 }
 
 
+/**
+ * Create ratios for all histograms whose name starts with hActiveLayerCounts.
+ */
 void StiHifyRootFile::FillDerivedHists()
 {
    StiRootFile::FillDerivedHists();

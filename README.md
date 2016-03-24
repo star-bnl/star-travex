@@ -1,26 +1,34 @@
 [![Build Status](https://travis-ci.org/plexoos/star-sti-tools.svg?branch=master)](https://travis-ci.org/plexoos/star-sti-tools)
 
-This package includes a collection of tools which can be used to evaluate and
-validate reconstruction of charged particle tracks measured by tracking
-detectors. The main objective of this toolkit is to design and implement
-a detector independent utilities that can be applied to most common detector
-configurations and reconstruction frameworks used in particle physics
-experiments.
+This package includes a collection of tools used by the STAR experiment to
+evaluate reconstruction of charged particle tracks and vertices. The STAR
+detector at the Relativistic Heavy Ion Collider (RHIC) in Brookhaven National
+Laboratory is a multipurpose experiment designed to study properties of high and
+medium energy nuclear collisions.
 
-Currently we provide two tools `stiscan`
-([StiScan/README.md](StiScan/README.md)) and `stihify`
-([StiHify/README.md](StiHify/README.md)):
+Although, the code in this package is mainly tested with and designed to support
+reconstruction and analysis of the data collected by the STAR experiment we hope
+other new or existing experiments will find it useful as well. This project can
+also serve as an example for other implementations of track and vertex
+evaluation toolkits who chose to save time and effort by building around
+`travex`, a detector-independent suite for track and vertex reconstruction
+evaluation [https://github.com/plexoos/travex].
 
-- `stiscan` is used to verify the accuracy of the modeled detector material
+The following individual tools are available:
 
-- `stihify` is used to measure the efficiency of hits assigned to the track by a
-track reconstruction algorithm. For single hit efficiency studies with `stihify`
-we developed a method independent of the actual reconstruction algorithm used
-for finding particle tracks.
+- `stiscan` ([StiScan/README.md](StiScan/README.md)) is used to verify the
+accuracy of the modeled detector material
 
-The code in this package is mainly tested with and designed to support
-reconstruction and analysis of the data collected by the STAR experiment at RHIC
-but we hope other experiments will find it useful as well.
+- `stihify` ([StiHify/README.md](StiHify/README.md)) is used to measure the
+efficiency of hits assigned to the track by a track reconstruction algorithm.
+For single hit efficiency studies with `stihify` we developed a method
+independent of the actual reconstruction algorithm used for finding particle
+tracks.
+
+- `vtxeval` is aimed to evaluate the performance of vertex finding algorithms.
+Currently, the source code can be found in a separate repository
+[https://github.com/star-bnl/star-vertex-eval] but we plan to transfer the code
+into here, possibly renaming the entire project to `star-travex`.
 
 
 How to build and install libraries and tools
@@ -34,45 +42,45 @@ Prerequisites
 - ROOT (>= 5.34.30), http://root.cern.ch
 - boost libraries (>= 1.54): `program_options`, `regex`, and `filesystem`
 - Some modules from the STAR software library already included as dependencies
-in `contrib/` subdirectory.
+in `ext/` subdirectory.
 
 
 Build with cmake
 ----------------
 
-In the following we assume that the user environment includes the standard shell
-variables available for a typical user account of the STAR experiment. The
-following environment variables can be set if needed:
-
-    $STAR_LIB        # Used in supple/starsim_zslice_*.kumac
-    $OPTSTAR         # The prefix path to installed boost release
-
 Checkout the code using one of the following commands:
 
-    git clone https://github.com/plexoos/star-sti-tools.git   # If you do not have an account on github.com
-    git clone git@github.com:plexoos/star-sti-tools.git       # otherwise.
+    git clone https://github.com/plexoos/star-sti-tools.git
 
 Compile and build the tools:
 
     cd star-sti-tools/
     git submodule update --init --depth=50
     mkdir build && cd build
-    cmake -D CMAKE_INSTALL_PREFIX=./ -D CMAKE_CXX_FLAGS="-m32" -D BOOST_ROOT=$OPTSTAR ../
+    cmake ../
     make -j4 && make install
 
 The make tool will place the libraries in the local `.slXX_gccXXX` directory.
 
 
-Build with cons within STAR environment
--------------------------------------
+Build within STAR environment
+-----------------------------
 
-    starver dev
-    git clone https://github.com/plexoos/star-sti-tools.git && cd star-sti-tools
-    git submodule update --init --depth=1
-    mkdir -p build-cons/StRoot && cd build-cons/StRoot
-    ln -s ../../contrib/star-sti/Sti* ../../Sti* ../../GeaRootIO .
-    cd ..
-    cons
+We assume that the user environment includes the standard shell variables
+available for a typical user account of the STAR experiment. The following
+environment variables should be set if needed:
+
+    $STAR_LIB        # Used in supple/starsim_zslice_*.kumac
+    $OPTSTAR         # The prefix path to installed boost release
+
+    git clone https://github.com/plexoos/star-sti-tools.git
+    cd star-sti-tools/
+    git submodule update --init --depth=50
+    mkdir build && cd build
+    cmake -D CMAKE_INSTALL_PREFIX=./ -D BOOST_ROOT=$OPTSTAR ../
+    make -j4 && make install
+
+The make tool will place the libraries in the local `.slXX_gccXXX` directory.
 
 
 Regular expressions matching geometry volumes used at STAR

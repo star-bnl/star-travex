@@ -46,6 +46,7 @@ Int_t StiTreeMaker::Init()
 
    //TString fileName( gSystem->BaseName(bfChain->GetFileIn().Data()) );
    fileName.ReplaceAll(".root",""); 
+
    // Form a new name for the output file
    fileName += "." + fSuffix + ".root";
 

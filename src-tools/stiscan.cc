@@ -63,6 +63,10 @@ void loop_over_tree(StiScanPrgOptions &prgOpts)
 
    Info("loop_over_tree", "Found tree/chain with N entries: %d", nTreeEvents);
 
+   nTreeEvents = (prgOpts.GetMaxEventsUser() < nTreeEvents) ? prgOpts.GetMaxEventsUser() : nTreeEvents;
+
+   Info("loop_over_tree", "Will process %d events", nTreeEvents);
+
    StiScanEvent *stiScanEvent = new StiScanEvent();
    stiChain->SetBranchAddress("e.", &stiScanEvent);
    stiChain->SetBranchStatus("e.TStiEvent*", false);
@@ -77,7 +81,7 @@ void loop_over_tree(StiScanPrgOptions &prgOpts)
 
    TRandom myRandom;
 
-   Info("loop_over_tree", "Loop over tree/chain...");
+   Info("loop_over_tree", "Looping over tree/chain...");
 
    for (int iEvent = 1; iEvent <= nTreeEvents; iEvent++, nProcEvents++)
    {

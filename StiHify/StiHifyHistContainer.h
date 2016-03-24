@@ -20,15 +20,15 @@ public:
 
    StiHifyHistContainer(const StiHifyPrgOptions& prgOpts, const char* name, TDirectory* motherDir = 0, Option_t* option = "");
 
-   void FillHists(const StiHifyEvent &event, StiNodeHitStatus hitStatus=StiNodeHitStatus::Any, const std::set<std::string> *volumeList=0);
-   virtual void FillDerivedHists() {}
+   void FillHists(const StiHifyEvent &event, StiNodeHitStatus hitStatus=StiNodeHitStatus::Any, bool onlyNodesWithCandidates=false);
+   virtual void FillDerivedHists();
 
 protected:
 
    virtual void BookHists();
-   void FillHists(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList=0);
-   void FillHistsHitsAccepted(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList=0);
-   void FillHistsHitsRejected(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList=0);
+   void FillHists(const TStiKalmanTrackNode &trkNode);
+   void FillHistsHitsAccepted(const TStiKalmanTrackNode &trkNode);
+   void FillHistsHitsRejected(const TStiKalmanTrackNode &trkNode);
 
    // These are only aliases to created histograms
    TH1I* hDiffProjToFitPositionWRTHit;

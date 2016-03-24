@@ -39,7 +39,7 @@ public:
    std::string GetOutFileName(std::string suffix="hist") const;
 
    void ProcessOptions();
-   bool MatchedVolName(std::string & volName) const;
+   bool MatchedVolName(const std::string & volName) const;
 
 protected:
 
