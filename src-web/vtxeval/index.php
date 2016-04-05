@@ -11,6 +11,13 @@ include_once(BASE_DIR."/common/head.php");
 <h1>Vtxeval Results</h1>
 
 
+<h2 class="colsep">D<sup>0</sup> enhanced, HFT and TPC pile-up - by Liang</h2>
+
+<ul>
+   <li><a href="plots.php?pfx=vertex-ppv-fit-ccbar-sim">PPV + fit</a>
+</ul>
+
+
 <h2 class="colsep">W, no pile-up, no HFT hits</h2>
 
 <ul>
@@ -20,7 +27,6 @@ include_once(BASE_DIR."/common/head.php");
    <li><a href="plots.php?pfx=vertex-kfv-0fd24f22">KFV</a>
    <li><a href="plots.php?pfx=vertex-kfv-beam-err">KFV (with beamline error changed 0.01 -> 0.1 cm)</a>
 </ul>
-
 
 
 
