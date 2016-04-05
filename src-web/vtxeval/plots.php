@@ -11,8 +11,8 @@ include_once(BASE_DIR."/common/PlotHelper.php");
 $pfx = isset($_GET['pfx']) ? $_GET['pfx'] : "";
 $det = isset($_GET['det']) ? $_GET['det'] : "";
 
-$info_file = VTXEVAL_RESULTS_DIR."/vertex-".dirname($pfx).".lis_result/info.html";
-$gP = new PlotHelper(VTXEVAL_RESULTS_URL."/vertex-$pfx.lis_result", "");
+$info_file = VTXEVAL_RESULTS_DIR."/".dirname($pfx).".lis_result/info.html";
+$gP = new PlotHelper(VTXEVAL_RESULTS_URL."/$pfx.lis_result", "");
 
 ?>
 
