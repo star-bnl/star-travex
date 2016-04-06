@@ -44,8 +44,8 @@ EReturnCodes StiHifyEvent::Fill(const StiTrackContainer &stiTrackContainer)
 
 
 /**
- * Loops over the track container and calls the track method to override the
- * accepted hits in all nodes of that track.
+ * Loops over the internal container of tracks and calls the track method to
+ * override the accepted hits in all nodes of that track.
  */
 void StiHifyEvent::AssignClosestCandidateHit()
 {

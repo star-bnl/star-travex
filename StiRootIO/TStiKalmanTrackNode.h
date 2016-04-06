@@ -62,27 +62,65 @@ public:
 
 protected:
 
-   const StiKalmanTrackNode* fStiTrackNode;  //!< Transient pointer to original StiKalmanTrackNode to access non-persistent info
-   TStiKalmanTrack *  fTrack;         //!< Pointer to parent track containing this node
-   float       fValid;                ///< A flag taken directly from StiKalmanTrackNode
-   int         fIsInsideVolume;       ///< A flag taken directly from StiKalmanTrackNode
-   TVector3    fPosition;             ///< Coordinates of the track state/node position
-   TVector3    fError;                ///< Diagonal elements of error matrix after final fit
-   TVector3    fPositionLocal;        ///< Local coordinates of the final (post refit) track node position
-   TVector3    fProjPositionLocal;    ///< Coordinates of the track state/node position
-   TVector3    fProjError;            ///< The projection error to the node before the fit
-   TVector3    fTrackP;               ///< Track momentum vector in global CS
-   float       fEnergyLosses;         ///< Energy lost in the volume
-   float       fNodeRadius;           ///< The nominal radius of the Sti volume associated with this node
-   float       fNodeCenterRefAngle;   ///< Angle to the center of the Sti volume associated with this node
-   float       fNodeMaterialDensity;  ///< Density of the material of this node/volume
-   float       fNodeTrackLength;      ///< Relative radiation length
-   float       fNodeRelRadLength;     ///< Relative radiation length
-   std::string fVolumeName;           ///< Name of Sti volume
+   /// Transient pointer to original StiKalmanTrackNode to access non-persistent info
+   const StiKalmanTrackNode *fStiTrackNode; //! transient member
+
+   /// Pointer to parent track containing this node
+   TStiKalmanTrack *fTrack;                 //! transient member
+
+   /// A flag taken directly from StiKalmanTrackNode
+   float  fValid;
+
+   /// A flag taken directly from StiKalmanTrackNode
+   int  fIsInsideVolume;
+
+   /// Global coordinates of the final (post re-fit) track node position
+   TVector3  fPosition;
+
+   /// Diagonal elements of error matrix after final fit
+   TVector3  fError;
+
+   /// Local coordinates of the final (post re-fit) track node position
+   TVector3  fPositionLocal;
+
+   /// Local coordinates of the projected (pre re-fit) track node position
+   TVector3  fProjPositionLocal;
+
+   /// The projection error to the node before the re-fit
+   TVector3  fProjError;
+
+   /// Track momentum vector in global CS
+   TVector3  fTrackP;
+
+   /// Energy lost in the volume
+   float  fEnergyLosses;
+
+   /// The nominal radius of the Sti volume associated with this node
+   float  fNodeRadius;
+
+   /// Angle to the center of the Sti volume associated with this node
+   float  fNodeCenterRefAngle;
+
+   /// Density of the material of this node/volume
+   float  fNodeMaterialDensity;
+
+   /// Relative radiation length
+   float  fNodeTrackLength;
+
+   /// Relative radiation length
+   float  fNodeRelRadLength;
+
+   /// Name of Sti volume
+   std::string  fVolumeName;
+
    /// Pointer to the hit associated with this node by the reconstruction algorithm, if any
    mutable const TStiHit  *fAcceptedStiHit;
-   mutable const TStiHit  *fClosestStiHit;    ///< Pointer to the hit closest to this node if any
-   mutable std::set<TStiHitProxy> fCandidateStiHits;   ///< Collection of hits in some proximity of mean track projection
+
+   /// Pointer to the hit closest to this node if any
+   mutable const TStiHit  *fClosestStiHit;
+
+   /// Collection of hits in some proximity of mean track projection
+   mutable std::set<TStiHitProxy> fCandidateStiHits;
 
    ClassDef(TStiKalmanTrackNode, 11)
 };

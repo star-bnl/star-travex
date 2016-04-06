@@ -171,6 +171,10 @@ std::set<const TStiHit*> TStiKalmanTrackNode::GetCandidateHits() const
 }
 
 
+/**
+ * Traverses the provided collection of hits and sets the internal pointer to
+ * the hit closest to this track node.
+ */
 void TStiKalmanTrackNode::FindClosestHit(const std::set<TStiHit>& stiHits) const
 {
    TVector3 distVec;
@@ -190,28 +194,36 @@ void TStiKalmanTrackNode::FindClosestHit(const std::set<TStiHit>& stiHits) const
 
 
 /**
- * Finds all hits within a 5x(track_proj_err) vicinity of the track mean
- * projection and fills this node's fCandidateStiHits collection with pointers
- * to the found hits. Note that the function also among the candidate hist finds
- * the closest hit to the track node position. The hits are selected from the
- * user provided collection stiHits which should normaly be a collection of hits
- * in the parent event to which the track belongs.
+ * In the provided collection of hits this class method finds all hits within
+ * a 5-sigma vicinity around the mean track projection. The mean track
+ * projection is the nominal position of this track node and the sigma is the
+ * track projection error.
+ *
+ * This method fills an internal container of hit candidates with pointers
+ * pointing to the hits found in the original collection. Note that besides the
+ * candidate hits the function finds the hit closest to the mean track
+ * projection. The hits are selected from the user provided collection 'stiHits'
+ * which should normaly be a collection of hits in the parent event to which the
+ * track belongs.
  */
 void TStiKalmanTrackNode::FindCandidateHits(const std::set<TStiHit>& stiHits) const
 {
-   TVector3 distVec;
+   TVector3 distVec; // Can be a static variable to avoid ROOT's memory allocation and overhead...
    double min_dist = DBL_MAX;
 
    for (const auto& hit : stiHits)
    {
-      if (fVolumeName != hit.GetVolumeName()) continue;
+      // We require the hit to be associated with the same detector volume as
+      // the track node itself
+      if (fVolumeName != hit.GetVolumeName())
+         continue;
 
       distVec = GetPositionLocal() - hit.GetPositionLocal();
 
       if (fabs(distVec.Y()) < 5*fProjError.Y() &&
           fabs(distVec.Z()) < 5*fProjError.Z() )
       {
-         fCandidateStiHits.insert(TStiHitProxy(hit, *this));
+         fCandidateStiHits.insert( TStiHitProxy(hit, *this) );
 
          double dist = distVec.Mag();
          if (dist < min_dist) {

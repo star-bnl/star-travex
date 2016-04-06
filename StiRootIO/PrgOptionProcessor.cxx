@@ -186,7 +186,7 @@ void PrgOptionProcessor::BuildInputChains()
 }
 
 
-/*!
+/**
  * This private method takes a path to a valid ROOT file as input. No check is
  * done to make sure the input chains exist.
  *

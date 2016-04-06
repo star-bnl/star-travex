@@ -1,4 +1,3 @@
-
 #include "StiRootIO/TStiKalmanTrack.h"
 
 #include "StEvent/StEnumerations.h"
@@ -67,7 +66,7 @@ void TStiKalmanTrack::Print(Option_t *opt) const
 
 /**
  * For each node of this track finds the hit closest to the mean track
- * projection.
+ * projection, i.e. the nominal position of the track node.
  */
 void TStiKalmanTrack::FindClosestHits(const std::set<TStiHit>& stiHits)
 {

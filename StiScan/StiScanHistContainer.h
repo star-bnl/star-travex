@@ -35,13 +35,17 @@ protected:
    virtual void FillHists(const TStiKalmanTrack &kalmTrack, const std::set<std::string> *volumeList=0);
    void FillHists(const TGeaTrack &trackG, const std::set<std::string> *volumeList=0);
 
-   const StiScanPrgOptions& fPrgOptions; ///< Command line arguments and options requested by the user
+   /// Command line arguments and options requested by the user
+   const StiScanPrgOptions& fPrgOptions;
+
    double  mNodeZMin;
    double  mNodeZMax;
    float   mNodeRMin;
    float   mNodeRMax;
-   /** If true will create integral projections of 2D profiles instead of creating 1D profiles with bin averages. */
-   bool    mDoProjection;
+
+   /// If true will create integral projections of 2D profiles instead of
+   /// creating 1D profiles with bin averages
+   bool  mDoProjection;
 
    Profile3D* hNStepsVsPhiVsRVsZ;
    Profile3D* hELossVsPhiVsRVsZ;

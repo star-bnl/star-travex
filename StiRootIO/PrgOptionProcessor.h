@@ -43,10 +43,19 @@ protected:
    virtual void VerifyOptions();
    virtual void AddToInputChains(std::string stiTreeRootFileName);
 
-   std::string             fGeomFilePath;    ///< Full path to a ROOT file with TGeo geometry
-   std::string             fVolumeListFile;  ///< Full path to a text file with Sti/TGeo volume names
-   std::string             fVolumePattern;   ///< Regex pattern provided by the user in the command line
-   std::set<std::string>   fVolumeList;      ///< A list of volume names to consider
+   /// Full path to a ROOT file with TGeo geometry
+   std::string  fGeomFilePath;
+
+   /// Full path to a text file with Sti/TGeo volume names
+   std::string  fVolumeListFile;
+
+   /// Regex pattern provided by the user in the command line
+   std::string  fVolumePattern;
+
+   /// A list of volume names to consider
+   std::set<std::string>  fVolumeList;
+
+   /// A (chained) TTree from the input file
    TChain *fStiTChain;
 };
 

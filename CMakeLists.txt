@@ -160,7 +160,12 @@ add_library(
 add_library( GeaRootIO SHARED GeaRootIO/TGeaEvent.cxx GeaRootIO_dict.cxx)
 add_library( AgUStep SHARED GeaRootIO/AgUStep.cxx AgUStep_dict.cxx)
 
-add_library( StMcAnalysisMaker SHARED StiHify/StMcAnalysisMaker.cxx StMcAnalysisMaker_dict.cxx)
+add_library(
+	StMcAnalysisMaker
+	SHARED
+	StiHify/StMcAnalysisMaker.cxx
+	StMcAnalysisMaker_dict.cxx
+)
 
 add_library(
 	StiHifyLib

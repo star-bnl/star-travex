@@ -24,12 +24,22 @@ public:
 
 private:
 
-   const StiHit*  fStiHit;         //!< Transient pointer to original StiHit to access non-persistent info
-   StDetectorId   fDetectorId;
-   std::string    fVolumeName;     //!< Name of Sti volume
-   TVector3       fPosition;       ///< Global coordinates of the hit in the STAR CS
-   TVector3       fPositionLocal;  ///< Local coordinates of the hit in the detector CS
-   char           fTimesUsed;      ///< The number of tracks this hit was assigned to
+   /// Transient pointer to original StiHit to access non-persistent info
+   const StiHit*  fStiHit;  //!
+
+   StDetectorId  fDetectorId;
+
+   /// Name of Sti volume
+   std::string  fVolumeName;  //!
+
+   /// Global coordinates of the hit in the STAR CS
+   TVector3  fPosition;
+
+   /// Local coordinates of the hit in the detector CS
+   TVector3  fPositionLocal;
+
+   /// The number of tracks this hit was assigned to
+   char  fTimesUsed;
 
    ClassDef(TStiHit, 2)
 };
