@@ -18,6 +18,7 @@
 #include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
 #include "StMuDSTMaker/COMMON/StMuMcVertex.h"
 #include "StMuDSTMaker/COMMON/StMuDstMaker.h"
+#include "StMuDSTMaker/COMMON/StMuTrack.h"
 #include "TMath.h"
 #include "StEvent/StBTofHeader.h"
 #endif
@@ -178,6 +179,8 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
 
          if (!stVertex) continue;
 
+         bool hasPxlTrack = checkVertexHasPxlHit(l, *muDst);
+
          primVtx.event   = ev;
          primVtx.mult    = stVertex->noTracks();
          primVtx.refMult = stVertex->refMult();
@@ -219,6 +222,9 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
 
          vertexTree->Fill();
 
+         if (hasPxlTrack)
+            fOut.FillHistsHftTracks(*stVertex, mcVertex);
+
          fOut.FillHists(*stVertex, mcVertex);
 
          if (vtxeval::gDebugFlag) {
@@ -246,4 +252,32 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
    std::cout << "Number of events: " <<  nevent << ", with 0 reconstructed verticies: " << noreco << std::endl;
 
    fOut.Close();
+}
+
+
+/**
+ * Returns true if at least one PXL hit is on a track pointing to vertex with
+ * vertexIndex.
+ */
+bool checkVertexHasPxlHit(int vertexIndex, const StMuDst& stMuDst)
+{
+   stMuDst.setVertexIndex(vertexIndex);
+
+   TObjArray *primaryTracks = stMuDst.primaryTracks();
+
+   if (!primaryTracks)
+      return false;
+
+   int nPrimaryTracks = primaryTracks->GetEntriesFast();
+
+   for (int i=0; i<nPrimaryTracks; i++)
+   {
+      StMuTrack *stTrack = static_cast<StMuTrack*>(primaryTracks->UncheckedAt(i));
+      StTrackTopologyMap trackHitMap = stTrack->topologyMap();
+
+      if ( trackHitMap.hasHitInPxlLayer(1) || trackHitMap.hasHitInPxlLayer(2) || trackHitMap.hasHitInPxlLayer(3) )
+         return true;
+   }
+
+   return false;
 }
