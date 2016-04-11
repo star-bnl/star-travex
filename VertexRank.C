@@ -239,7 +239,7 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
       if (maxRankVertex)
       {
          int idTruth = maxRankVertex->idTruth();
-         StMuMcVertex* mcVertex = (idTruth > 0 && idTruth < NoMuMcVertices) ?
+         StMuMcVertex* mcVertex = (idTruth > 0 && idTruth <= NoMuMcVertices) ?
             (StMuMcVertex *) MuMcVertices->UncheckedAt(idTruth - 1) : nullptr;
 
          // Fill vertex hist container for max rank vertex
