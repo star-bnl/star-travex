@@ -54,7 +54,7 @@ add_subdirectory(ext/star-vertex)
 root_generate_dictionary(star-vertex-eval_dict MuMcPrVKFV2012.h VertexRank.h VxEff.h LINKDEF VertexEvalLinkDef.h)
 
 add_library( star-vertex-eval SHARED VertexRank.C MuMcPrVKFV2012.C VxEff.C
-	StarEventHistContainer.cxx StarVertexHistContainer.cxx VertexRootFile.cxx star-vertex-eval_dict.cxx)
+	StarEventHistContainer.cxx StarVertexHistContainer.cxx StarVertexHftHistContainer.cxx VertexRootFile.cxx star-vertex-eval_dict.cxx)
 
 link_directories( ${Boost_LIBRARY_DIR} ${ROOT_LIBRARY_DIR} )
 
