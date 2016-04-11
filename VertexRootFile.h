@@ -15,6 +15,7 @@ public:
 
    void FillHists(const StMuDst &event);
    void FillHists(const StMuPrimaryVertex &vertex, const StMuMcVertex* mcVertex=nullptr);
+   void FillHistsHftTracks(const StMuPrimaryVertex &vertex, const StMuMcVertex* mcVertex=nullptr);
    void FillHistsMaxRank(const StMuPrimaryVertex &vertex, const StMuMcVertex* mcVertex=nullptr);
 
 };
