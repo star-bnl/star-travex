@@ -35,8 +35,8 @@ public:
     errorInfo_t errorInfoAcc;
     errorInfo_t errorInfoRej;
 
-    void FillTree(const StiHifyEvent &event, StiNodeHitStatus hitStatus=StiNodeHitStatus::Any, const std::set<std::string> *volumeList=0);
-    void FillTree(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList, errorInfo_t &eI );
+    void FillTree(const StiHifyEvent &event, StiNodeHitStatus hitStatus=StiNodeHitStatus::Any, bool onlyNodesWithCandidates=false);
+    void FillTree(const TStiKalmanTrackNode &trkNode, errorInfo_t &eI );
     virtual void createTree();
     void writeTree();
     void clearTreeStructs();

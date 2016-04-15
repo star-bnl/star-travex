@@ -18,8 +18,7 @@ public:
 
    StiHifyRootFile(StiHifyPrgOptions& prgOpts, Option_t* option="", const char* ftitle="", Int_t compress=1);
 
-   void FillHists(const StiHifyEvent &event, const std::set<std::string> *volumeList=0);
-   void FillTree(const StiHifyEvent &event, const std::set<std::string> *volumeList=0);
+   void FillHists(const StiHifyEvent &event);
    void FillDerivedHists();
 
 private:

@@ -63,6 +63,7 @@ include_directories(
 add_subdirectory(ext/star-base)
 add_subdirectory(ext/star-sti)
 add_subdirectory(ext/star-bfchain)
+add_subdirectory(ext/star-pxl)
 
 root_generate_dictionary(
 	StiRootIO_dict

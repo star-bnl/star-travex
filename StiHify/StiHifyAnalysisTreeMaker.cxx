@@ -24,24 +24,28 @@ void StiHifyAnalysisTreeMaker::createTree()
 }
 
 
-void StiHifyAnalysisTreeMaker::FillTree(const StiHifyEvent &event, StiNodeHitStatus hitStatus, const std::set<std::string> *volumeList)
+void StiHifyAnalysisTreeMaker::FillTree(const StiHifyEvent &event, StiNodeHitStatus hitStatus, bool onlyNodesWithCandidates) 
 {
   for (const auto& kalmTrack : event.GetTStiKalmanTracks()) // Loop over tracks in event
   {
     for (const auto& trkNode : kalmTrack.GetNodes()) // Loop over nodes in track
     {
+      // Ignore nodes with 0 candidate hits when requested by user
+      if ( onlyNodesWithCandidates && !trkNode.GetCandidateProxyHits().size() )
+        continue;
+
       switch (hitStatus) // Decide what type of nodes you want to look at in FillTree iteration
       {
         case StiNodeHitStatus::Any:
-          FillTree(trkNode, volumeList, errorInfo);
+          FillTree(trkNode, errorInfo);
           break;
         case StiNodeHitStatus::Accepted:
           if(trkNode.GetHit()) // Check if accepted
-            FillTree(trkNode, volumeList, errorInfoAcc);
+            FillTree(trkNode, errorInfoAcc);
           break;
         case StiNodeHitStatus::Rejected:
           if(!trkNode.GetHit()) //Check if not accepted
-            FillTree(trkNode, volumeList, errorInfoRej);
+            FillTree(trkNode, errorInfoRej);
           break;
         default:
           Error("FillHists", "Internal type of Sti hit assigned to this node is not specified. "
@@ -52,12 +56,12 @@ void StiHifyAnalysisTreeMaker::FillTree(const StiHifyEvent &event, StiNodeHitSta
   }
 }
 
-void StiHifyAnalysisTreeMaker::FillTree(const TStiKalmanTrackNode &trkNode, const std::set<std::string> *volumeList, errorInfo_t &eI )
+void StiHifyAnalysisTreeMaker::FillTree(const TStiKalmanTrackNode &trkNode, errorInfo_t &eI )
 {
-  if (volumeList && volumeList->size() && !trkNode.MatchedVolName(*volumeList) ) // Limit to only volumes in volumeList
+  if (trkNode.GetVolumeName().empty() || !trkNode.IsInsideVolume())
     return;
 
-  if (trkNode.GetVolumeName().empty() || !trkNode.IsInsideVolume())
+  if (!fPrgOptions.MatchedVolName(trkNode.GetVolumeName()) ) // Limit to only volumes in volumeList
     return;
 
   // Set variables needed by tree in the structure. All others are -999.

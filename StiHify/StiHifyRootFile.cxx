@@ -28,9 +28,9 @@ void StiHifyRootFile::BookHists(const StiHifyPrgOptions& prgOpts)
 
 void StiHifyRootFile::FillHists(const StiHifyEvent &event)
 {
-   treeMaker->FillTree(event, StiNodeHitStatus::Any, volumeList);
-   treeMaker->FillTree(event, StiNodeHitStatus::Accepted, volumeList);
-   treeMaker->FillTree(event, StiNodeHitStatus::Rejected, volumeList);
+   treeMaker->FillTree(event, StiNodeHitStatus::Any);
+   treeMaker->FillTree(event, StiNodeHitStatus::Accepted);
+   treeMaker->FillTree(event, StiNodeHitStatus::Rejected);
 
    StiHifyHistContainer* container;
 
