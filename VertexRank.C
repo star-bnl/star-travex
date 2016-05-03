@@ -21,6 +21,7 @@
 #include "StMuDSTMaker/COMMON/StMuTrack.h"
 #include "TMath.h"
 #include "StEvent/StBTofHeader.h"
+#include "StEvent/StTrackTopologyMap.h"
 #endif
 
 #include "utils.h"
