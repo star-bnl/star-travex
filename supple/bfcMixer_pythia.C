@@ -64,8 +64,6 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
    TString prodP12icpp510("DbV20120816 pp2012b Sti VFPPVnoCTB beamline BEmcChkStat mtdDat btof fmsDat Corr4 OSpaceZ2 OGridLeak3D -hitfilt"); // Run 12 pp510 chain for W "preview" production
    TString prodP13ibpp510("DbV20130502 pp2012b Sti btof fmsDat VFPPVnoCTB beamline BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt"); // Run 12 pp510 chain for W final production
    //  TString prodP14iapp510("DbV20140222 pp2013a mtd btof fmsDat fgt fgtPoint VFPPVnoCTB beamline BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt"); // Run 13 pp510 chain exactly as listed on webpage
-   //TString prodP14iapp510("DbV20140222 pp2013a Sti mtd btof fmsDat fgt fgtPoint VFPPVnoCTB beamline -evout BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt"); // Run 13 pp510 chain as best I can figure
-   //TString prodP14iapp510("DbV20140222 pp2013a btof fmsDat fgt fgtPoint VFMCE TpxClu BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt"); // Run 13 pp510 chain as best I can figure
    TString prodP14iapp510("DbV20140222 pp2013a btof fmsDat fgt fgtPoint KFVertex BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt"); // chain for KFvertex from Lidia
    // Construct our embedding option list based on official production chain for
    // pp 500GeV run 2013 production for days129-161 (part 2) with HFT inserted in STAR detector:
@@ -84,7 +82,6 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
    prodP12icpp510 += " TpxClu -VFMinuit VFPPVnoCTB beamLine -hitfilt";
    prodP13ibpp510 += " TpxClu -VFMinuit VFPPVnoCTB beamLine -hitfilt";
    prodP14iapp510 += " TpxClu -VFMinuit VFPPVnoCTB beamLine -hitfilt";
-   //prodP14iapp510 += " TpxClu";
    prodP14igpp510 += " TpxClu -VFMinuit VFPPVnoCTB beamLine -hitfilt";
 
 
