@@ -120,6 +120,7 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
   else if (prodName == "P13ibpp510")   { chain3Opt = prodP13ibpp510;    chain2Opt += geomP13ib; }
   else if (prodName == "P11idpp500")   { chain3Opt = prodP11idpp500;    chain2Opt += geomP11id; } // S.F.
   else if (prodName == "P14iapp510")   { chain3Opt = prodP14iapp510;    chain2Opt += geomP14ia; } // JLD
+  else if (prodName == "P14iapp500RFF"){ chain3Opt = prodP14iapp500RFF; chain2Opt += geomP14ia; }
   else if (prodName == "P14igpp510")   { chain3Opt = prodP14igpp510;    chain2Opt += geomP14ig; chain1Opt += ",useXgeom"; }
   else if (prodName == "P11idpp500")   { chain3Opt = prodP11idpp500;    chain2Opt += geomP11idpp500; }
   else {
