@@ -5,7 +5,6 @@
 #pragma link off all functions;
 
 #pragma link C++ function MuMcPrVKFV2012;
-#pragma link C++ function VertexRank;
 #pragma link C++ function VxEff;
 
 #endif

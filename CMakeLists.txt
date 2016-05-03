@@ -51,9 +51,9 @@ include_directories(
 add_subdirectory(ext/travex)
 add_subdirectory(ext/star-vertex)
 
-root_generate_dictionary(star-vertex-eval_dict MuMcPrVKFV2012.h VertexRank.h VxEff.h LINKDEF VertexEvalLinkDef.h)
+root_generate_dictionary(star-vertex-eval_dict MuMcPrVKFV2012.h VxEff.h LINKDEF VertexEvalLinkDef.h)
 
-add_library( star-vertex-eval SHARED VertexRank.C MuMcPrVKFV2012.C VxEff.C
+add_library( star-vertex-eval SHARED MuMcPrVKFV2012.C VxEff.C
 	StarEventHistContainer.cxx StarVertexHistContainer.cxx StarVertexHftHistContainer.cxx VertexRootFile.cxx star-vertex-eval_dict.cxx)
 
 link_directories( ${Boost_LIBRARY_DIR} ${ROOT_LIBRARY_DIR} )
