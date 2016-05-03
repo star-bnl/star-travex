@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
+#
+# See project's README.md for details
+#
 
 sample="Wplus_enu"
 #sample=Wplus_taunu
@@ -49,7 +52,8 @@ norm=1.0
 #norm=0.32 for 35K events (W-)
 #norm=0.23 for 25K events (Z/gamma*)
 
-IFS=, #set comma as delimeter
+
+IFS=\  #set space as delimeter
 while read daqFile runNumber nEvents
 do
 
@@ -81,4 +85,4 @@ do
 
   index=`expr $index \+ 1`
 
-done <  $codePath/supple/runlist_wbos.csv
+done <  $codePath/supple/filelist_zerobias.txt

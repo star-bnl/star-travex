@@ -35,22 +35,40 @@ To create histograms from muDst files one can do from the same location:
 How to create embedding samples
 ===============================
 
-Checkout the code using one of the following commands:
+Checkout the code using the following command:
 
-    git clone git@github.com:star-bnl/star-vertex-eval.git       # If you have an account on github.com
-    git clone https://github.com/star-bnl/star-vertex-eval.git   # otherwise.
+    git clone --recursive https://github.com/star-bnl/star-vertex-eval.git
 
-Get the code dependencies by issuing the following commands:
+Select desired zerobias files from the database:
 
-    cd star-vertex-eval/
-    git submodule update --init
+    get_file_list.pl -keys path,filename,events -cond 'filename~st_zerobias_adc_1412%,year=2013,runnumber>14125000' -delim / -limit 20
+
+Create a text file with a list of zerobias data files in the following format
+(`path/to/file` `run_id` `num_of_events`), e.g.:
+
+    $cat supple/filelist_zerobias.txt
+    /star/data05/daq/2013/embedding/st_zerobias_adc_14150005_raw_3330002.daq 14150005 103
+    /star/data05/daq/2013/embedding/st_zerobias_adc_14150004_raw_1530002.daq 14150004 103
+	 ...
+    /star/data05/daq/2013/embedding/st_zerobias_adc_14150005_raw_8660002.daq 14150005 102
+	 ...
+
+
+W boson
+-------
+
+Create a directory from where condor jobs will be submitted and run the script
+as:
+
+    mkdir submit_wbos && cd submit_wbos
+    /path/to/star-vertex-eval/supple/submit_jobs_embedding_wbos.sh
 
 
 J/psi
 -----
 
-Now create a directory from where condor jobs will be submitted and run the
-script as:
+Create a directory from where condor jobs will be submitted and run the script
+as:
 
     mkdir submit_jpsi && cd submit_jpsi
     /path/to/star-vertex-eval/supple/submit_jobs_embedding_jpsi.sh 200

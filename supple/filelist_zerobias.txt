@@ -1,0 +1,5 @@
+/star/data05/daq/2013/embedding/st_zerobias_adc_14150131_raw_2420001.daq 14150131 95
+/star/data05/daq/2013/embedding/st_zerobias_adc_14150058_raw_1540001.daq 14150058 94
+/star/data05/daq/2013/embedding/st_zerobias_adc_14150131_raw_1530001.daq 14150131 93
+/star/data05/daq/2013/embedding/st_zerobias_adc_14150004_raw_2440002.daq 14150004 91
+/star/data05/daq/2013/embedding/st_zerobias_adc_14150133_raw_6890002.daq 14150133 90
