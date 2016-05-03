@@ -83,7 +83,7 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
   prodP11idpp500 += " TpxClu -VFMinuit VFPPVnoCTB beamLine -hitfilt";
   prodP12icpp510 += " TpxClu -VFMinuit VFPPVnoCTB beamLine -hitfilt";
   prodP13ibpp510 += " TpxClu -VFMinuit VFPPVnoCTB beamLine -hitfilt";
-  //prodP14iapp510 += " TpxClu -VFMinuit VFPPVnoCTB beamLine -hitfilt";
+  prodP14iapp510 += " TpxClu -VFMinuit VFPPVnoCTB beamLine -hitfilt";
 //  prodP14iapp510 += " TpxClu";
   prodP14igpp510 += " TpxClu -VFMinuit VFPPVnoCTB beamLine -hitfilt";
 
