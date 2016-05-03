@@ -24,8 +24,6 @@
 #include "TMath.h"
 #include "TMVA/Factory.h"
 #include "TMVA/Tools.h"
-#include "StMuDSTMaker/COMMON/StMuTimer.h"
-#include "StMuDSTMaker/COMMON/StMuDebug.h"
 #include "StMuDSTMaker/COMMON/StMuDst.h"
 #include "StMuDSTMaker/COMMON/StMuEvent.h"
 #include "StMuDSTMaker/COMMON/StMuTrack.h"
@@ -209,16 +207,12 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
    TNtuple *VertexG = new TNtuple("VertexG", "good vertex & global params info", vnames);
    TNtuple *VertexB = new TNtuple("VertexB", "bad  vertex & global params info", vnames);
    // ----------------------------------------------
-   StMuTimer timer;
-   timer.start();
-   StMuDebug::setLevel(0);
    StMuDstMaker *maker = new StMuDstMaker(0, 0, "", file, "st:MuDst.root", 1e9); // set up maker in read mode
    //                       0,0                        this mean read mode
    //                           dir                    read all files in this directory
    //                               file               bla.lis real all file in this list, if (file!="") dir is ignored
    //                                    filter        apply filter to filenames, multiple filters are separated by ':'
    //                                          10      maximum number of file to read
-   std::cout << "time to load chain: " << timer.elapsedTime() << std::endl;
    maker->SetStatus("*", 0);
 
    std::vector<std::string> activeBranchNames = {
@@ -232,9 +226,6 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
    for (const auto& branchName : activeBranchNames)
       maker->SetStatus(branchName.c_str(), 1);
 
-   StMuDebug::setLevel(0);
-   timer.reset();
-   timer.start();
    TChain *tree = maker->chain();
    Long64_t nentries = tree->GetEntries();
    nevent = TMath::Min(nevent, nentries);
@@ -265,8 +256,8 @@ void MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string& outFil
                    << "\tId: " << muEvent->eventId()
                    << " refMult= " << referenceMultiplicity
                    << "\tPrimaryVertices " << nPrimaryVertices
-                   << "\t" << StMuArrays::mcArrayTypes[0] << " " << nMuMcVertices
-                   << "\t" << StMuArrays::mcArrayTypes[1] << " " << nMuMcTracks
+                   << "\t" << " " << nMuMcVertices
+                   << "\t" << " " << nMuMcTracks
                    << std::endl;
       }
 

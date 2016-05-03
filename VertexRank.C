@@ -70,7 +70,6 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
 
 
 
-   StMuDebug::setLevel(0);
    StMuDstMaker *maker = new StMuDstMaker(0, 0, "", fileName.c_str(), "st:MuDst.root", 1e9); // set up maker in read mode
    //                                     0, 0                        this mean read mode
    //                                           dir                    read all files in this directory
@@ -91,7 +90,6 @@ void VertexRank(Long64_t nevent, const std::string& fileName, const std::string&
 
    for (const auto& branchName : activeBranchNames) maker->SetStatus(branchName.c_str(), 1); // Set Active braches
 
-   StMuDebug::setLevel(0);
    TChain *tree = maker->chain();
    Long64_t nentries = tree->GetEntries();
    nevent = TMath::Min(nevent, nentries);
