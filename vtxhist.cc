@@ -36,6 +36,15 @@ struct VertexData {
    float McX, McY, McZ;
    float chi2;
    int beam, postx, prompt, cross, tof, notof, EEMC, noEEMC, BEMC, noBEMC;
+
+   VertexData() { Init(); }
+
+   void Init() {
+      event = index = rank = mult = refMult = maxmult = -999;
+      primX = primY = primZ = zVpd = 999.f;
+      positionError.set(999.f, 999.f, 999.f);
+      McX = McY = McZ = chi2 = 999.f;
+   }
 };
 
 
@@ -140,18 +149,7 @@ void VertexRank(VertexRootFile& outFile, int nevent)
       TClonesArray *MuMcVertices   = muDst->mcArray(0);
       int NoMuMcVertices = MuMcVertices->GetEntriesFast();
 
-      ///////VPD////////////
-      Float_t VpdZ = 999;
       StBTofHeader *BTofHeader = muDst->btofHeader();
-
-      if (BTofHeader) {
-         VpdZ = BTofHeader->vpdVz();
-
-         if (TMath::Abs(VpdZ) < 200) primVtx.zVpd = VpdZ;
-      }
-      else primVtx.zVpd = 999;
-
-      if (vtxeval::gDebugFlag) std::cout << Form("Vpd value:              %8.3f", VpdZ) << std::endl;
 
       //////Max multiplicity/////////
       /////Usually the correct vertex/////
@@ -179,18 +177,6 @@ void VertexRank(VertexRootFile& outFile, int nevent)
       ////////No reconstructed///////////
       if (numPrimaryVertices == 0) {
          noreco++;
-         primVtx.event = ev;
-         primVtx.zVpd = 999;
-         primVtx.mult = 999;
-         primVtx.refMult = 999;
-
-         primVtx.primX = 999;
-         primVtx.primY = 999;
-         primVtx.primZ = 999;
-         primVtx.index = 999;
-         primVtx.rank = 999;
-         primVtx.maxmult = 999;
-
          if (vtxeval::gDebugFlag) std::cout << "No reconstructed vertex" << std::endl;
       }
 
@@ -202,48 +188,39 @@ void VertexRank(VertexRootFile& outFile, int nevent)
 
          if (!stVertex) continue;
 
-         bool hasPxlTrack = checkVertexHasPxlHit(l, *muDst);
+         //////Mc info/////////
+         int idTruth = stVertex->idTruth();
+         StMuMcVertex *mcVertex = (idTruth > 0 && idTruth <= NoMuMcVertices) ? (StMuMcVertex *) MuMcVertices->UncheckedAt(idTruth - 1) : nullptr;
 
          primVtx.event   = ev;
+         primVtx.index   = l;
+         primVtx.rank    = stVertex->ranking();
          primVtx.mult    = stVertex->noTracks();
          primVtx.refMult = stVertex->refMult();
+         primVtx.maxmult = (MaxMult == primVtx.mult ? 1 : 0);
          primVtx.primX   = stVertex->position().x();
          primVtx.primY   = stVertex->position().y();
          primVtx.primZ   = stVertex->position().z();
+         primVtx.zVpd    = BTofHeader ? BTofHeader->vpdVz() : 999;
          primVtx.positionError  = stVertex->posError();
-         primVtx.index   = l;
-         primVtx.rank    = stVertex->ranking();
-
-         //////Mc info/////////
-         primVtx.McX    = 999;
-         primVtx.McY    = 999;
-         primVtx.McZ    = 999;
-         int idTruth = stVertex->idTruth();
-         StMuMcVertex *mcVertex = 0;
-
-         if (idTruth > 0 && idTruth <= NoMuMcVertices)
-            mcVertex = (StMuMcVertex *) MuMcVertices->UncheckedAt(idTruth - 1);
-
-         if (mcVertex) {
-            primVtx.McX = mcVertex->XyzV().x();
-            primVtx.McY = mcVertex->XyzV().y();
-            primVtx.McZ = mcVertex->XyzV().z();
-         }
-
-         primVtx.beam    =  stVertex->isBeamConstrained() ? 1 : 0;
-         primVtx.postx   =  stVertex->nPostXtracks();
-         primVtx.prompt  =  stVertex->nPromptTracks();
-         primVtx.cross   =  stVertex->nCrossCentralMembrane();
-         primVtx.tof     = (stVertex->nCTBMatch()     + stVertex->nBTOFMatch());
-         primVtx.notof   = (stVertex->nCTBNotMatch()  + stVertex->nBTOFNotMatch());
-         primVtx.BEMC    =  stVertex->nBEMCMatch();
-         primVtx.noBEMC  =  stVertex->nBEMCNotMatch();
-         primVtx.EEMC    =  stVertex->nEEMCMatch();
-         primVtx.noEEMC  =  stVertex->nEEMCNotMatch();
-         primVtx.chi2    =  stVertex->chiSquared();
-         primVtx.maxmult = (MaxMult == primVtx.mult ? 1 : 0);
+         primVtx.McX     = mcVertex ? mcVertex->XyzV().x() : 999.f;
+         primVtx.McY     = mcVertex ? mcVertex->XyzV().y() : 999.f;
+         primVtx.McZ     = mcVertex ? mcVertex->XyzV().z() : 999.f;
+         primVtx.chi2    = stVertex->chiSquared();
+         primVtx.beam    = stVertex->isBeamConstrained() ? 1 : 0;
+         primVtx.postx   = stVertex->nPostXtracks();
+         primVtx.prompt  = stVertex->nPromptTracks();
+         primVtx.cross   = stVertex->nCrossCentralMembrane();
+         primVtx.tof     = stVertex->nCTBMatch()    + stVertex->nBTOFMatch();
+         primVtx.notof   = stVertex->nCTBNotMatch() + stVertex->nBTOFNotMatch();
+         primVtx.EEMC    = stVertex->nEEMCMatch();
+         primVtx.noEEMC  = stVertex->nEEMCNotMatch();
+         primVtx.BEMC    = stVertex->nBEMCMatch();
+         primVtx.noBEMC  = stVertex->nBEMCNotMatch();
 
          vertexTree->Fill();
+
+         bool hasPxlTrack = checkVertexHasPxlHit(l, *muDst);
 
          if (hasPxlTrack)
             outFile.FillHistsHftTracks(*stVertex, mcVertex);
