@@ -23,7 +23,7 @@
 namespace po = boost::program_options;
 
 
-void VertexRank(VertexRootFile& outFile, int nevent=10000);
+void process_muDst(VertexRootFile& outFile, int nevent=10000);
 
 // Verify whether this vertex has an HFT track with a PXL hit
 bool checkVertexHasPxlHit(int vertexIndex, const StMuDst& stMuDst);
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 
    VertexRootFile vertexOutFile(prgOpts, "recreate");
 
-   VertexRank(vertexOutFile);
+   process_muDst(vertexOutFile);
 
    vertexOutFile.Write();
    vertexOutFile.Close();
@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 
 
 
-void VertexRank(VertexRootFile& outFile, int nevent)
+void process_muDst(VertexRootFile& outFile, int nevent)
 {
    VertexData primVtx;
 
@@ -135,13 +135,13 @@ void VertexRank(VertexRootFile& outFile, int nevent)
    int noreco = 0;
 
    // Main loop over events
-   for (int ev = 0; ev < nevent; ev++) {
+   for (int iEvent = 0; iEvent < nevent; iEvent++) {
       if (maker->Make()) break;
 
       StMuDst *muDst = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
       StMuEvent *muEvent = muDst->event(); // get a pointer to the class holding event-wise information
 
-      if (vtxeval::gDebugFlag) std::cout << "Read event #" << ev << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << std::endl;
+      if (vtxeval::gDebugFlag) std::cout << "Read event #" << iEvent << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << std::endl;
 
       TClonesArray *primaryVertices   = muDst->primaryVertices();
       int numPrimaryVertices = primaryVertices->GetEntriesFast();
@@ -153,17 +153,17 @@ void VertexRank(VertexRootFile& outFile, int nevent)
 
       //////Max multiplicity/////////
       /////Usually the correct vertex/////
-      int MaxMult = 0;
+      int maxVertexMult = 0;
       StMuPrimaryVertex *maxRankVertex = nullptr;
       float vertexMaxRank = -1e10;
 
-      for (int l = 0; l < numPrimaryVertices; l++)
+      for (int iVertex = 0; iVertex < numPrimaryVertices; iVertex++)
       {
-         StMuPrimaryVertex *stVertex = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
+         StMuPrimaryVertex *stVertex = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(iVertex);
          Float_t numTracksToVertex = stVertex->noTracks();
 
-         if (MaxMult < numTracksToVertex) {   //Amilkar: check if the numTracksToVertex is higher than previous
-            MaxMult = numTracksToVertex;      //Amilkar: asign the new maximum value
+         if (maxVertexMult < numTracksToVertex) {   //Amilkar: check if the numTracksToVertex is higher than previous
+            maxVertexMult = numTracksToVertex;      //Amilkar: asign the new maximum value
          }
 
          // Find the highest rank vertex
@@ -182,9 +182,9 @@ void VertexRank(VertexRootFile& outFile, int nevent)
 
 
       // Loop over primary verticies in the event
-      for (int l = 0; l < numPrimaryVertices; l++)
+      for (int iVertex = 0; iVertex < numPrimaryVertices; iVertex++)
       {
-         StMuPrimaryVertex *stVertex = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(l);
+         StMuPrimaryVertex *stVertex = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(iVertex);
 
          if (!stVertex) continue;
 
@@ -192,12 +192,12 @@ void VertexRank(VertexRootFile& outFile, int nevent)
          int idTruth = stVertex->idTruth();
          StMuMcVertex *mcVertex = (idTruth > 0 && idTruth <= NoMuMcVertices) ? (StMuMcVertex *) MuMcVertices->UncheckedAt(idTruth - 1) : nullptr;
 
-         primVtx.event   = ev;
-         primVtx.index   = l;
+         primVtx.event   = iEvent;
+         primVtx.index   = iVertex;
          primVtx.rank    = stVertex->ranking();
          primVtx.mult    = stVertex->noTracks();
          primVtx.refMult = stVertex->refMult();
-         primVtx.maxmult = (MaxMult == primVtx.mult ? 1 : 0);
+         primVtx.maxmult = (maxVertexMult == primVtx.mult ? 1 : 0);
          primVtx.primX   = stVertex->position().x();
          primVtx.primY   = stVertex->position().y();
          primVtx.primZ   = stVertex->position().z();
@@ -220,7 +220,7 @@ void VertexRank(VertexRootFile& outFile, int nevent)
 
          vertexTree->Fill();
 
-         bool hasPxlTrack = checkVertexHasPxlHit(l, *muDst);
+         bool hasPxlTrack = checkVertexHasPxlHit(iVertex, *muDst);
 
          if (hasPxlTrack)
             outFile.FillHistsHftTracks(*stVertex, mcVertex);
@@ -228,10 +228,10 @@ void VertexRank(VertexRootFile& outFile, int nevent)
          outFile.FillHists(*stVertex, mcVertex);
 
          if (vtxeval::gDebugFlag) {
-            std::cout << Form("[%i]", l) << Form(" %8.3f  %8.3f  %8.3f ", stVertex->position().x(), stVertex->position().y(), stVertex->position().z())
+            std::cout << Form("[%i]", iVertex) << Form(" %8.3f  %8.3f  %8.3f ", stVertex->position().x(), stVertex->position().y(), stVertex->position().z())
                       << Form("  Rank:%1.0f", stVertex->ranking()) << "    Mult: " << primVtx.mult;
 
-            if (primVtx.maxmult == 1 && l != 0) std::cout << "\t WRONG RANK" << std::endl;
+            if (primVtx.maxmult == 1 && iVertex != 0) std::cout << "\t WRONG RANK" << std::endl;
             else std::cout << std::endl;
          }
       }
