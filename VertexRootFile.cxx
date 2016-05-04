@@ -1,5 +1,9 @@
 #include "VertexRootFile.h"
 
+#include "StMuDSTMaker/COMMON/StMuDst.h"
+#include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
+#include "StMuDSTMaker/COMMON/StMuMcVertex.h"
+
 #include "StarEventHistContainer.h"
 #include "StarVertexHistContainer.h"
 #include "StarVertexHftHistContainer.h"

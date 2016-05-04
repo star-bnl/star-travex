@@ -1,5 +1,7 @@
 #include "StarEventHistContainer.h"
 
+#include "StMuDSTMaker/COMMON/StMuDst.h"
+
 
 StarEventHistContainer::StarEventHistContainer(const std::string name, TDirectory* motherDir, const std::string option) :
    tvx::HistContainer(name, motherDir, option)

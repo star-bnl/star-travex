@@ -2,7 +2,8 @@
 #define StarEventHistContainer_h
 
 #include "travex/HistContainer.h"
-#include "StMuDSTMaker/COMMON/StMuDst.h"
+
+class StMuDst;
 
 
 class StarEventHistContainer : public tvx::HistContainer

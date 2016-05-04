@@ -2,9 +2,10 @@
 #define VertexRootFile_h
 
 #include "travex/RootFile.h"
-#include "StMuDSTMaker/COMMON/StMuDst.h"
-#include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
-#include "StMuDSTMaker/COMMON/StMuMcVertex.h"
+
+class StMuDst;
+class StMuPrimaryVertex;
+class StMuMcVertex;
 
 
 class VertexRootFile : public tvx::RootFile
