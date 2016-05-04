@@ -3,10 +3,6 @@
 
 #include "StarVertexHistContainer.h"
 
-class StMuPrimaryVertex;
-class StMuMcVertex;
-
-
 
 class StarVertexHftHistContainer : public StarVertexHistContainer
 {
