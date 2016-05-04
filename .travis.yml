@@ -50,5 +50,5 @@ before_script:
 script:
   - mkdir build/ && cd build/ && pwd
   - cmake -D CMAKE_INSTALL_PREFIX=./ -D CMAKE_BUILD_TYPE=Release ../
-  - make -j4 && make install && make clean
-  - pwd && ls -la ./ && ls -la lib/
+  - make -j4 star-vertex-eval
+  - pwd && ls -la ./
