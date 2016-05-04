@@ -146,6 +146,8 @@ void process_muDst(VertexRootFile& outFile, int nevent)
       TClonesArray *primaryVertices   = muDst->primaryVertices();
       int numPrimaryVertices = primaryVertices->GetEntriesFast();
 
+      if (numPrimaryVertices == 0) noreco++;
+
       TClonesArray *MuMcVertices   = muDst->mcArray(0);
       int NoMuMcVertices = MuMcVertices->GetEntriesFast();
 
@@ -157,9 +159,13 @@ void process_muDst(VertexRootFile& outFile, int nevent)
       StMuPrimaryVertex *maxRankVertex = nullptr;
       float vertexMaxRank = -1e10;
 
+      // Loop over primary verticies in the event
       for (int iVertex = 0; iVertex < numPrimaryVertices; iVertex++)
       {
          StMuPrimaryVertex *stVertex = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(iVertex);
+
+         if (!stVertex) continue;
+
          Float_t numTracksToVertex = stVertex->noTracks();
 
          if (maxVertexMult < numTracksToVertex) {   //Amilkar: check if the numTracksToVertex is higher than previous
@@ -172,21 +178,6 @@ void process_muDst(VertexRootFile& outFile, int nevent)
             vertexMaxRank = stVertex->ranking();
             maxRankVertex = stVertex;
          }
-      }
-
-      ////////No reconstructed///////////
-      if (numPrimaryVertices == 0) {
-         noreco++;
-         if (vtxeval::gDebugFlag) std::cout << "No reconstructed vertex" << std::endl;
-      }
-
-
-      // Loop over primary verticies in the event
-      for (int iVertex = 0; iVertex < numPrimaryVertices; iVertex++)
-      {
-         StMuPrimaryVertex *stVertex = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(iVertex);
-
-         if (!stVertex) continue;
 
          //////Mc info/////////
          int idTruth = stVertex->idTruth();
