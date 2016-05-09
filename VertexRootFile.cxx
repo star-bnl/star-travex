@@ -1,4 +1,8 @@
+#include <float.h>
+
 #include "VertexRootFile.h"
+
+#include "TClonesArray.h"
 
 #include "StMuDSTMaker/COMMON/StMuDst.h"
 #include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
@@ -25,6 +29,37 @@ VertexRootFile::VertexRootFile(tvx::ProgramOptions& prgOpts, Option_t *option, c
 void VertexRootFile::FillHists(const StMuDst &event)
 {
    static_cast<StarEventHistContainer*>(fDirs["event"])->FillHists(event);
+
+   // Currently consider only one primary vertex with idTruth = 1
+   int idTruth = 1;
+   TClonesArray *muMcVertices = event.mcArray(0);
+   StMuMcVertex *mcVertex = static_cast<StMuMcVertex*>(muMcVertices->UncheckedAt(idTruth - 1));
+
+   TClonesArray *primaryVertices = event.primaryVertices();
+   int numPrimaryVertices = primaryVertices->GetEntriesFast();
+   StMuPrimaryVertex *recoVertex = nullptr;
+   StMuPrimaryVertex *recoVertexMaxRank = nullptr;
+   double maxRank = -DBL_MAX;
+
+   // Loop over primary verticies in the event
+   for (int iVertex = 0; iVertex < numPrimaryVertices; iVertex++)
+   {
+      StMuPrimaryVertex *testRecoVertex = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(iVertex);
+
+      // Theoretically, there can be other reco vertices with the same truth id
+      // but for now we consider the first in the list matching the id of the
+      // simulated vertex
+      if (testRecoVertex && testRecoVertex->idTruth() == mcVertex->Id()) {
+         recoVertex = testRecoVertex;
+      }
+
+      if (testRecoVertex->ranking() > maxRank) {
+         maxRank = testRecoVertex->ranking();
+         recoVertexMaxRank = testRecoVertex;
+      }
+   }
+
+   static_cast<StarEventHistContainer*>(fDirs["event"])->FillEfficyHists(event, *mcVertex, recoVertex, recoVertexMaxRank);
 }
 
 
