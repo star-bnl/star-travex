@@ -164,65 +164,65 @@ void process_muDst(VertexRootFile& outFile, int nevent)
       // Loop over primary verticies in the event
       for (int iVertex = 0; iVertex < numPrimaryVertices; iVertex++)
       {
-         StMuPrimaryVertex *stVertex = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(iVertex);
+         StMuPrimaryVertex *recoVertex = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(iVertex);
 
-         if (!stVertex) continue;
+         if (!recoVertex) continue;
 
-         Float_t numTracksToVertex = stVertex->noTracks();
+         Float_t numTracksToVertex = recoVertex->noTracks();
 
          if (maxVertexMult < numTracksToVertex) {   //Amilkar: check if the numTracksToVertex is higher than previous
             maxVertexMult = numTracksToVertex;      //Amilkar: asign the new maximum value
          }
 
          // Find the highest rank vertex
-         if (stVertex->ranking() > vertexMaxRank )
+         if (recoVertex->ranking() > vertexMaxRank )
          {
-            vertexMaxRank = stVertex->ranking();
-            maxRankVertex = stVertex;
+            vertexMaxRank = recoVertex->ranking();
+            maxRankVertex = recoVertex;
          }
 
          //////Mc info/////////
-         int idTruth = stVertex->idTruth();
+         int idTruth = recoVertex->idTruth();
          StMuMcVertex *mcVertex = (idTruth > 0 && idTruth <= NoMuMcVertices) ? (StMuMcVertex *) MuMcVertices->UncheckedAt(idTruth - 1) : nullptr;
 
          primVtx.event   = iEvent;
          primVtx.index   = iVertex;
-         primVtx.rank    = stVertex->ranking();
-         primVtx.mult    = stVertex->noTracks();
-         primVtx.refMult = stVertex->refMult();
+         primVtx.rank    = recoVertex->ranking();
+         primVtx.mult    = recoVertex->noTracks();
+         primVtx.refMult = recoVertex->refMult();
          primVtx.maxmult = (maxVertexMult == primVtx.mult ? 1 : 0);
-         primVtx.primX   = stVertex->position().x();
-         primVtx.primY   = stVertex->position().y();
-         primVtx.primZ   = stVertex->position().z();
+         primVtx.primX   = recoVertex->position().x();
+         primVtx.primY   = recoVertex->position().y();
+         primVtx.primZ   = recoVertex->position().z();
          primVtx.zVpd    = BTofHeader ? BTofHeader->vpdVz() : 999;
-         primVtx.positionError  = stVertex->posError();
+         primVtx.positionError  = recoVertex->posError();
          primVtx.McX     = mcVertex ? mcVertex->XyzV().x() : 999.f;
          primVtx.McY     = mcVertex ? mcVertex->XyzV().y() : 999.f;
          primVtx.McZ     = mcVertex ? mcVertex->XyzV().z() : 999.f;
-         primVtx.chi2    = stVertex->chiSquared();
-         primVtx.beam    = stVertex->isBeamConstrained() ? 1 : 0;
-         primVtx.postx   = stVertex->nPostXtracks();
-         primVtx.prompt  = stVertex->nPromptTracks();
-         primVtx.cross   = stVertex->nCrossCentralMembrane();
-         primVtx.tof     = stVertex->nCTBMatch()    + stVertex->nBTOFMatch();
-         primVtx.notof   = stVertex->nCTBNotMatch() + stVertex->nBTOFNotMatch();
-         primVtx.EEMC    = stVertex->nEEMCMatch();
-         primVtx.noEEMC  = stVertex->nEEMCNotMatch();
-         primVtx.BEMC    = stVertex->nBEMCMatch();
-         primVtx.noBEMC  = stVertex->nBEMCNotMatch();
+         primVtx.chi2    = recoVertex->chiSquared();
+         primVtx.beam    = recoVertex->isBeamConstrained() ? 1 : 0;
+         primVtx.postx   = recoVertex->nPostXtracks();
+         primVtx.prompt  = recoVertex->nPromptTracks();
+         primVtx.cross   = recoVertex->nCrossCentralMembrane();
+         primVtx.tof     = recoVertex->nCTBMatch()    + recoVertex->nBTOFMatch();
+         primVtx.notof   = recoVertex->nCTBNotMatch() + recoVertex->nBTOFNotMatch();
+         primVtx.EEMC    = recoVertex->nEEMCMatch();
+         primVtx.noEEMC  = recoVertex->nEEMCNotMatch();
+         primVtx.BEMC    = recoVertex->nBEMCMatch();
+         primVtx.noBEMC  = recoVertex->nBEMCNotMatch();
 
          vertexTree->Fill();
 
          bool hasPxlTrack = checkVertexHasPxlHit(iVertex, *muDst);
 
          if (hasPxlTrack)
-            outFile.FillHistsHftTracks(*stVertex, mcVertex);
+            outFile.FillHistsHftTracks(*recoVertex, mcVertex);
 
-         outFile.FillHists(*stVertex, mcVertex);
+         outFile.FillHists(*recoVertex, mcVertex);
 
          if (vtxeval::gDebugFlag) {
-            std::cout << Form("[%i]", iVertex) << Form(" %8.3f  %8.3f  %8.3f ", stVertex->position().x(), stVertex->position().y(), stVertex->position().z())
-                      << Form("  Rank:%1.0f", stVertex->ranking()) << "    Mult: " << primVtx.mult;
+            std::cout << Form("[%i]", iVertex) << Form(" %8.3f  %8.3f  %8.3f ", recoVertex->position().x(), recoVertex->position().y(), recoVertex->position().z())
+                      << Form("  Rank:%1.0f", recoVertex->ranking()) << "    Mult: " << primVtx.mult;
 
             if (primVtx.maxmult == 1 && iVertex != 0) std::cout << "\t WRONG RANK" << std::endl;
             else std::cout << std::endl;
