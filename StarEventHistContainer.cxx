@@ -1,5 +1,7 @@
 #include <algorithm>
 
+#include <TEfficiency.h>
+
 #include "StarEventHistContainer.h"
 
 #include "StMuDSTMaker/COMMON/StMuDst.h"
@@ -50,4 +52,43 @@ void StarEventHistContainer::FillEfficyHists(const StMuDst &event, const StMuMcV
       if (recoVertex == recoVertexMaxRank)
          h("McRecMulGood")->Fill(nRecoTracks);
    }
+}
+
+
+void StarEventHistContainer::FillDerivedHists()
+{
+   // Calculate efficiency for any reco vertex matching simulated vertex
+   TEfficiency *eff_any = new TEfficiency(*h("McRecMulAny"), *h("McRecMulT"));
+
+   std::string eff_title = std::string(";") + h("McRecMulAny")->GetXaxis()->GetTitle() + "; Efficiency";
+
+   eff_any->SetTitle(eff_title.c_str() );
+   eff_any->SetMarkerColor(kBlack);
+   eff_any->SetMarkerStyle(kFullCross);
+
+   TH1 *eff_hist = static_cast<TH1*>( h("McRecMulAny")->Clone() );
+   eff_hist->Reset("ICES");
+   eff_hist->SetName( (std::string(eff_hist->GetName()) + "_eff").c_str() );
+   eff_hist->SetYTitle("Efficiency");
+   eff_hist->GetListOfFunctions()->Add(eff_any);
+
+   Add(eff_hist);
+
+
+   // Calculate efficiency for max rank reco vertex matching simulated vertex
+   TEfficiency *eff_good = new TEfficiency(*h("McRecMulGood"), *h("McRecMulT"));
+
+   eff_title = std::string(";") + h("McRecMulGood")->GetXaxis()->GetTitle() + "; Efficiency";
+
+   eff_good->SetTitle(eff_title.c_str() );
+   eff_good->SetMarkerColor(kRed);
+   eff_good->SetMarkerStyle(kFullCross);
+
+   eff_hist = static_cast<TH1*>( h("McRecMulGood")->Clone() );
+   eff_hist->Reset("ICES");
+   eff_hist->SetName( (std::string(eff_hist->GetName()) + "_eff").c_str() );
+   eff_hist->SetYTitle("Efficiency");
+   eff_hist->GetListOfFunctions()->Add(eff_good);
+
+   Add(eff_hist);
 }
