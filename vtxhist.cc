@@ -242,6 +242,8 @@ void process_muDst(VertexRootFile& outFile, int nevent)
       outFile.FillHists(*muDst);
    }
 
+   outFile.FillDerivedHists();
+
    std::cout << "Number of events: " <<  nevent << ", with 0 reconstructed verticies: " << noreco << std::endl;
 }
 
