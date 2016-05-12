@@ -1,9 +1,20 @@
 #ifndef VTXEVAL_UTILS_H
 #define VTXEVAL_UTILS_H
 
+class StMuDst;
+class StMuMcTrack;
+class StMuMcVertex;
+
 
 namespace vtxeval
 {
+
+using VectorMcTracks = std::vector<const StMuMcTrack*>;
+
+//
+vtxeval::VectorMcTracks getMcTracksMatchingMcVertex(const StMuDst& stMuDst, const StMuMcVertex* mcVertex);
+
+
 
 static bool gDebugFlag = false;
 

@@ -11,6 +11,7 @@
 #include "StMuDSTMaker/COMMON/StMuDst.h"
 #include "StMuDSTMaker/COMMON/StMuEvent.h"
 #include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
+#include "StMuDSTMaker/COMMON/StMuMcTrack.h"
 #include "StMuDSTMaker/COMMON/StMuMcVertex.h"
 #include "StMuDSTMaker/COMMON/StMuDstMaker.h"
 #include "StMuDSTMaker/COMMON/StMuTrack.h"
@@ -117,7 +118,8 @@ void process_muDst(VertexRootFile& outFile, int nevent)
       "GlobalTracks",
       "BTofHit",
       "BTofHeader",
-      "StStMuMcVertex"
+      "StStMuMcVertex",
+      "StStMuMcTrack"
    };
 
    for (const auto& branchName : activeBranchNames) maker->SetStatus(branchName.c_str(), 1); // Set Active braches
@@ -269,4 +271,27 @@ bool checkVertexHasPxlHit(int vertexIndex, const StMuDst& stMuDst)
    }
 
    return false;
+}
+
+
+
+vtxeval::VectorMcTracks vtxeval::getMcTracksMatchingMcVertex(const StMuDst& stMuDst, const StMuMcVertex* mcVertex)
+{
+   std::vector<const StMuMcTrack*> mcTracks;
+
+   if (!mcVertex) return mcTracks;
+
+   TClonesArray *muMcTracks = stMuDst.mcArray(1);
+   int nMuMcTracks = muMcTracks->GetEntriesFast();
+
+   for (int i = 0; i < nMuMcTracks; i++)
+   {
+      StMuMcTrack *mcTrack = static_cast<StMuMcTrack*>( muMcTracks->UncheckedAt(i) );
+
+      if ( !mcTrack || mcTrack->IdVx() != mcVertex->Id() ) continue;
+
+      mcTracks.push_back(mcTrack);
+   }
+
+   return mcTracks;
 }
