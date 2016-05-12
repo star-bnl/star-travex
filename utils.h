@@ -1,5 +1,7 @@
-#ifndef VTXEVAL_UTILS_H
-#define VTXEVAL_UTILS_H
+#ifndef vtxeval_utils_h
+#define vtxeval_utils_h
+
+#include <iostream>
 
 class StMuDst;
 class StMuMcTrack;

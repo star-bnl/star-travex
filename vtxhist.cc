@@ -108,7 +108,7 @@ void process_muDst(VertexRootFile& outFile, int nevent)
    //                                               file               bla.lis real all file in this list, if (file!="") dir is ignored
    //                                                    filter        apply filter to filenames, multiple filters are separated by ':'
    //                                                           10      maximum number of file to read
- 
+
    maker->SetStatus("*", 0);
 
    std::vector<std::string> activeBranchNames = {
@@ -127,7 +127,7 @@ void process_muDst(VertexRootFile& outFile, int nevent)
    TChain *tree = maker->chain();
    int nentries = tree->GetEntries();
    nevent = TMath::Min(nevent, nentries);
-   std::cout << nentries << " events in chain " << nevent << " will be read." << std::endl;
+   std::cout << nentries << " events in chain, " << nevent << " will be read." << std::endl;
    tree->SetCacheSize(-1);        //by setting the read cache to -1 we set it to the AutoFlush value when writing
    tree->SetCacheLearnEntries(1); //one entry is sufficient to learn
    tree->SetCacheEntryRange(0, nevent);
@@ -155,8 +155,8 @@ void process_muDst(VertexRootFile& outFile, int nevent)
 
       StBTofHeader *BTofHeader = muDst->btofHeader();
 
-      //////Max multiplicity/////////
-      /////Usually the correct vertex/////
+      // Max multiplicity
+      // Usually the correct vertex
       int maxVertexMult = 0;
       StMuPrimaryVertex *maxRankVertex = nullptr;
       float vertexMaxRank = -1e10;
