@@ -14,7 +14,7 @@ StarEventHistContainer::StarEventHistContainer(const std::string name, TDirector
 
 void StarEventHistContainer::FillHists(const StMuDst &event)
 {
-   fHs["hNumVertices"]->Fill( event.primaryVertices()->GetEntriesFast() );
-   fHs["hNumTracksPerEvent"]->Fill( event.globalTracks()->GetEntriesFast() );
-   fHs["hNumTracksPerEventPrimary"]->Fill( event.primaryTracks()->GetEntriesFast() );
+   h("hNumVertices")->Fill( event.primaryVertices()->GetEntriesFast() );
+   h("hNumTracksPerEvent")->Fill( event.globalTracks()->GetEntriesFast() );
+   h("hNumTracksPerEventPrimary")->Fill( event.primaryTracks()->GetEntriesFast() );
 }

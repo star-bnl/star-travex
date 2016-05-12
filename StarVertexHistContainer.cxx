@@ -18,22 +18,22 @@ StarVertexHistContainer::StarVertexHistContainer(const std::string name, TDirect
    Add( new TH1I("hVertexZ", "; Reco Vertex Z Position, cm; Counts; ", 50, -30, 30) );
 
    Add( new TH2I("hVertexXvY", "; Reco Vertex X Position, cm; Reco Vertex Y Position, cm; Counts", 50, -1, 1, 50, -1, 1) );
-   fHs["hVertexXvY"]->SetOption("colz");
+   h("hVertexXvY")->SetOption("colz");
    Add( new TH2I("hVertexZvX", "; Reco Vertex Z Position, cm; Reco Vertex X Position, cm; Counts", 50, -30, 30, 50, -1, 1) );
-   fHs["hVertexZvX"]->SetOption("colz");
+   h("hVertexZvX")->SetOption("colz");
    Add( new TH2I("hVertexZvY", "; Reco Vertex Z Position, cm; Reco Vertex Y Position, cm; Counts", 50, -30, 30, 50, -1, 1) );
-   fHs["hVertexZvY"]->SetOption("colz");
+   h("hVertexZvY")->SetOption("colz");
 
    Add( new TH1I("hMcVertexX", "; MC Vertex X Position, cm; Counts; ", 50, -1, 1) );
    Add( new TH1I("hMcVertexY", "; MC Vertex Y Position, cm; Counts; ", 50, -1, 1) );
    Add( new TH1I("hMcVertexZ", "; MC Vertex Z Position, cm; Counts; ", 50, -30, 30) );
 
    Add( new TH2I("hMcVertexXvY", "; MC Vertex X Position, cm; Reco Vertex Y Position, cm; Counts", 50, -1, 1, 50, -1, 1) );
-   fHs["hMcVertexXvY"]->SetOption("colz");
+   h("hMcVertexXvY")->SetOption("colz");
    Add( new TH2I("hMcVertexZvX", "; MC Vertex Z Position, cm; Reco Vertex X Position, cm; Counts", 50, -30, 30, 50, -1, 1) );
-   fHs["hMcVertexZvX"]->SetOption("colz");
+   h("hMcVertexZvX")->SetOption("colz");
    Add( new TH2I("hMcVertexZvY", "; MC Vertex Z Position, cm; Reco Vertex Y Position, cm; Counts", 50, -30, 30, 50, -1, 1) );
-   fHs["hMcVertexZvY"]->SetOption("colz");
+   h("hMcVertexZvY")->SetOption("colz");
 
    Add( new TH1I("hMcRecoVertexDeltaX", "; MC - Reco Vertex X, cm; Counts; ", 50, -0.3, 0.3) );
    Add( new TH1I("hMcRecoVertexDeltaY", "; MC - Reco Vertex Y, cm; Counts; ", 50, -0.3, 0.3) );
@@ -57,40 +57,40 @@ StarVertexHistContainer::StarVertexHistContainer(const std::string name, TDirect
 
 void StarVertexHistContainer::FillHists(const StMuPrimaryVertex &vertex, const StMuMcVertex* mcVertex)
 {
-   fHs["hNumTracksToVertex"]->Fill(vertex.noTracks());
-   fHs["hVertexRank"]->Fill(vertex.ranking());
+   h("hNumTracksToVertex")->Fill(vertex.noTracks());
+   h("hVertexRank")->Fill(vertex.ranking());
 
-   fHs["hVertexX"]->Fill(vertex.position().x());
-   fHs["hVertexY"]->Fill(vertex.position().y());
-   fHs["hVertexZ"]->Fill(vertex.position().z());
+   h("hVertexX")->Fill(vertex.position().x());
+   h("hVertexY")->Fill(vertex.position().y());
+   h("hVertexZ")->Fill(vertex.position().z());
 
-   fHs["hVertexXvY"]->Fill(vertex.position().x(), vertex.position().y());
-   fHs["hVertexZvX"]->Fill(vertex.position().z(), vertex.position().x());
-   fHs["hVertexZvY"]->Fill(vertex.position().z(), vertex.position().y());
+   h("hVertexXvY")->Fill(vertex.position().x(), vertex.position().y());
+   h("hVertexZvX")->Fill(vertex.position().z(), vertex.position().x());
+   h("hVertexZvY")->Fill(vertex.position().z(), vertex.position().y());
 
-   fHs["hVertexErrorMag"]->Fill(vertex.posError().mag());
-   fHs["hVertexErrorX"]->Fill(vertex.posError().x());
-   fHs["hVertexErrorY"]->Fill(vertex.posError().y());
-   fHs["hVertexErrorZ"]->Fill(vertex.posError().z());
+   h("hVertexErrorMag")->Fill(vertex.posError().mag());
+   h("hVertexErrorX")->Fill(vertex.posError().x());
+   h("hVertexErrorY")->Fill(vertex.posError().y());
+   h("hVertexErrorZ")->Fill(vertex.posError().z());
 
    // Proceed with histogram requiring info about simulated vertex
    if (!mcVertex) return;
 
-   fHs["hMcVertexX"]->Fill(mcVertex->XyzV().x());
-   fHs["hMcVertexY"]->Fill(mcVertex->XyzV().y());
-   fHs["hMcVertexZ"]->Fill(mcVertex->XyzV().z());
+   h("hMcVertexX")->Fill(mcVertex->XyzV().x());
+   h("hMcVertexY")->Fill(mcVertex->XyzV().y());
+   h("hMcVertexZ")->Fill(mcVertex->XyzV().z());
 
-   fHs["hMcVertexXvY"]->Fill(mcVertex->XyzV().x(), mcVertex->XyzV().y());
-   fHs["hMcVertexZvX"]->Fill(mcVertex->XyzV().z(), mcVertex->XyzV().x());
-   fHs["hMcVertexZvY"]->Fill(mcVertex->XyzV().z(), mcVertex->XyzV().y());
+   h("hMcVertexXvY")->Fill(mcVertex->XyzV().x(), mcVertex->XyzV().y());
+   h("hMcVertexZvX")->Fill(mcVertex->XyzV().z(), mcVertex->XyzV().x());
+   h("hMcVertexZvY")->Fill(mcVertex->XyzV().z(), mcVertex->XyzV().y());
 
-   fHs["hMcRecoVertexDeltaX"]->Fill(mcVertex->XyzV().x() - vertex.position().x());
-   fHs["hMcRecoVertexDeltaY"]->Fill(mcVertex->XyzV().y() - vertex.position().y());
-   fHs["hMcRecoVertexDeltaZ"]->Fill(mcVertex->XyzV().z() - vertex.position().z());
+   h("hMcRecoVertexDeltaX")->Fill(mcVertex->XyzV().x() - vertex.position().x());
+   h("hMcRecoVertexDeltaY")->Fill(mcVertex->XyzV().y() - vertex.position().y());
+   h("hMcRecoVertexDeltaZ")->Fill(mcVertex->XyzV().z() - vertex.position().z());
 
-   fHs["hMcRecoVertexDelta"]->Fill( (mcVertex->XyzV() - vertex.position()).mag() );
+   h("hMcRecoVertexDelta")->Fill( (mcVertex->XyzV() - vertex.position()).mag() );
 
-   fHs["hVertexPullX"]->Fill( (vertex.position().x() - mcVertex->XyzV().x())/vertex.posError().x() );
-   fHs["hVertexPullY"]->Fill( (vertex.position().y() - mcVertex->XyzV().y())/vertex.posError().y() );
-   fHs["hVertexPullZ"]->Fill( (vertex.position().z() - mcVertex->XyzV().z())/vertex.posError().z() );
+   h("hVertexPullX")->Fill( (vertex.position().x() - mcVertex->XyzV().x())/vertex.posError().x() );
+   h("hVertexPullY")->Fill( (vertex.position().y() - mcVertex->XyzV().y())/vertex.posError().y() );
+   h("hVertexPullZ")->Fill( (vertex.position().z() - mcVertex->XyzV().z())/vertex.posError().z() );
 }
