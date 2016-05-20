@@ -46,15 +46,30 @@
 [submodule "star-ssd"]
 	path = ext/star-ssd
 	url = https://github.com/star-bnl/star-ssd.git
+[submodule "star-muDst"]
+	path = ext/star-muDst
+	url = https://github.com/star-bnl/star-muDst.git
+[submodule "star-macros"]
+	path = ext/star-macros
+	url = https://github.com/star-bnl/star-macros.git
+[submodule "star-sim"]
+	path = ext/star-sim
+	url = https://github.com/star-bnl/star-sim.git
 [submodule "star-emc"]
 	path = ext/star-emc
 	url = https://github.com/star-bnl/star-emc.git
 [submodule "star-vertex"]
 	path = ext/star-vertex
 	url = https://github.com/star-bnl/star-vertex.git
+[submodule "star-fgt"]
+	path = ext/star-fgt
+	url = https://github.com/star-bnl/star-fgt.git
 [submodule "star-pams"]
 	path = ext/star-pams
 	url = https://github.com/star-bnl/star-pams.git
 [submodule "star-cmake"]
 	path = star-cmake
 	url = https://github.com/star-bnl/star-cmake.git
+[submodule "travex"]
+	path = ext/travex
+	url = https://github.com/plexoos/travex.git

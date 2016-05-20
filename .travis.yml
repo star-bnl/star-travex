@@ -9,16 +9,21 @@ addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
+      - kubuntu-backports
       - boost-latest
     packages:
       - gcc-4.8
       - g++-4.8
       - libc6-dev-i386
+      - cmake
       - libboost-regex1.55-dev
       - libboost-filesystem1.55-dev
       - libboost-program-options1.55-dev
       - liblog4cxx10
       - liblog4cxx10-dev
+      - libboost-regex1.55-dev
+      - libboost-filesystem1.55-dev
+      - libboost-program-options1.55-dev
 
 git:
   depth: 1

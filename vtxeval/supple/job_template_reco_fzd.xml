@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<job filesPerHour="1" maxFilesPerProcess="1" fileListSyntax="xrootd" simulateSubmission="false" name="&JOB_NAME_UID;">
+   <ResourceUsage>
+      <StorageSpace>
+         <MinStorage>20</MinStorage>
+      </StorageSpace>
+   </ResourceUsage>
+
+   <Generator>
+      <Location>./sums/</Location>
+   </Generator>
+
+   <command>
+
+      starver &STAR_VERSION;
+
+      echo
+      echo "JOB_NAME_UID:        " &JOB_NAME_UID;
+      echo "JOB_INPUT_FILE:      " &JOB_INPUT_FILE;
+      echo "OUT_DIR:             " &OUT_DIR;
+      echo "STAR_VERSION:        " &STAR_VERSION;
+      echo "BFC_OPTIONS:         " &BFC_OPTIONS;
+      echo
+
+      setenv BFC_INPFILE  &JOB_INPUT_FILE;
+      setenv BFC_OPTIONS  `echo &BFC_OPTIONS; | sed 's/_/,/g'`
+
+      setenv COMMAND  "root4star -b -q -l bfc.C(1,1000,"\""${BFC_OPTIONS}"\"","\""${BFC_INPFILE}"\"")"
+
+      ls -al .
+
+      echo
+      echo "STAR:           " $STAR
+      echo "BFC_INPFILE:    " $BFC_INPFILE
+      echo "BFC_OPTIONS:    " $BFC_OPTIONS
+      echo "SCRATCH:        " $SCRATCH
+      echo "pwd:            " `pwd`
+      echo "COMMAND:        " $COMMAND
+      echo
+
+      root4star -b -q -l bfc.C\(1,100000,\"${BFC_OPTIONS}\",\"${BFC_INPFILE}\"\) >&amp; &OUT_DIR;/&JOB_NAME_UID;_bfc.log
+
+      # Cleanup before transfering the files to the output dir
+      mv pythia8.starsim.MuDst.root &JOB_NAME_UID;.MuDst.root
+      rm *.geom.root *.geant.root *.event.root *.hist.root *.tags.root *.runco.root *.minimc.root
+
+      echo "End of job: tralala"
+
+   </command>
+
+   <output fromScratch="*.root" toURL="file:&OUT_DIR;/"/>
+
+   <stdout URL="file:&OUT_DIR;/&JOB_NAME_UID;.log"/>
+   <stderr URL="file:&OUT_DIR;/&JOB_NAME_UID;.log"/>
+
+</job>

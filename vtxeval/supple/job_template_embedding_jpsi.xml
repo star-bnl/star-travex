@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<job maxFilesPerProcess="1" fileListSyntax="xrootd" filesPerHour="1" simulateSubmission="false">
+
+<command>
+<!-- Load library -->
+starver dev
+
+<!-- Set year and day from filename -->
+setenv EMYEAR `perl $STAR/StRoot/macros/embedding/getYearDayFromFile.pl -y ${FILEBASENAME}`
+setenv EMDAY `perl $STAR/StRoot/macros/embedding/getYearDayFromFile.pl -d ${FILEBASENAME}`
+
+<!-- Set log files area -->
+setenv EMLOGS /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedLogs/
+
+<!-- Set output directory path -->
+setenv EMOUTPUT &OUTPUT_DIR;/Jpsi2ee_STARlight_&FSET;_KFV/P10ik.SL10k_embed/$EMYEAR/$EMDAY
+setenv EMLIST   &OUTPUT_DIR;/Jpsi2ee_STARlight_KFV/FSET&FSET;_P10ik.SL10k_embed_$EMYEAR
+
+<!-- Print out EMYEAR and EMDAY and EMLOGS -->
+echo EMYEAR   : $EMYEAR
+echo EMDAY    : $EMDAY
+echo EMLOGS   : $EMLOGS
+echo EMOUTPUT : $EMOUTPUT
+echo EMLIST   : $EMLIST
+
+<!-- Start job -->
+
+<!-- Run starsim with kumac file -->
+set JOB_MAX_EVENTS = &JOB_MAX_EVENTS;
+set daqevents=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/daq_AuAu200_SL10k_zerobias_nevents.list
+set fzdFile=${FILEBASENAME}.fzd
+set random=`/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/get_random_seed`
+set seed=`echo $random | awk '{print $1}'`
+set ptmin=0
+set ptmax=30
+set nevents=`grep $FILEBASENAME $daqevents | awk '{print $2}'`
+
+if ( "$JOB_MAX_EVENTS" != "" ) then
+   set nevents = $JOB_MAX_EVENTS
+endif
+
+echo nevents = $nevents, random = $random, fzdFile=$fzdFile, ptmin = $ptmin, ptmax = $ptmax
+set data=/star/u/desilva/WorkKFvertex/2010_Jpsi2ee_embedding/Input/UPCAuAu200_Jpsi_04242015_zDistributions.root
+
+pwd
+ls -la .
+
+ln -s ./GenerateVertex.C ./GenerateVertex4Jpsi.C
+set my_command='root4star -l -b -q ./GenerateVertex4Jpsi.C("'$data'",'$nevents','$seed',"@'$FILELIST'","vertex.txt","Jet")'
+echo
+echo "Executing..."
+echo  $my_command
+eval '$my_command'
+
+set my_command="starsim -w 0 -b ./starlight_Jpsi_ee.kumac vertex.txt $fzdFile $random $nevents $ptmin $ptmax"
+echo
+echo "Executing..."
+echo  $my_command
+eval '$my_command'
+
+set my_command='root4star -l -b -q ./bfcMixer_Tpx.C('$nevents',"'$INPUTFILE0'","",0,30,-1.5,1.5,-200,200,100,8,1,0,"P14iiAuAu15","FlatPt",true,"'$fzdFile'")'
+echo
+echo "Executing..."
+echo  $my_command
+eval '$my_command'
+
+ls -la .
+
+
+<!-- Make output and list directory (if they don't exist) -->
+if ( ! -f $EMOUTPUT ) then 
+  umask 2
+  mkdir -pv $EMOUTPUT
+  chmod -R ug+rw $EMOUTPUT
+endif
+if ( ! -f $EMLIST ) then 
+  umask 2
+  mkdir -pv $EMLIST
+  chmod -R ug+rw $EMLIST
+endif
+
+
+<!-- Move LOG files and csh to eliza disk, remove list files -->
+mv -v $EMLOGS/P10ik/LOG/$JOBID.log $EMOUTPUT/${FILEBASENAME}.$JOBID.log
+gzip -f $EMOUTPUT/${FILEBASENAME}.$JOBID.log
+mv -v /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedLogs/P10ik/Jpsi_ee_STARlight_20142801/LIST/sched$JOBID.csh $EMLIST/
+rm -v /star/data20/embedding/reco/2010_zerobias/kfVertexStudies/embedLogs/P10ik/Jpsi_ee_STARlight_20142801/LIST/sched$JOBID.list
+
+
+</command>
+
+
+<!-- Define locations of ROOT files -->
+<output fromScratch="*.root" toURL="$EMOUTPUT/"/>
+<output fromScratch="*.fzd" toURL="$EMOUTPUT/"/>
+
+<!-- Define locations of log files -->
+<stdout URL="file:&OUTPUT_DIR;/log/$JOBID.log"/>
+
+<!-- Input daq files -->
+<input URL="file:&INPUT_FILES;"/>
+
+<!-- csh/list files -->
+<Generator>
+  <Location>&OUTPUT_DIR;/sums/</Location>
+</Generator>
+
+<!-- Put any locally-compiled stuffs into a sand-box -->
+<SandBox installer="ZIP">
+  <Package name="Localmakerlibs">
+    <File>file:./bfcMixer_Tpx.C</File>
+    <File>file:./GenerateVertex.C</File>
+    <File>file:./starlight_Jpsi_ee.kumac</File>
+  </Package>
+</SandBox>
+</job>

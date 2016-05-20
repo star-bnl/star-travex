@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<job filesPerHour="&filesPerHour;" maxFilesPerProcess="1" fileListSyntax="xrootd" simulateSubmission="false">
+    <command>
+
+	starver dev
+
+	set RND_SEED=`expr &nIndex; \* 1000`
+
+	echo
+	echo "codePath:   " &codePath;
+	echo "RND_SEED:   " $RND_SEED
+	echo
+
+	ls -al
+
+	ln -s ./GenerateVertex.C ./GenerateVertex4WBoson.C
+	set my_command='root4star -q -b ./GenerateVertex4WBoson.C(0,&nEvents;,'$RND_SEED',"@'$FILELIST'","vertex.txt")'
+	echo
+	echo "Executing..."
+	echo  $my_command
+	eval '$my_command' >&amp;! &outPath;/log/${FILEBASENAME}_vertex.log
+
+	set my_command="starsim -w 0 -b ./simWRequest.kumac nevents=&nEvents; config=&sample; run=&runNumber; seed=$RND_SEED file=$FILEBASENAME.fzd vertexfile=vertex.txt"
+	echo
+	echo "Executing..."
+	echo  $my_command
+	eval '$my_command' >&amp;! &outPath;/log/${FILEBASENAME}_starsim.log
+
+	set my_command='root4star -q -b ./bfcMixer_pythia.C(&nEvents;,"@'$FILELIST'","'$FILEBASENAME'.fzd","P14igpp510","","W")'
+	echo
+	echo "Executing..."
+	echo  $my_command
+	eval '$my_command' >&amp;! &outPath;/log/${FILEBASENAME}_bfcMixer.log
+
+	ls -al
+
+	</command>
+	<input URL="file:&daqFile;" nFiles="1" />
+	<stdout URL="file:&outPath;/log/$FILEBASENAME.log" />
+
+	<output fromScratch="*.fzd"  toURL="file:&outPath;/fzd/" />
+	<output fromScratch="*.root" toURL="file:&outPath;/root/" />
+
+<Generator>
+  <Location>&outPath;/sums/</Location>
+</Generator>
+
+<SandBox installer="ZIP">
+	<Package name="tarball_wbos_embed">
+	<File>file:./bfcMixer_pythia.C</File>
+	<File>file:./GenerateVertex.C</File>
+	<File>file:./simWRequest.kumac</File>
+	<File>file:./StarDb/Calibrations/tracker/</File>
+	<File>file:./.$STAR_HOST_SYS/</File>
+	</Package>
+</SandBox>
+
+</job>
