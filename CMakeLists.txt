@@ -197,13 +197,37 @@ target_link_libraries(stihify
 )
 
 
+add_executable(vtxhist vtxeval/vtxhist.cc)
+
+target_link_libraries(vtxhist
+	travex
+	star-vertex-eval
+	StTableUtilities
+	StarRoot
+	St_base
+	StChain
+	St_Tables
+	StUtilities
+	StIOMaker
+	StarClassLibrary
+	StTriggerDataMaker
+	StEvent
+	StDbLib
+	StEmcUtil
+	StStrangeMuDstMaker
+	StMuDSTMaker
+	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table HistPainter pthread
+)
+
+
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 	set_target_properties(stiscan PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 	set_target_properties(stihify PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
+	set_target_properties(vtxhist PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 endif()
 
 
 # Installation section
 install(DIRECTORY "ext/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
 install(TARGETS StiRootIO GeaRootIO AgUStep StiHifyLib StiScanLib star-vertex-eval DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
-install(TARGETS stiscan stihify DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/bin")
+install(TARGETS stiscan stihify vtxhist DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/bin")
