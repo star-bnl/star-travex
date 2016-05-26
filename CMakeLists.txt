@@ -44,6 +44,7 @@ include_directories(
 	ext/star-daq
 	ext/star-db-calibrations
 	ext/star-emc
+	ext/star-fgt               # required by star-muDst
 	ext/star-geant
 	ext/star-ist
 	ext/star-pxl
@@ -54,16 +55,28 @@ include_directories(
 	ext/star-sti
 	ext/star-svt
 	ext/star-tables
+	ext/star-tables/tables     # required by star-stevent
+	ext/star-sim               # required by star-muDst
 	ext/star-tof
 	ext/star-tpc
+	ext/star-ftpc              # required by star-stevent
 	ext/star-vertex
 	ext/star-pams/global/inc   # required by star-vertex
 )
 
+add_subdirectory(ext/travex)
+add_subdirectory(ext/star-vertex)
 add_subdirectory(ext/star-base)
 add_subdirectory(ext/star-sti)
 add_subdirectory(ext/star-bfchain)
+add_subdirectory(ext/star-muDst)
 add_subdirectory(ext/star-pxl)
+add_subdirectory(ext/star-stevent)
+add_subdirectory(ext/star-emc)
+add_subdirectory(ext/star-sim)
+add_subdirectory(ext/star-trigger)
+add_subdirectory(ext/star-tables)
+add_subdirectory(ext/star-stdb)
 
 root_generate_dictionary(
 	StiRootIO_dict
