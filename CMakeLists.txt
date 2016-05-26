@@ -39,9 +39,11 @@ include_directories(
 	${ROOT_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR}/inc
+	ext/travex/include         # required by star-vertex-eval
 	ext/star-base
 	ext/star-bfchain
 	ext/star-daq
+	ext/star-muDst             # required by star-vertex-eval
 	ext/star-db-calibrations
 	ext/star-emc
 	ext/star-fgt               # required by star-muDst
@@ -167,6 +169,15 @@ add_library(
 	StiScan_dict.cxx
 )
 
+add_library(
+	star-vertex-eval
+	SHARED
+	vtxeval/StarEventHistContainer.cxx
+	vtxeval/StarVertexHistContainer.cxx
+	vtxeval/StarVertexHftHistContainer.cxx
+	vtxeval/VertexRootFile.cxx
+)
+
 
 link_directories( ${Boost_LIBRARY_DIR} ${ROOT_LIBRARY_DIR} )
 
@@ -194,5 +205,5 @@ endif()
 
 # Installation section
 install(DIRECTORY "ext/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
-install(TARGETS StiRootIO GeaRootIO AgUStep StiHifyLib StiScanLib DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
+install(TARGETS StiRootIO GeaRootIO AgUStep StiHifyLib StiScanLib star-vertex-eval DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
 install(TARGETS stiscan stihify DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/bin")
