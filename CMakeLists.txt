@@ -208,7 +208,7 @@ target_link_libraries(stihify
 )
 
 
-add_executable(vtxhist vtxeval/vtxhist.cc)
+add_executable(vtxhist src-tools/vtxhist.cc)
 
 target_link_libraries(vtxhist
 	travex

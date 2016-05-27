@@ -17,8 +17,8 @@
 #include "StMuDSTMaker/COMMON/StMuTrack.h"
 
 #include "travex/ProgramOptions.h"
-#include "utils.h"
-#include "VertexRootFile.h"
+#include "src-tools/utils.h"
+#include "vtxeval/VertexRootFile.h"
 
 
 namespace po = boost::program_options;

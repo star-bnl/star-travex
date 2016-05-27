@@ -9,7 +9,7 @@
 #include "StMuDSTMaker/COMMON/StMuMcVertex.h"
 #include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
 
-#include "utils.h"
+#include "src-tools/utils.h"
 
 
 StarEventHistContainer::StarEventHistContainer(const std::string name, TDirectory* motherDir, const std::string option) :
