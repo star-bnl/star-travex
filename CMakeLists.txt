@@ -30,6 +30,11 @@ include(StarCommon)
 # Search for mysql package after StarCommon is loaded as there some properties
 # set to help choose the appropriate version
 find_package(MySQL)
+find_package(LibXml2)
+
+if(NOT LIBXML2_FOUND)
+	message(FATAL_ERROR "Fatal error: LibXml2 package not found")
+endif()
 
 add_definitions(-D__ROOT__)
 
@@ -42,6 +47,7 @@ include_directories(
 	${Boost_INCLUDE_DIR}
 	${ROOT_INCLUDE_DIR}
 	${MYSQL_INCLUDE_DIRS}
+	${LIBXML2_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR}/inc
 	ext/travex/include         # required by star-vertex-eval
@@ -221,7 +227,7 @@ target_link_libraries(vtxhist
 	StEmcUtil
 	StStrangeMuDstMaker
 	StMuDSTMaker
-	${Boost_LIBRARIES} ${ROOT_LIBRARIES} ${MYSQL_LIBRARIES} Table HistPainter pthread
+	${Boost_LIBRARIES} ${ROOT_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES} Table HistPainter pthread
 )
 
 
