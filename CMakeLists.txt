@@ -27,6 +27,10 @@ endif()
 # Perform some setup standard to STAR experiment environment
 include(StarCommon)
 
+# Search for mysql package after StarCommon is loaded as there some properties
+# set to help choose the appropriate version
+find_package(MySQL)
+
 add_definitions(-D__ROOT__)
 
 
@@ -37,6 +41,7 @@ file(COPY asps/rexe/TGeant3/TGiant3.h asps/rexe/TGeant3/StarMC.h DESTINATION inc
 include_directories(
 	${Boost_INCLUDE_DIR}
 	${ROOT_INCLUDE_DIR}
+	${MYSQL_INCLUDE_DIRS}
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR}/inc
 	ext/travex/include         # required by star-vertex-eval
@@ -216,7 +221,7 @@ target_link_libraries(vtxhist
 	StEmcUtil
 	StStrangeMuDstMaker
 	StMuDSTMaker
-	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table HistPainter pthread
+	${Boost_LIBRARIES} ${ROOT_LIBRARIES} ${MYSQL_LIBRARIES} Table HistPainter pthread
 )
 
 

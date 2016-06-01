@@ -16,6 +16,7 @@ addons:
       - g++-4.8
       - libc6-dev-i386
       - cmake
+      - libmysqlclient-dev
       - libboost-regex1.55-dev
       - libboost-filesystem1.55-dev
       - libboost-program-options1.55-dev
