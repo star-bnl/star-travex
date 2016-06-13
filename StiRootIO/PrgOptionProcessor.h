@@ -61,13 +61,11 @@ protected:
    unsigned int            fMaxEventsUser;
    float                   fSparsity;        ///< Approximate fraction of events to read and process
    bool                    fSaveGraphics;    ///< A flag to create images when set
-   std::map<std::string, std::string> fEnvVars;
    TChain *fStiTChain;
 
 private:
 
    void InitOptions();
-   void InitEnvVars();
 };
 
 #endif

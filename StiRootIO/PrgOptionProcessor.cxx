@@ -20,10 +20,9 @@ PrgOptionProcessor::PrgOptionProcessor(int argc, char **argv, const std::string&
    fVolumeListFile(),
    fVolumePattern(),
    fVolumeList(), fMaxEventsUser(0), fSparsity(1), fSaveGraphics(false),
-   fEnvVars(), fStiTChain(new TChain(stiTreeName.c_str(), "READ"))
+   fStiTChain(new TChain(stiTreeName.c_str(), "READ"))
 {
    InitOptions();
-   InitEnvVars();
 }
 
 
@@ -54,15 +53,6 @@ void PrgOptionProcessor::InitOptions()
    fVolumeList.insert("^.*IDSM_1/PXMO_1/PXLA_[\\d]+/LADR_\\d/PXSI_[\\d]+/PLAC_1.*$");
    fVolumeList.insert("^.*IDSM_1/IBMO_1/IBAM_[\\d]+/IBLM_\\d/IBSS_1.*$");
    fVolumeList.insert("^.*IDSM_1/SFMO_1/SFLM_[\\d]+/SFSW_[\\d]+/SFSL_1/SFSD_1.*$");
-}
-
-
-void PrgOptionProcessor::InitEnvVars()
-{
-   const char* tmpEnv = getenv("OFFLINE_HFT_DIR");
-
-   if (tmpEnv) fEnvVars["OFFLINE_HFT_DIR"] = tmpEnv;
-   else        fEnvVars["OFFLINE_HFT_DIR"] = ".";
 }
 
 
