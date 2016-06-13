@@ -20,18 +20,6 @@ PrgOptionProcessor::PrgOptionProcessor(int argc, char **argv, const std::string&
    fVolumeList(),
    fStiTChain(new TChain(stiTreeName.c_str(), "READ"))
 {
-   InitOptions();
-}
-
-
-PrgOptionProcessor::~PrgOptionProcessor()
-{
-   delete fStiTChain; fStiTChain = nullptr;
-}
-
-
-void PrgOptionProcessor::InitOptions()
-{
    // Declare supported options
    fOptions.add_options()
       ("geom-file",           po::value<std::string>(&fGeomFilePath)->default_value("y2014a.root"), "Full path to a ROOT file with TGeo geometry")
@@ -44,6 +32,12 @@ void PrgOptionProcessor::InitOptions()
    fVolumeList.insert("^.*IDSM_1/PXMO_1/PXLA_[\\d]+/LADR_\\d/PXSI_[\\d]+/PLAC_1.*$");
    fVolumeList.insert("^.*IDSM_1/IBMO_1/IBAM_[\\d]+/IBLM_\\d/IBSS_1.*$");
    fVolumeList.insert("^.*IDSM_1/SFMO_1/SFLM_[\\d]+/SFSW_[\\d]+/SFSL_1/SFSD_1.*$");
+}
+
+
+PrgOptionProcessor::~PrgOptionProcessor()
+{
+   delete fStiTChain; fStiTChain = nullptr;
 }
 
 

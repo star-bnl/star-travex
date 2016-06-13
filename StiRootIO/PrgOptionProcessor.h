@@ -48,10 +48,6 @@ protected:
    std::string             fVolumePattern;   ///< Regex pattern provided by the user in the command line
    std::set<std::string>   fVolumeList;      ///< A list of volume names to consider
    TChain *fStiTChain;
-
-private:
-
-   void InitOptions();
 };
 
 #endif

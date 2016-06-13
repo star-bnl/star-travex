@@ -11,15 +11,6 @@ StiHifyPrgOptions::StiHifyPrgOptions(int argc, char **argv, const std::string& s
    fHistZMin(0), fHistZMax(0),
    fHistYMin(0), fHistYMax(0)
 {
-   InitOptions();
-}
-
-
-/**
- * Declare supported options.
- */
-void StiHifyPrgOptions::InitOptions()
-{
    fOptions.add_options()
       ("accept-candidate,c", po::value<bool>(&fAcceptCandidateHit)->implicit_value(true), "Force closest candidate hit to be the accepted track node hit")
       ("split-by-volume,v", po::value<bool>(&fSplitHistsByVolume)->implicit_value(true), "Separate histograms will be created for each volume matching regex")

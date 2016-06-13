@@ -52,11 +52,6 @@ protected:
    double  fHistZMax;
    double  fHistRMin;
    double  fHistRMax;
-
-private:
-
-   void InitOptions();
-
 };
 
 #endif

@@ -17,21 +17,6 @@ StiScanPrgOptions::StiScanPrgOptions(int argc, char **argv, const std::string& s
    fHistZMin(0), fHistZMax(0),
    fHistRMin(0), fHistRMax(0)
 {
-   InitOptions();
-}
-
-
-StiScanPrgOptions::~StiScanPrgOptions()
-{
-   delete fGeantStepChain; fGeantStepChain = nullptr;
-}
-
-
-/**
- * Declare supported options.
- */
-void StiScanPrgOptions::InitOptions()
-{
    fOptions.add_options()
       ("geant-step-tree,t",   "In addition to Sti tree process tree with info from geant steps")
       ("z-min", po::value<double>(&fHistZMin)->default_value(fHistZMin), "If provided the minimum limit along z will be overwritten by this value in the output histograms")
@@ -39,6 +24,12 @@ void StiScanPrgOptions::InitOptions()
       ("r-min", po::value<double>(&fHistRMin)->default_value(fHistRMin), "If provided the minimum limit in radial direction will be overwritten by this value in the output histograms")
       ("r-max", po::value<double>(&fHistRMax)->default_value(fHistRMax), "If provided the maximum limit in radial direction will be overwritten by this value in the output histograms")
    ;
+}
+
+
+StiScanPrgOptions::~StiScanPrgOptions()
+{
+   delete fGeantStepChain; fGeantStepChain = nullptr;
 }
 
 

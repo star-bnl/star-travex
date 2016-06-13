@@ -46,8 +46,6 @@ private:
    double  fHistZMax;
    double  fHistYMin;
    double  fHistYMax;
-
-   void InitOptions();
 };
 
 #endif
