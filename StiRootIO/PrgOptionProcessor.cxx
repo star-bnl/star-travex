@@ -34,17 +34,10 @@ void PrgOptionProcessor::InitOptions()
 {
    // Declare supported options
    fOptions.add_options()
-      ("help,h",              "Print help message")
-      ("stitree-file,f",      po::value<std::string>(&fInFilePath), "Full path to a ROOT file containing an Sti TTree " \
-                              "OR a text file with a list of such ROOT files")
       ("geom-file",           po::value<std::string>(&fGeomFilePath)->default_value("y2014a.root"), "Full path to a ROOT file with TGeo geometry")
       ("volume-pattern,p",    po::value<std::string>(&fVolumePattern)->implicit_value("process_all_volumes"),
                               "A regex pattern to match Sti/TGeo volume names. If specified without a value all volumes will be matched")
       ("volume-pattern-flist,l",   po::value<std::string>(&fVolumeListFile), "Full path to a text file with regex patterns to match Sti/TGeo volume names")
-      ("out-prefix,o",        po::value<std::string>(&fOutPrefix), "Absolute or relative path prefix for the output files")
-      ("max-events,n",        po::value<unsigned int>(&fMaxEventsUser)->default_value(0), "Maximum number of events to process")
-      ("sparsity,s",          po::value<float>(&fSparsity)->default_value(1), "Approximate fraction of events to read and process")
-      ("save-graph,g",        "Use this option to save plots in png format")
    ;
 
    // Set default values for Sti volume name patterns. These are used if the user does not specify any
@@ -73,28 +66,9 @@ void PrgOptionProcessor::ProcessOptions()
 
 void PrgOptionProcessor::VerifyOptions()
 {
-   if (fOptionsValues.count("help"))
-   {
-      std::cout << fOptions << std::endl;
-      exit(EXIT_SUCCESS);
-   }
-
    Info("VerifyOptions", "User provided options:");
 
-
-   if (fOptionsValues.count("stitree-file"))
-   {
-      std::string treeFile = boost::any_cast<std::string>(fOptionsValues["stitree-file"].value());
-      std::cout << "File with Sti TTree: " << treeFile << std::endl;
-
-      std::ifstream tmpFileCheck(treeFile.c_str());
-      if (!tmpFileCheck.good()) {
-         Fatal("VerifyOptions", "File \"%s\" does not exist", treeFile.c_str());
-      }
-   } else {
-      Fatal("VerifyOptions", "Input file not set");
-   }
-
+   tvx::ProgramOptions::VerifyOptions();
 
    if (fOptionsValues.count("geom-file"))
    {
@@ -165,24 +139,6 @@ void PrgOptionProcessor::VerifyOptions()
       Info("VerifyOptions", "User patterns (fVolumeList) are:");
       std::copy(fVolumeList.begin(), fVolumeList.end(), std::ostream_iterator<std::string>(std::cout, "\n"));
    }
-
-
-   if (fOptionsValues.count("max-events"))
-   {
-      std::cout << "max-events: " << fMaxEventsUser << std::endl;
-   }
-
-   if (fOptionsValues.count("sparsity"))
-   {
-      if (fSparsity > 1 || fSparsity <= 0) {
-         Warning("VerifyOptions", "Sparsity specified value outside allowed limits. Set to 1");
-         fSparsity = 1;
-      }
-      std::cout << "sparsity: " << fSparsity << std::endl;
-   }
-
-   if (fOptionsValues.count("save-graph") )
-      fSaveGraphics = true;
 }
 
 
