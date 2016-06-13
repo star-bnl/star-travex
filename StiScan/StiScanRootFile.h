@@ -29,7 +29,6 @@ protected:
 private:
 
    void FindAutoRange() const;
-   void BookHists();
 };
 
 #endif

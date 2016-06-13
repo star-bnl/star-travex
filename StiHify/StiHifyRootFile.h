@@ -19,10 +19,6 @@ public:
 
    void FillHists(const StiHifyEvent &event);
    void FillDerivedHists();
-
-private:
-
-   void BookHists(const StiHifyPrgOptions& prgOpts);
 };
 
 #endif
