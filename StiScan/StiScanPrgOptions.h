@@ -8,7 +8,6 @@
 #include <boost/program_options/variables_map.hpp>
 #include <boost/program_options/parsers.hpp>
 
-#include "TObject.h"
 #include "TChain.h"
 
 #include "StiRootIO/PrgOptionProcessor.h"
