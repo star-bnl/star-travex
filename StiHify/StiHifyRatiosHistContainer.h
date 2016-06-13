@@ -13,9 +13,6 @@ public:
    virtual void FillDerivedHists() {}
    void CreateRatioHist(const TH1* hNumer, const TH1* hDenom);
 
-protected:
-
-   virtual void BookHists() {}
 };
 
 #endif

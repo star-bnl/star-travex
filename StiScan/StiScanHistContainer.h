@@ -31,7 +31,6 @@ public:
 
 protected:
 
-   virtual void BookHists();
    virtual void FillHists(const TStiKalmanTrack &kalmTrack, const std::set<std::string> *volumeList=0);
    void FillHists(const TGeaTrack &trackG, const std::set<std::string> *volumeList=0);
 
@@ -51,6 +50,7 @@ protected:
 
 private:
 
+   void BookHists();
    void InitRange();
 };
 

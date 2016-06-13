@@ -20,12 +20,6 @@ StiHifyHistContainer::StiHifyHistContainer(const StiHifyPrgOptions& prgOpts, con
    hCountCandidateHits(nullptr),
    hActiveLayerCounts(nullptr)
 {
-   BookHists();
-}
-
-
-void StiHifyHistContainer::BookHists()
-{
    const double suggestBinWidth = 1;   // desired bin width in cm
 
    const double z_max = fPrgOptions.GetHistZMax();

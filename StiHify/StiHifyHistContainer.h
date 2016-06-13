@@ -25,7 +25,6 @@ public:
 
 protected:
 
-   virtual void BookHists();
    void FillHists(const TStiKalmanTrackNode &trkNode);
    void FillHistsHitsAccepted(const TStiKalmanTrackNode &trkNode);
    void FillHistsHitsRejected(const TStiKalmanTrackNode &trkNode);
