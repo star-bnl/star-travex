@@ -12,14 +12,12 @@
 PrgOptionProcessor::PrgOptionProcessor() : PrgOptionProcessor(0, nullptr) { }
 
 
-PrgOptionProcessor::PrgOptionProcessor(int argc, char **argv, const std::string& stiTreeName) : TObject(),
-   fArgc(argc), fArgv(argv),
-   fOptions("Program options", 120), fOptionsValues(), fInFilePath(),
+PrgOptionProcessor::PrgOptionProcessor(int argc, char **argv, const std::string& stiTreeName) :
+   tvx::ProgramOptions(argc, argv),
    fGeomFilePath(),
-   fOutPrefix("./"),
    fVolumeListFile(),
    fVolumePattern(),
-   fVolumeList(), fMaxEventsUser(0), fSparsity(1), fSaveGraphics(false),
+   fVolumeList(),
    fStiTChain(new TChain(stiTreeName.c_str(), "READ"))
 {
    InitOptions();
@@ -252,25 +250,4 @@ void PrgOptionProcessor::AddToInputChains(std::string stiTreeRootFileName)
 
    fStiTChain->AddFile( stiTreeRootFileName.c_str() );
    Info("AddToInputChains", "Found valid ROOT file with Sti tree: %s", stiTreeRootFileName.c_str());
-}
-
-
-/**
- * Form the name of the output file from the input file name by appending
- * a suffix to it. The following rules applied depending on the input file
- * extension:
- *
- * input_file_name      -> input_file_name.<suffix>.root
- * input_file_name.blah -> input_file_name.blah.<suffix>.root
- * input_file_name.root -> input_file_name.<suffix>.root
- */
-std::string PrgOptionProcessor::GetOutFileName(std::string suffix) const
-{
-   boost::regex extension_regex("^(.*)\\.root$");
-
-   if ( boost::regex_match(fInFilePath, extension_regex) ) {
-      return boost::regex_replace(fInFilePath, extension_regex, "\\1." + suffix + ".root");
-   } else {
-      return fInFilePath + "." + suffix + ".root";
-   }
 }

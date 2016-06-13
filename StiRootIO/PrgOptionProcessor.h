@@ -8,8 +8,9 @@
 #include <boost/program_options/variables_map.hpp>
 #include <boost/program_options/parsers.hpp>
 
-#include "TObject.h"
 #include "TChain.h"
+
+#include "travex/ProgramOptions.h"
 
 
 namespace {
@@ -20,7 +21,7 @@ namespace {
 /**
  * Processes and controls user options provided in the command line.
  */
-class PrgOptionProcessor : public TObject
+class PrgOptionProcessor : public tvx::ProgramOptions
 {
 public:
 
@@ -31,12 +32,7 @@ public:
    std::string  PathToStiTreeFile() const { return fInFilePath; }
    std::string  PathToGeometryFile() const { return fGeomFilePath; }
    const std::set<std::string>&  GetVolumeList() const { return fVolumeList; }
-   unsigned int GetMaxEventsUser() const { return fMaxEventsUser; }
-   float GetSparsity() const { return fSparsity; }
-   bool  SaveGraphics() const { return fSaveGraphics; }
    TChain* GetStiTChain() { return fStiTChain; }
-   std::string GetOutPrefix() const { return fOutPrefix; }
-   std::string GetOutFileName(std::string suffix="hist") const;
 
    void ProcessOptions();
    bool MatchedVolName(const std::string & volName) const;
@@ -47,20 +43,10 @@ protected:
    virtual void VerifyOptions();
    virtual void AddToInputChains(std::string stiTreeRootFileName);
 
-   int                     fArgc;
-   char**                  fArgv;
-   po::options_description fOptions;
-   po::variables_map       fOptionsValues;
-   /// Full path to either a root file with Sti event tree or a text file with a list of such root files
-   std::string             fInFilePath;
    std::string             fGeomFilePath;    ///< Full path to a ROOT file with TGeo geometry
-   std::string             fOutPrefix;
    std::string             fVolumeListFile;  ///< Full path to a text file with Sti/TGeo volume names
    std::string             fVolumePattern;   ///< Regex pattern provided by the user in the command line
    std::set<std::string>   fVolumeList;      ///< A list of volume names to consider
-   unsigned int            fMaxEventsUser;
-   float                   fSparsity;        ///< Approximate fraction of events to read and process
-   bool                    fSaveGraphics;    ///< A flag to create images when set
    TChain *fStiTChain;
 
 private:
