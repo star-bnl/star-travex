@@ -66,6 +66,7 @@ include_directories(
 	ext/star-stdb
 	ext/star-stevent
 	ext/star-sti
+	ext/star-ca-tracker        # required by star-sti
 	ext/star-svt
 	ext/star-tables
 	ext/star-tables/tables     # required by star-stevent

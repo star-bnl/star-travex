@@ -79,3 +79,6 @@
 [submodule "ext/star-trigger"]
 	path = ext/star-trigger
 	url = https://github.com/star-bnl/star-trigger.git
+[submodule "ext/star-ca-tracker"]
+	path = ext/star-ca-tracker
+	url = https://github.com/star-bnl/star-ca-tracker.git
