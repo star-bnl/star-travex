@@ -199,11 +199,13 @@ add_executable(stiscan src-tools/stiscan.cc)
 add_executable(stihify src-tools/stihify.cc)
 
 target_link_libraries(stiscan
+	travex
 	StiScanLib GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
 	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table Geom HistPainter EG pthread
 )
 
 target_link_libraries(stihify
+	travex
 	StiHifyLib StiScanLib GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
 	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table Geom HistPainter EG pthread
 )
