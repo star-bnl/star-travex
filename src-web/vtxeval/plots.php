@@ -11,8 +11,8 @@ include_once(BASE_DIR."/common/PlotHelper.php");
 $pfx = isset($_GET['pfx']) ? $_GET['pfx'] : "";
 $det = isset($_GET['det']) ? $_GET['det'] : "";
 
-$info_file = VTXEVAL_RESULTS_DIR."/vertex-".dirname($pfx).".lis_result/info.html";
-$gP = new PlotHelper(VTXEVAL_RESULTS_URL."/vertex-$pfx.lis_result", "");
+$info_file = VTXEVAL_RESULTS_DIR."/".dirname($pfx).".lis_result/info.html";
+$gP = new PlotHelper(VTXEVAL_RESULTS_URL."/$pfx.lis_result", "");
 
 ?>
 
@@ -197,6 +197,78 @@ if (file_exists($info_file))
 
 
 
+<h2 id="h_vertex_reco_hft" class="count">Reconstructed Vertex (HFT tracks)</h2>
+<!-- {{{ -->
+<div id="div:h_vertex_reco_hft" class="section">
+
+
+<p>
+<table class="simple00 cntr">
+
+<tr>
+   <td><?php print $gP->img("vertex_hft/hVertexX"); ?>
+   <div class="thumbcaption">
+   Vertex position X
+   </div>
+
+   <td>&nbsp;
+
+   <td><?php print $gP->img("vertex_hft/hVertexZvX"); ?>
+   <div class="thumbcaption">
+   Vertex position Z vs X
+   </div>
+
+<tr>
+
+   <td><?php print $gP->img("vertex_hft/hVertexXvY"); ?>
+   <div class="thumbcaption">
+   Vertex position X vs Y
+   </div>
+
+   <td><?php print $gP->img("vertex_hft/hVertexY"); ?>
+   <div class="thumbcaption">
+   Vertex position Y
+   </div>
+
+   <td><?php print $gP->img("vertex_hft/hVertexZvY"); ?>
+   <div class="thumbcaption">
+   Vertex position Z vs Y
+   </div>
+
+<tr>
+   <td>&nbsp;
+
+   <td>&nbsp;
+
+   <td><?php print $gP->img("vertex_hft/hVertexZ"); ?>
+   <div class="thumbcaption">
+   Vertex position Z
+   </div>
+
+<tr>
+   <td><?php print $gP->img("vertex_hft/hVertexErrorX"); ?>
+   <div class="thumbcaption">
+   Vertex position error X
+   </div>
+
+   <td><?php print $gP->img("vertex_hft/hVertexErrorY"); ?>
+   <div class="thumbcaption">
+   Vertex position error Y
+   </div>
+
+   <td><?php print $gP->img("vertex_hft/hVertexErrorZ"); ?>
+   <div class="thumbcaption">
+   Vertex position error Z
+   </div>
+
+</table>
+
+
+</div>
+<!-- }}} -->
+
+
+
 <h2 id="h_vertex_mc_reco" class="count">Reco vs Simu Vertex</h2>
 <!-- {{{ -->
 <div id="div:h_vertex_mc_reco" class="section">
@@ -241,6 +313,64 @@ if (file_exists($info_file))
    <td>&nbsp;
 
    <td><?php print $gP->img("vertex/hMcRecoVertexDelta"); ?>
+   <div class="thumbcaption">
+   Distance: Simu - Reco
+   </div>
+
+   <td>&nbsp;
+
+</table>
+
+
+</div>
+<!-- }}} -->
+
+
+
+<h2 id="h_vertex_mc_reco_hft" class="count">Reco vs Simu Vertex (HFT tracks)</h2>
+<!-- {{{ -->
+<div id="div:h_vertex_mc_reco_hft" class="section">
+
+
+<p>
+<table class="simple00 cntr">
+
+<tr>
+   <td><?php print $gP->img("vertex_hft/hVertexPullX"); ?>
+   <div class="thumbcaption">
+   Vertex pull distribuition in X
+   </div>
+
+   <td><?php print $gP->img("vertex_hft/hVertexPullY"); ?>
+   <div class="thumbcaption">
+   Vertex pull distribuition in Y
+   </div>
+
+   <td><?php print $gP->img("vertex_hft/hVertexPullZ"); ?>
+   <div class="thumbcaption">
+   Vertex pull distribuition in Z
+   </div>
+
+<tr>
+   <td><?php print $gP->img("vertex_hft/hMcRecoVertexDeltaX"); ?>
+   <div class="thumbcaption">
+   Delta X: Simu - Reco
+   </div>
+
+   <td><?php print $gP->img("vertex_hft/hMcRecoVertexDeltaY"); ?>
+   <div class="thumbcaption">
+   Delta Y: Simu - Reco
+   </div>
+
+   <td><?php print $gP->img("vertex_hft/hMcRecoVertexDeltaZ"); ?>
+   <div class="thumbcaption">
+   Delta Z: Simu - Reco
+   </div>
+
+<tr>
+   <td>&nbsp;
+
+   <td><?php print $gP->img("vertex_hft/hMcRecoVertexDelta"); ?>
    <div class="thumbcaption">
    Distance: Simu - Reco
    </div>
