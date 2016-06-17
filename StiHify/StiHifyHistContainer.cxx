@@ -19,7 +19,8 @@ StiHifyHistContainer::StiHifyHistContainer(const StiHifyPrgOptions& prgOpts, con
    hPullCandidateHits2D(nullptr),
    hChi2CandidateHits(nullptr),
    hCountCandidateHits(nullptr),
-   hActiveLayerCounts(nullptr)
+   hActiveLayerCounts(nullptr),
+   hProjErrorMag(nullptr)
 {
    const double suggestBinWidth = 1;   // desired bin width in cm
 
@@ -72,6 +73,9 @@ StiHifyHistContainer::StiHifyHistContainer(const StiHifyPrgOptions& prgOpts, con
    hActiveLayerCounts = new TH2F("hActiveLayerCounts", " ; Track Local Z, cm; Local Y, cm; Num. of Track Nodes", n_z_bins, z_min, z_max, n_y_bins, y_min, y_max);
    hActiveLayerCounts->SetOption("colz");
    Add(hActiveLayerCounts);
+
+   hProjErrorMag = new TH1I("hProjErrorMag", "Projection Error; Projection Error Mag",200,0.,1.0);
+   Add(hProjErrorMag);
 }
 
 
@@ -136,6 +140,9 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode)
    hDist2ClosestHit->Fill( trkNode.CalcDistanceToClosestHit() );
 
    hPullClosestHit1D->Fill(trkNode.CalcDistanceToClosestHit() < 0 ? -1 : (trkNode.CalcDistanceToClosestHit()/trkNode.GetProjError().Mag()) );
+
+   // Add by ZWM
+   hProjErrorMag->Fill( trkNode.GetProjError().Mag() );
 
    const std::set<TStiHitProxy>& hitCandidates = trkNode.GetCandidateProxyHits();
 

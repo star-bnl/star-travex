@@ -133,6 +133,12 @@ root_generate_dictionary(
 	LINKDEF StiScan/StiScanLinkDef.h
 )
 
+root_generate_dictionary(
+	StMcAnalysisMaker_dict
+	StiHify/StMcAnalysisMaker.h
+   LINKDEF StiHify/StMcAnalysisMakerLinkDef.h
+)
+
 add_library(
 	StiRootIO
 	SHARED
@@ -156,12 +162,15 @@ add_library(
 add_library( GeaRootIO SHARED GeaRootIO/TGeaEvent.cxx GeaRootIO_dict.cxx)
 add_library( AgUStep SHARED GeaRootIO/AgUStep.cxx AgUStep_dict.cxx)
 
+add_library( StMcAnalysisMaker SHARED StiHify/StMcAnalysisMaker.cxx StMcAnalysisMaker_dict.cxx)
+
 add_library(
 	StiHifyLib
 	SHARED
 	StiHify/StiHifyEvent.cxx
 	StiHify/StiHifyTreeMaker.cxx
 	StiHify/StiHifyHistContainer.cxx
+	StiHify/StiHifyAnalysisTreeMaker.cxx
 	StiHify/StiHifyRatiosHistContainer.cxx
 	StiHify/StiHifyPrgOptions.cxx
 	StiHify/StiHifyRootFile.cxx
@@ -243,5 +252,6 @@ endif()
 
 # Installation section
 install(DIRECTORY "ext/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
-install(TARGETS StiRootIO GeaRootIO AgUStep StiHifyLib StiScanLib star-vertex-eval DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
+install(TARGETS StiRootIO GeaRootIO AgUStep StiHifyLib StiScanLib
+	star-vertex-eval StMcAnalysisMaker DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
 install(TARGETS stiscan stihify vtxhist DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/bin")

@@ -39,7 +39,9 @@ protected:
    TH2I* hPullCandidateHits2D;
    TH1I* hChi2CandidateHits;
    TH1I* hCountCandidateHits;
-   TH2F* hActiveLayerCounts; // Defined as float because we calculate a ratio
+   TH2F* hActiveLayerCounts;
+   // Added ZWM
+   TH1I* hProjErrorMag;
 
 private:
 

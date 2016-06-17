@@ -13,6 +13,8 @@
 StiHifyRootFile::StiHifyRootFile(StiHifyPrgOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
    tvx::RootFile(prgOpts, option, ftitle, compress)
 {
+   treeMaker = new StiHifyAnalysisTreeMaker(prgOpts);
+
    fDirs["sti_hit_any_node"] = new StiHifyHistContainer(prgOpts, "sti_hit_any_node", this);
    fDirs["sti_hit_accepted"] = new StiHifyHistContainer(prgOpts, "sti_hit_accepted", this);
    fDirs["sti_hit_rejected"] = new StiHifyHistContainer(prgOpts, "sti_hit_rejected", this);
@@ -21,6 +23,10 @@ StiHifyRootFile::StiHifyRootFile(StiHifyPrgOptions& prgOpts, Option_t *option, c
 
 void StiHifyRootFile::FillHists(const StiHifyEvent &event)
 {
+   treeMaker->FillTree(event, StiNodeHitStatus::Any);
+   treeMaker->FillTree(event, StiNodeHitStatus::Accepted);
+   treeMaker->FillTree(event, StiNodeHitStatus::Rejected);
+
    StiHifyHistContainer* container;
 
    container = static_cast<StiHifyHistContainer*> (fDirs["sti_hit_any_node"]);

@@ -7,6 +7,7 @@
 
 #include "travex/RootFile.h"
 #include "StiHify/StiHifyEvent.h"
+#include "StiHify/StiHifyAnalysisTreeMaker.h"
 
 class StiHifyPrgOptions;
 
@@ -19,6 +20,10 @@ public:
 
    void FillHists(const StiHifyEvent &event);
    void FillDerivedHists();
+
+private:
+
+   StiHifyAnalysisTreeMaker* treeMaker;
 };
 
 #endif
