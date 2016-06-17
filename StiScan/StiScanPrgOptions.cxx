@@ -3,6 +3,7 @@
 
 #include "TFile.h"
 
+#include "travex/utils.h"
 #include "StiScan/StiScanPrgOptions.h"
 
 
@@ -61,8 +62,8 @@ void StiScanPrgOptions::AddToInputChains(std::string stiTreeRootFileName)
    TFile file( geantStepRootFileName.Data() );
 
    if ( file.IsZombie() )
-      Fatal("AddToInputChains", "Input file is not a valid root file: %s", geantStepRootFileName.Data());
+      tvx::Fatal("Input file is not a valid root file: %s", geantStepRootFileName.Data());
 
    fGeantStepChain->AddFile( geantStepRootFileName.Data() );
-   Info("AddToInputChains", "Found valid ROOT file with Geant info: %s", geantStepRootFileName.Data());
+   tvx::Info("Found valid ROOT file with Geant info: %s", geantStepRootFileName.Data());
 }
