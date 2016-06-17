@@ -12,7 +12,7 @@
 
 
 StiScanRootFile::StiScanRootFile(StiScanPrgOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
-   StiRootFile(prgOpts, option, ftitle, compress),
+   tvx::RootFile(prgOpts, option, ftitle, compress),
    fPrgOptions(prgOpts)
 {
    // Find ranges (\todo if requested by the user)
@@ -21,9 +21,9 @@ StiScanRootFile::StiScanRootFile(StiScanPrgOptions& prgOpts, Option_t *option, c
       FindAutoRange();
    }
 
-   mDirs["sti_vol"] = new StiScanHistsByVolume(fPrgOptions, "sti_vol", this);
-   mDirs["sti_trk"] = new StiScanHistContainer(fPrgOptions, "sti_trk", this);
-   mDirs["gea"]     = new StiScanHistContainer(fPrgOptions, "gea", this); // Will create integral projections from 2D histograms
+   fDirs["sti_vol"] = new StiScanHistsByVolume(fPrgOptions, "sti_vol", this);
+   fDirs["sti_trk"] = new StiScanHistContainer(fPrgOptions, "sti_trk", this);
+   fDirs["gea"]     = new StiScanHistContainer(fPrgOptions, "gea", this); // Will create integral projections from 2D histograms
 }
 
 
@@ -100,30 +100,30 @@ void StiScanRootFile::FillHists(const StiScanEvent &stiEvent, const std::set<std
 {
    StiScanHistContainer* container;
 
-   container = static_cast<StiScanHistContainer*> (mDirs["sti_vol"]);
+   container = static_cast<StiScanHistContainer*> (fDirs["sti_vol"]);
    container->FillHists(stiEvent, volumeList);
 
-   container = static_cast<StiScanHistContainer*> (mDirs["sti_trk"]);
+   container = static_cast<StiScanHistContainer*> (fDirs["sti_trk"]);
    container->FillHists(stiEvent, volumeList);
 }
 
 
 void StiScanRootFile::FillHists(const TGeaEvent &geaEvent, const std::set<std::string> *volumeList)
 {
-   StiScanHistContainer* container = static_cast<StiScanHistContainer*> (mDirs["gea"]);
+   StiScanHistContainer* container = static_cast<StiScanHistContainer*> (fDirs["gea"]);
    container->FillHists(geaEvent, volumeList);
 }
 
 
 void StiScanRootFile::FillDerivedHists()
 {
-   StiRootFile::FillDerivedHists();
+   tvx::RootFile::FillDerivedHists();
 
    StiScanRatiosHistContainer *ratios;
-   mDirs["sti_gea_ratio"] = ratios = new StiScanRatiosHistContainer("sti_gea_ratio", this);
+   fDirs["sti_gea_ratio"] = ratios = new StiScanRatiosHistContainer("sti_gea_ratio", this);
 
-   const tvx::HistContainer* gea = mDirs["gea"];
-   const tvx::HistContainer* sti_trk = mDirs["sti_trk"];
+   const tvx::HistContainer* gea = fDirs["gea"];
+   const tvx::HistContainer* sti_trk = fDirs["sti_trk"];
 
    const TH1* gea_eloss = gea->FindHist("hELossVsPhiVsRVsZ_pyx");
    const TH1* sti_eloss = sti_trk->FindHist("hELossVsPhiVsRVsZ_pyx");

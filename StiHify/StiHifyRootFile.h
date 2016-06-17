@@ -5,13 +5,13 @@
 #include <set>
 #include <string>
 
-#include "StiRootIO/StiRootFile.h"
+#include "travex/RootFile.h"
 #include "StiHify/StiHifyEvent.h"
 
 class StiHifyPrgOptions;
 
 
-class StiHifyRootFile : public tvx::StiRootFile
+class StiHifyRootFile : public tvx::RootFile
 {
 public:
 

@@ -11,11 +11,11 @@
 
 
 StiHifyRootFile::StiHifyRootFile(StiHifyPrgOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
-   StiRootFile(prgOpts, option, ftitle, compress)
+   tvx::RootFile(prgOpts, option, ftitle, compress)
 {
-   mDirs["sti_hit_any_node"] = new StiHifyHistContainer(prgOpts, "sti_hit_any_node", this);
-   mDirs["sti_hit_accepted"] = new StiHifyHistContainer(prgOpts, "sti_hit_accepted", this);
-   mDirs["sti_hit_rejected"] = new StiHifyHistContainer(prgOpts, "sti_hit_rejected", this);
+   fDirs["sti_hit_any_node"] = new StiHifyHistContainer(prgOpts, "sti_hit_any_node", this);
+   fDirs["sti_hit_accepted"] = new StiHifyHistContainer(prgOpts, "sti_hit_accepted", this);
+   fDirs["sti_hit_rejected"] = new StiHifyHistContainer(prgOpts, "sti_hit_rejected", this);
 }
 
 
@@ -23,13 +23,13 @@ void StiHifyRootFile::FillHists(const StiHifyEvent &event)
 {
    StiHifyHistContainer* container;
 
-   container = static_cast<StiHifyHistContainer*> (mDirs["sti_hit_any_node"]);
+   container = static_cast<StiHifyHistContainer*> (fDirs["sti_hit_any_node"]);
    container->FillHists(event, StiNodeHitStatus::Any);
 
-   container = static_cast<StiHifyHistContainer*> (mDirs["sti_hit_accepted"]);
+   container = static_cast<StiHifyHistContainer*> (fDirs["sti_hit_accepted"]);
    container->FillHists(event, StiNodeHitStatus::Accepted);
 
-   container = static_cast<StiHifyHistContainer*> (mDirs["sti_hit_rejected"]);
+   container = static_cast<StiHifyHistContainer*> (fDirs["sti_hit_rejected"]);
    container->FillHists(event, StiNodeHitStatus::Rejected);
 }
 
@@ -39,13 +39,13 @@ void StiHifyRootFile::FillHists(const StiHifyEvent &event)
  */
 void StiHifyRootFile::FillDerivedHists()
 {
-   StiRootFile::FillDerivedHists();
+   tvx::RootFile::FillDerivedHists();
 
    StiHifyRatiosHistContainer *ratios;
-   mDirs["sti_hit_ratio"] = ratios = new StiHifyRatiosHistContainer("sti_hit_ratio", this);
+   fDirs["sti_hit_ratio"] = ratios = new StiHifyRatiosHistContainer("sti_hit_ratio", this);
 
 
-   const tvx::HistMap& hists = mDirs["sti_hit_any_node"]->GetHists();
+   const tvx::HistMap& hists = fDirs["sti_hit_any_node"]->GetHists();
 
    for (const auto& hist_iter : hists)
    {
@@ -56,8 +56,8 @@ void StiHifyRootFile::FillDerivedHists()
 
       if (!matched) continue;
 
-      const tvx::HistContainer& hitsNumer(*mDirs["sti_hit_accepted"]);
-      const tvx::HistContainer& hitsDenom(*mDirs["sti_hit_any_node"]);
+      const tvx::HistContainer& hitsNumer(*fDirs["sti_hit_accepted"]);
+      const tvx::HistContainer& hitsDenom(*fDirs["sti_hit_any_node"]);
 
       const TH1* hitsAcc = hitsNumer.FindHist(hist_name);
       const TH1* hitsAll = hitsDenom.FindHist(hist_name);

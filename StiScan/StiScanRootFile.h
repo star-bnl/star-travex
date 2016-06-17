@@ -5,14 +5,15 @@
 #include <set>
 #include <string>
 
-#include "StiRootIO/StiRootFile.h"
+#include "travex/RootFile.h"
+
 #include "GeaRootIO/TGeaEvent.h"
 #include "StiScan/StiScanEvent.h"
 
 class StiScanPrgOptions;
 
 
-class StiScanRootFile : public tvx::StiRootFile
+class StiScanRootFile : public tvx::RootFile
 {
 public:
 
