@@ -56,8 +56,8 @@ void StiHifyRootFile::FillDerivedHists()
 
       if (!matched) continue;
 
-      const tvx::StiHistContainer& hitsNumer(*mDirs["sti_hit_accepted"]);
-      const tvx::StiHistContainer& hitsDenom(*mDirs["sti_hit_any_node"]);
+      const tvx::HistContainer& hitsNumer(*mDirs["sti_hit_accepted"]);
+      const tvx::HistContainer& hitsDenom(*mDirs["sti_hit_any_node"]);
 
       const TH1* hitsAcc = hitsNumer.FindHist(hist_name);
       const TH1* hitsAll = hitsDenom.FindHist(hist_name);

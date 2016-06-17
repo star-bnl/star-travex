@@ -122,8 +122,8 @@ void StiScanRootFile::FillDerivedHists()
    StiScanRatiosHistContainer *ratios;
    mDirs["sti_gea_ratio"] = ratios = new StiScanRatiosHistContainer("sti_gea_ratio", this);
 
-   const tvx::StiHistContainer* gea = mDirs["gea"];
-   const tvx::StiHistContainer* sti_trk = mDirs["sti_trk"];
+   const tvx::HistContainer* gea = mDirs["gea"];
+   const tvx::HistContainer* sti_trk = mDirs["sti_trk"];
 
    const TH1* gea_eloss = gea->FindHist("hELossVsPhiVsRVsZ_pyx");
    const TH1* sti_eloss = sti_trk->FindHist("hELossVsPhiVsRVsZ_pyx");
