@@ -37,15 +37,14 @@ StiTreeMaker::~StiTreeMaker()
  */
 Int_t StiTreeMaker::Init()
 {
-   //StBFChain *bfChain = (StBFChain *) StMaker::GetChain();
+   StBFChain *bfChain = (StBFChain *) StMaker::GetChain();
 
-   //if (!bfChain) return kStFatal;
+   if (!bfChain) return kStFatal;
 
    // Authorize Trees up to 2 Terabytes (if the system can do it)
    TTree::SetMaxTreeSize(1000 * Long64_t(2000000000));
 
-   //TString fileName( gSystem->BaseName(bfChain->GetFileIn().Data()) );
-   fileName.ReplaceAll(".root",""); 
+   TString fileName( gSystem->BaseName(bfChain->GetFileOut().Data()) );
 
    // Form a new name for the output file
    fileName += "." + fSuffix + ".root";
@@ -77,9 +76,4 @@ Int_t StiTreeMaker::Finish()
 void StiTreeMaker::Clear(Option_t *opt)
 {
    fEvent->Clear();
-}
-
-void StiTreeMaker::setOutputFileName(TString st="defaultHify")
-{
-  fileName += st;
 }

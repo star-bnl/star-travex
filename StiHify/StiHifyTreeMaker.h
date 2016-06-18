@@ -14,7 +14,6 @@ public:
 
    explicit StiHifyTreeMaker(const std::string &name="StiHifyTreeMaker");
    virtual Int_t Make();
-   void SetOutputFileName(TString t){StiTreeMaker::setOutputFileName(t);};
 
 private:
 
