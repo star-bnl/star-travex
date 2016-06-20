@@ -1,17 +1,10 @@
 #ifndef StiHifyAnalysisTreeMaker_h
 #define StiHifyAnalysisTreeMaker_h
 
-#include <set>
-#include <string>
-
-#include "TH1I.h"
-#include "TH2I.h"
-#include "TH2F.h"
 #include "TTree.h"
 
 #include "StiHify/StiHifyEvent.h"
 #include "StiHify/StiHifyPrgOptions.h"
-#include "StiRootIO/StiHistContainer.h"
 #include "StiRootIO/TStiKalmanTrackNode.h"
 
 

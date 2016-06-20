@@ -1,10 +1,5 @@
-#include <cmath>
-#include <boost/algorithm/string/replace.hpp>
-
-#include "TVector3.h"
-
 #include "StiHify/StiHifyAnalysisTreeMaker.h"
-#include "StiRootIO/TStiHitProxy.h"
+
 
 StiHifyAnalysisTreeMaker::StiHifyAnalysisTreeMaker(const StiHifyPrgOptions& prgOpts) :fPrgOptions(prgOpts)
 {
