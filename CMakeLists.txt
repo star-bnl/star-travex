@@ -147,8 +147,6 @@ add_library(
 	StiRootIO/PrgOptionProcessor.cxx
 	StiRootIO/Profile2D.cxx
 	StiRootIO/Profile3D.cxx
-	StiRootIO/StiHistContainer.cxx
-	StiRootIO/StiRootFile.cxx
 	StiRootIO/StiTreeMaker.cxx
 	StiRootIO/StiVolumeFilter.cxx
 	StiRootIO/TStiEvent.cxx
