@@ -62,8 +62,8 @@ void StiScanPrgOptions::AddToInputChains(std::string stiTreeRootFileName)
    TFile file( geantStepRootFileName.Data() );
 
    if ( file.IsZombie() )
-      tvx::Fatal("Input file is not a valid root file: %s", geantStepRootFileName.Data());
+      TVX_FATAL("Input file is not a valid root file: %s", geantStepRootFileName.Data());
 
    fGeantStepChain->AddFile( geantStepRootFileName.Data() );
-   tvx::Info("Found valid ROOT file with Geant info: %s", geantStepRootFileName.Data());
+   TVX_INFO("Found valid ROOT file with Geant info: %s", geantStepRootFileName.Data());
 }

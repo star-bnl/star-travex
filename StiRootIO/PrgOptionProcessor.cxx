@@ -61,7 +61,7 @@ void PrgOptionProcessor::ProcessOptions()
 
 void PrgOptionProcessor::VerifyOptions()
 {
-   tvx::Info("User provided options:");
+   TVX_INFO("User provided options:");
 
    tvx::ProgramOptions::VerifyOptions();
 
@@ -71,9 +71,9 @@ void PrgOptionProcessor::VerifyOptions()
       std::cout << "File with TGeo geometry: " << pathToGeomFile << std::endl;
 
       if ( !std::ifstream(pathToGeomFile.c_str()).good() )
-         tvx::Fatal("File \"%s\" does not exist", pathToGeomFile.c_str());
+         TVX_FATAL("File \"%s\" does not exist", pathToGeomFile.c_str());
    } else
-      tvx::Fatal("Geometry file not set");
+      TVX_FATAL("Geometry file not set");
 
 
    if (fOptionsValues.count("volume-pattern-flist"))
@@ -82,7 +82,7 @@ void PrgOptionProcessor::VerifyOptions()
       std::ifstream volListFile(fVolumeListFile.c_str());
 
       if (!volListFile.good()) {
-         tvx::Fatal("File \"%s\" does not exist", fVolumeListFile.c_str());
+         TVX_FATAL("File \"%s\" does not exist", fVolumeListFile.c_str());
       }
 
       fVolumeList.clear();
@@ -96,7 +96,7 @@ void PrgOptionProcessor::VerifyOptions()
             boost::regex re(pattern);
          }
          catch (boost::regex_error& e) {
-            tvx::Fatal("Provided regex \"%s\" is not valid", pattern.c_str());
+            TVX_FATAL("Provided regex \"%s\" is not valid", pattern.c_str());
          }
 
          if (volListFile.eof()) break;
@@ -104,10 +104,10 @@ void PrgOptionProcessor::VerifyOptions()
          fVolumeList.insert(pattern);
       }
 
-      tvx::Info("User patterns (fVolumeList) are:");
+      TVX_INFO("User patterns (fVolumeList) are:");
       std::copy(fVolumeList.begin(), fVolumeList.end(), std::ostream_iterator<std::string>(std::cout, "\n"));
    } else {
-      tvx::Info("Default patterns (fVolumeList) are:");
+      TVX_INFO("Default patterns (fVolumeList) are:");
       std::copy(fVolumeList.begin(), fVolumeList.end(), std::ostream_iterator<std::string>(std::cout, "\n"));
    }
 
@@ -124,14 +124,14 @@ void PrgOptionProcessor::VerifyOptions()
             boost::regex re(fVolumePattern);
          }
          catch (boost::regex_error& e) {
-            tvx::Fatal("Provided regex \"%s\" is not valid", fVolumePattern.c_str());
+            TVX_FATAL("Provided regex \"%s\" is not valid", fVolumePattern.c_str());
          }
 
          fVolumeList.clear();
          fVolumeList.insert(fVolumePattern);
       }
 
-      tvx::Info("User patterns (fVolumeList) are:");
+      TVX_INFO("User patterns (fVolumeList) are:");
       std::copy(fVolumeList.begin(), fVolumeList.end(), std::ostream_iterator<std::string>(std::cout, "\n"));
    }
 }
@@ -166,7 +166,7 @@ void PrgOptionProcessor::BuildInputChains()
 
    if ( file.IsZombie() )
    {
-      tvx::Warning("Input file is not a root file: %s\nWill treat it as a file list", fInFilePath.c_str());
+      TVX_WARNING("Input file is not a root file: %s\nWill treat it as a file list", fInFilePath.c_str());
 
       std::ifstream treeListFile(fInFilePath.c_str());
 
@@ -180,7 +180,7 @@ void PrgOptionProcessor::BuildInputChains()
       }
    } else
    {
-      tvx::Info("Found root file: %s", fInFilePath.c_str());
+      TVX_INFO("Found root file: %s", fInFilePath.c_str());
       AddToInputChains(fInFilePath);
    }
 }
@@ -197,8 +197,8 @@ void PrgOptionProcessor::AddToInputChains(std::string stiTreeRootFileName)
    TFile file( stiTreeRootFileName.c_str() );
 
    if ( file.IsZombie() )
-      tvx::Fatal("Input file is not a valid root file: %s", stiTreeRootFileName.c_str());
+      TVX_FATAL("Input file is not a valid root file: %s", stiTreeRootFileName.c_str());
 
    fStiTChain->AddFile( stiTreeRootFileName.c_str() );
-   tvx::Info("Found valid ROOT file with Sti tree: %s", stiTreeRootFileName.c_str());
+   TVX_INFO("Found valid ROOT file with Sti tree: %s", stiTreeRootFileName.c_str());
 }
