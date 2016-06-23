@@ -1,35 +1,8 @@
-[![Build Status](https://travis-ci.org/star-bnl/star-vertex-eval.svg?branch=master)](https://travis-ci.org/star-bnl/star-vertex-eval)
+VtxEval tool
+============
 
-
-How to build and use the library in a ROOT session
-==================================================
-
-Checkout the code using the following command:
-
-    git clone --recursive https://github.com/star-bnl/star-vertex-eval.git
-
-Compile and build the library:
-
-    cd star-vertex-eval/
-    mkdir build && cd build/
-    cmake -D CMAKE_INSTALL_PREFIX=./ ../
-    make install
-
-The above commands should build `libstar-vertex-eval.so` in the `build`
-directory. Now we can load it in ROOT and call `MuMcPrVKFV2012()` to create a
-ROOT file (e.g. `my_output_file.root`) with support histograms used to calculate
-the vertex finding efficiency. To produce and the efficiency plots one can
-follow up with a call to `VxEff()` as in the snipped below:
-
-    root -l ../load_libs.C
-    root [0] MuMcPrVKFV2012(<num_events>, "path/to/*.MuDst.root", "my_output_file.root");
-    root [1] std::vector<std::string> myKeys, myFiles; myKeys.push_back("DFLT"); myFiles.push_back("my_output_file.root");
-    root [2] VxEff(myKeys, myFiles);
-
-To create histograms from muDst files one can do from the same location:
-
-    root -l ../load_libs.C
-    root [0] VertexRank.C(<num_events>, "path/to/*.MuDst.root", "my_output_file")
+To build the library and the `vtxeval` executable follow the instructions in the
+project's [README.md](../README.md).
 
 
 How to create embedding samples
@@ -87,6 +60,9 @@ values.
 
 Study the ranking scheme in STAR
 ================================
+
+This section is outdated but left here for the reference until after all
+mentioned macros are removed from the repository...
 
 1.- The macro VertexRank.C will read the MuDst sample and create a tree with some vertex information. To run (e.g. 100 events and output file outvertex.root):
 

@@ -16,19 +16,17 @@ evaluation [https://github.com/plexoos/travex].
 
 The following individual tools are available:
 
-- `stiscan` ([StiScan/README.md](StiScan/README.md)) is used to verify the
-accuracy of the modeled detector material
-
 - `stihify` ([StiHify/README.md](StiHify/README.md)) is used to measure the
 efficiency of hits assigned to the track by a track reconstruction algorithm.
 For single hit efficiency studies with `stihify` we developed a method
 independent of the actual reconstruction algorithm used for finding particle
 tracks.
 
-- `vtxeval` is aimed to evaluate the performance of vertex finding algorithms.
-Currently, the source code can be found in a separate repository
-[https://github.com/star-bnl/star-vertex-eval] but we plan to transfer the code
-into here, possibly renaming the entire project to `star-travex`.
+- `vtxeval` ([StiScan/README.md](StiScan/README.md)) is aimed to evaluate the
+performance of vertex finding algorithms.
+
+- `stiscan` ([StiScan/README.md](StiScan/README.md)) is used to verify the
+accuracy of the modeled detector material
 
 
 How to build and install libraries and tools
@@ -41,8 +39,8 @@ Prerequisites
 - C++ compiler with C++11 support (e.g. g++ >= 4.8.2)
 - ROOT (>= 5.34.30), http://root.cern.ch
 - boost libraries (>= 1.54): `program_options`, `regex`, and `filesystem`
-- Some modules from the STAR software library already included as dependencies
-in `ext/` subdirectory.
+- This project also depends on some modules from the STAR software library.
+  These are already included as dependencies in the `ext/` subdirectory.
 
 
 Build with cmake

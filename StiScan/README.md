@@ -94,4 +94,7 @@ script.
 Reconstruction chain examples
 =============================
 
-    root4star -q -b -l 'bfc.C(1, 100, "tpcRS y2014a AgML MakeEvent ITTF StiHftC Idst BAna l0 Tree logger Sti tpcDB TpcHitMover TpxClu bbcSim btofsim tags emcY2 EEfs evout -dstout IdTruth geantout big fzin MiniMcMk clearmem StiScanTreeMaker", "starsim_zslice.fz")'
+Run over an fzd file produced by `starsim` with the following options to produce
+a MuDst.root file with simulated tracker response and reconstruced events.
+
+    root4star -q -b -l 'bfc.C(1, 100, "fzin y2015a AgML usexgeom FieldOn tpcRS MakeEvent VFMinuit Sti BAna Idst NoSsdIt NoSvtIt StiHftC TpcHitMover TpxClu l0 Tree logger tpcDB tags emcY2 EEfs -dstout IdTruth big MiniMcMk clearmem StiScanTreeMaker", "starsim_zslice.fz")'
