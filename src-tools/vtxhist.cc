@@ -18,7 +18,7 @@
 
 #include "travex/ProgramOptions.h"
 #include "src-tools/utils.h"
-#include "vtxeval/VertexRootFile.h"
+#include "VtxEval/VertexRootFile.h"
 
 
 namespace po = boost::program_options;

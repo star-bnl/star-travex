@@ -191,10 +191,10 @@ add_library(
 add_library(
 	star-vertex-eval
 	SHARED
-	vtxeval/StarEventHistContainer.cxx
-	vtxeval/StarVertexHistContainer.cxx
-	vtxeval/StarVertexHftHistContainer.cxx
-	vtxeval/VertexRootFile.cxx
+	VtxEval/StarEventHistContainer.cxx
+	VtxEval/StarVertexHistContainer.cxx
+	VtxEval/StarVertexHftHistContainer.cxx
+	VtxEval/VertexRootFile.cxx
 )
 
 
