@@ -175,7 +175,7 @@ void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode)
    {
       std::string histName("hActiveLayerCounts_" + boost::replace_all_copy<string>(trkNode.GetVolumeName(), "/", "__"));
 
-      TH1* hActiveLayerCounts_det = FindHist(histName);
+      TH1* hActiveLayerCounts_det = h(histName);
 
       if (!hActiveLayerCounts_det) {
          this->cd();
