@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['h2',['h2',['../H3D_8cxx.html#afbfa466e1ab5781bf49d0b20ee7f1d9a',1,'H3D.cxx']]],
+  ['h2obj',['h2obj',['../H3D_8cxx.html#a2cb0400f00381b9ef06983ba0d212774',1,'H3D.cxx']]],
+  ['hactivelayercounts',['hActiveLayerCounts',['../classStiHifyHistContainer.html#a6bfd859df9bbd9e155b105e6a9ad40f9',1,'StiHifyHistContainer']]],
+  ['hchi2candidatehits',['hChi2CandidateHits',['../classStiHifyHistContainer.html#a0d1f8029583f006047bd8f2a2848b509',1,'StiHifyHistContainer']]],
+  ['hcountcandidatehits',['hCountCandidateHits',['../classStiHifyHistContainer.html#acc71867ac99572c6ee85935ad982a1bb',1,'StiHifyHistContainer']]],
+  ['hdensityvsphivsrvsz',['hDensityVsPhiVsRVsZ',['../classStiScanHistContainer.html#a7e6e892cbe76637addaa1252620aacea',1,'StiScanHistContainer']]],
+  ['hdiffprojtofiterror',['hDiffProjToFitError',['../classStiHifyHistContainer.html#a497fee27a28d6cbfc95b01e47616d2fc',1,'StiHifyHistContainer']]],
+  ['hdiffprojtofitpositionwrthit',['hDiffProjToFitPositionWRTHit',['../classStiHifyHistContainer.html#a00210b50316a6b5b883dc11288c90002',1,'StiHifyHistContainer']]],
+  ['hdist2acceptedhit',['hDist2AcceptedHit',['../classStiHifyHistContainer.html#a7bfe1393ec1356a751a3263114dbcf0b',1,'StiHifyHistContainer']]],
+  ['hdist2closesthit',['hDist2ClosestHit',['../classStiHifyHistContainer.html#a265a479f24a453f82caac08fc0bee840',1,'StiHifyHistContainer']]],
+  ['helossvsphivsrvsz',['hELossVsPhiVsRVsZ',['../classStiScanHistContainer.html#a0ef22560a5ae4e94a7c528f6e959f054',1,'StiScanHistContainer']]],
+  ['helossvsxvsyvsz',['hELossVsXVsYVsZ',['../classStiScanHistContainer.html#a54cf805f819db5312d7e73bb032a0f5e',1,'StiScanHistContainer']]],
+  ['hnstepsvsphivsrvsz',['hNStepsVsPhiVsRVsZ',['../classStiScanHistContainer.html#a391f4391fea309883e50bf8854bab495',1,'StiScanHistContainer']]],
+  ['hprojerrormag',['hProjErrorMag',['../classStiHifyHistContainer.html#a2c5ced7e5dabb1da0d4240c01b1bd6fa',1,'StiHifyHistContainer']]],
+  ['hpullcandidatehits2d',['hPullCandidateHits2D',['../classStiHifyHistContainer.html#a360c5e0f1aaa5d7f3883d450d6eea220',1,'StiHifyHistContainer']]],
+  ['hpullclosesthit1d',['hPullClosestHit1D',['../classStiHifyHistContainer.html#aaaf409dc35c3c711a3a1e6a84fa3f89f',1,'StiHifyHistContainer']]],
+  ['hpullclosesthit2d',['hPullClosestHit2D',['../classStiHifyHistContainer.html#a573d8a829b99d41c9d1e2bdb85b9a2a4',1,'StiHifyHistContainer']]],
+  ['hrelradlengthvsphivsrvsz',['hRelRadLengthVsPhiVsRVsZ',['../classStiScanHistContainer.html#ab0c75b43517eb48357d8d55f4c6428c0',1,'StiScanHistContainer']]],
+  ['htpchitsdiffxvspadrowvssector',['hTpcHitsDiffXVsPadrowVsSector',['../classStMcAnalysisMaker.html#a30c84c1ab187c1b231499a28fa61148e',1,'StMcAnalysisMaker']]],
+  ['htpchitsdiffyvspadrowvssector',['hTpcHitsDiffYVsPadrowVsSector',['../classStMcAnalysisMaker.html#ab7d0be2b40b45160350f5828cc499525',1,'StMcAnalysisMaker']]],
+  ['htpchitsdiffzvspadrowvssector',['hTpcHitsDiffZVsPadrowVsSector',['../classStMcAnalysisMaker.html#ac272516334f7506a1ec59be5203b0b2a',1,'StMcAnalysisMaker']]]
+];
