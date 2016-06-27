@@ -1,5 +1,5 @@
-VtxEval tool
-============
+VtxEval: Vertex Reconstruction Evaluation and Efficiency at STAR
+================================================================
 
 To build the library and the `vtxeval` executable follow the instructions in the
 project's [README.md](../README.md).

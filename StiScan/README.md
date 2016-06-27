@@ -1,5 +1,8 @@
-StiScan tool and library
-========================
+StiScan: Detector Material Evaluation at STAR
+=============================================
+
+How to use
+==========
 
 To build the library and the executable follow the installation instructions in
 the project's [README.md](../README.md). Once the `StiScan` library is built it
@@ -98,3 +101,18 @@ Run over an fzd file produced by `starsim` with the following options to produce
 a MuDst.root file with simulated tracker response and reconstruced events.
 
     root4star -q -b -l 'bfc.C(1, 100, "fzin y2015a AgML usexgeom FieldOn tpcRS MakeEvent VFMinuit Sti BAna Idst NoSsdIt NoSvtIt StiHftC TpcHitMover TpxClu l0 Tree logger tpcDB tags emcY2 EEfs -dstout IdTruth big MiniMcMk clearmem StiScanTreeMaker", "starsim_zslice.fz")'
+
+
+Regular expressions matching geometry volumes used at STAR
+==========================================================
+
+    Beam pipe                   ^.*IDSM_1/PIPI_1/PBES_1$
+    Field cages                 ^.*TPCE_1/T[IO]FC.*$
+    PXL all volumes             ^.*IDSM_1/PXMO_.*$
+    PXL sensitive volumes       ^.*IDSM_1/PXMO_1/PXLA_[\d]+/LADR_\d/PXSI_[\d]+/PLAC_1.*$
+    PXL ribs                    ^.*IDSM_1/PXMO_1/PXLA_[\d]+/PXRB.*$
+                                ^.*IDSM_1/PXMO_1/PXLA_[\d]+/PXLB.*$
+    IST all volumes             ^.*IDSM_1/IBMO_.*$
+    IST sensitive volumes       ^.*IDSM_1/IBMO_1/IBAM_[\d]+/IBLM_\d/IBSS_1.*$
+    SST all volumes             ^.*IDSM_1/SFMO_.*$
+    SST sensitive volumes       ^.*IDSM_1/SFMO_1/SFLM_[\d]+/SFSW_[\d]+/SFSL_1/SFSD_1.*$

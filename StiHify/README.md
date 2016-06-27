@@ -1,3 +1,9 @@
+StiHify: Track Reconstruction Evaluation at STAR
+================================================
+
+Introduction
+============
+
 The efficiency to find a hit in an active detector volume can be described
 using the following components:
 
@@ -21,8 +27,8 @@ such as number of time hits can be used/reused, hit acceptance/rejection cuts
 (chi^2), etc.
 
 
-StiHify tool and library
-========================
+How to use
+==========
 
 To build the library and the executable follow the installation instructions in
 the project's [README.md](../README.md). Once the `StiHify` library is built it
@@ -61,3 +67,18 @@ The following command is for the pretty much standard reconstruction with all
 HFT hits used in tracking.
 
     root4star -q -b -l 'bfc.C(1, 100, "P2014a mtd btof pxlHit istHit sstHit BEmcChkStat CorrX OSpaceZ2 OGridLeak3D -hitfilt StiHifyTreeMaker", "st_physics_file.daq")'
+
+
+Regular expressions matching geometry volumes used at STAR
+==========================================================
+
+    Beam pipe                   ^.*IDSM_1/PIPI_1/PBES_1$
+    Field cages                 ^.*TPCE_1/T[IO]FC.*$
+    PXL all volumes             ^.*IDSM_1/PXMO_.*$
+    PXL sensitive volumes       ^.*IDSM_1/PXMO_1/PXLA_[\d]+/LADR_\d/PXSI_[\d]+/PLAC_1.*$
+    PXL ribs                    ^.*IDSM_1/PXMO_1/PXLA_[\d]+/PXRB.*$
+                                ^.*IDSM_1/PXMO_1/PXLA_[\d]+/PXLB.*$
+    IST all volumes             ^.*IDSM_1/IBMO_.*$
+    IST sensitive volumes       ^.*IDSM_1/IBMO_1/IBAM_[\d]+/IBLM_\d/IBSS_1.*$
+    SST all volumes             ^.*IDSM_1/SFMO_.*$
+    SST sensitive volumes       ^.*IDSM_1/SFMO_1/SFLM_[\d]+/SFSW_[\d]+/SFSL_1/SFSD_1.*$
