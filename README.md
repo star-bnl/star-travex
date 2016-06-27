@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/plexoos/star-sti-tools.svg?branch=master)](https://travis-ci.org/plexoos/star-sti-tools)
+[![Build Status](https://travis-ci.org/star-bnl/star-travex.svg?branch=master)](https://travis-ci.org/star-bnl/star-travex)
 
 This package includes a collection of tools used by the STAR experiment to
 evaluate reconstruction of charged particle tracks and vertices. The STAR
@@ -12,7 +12,7 @@ other new or existing experiments will find it useful as well. This project can
 also serve as an example for other implementations of track and vertex
 evaluation toolkits who chose to save time and effort by building around
 `travex`, a detector-independent suite for track and vertex reconstruction
-evaluation [https://github.com/plexoos/travex].
+evaluation [https://github.com/star-bnl/travex].
 
 The following individual tools are available:
 
@@ -48,11 +48,11 @@ Build with cmake
 
 Checkout the code using one of the following commands:
 
-    git clone https://github.com/plexoos/star-sti-tools.git
+    git clone https://github.com/star-bnl/star-travex.git
 
 Compile and build the tools:
 
-    cd star-sti-tools/
+    cd star-travex/
     git submodule update --init --depth=50
     mkdir build && cd build
     cmake ../
@@ -71,8 +71,8 @@ environment variables should be set if needed:
     $STAR_LIB        # Used in supple/starsim_zslice_*.kumac
     $OPTSTAR         # The prefix path to installed boost release
 
-    git clone https://github.com/plexoos/star-sti-tools.git
-    cd star-sti-tools/
+    git clone https://github.com/star-bnl/star-travex.git
+    cd star-travex/
     git submodule update --init --depth=50
     mkdir build && cd build
     cmake -D CMAKE_INSTALL_PREFIX=./ -D BOOST_ROOT=$OPTSTAR ../

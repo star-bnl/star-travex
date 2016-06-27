@@ -34,7 +34,7 @@
 # These default BFC options should be good for reconstructing real data
 : ${TVX_BFC_OPTIONS:="P2014a mtd btof pxlHit istHit sstHit BEmcChkStat CorrX OSpaceZ2 OGridLeak3D -hitfilt StiHifyTreeMaker"}
 
-# TVX_INSTALL_DIR is the directory where star-sti-tools was installed
+# TVX_INSTALL_DIR is the directory where star-travex was installed
 : ${TVX_INSTALL_DIR:=${HOME}/travex/build_install} && TVX_INSTALL_DIR=`cd "$TVX_INSTALL_DIR"; pwd`
 
 # A path to the ROOT file with detector's TGeo geometry

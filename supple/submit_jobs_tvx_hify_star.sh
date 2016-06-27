@@ -12,8 +12,8 @@
 : ${JOB_INPUT_FILE:=/star/data99/reco/AuAu200/hijing_382/b0_20/minbias/y2014a/gheisha_on/pileup_eval_Oct05/rcf15005_10_10evts.event.root}
 : ${JOB_NEVENTS:=1000000}
 : ${TVX_DEACTIVATE_DETECTOR:=true}
-: ${TVX_SOURCE_DIR:=${HOME}/star-sti-tools} && TVX_SOURCE_DIR=`cd "$TVX_SOURCE_DIR"; pwd`
-: ${TVX_INSTALL_DIR:=${HOME}/star-sti-tools/build4condor_install} && TVX_INSTALL_DIR=`cd "$TVX_INSTALL_DIR"; pwd`
+: ${TVX_SOURCE_DIR:=${HOME}/star-travex} && TVX_SOURCE_DIR=`cd "$TVX_SOURCE_DIR"; pwd`
+: ${TVX_INSTALL_DIR:=${HOME}/star-travex/build4condor_install} && TVX_INSTALL_DIR=`cd "$TVX_INSTALL_DIR"; pwd`
 : ${TVX_OUT_PREFIX:=/path/to/some_dir} && mkdir -p $TVX_OUT_PREFIX && TVX_OUT_PREFIX=`cd "$TVX_OUT_PREFIX"; pwd`
 
 #TVX_DETECTOR_LAYERS=("pxl_1" "pxl_2" "ist_1" "sst_1" "tpc_1" "tpc_2" "tpc_3" "tpc_4" "tpc_5" "tpc_6" "tpc_7" "tpc_8" "tpc_9" "tpc_10" "tpc_11" "tpc_12" "tpc_13" "tpc_14" "tpc_15" "tpc_16" "tpc_17" "tpc_18" "tpc_19" "tpc_20" "tpc_21" "tpc_22" "tpc_23" "tpc_24" "tpc_25" "tpc_26" "tpc_27" "tpc_28" "tpc_29" "tpc_30" "tpc_31" "tpc_32" "tpc_33" "tpc_34" "tpc_35" "tpc_36" "tpc_37" "tpc_38" "tpc_39" "tpc_40" "tpc_41" "tpc_42" "tpc_43" "tpc_44" "tpc_45")

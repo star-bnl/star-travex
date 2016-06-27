@@ -8,7 +8,7 @@
 
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
-project(star-sti-tools)
+project(star-travex)
 
 
 # Add to path in order to pick up the FindXXX.cmake files included in this project
