@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<job filesPerHour="1" maxFilesPerProcess="1" name="tvx_hify_&TVX_DETECTOR;">
-   <ResourceUsage>
-      <StorageSpace>
-         <MinStorage>20</MinStorage>
-      </StorageSpace>
-   </ResourceUsage>
+<job filesPerHour="1" maxFilesPerProcess="1" name="star_hify_&STAR_DETECTOR;">
 
    <Generator>
       <Location>./sums/</Location>
@@ -19,26 +14,31 @@
       echo "JOB_NEVENTS:               " &JOB_NEVENTS;
       echo "JOB_BFC_OPTIONS:           " &JOB_BFC_OPTIONS;
       echo "OUT_DIR:                   " &OUT_DIR;
-      echo "TVX_DETECTOR:              " &TVX_DETECTOR;
-      echo "TVX_DEACTIVATE_DETECTOR:   " &TVX_DEACTIVATE_DETECTOR;
+      echo "STAR_DETECTOR:             " &STAR_DETECTOR;
+      echo "STAR_DEACTIVATE_DETECTOR:  " &STAR_DEACTIVATE_DETECTOR;
       echo
 
       pwd
-      ls -al .
+      ls -al
 
       # The actual command and redefine the install dir to be the current one
-      setenv TVX_INSTALL_DIR           `pwd`
-      setenv TVX_BFC_NEVENTS           &JOB_NEVENTS;
-      setenv TVX_BFC_OPTIONS           `echo &JOB_BFC_OPTIONS; | sed 's/_/,/g'`
-      setenv TVX_BFC_INPUT_FILE        &JOB_INPUT_FILE;
-      setenv TVX_DEACTIVATE_DETECTOR   &TVX_DEACTIVATE_DETECTOR;
+      setenv STAR_TRAVEX_INSTALL_DIR   `pwd`
+      setenv BFC_NEVENTS               &JOB_NEVENTS;
+      setenv BFC_OPTIONS               `echo &JOB_BFC_OPTIONS; | sed 's/_/,/g'`
+      setenv INPUT_FILE                &JOB_INPUT_FILE;
+      setenv STAR_DEACTIVATE_DETECTOR  &STAR_DEACTIVATE_DETECTOR;
 
-      echo 'run_tvx_hify_star.sh &TVX_DETECTOR; >&amp; &OUT_DIR;/&TVX_DETECTOR;_hify.log'
-      run_tvx_hify_star.sh &TVX_DETECTOR; >&amp; &OUT_DIR;/&TVX_DETECTOR;_hify.log
+      set COMMAND='run_tvx_hify_star.sh &STAR_DETECTOR;'
+      echo
+      echo "Executing..."
+      echo  $COMMAND
+      eval '$COMMAND' >&amp;! &OUT_DIR;/&STAR_DETECTOR;_hify.log
 
       # Cleanup before transfering the files to the output dir
       rm *.geom.root *.geant.root *.event.root *.hist.root *.tags.root *.runco.root *.minimc.root
       rm -fr StRoot/ StarDb/ y2014a.root run_tvx_hify_star.sh
+
+      ls -al
 
       echo "End of job: tralala"
 
@@ -46,14 +46,14 @@
 
    <output fromScratch="./*" toURL="file:&OUT_DIR;/"/>
 
-   <stdout URL="file:&OUT_DIR;/&TVX_DETECTOR;.log"/>
-   <stderr URL="file:&OUT_DIR;/&TVX_DETECTOR;.log"/>
+   <stdout URL="file:&OUT_DIR;/&STAR_DETECTOR;.log"/>
+   <stderr URL="file:&OUT_DIR;/&STAR_DETECTOR;.log"/>
 
-   <!-- Environment variable $TVX_INSTALL_DIR must be known and exported -->
+   <!-- Environment variable $STAR_TRAVEX_INSTALL_DIR must be set and visible -->
    <SandBox installer="ZIP">
-       <Package name="tvx_install_dir">
-          <File>file:$TVX_INSTALL_DIR/*</File>
-          <File>file:$TVX_INSTALL_DIR/.sl*</File>
+       <Package name="star_travex_install_dir">
+          <File>file:$STAR_TRAVEX_INSTALL_DIR/*</File>
+          <File>file:$STAR_TRAVEX_INSTALL_DIR/.sl*</File>
        </Package>
    </SandBox>
 
