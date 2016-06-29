@@ -11,71 +11,223 @@ include_once(BASE_DIR."/common/head.php");
 <h1>Vtxeval Results</h1>
 
 
-<h2 class="colsep">MinuitVF, beamline as track</h2>
+<h2 class="colsep">pp, signal, pile-up</h2>
 
 <ul>
-   <li>16 tracks:
 
-   <br>beamline, beam width (cm):
-   <a href="plots.php?pfx=a1bae679-vertex-minuit-fit-beamline-xysigma-0.1_pions_n_016">0.1</a>&nbsp;&nbsp;&nbsp;
-   <a href="plots.php?pfx=a1bae679-vertex-minuit-fit-beamline-xysigma-0.01_pions_n_016">0.01</a>
+   <li><b>K0, Beam width: 0.01 cm</b>
 
-   <br>no beamline, beam width (cm):
-   <a href="plots.php?pfx=vertex-minuit-fit-xysigma-0.1-4cfe5e77_pions_n_016">0.1</a>&nbsp;&nbsp;&nbsp;
-   <a href="plots.php?pfx=vertex-minuit-fit-xysigma-0.01-4cfe5e77_pions_n_016">0.01</a>
+   <p>
+   <table class="generic">
+   <tr>
+      <td>
+      <th>no beamline
+      <th>beamline (aka 1D fit)
+      <th>beamline3D (aka 3D fit)
 
+   <tr>
+      <th>VFMinuit
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_20_VFMinuit/k0short">VFMinuit</a>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_20_VFMinuitBeamline/k0short">VFMinuit</a>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_20_VFMinuitBeamline3D/k0short">VFMinuit</a>
 
-   <li>8 tracks:
+   <tr>
+      <th>PPV
+      <td>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_20_VFPPVnoCTBBeamline/k0short">PPV</a>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_20_VFPPVnoCTBBeamline3D/k0short">PPV</a>
 
-   <br>beamline, beam width (cm):
-   <a href="plots.php?pfx=a1bae679-vertex-minuit-fit-beamline-xysigma-0.1_pions_n_008">0.1</a>&nbsp;&nbsp;&nbsp;
-   <a href="plots.php?pfx=a1bae679-vertex-minuit-fit-beamline-xysigma-0.01_pions_n_008">0.01</a>
+   <tr>
+      <th>KFVF
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_20_KFVertex/k0short">KFVF</a>
+      <td colspan=2> <a href="plots.php?pfx=DEV_sti_Jun_20_KFVertexBeamline/k0short">KFVF</a>
 
-   <br>no beamline, beam width (cm):
-   <a href="plots.php?pfx=vertex-minuit-fit-xysigma-0.1-4cfe5e77_pions_n_008">0.1</a>&nbsp;&nbsp;&nbsp;
-   <a href="plots.php?pfx=vertex-minuit-fit-xysigma-0.01-4cfe5e77_pions_n_008">0.01</a>
+   </table>
 
+   <li><b>minbias, Beam width: 0.01 cm</b>
 
-   <li>4 tracks,
+   <p>
+   <table class="generic">
+   <tr>
+      <td>
+      <th>no beamline
+      <th>beamline (aka 1D fit)
+      <th>beamline3D (aka 3D fit)
 
-   <br>beamline, beam width (cm):
-   <a href="plots.php?pfx=a1bae679-vertex-minuit-fit-beamline-xysigma-0.1_pions_n_004">0.1</a>&nbsp;&nbsp;&nbsp;
-   <a href="plots.php?pfx=a1bae679-vertex-minuit-fit-beamline-xysigma-0.01_pions_n_004">0.01</a>
+   <tr>
+      <th>VFMinuit
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_20_VFMinuit/minbias">VFMinuit</a>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_20_VFMinuitBeamline/minbias">VFMinuit</a>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_20_VFMinuitBeamline3D/minbias">VFMinuit</a>
 
-   <br>no beamline, beam width (cm):
-   <a href="plots.php?pfx=vertex-minuit-fit-xysigma-0.1-4cfe5e77_pions_n_004">0.1</a>&nbsp;&nbsp;&nbsp;
-   <a href="plots.php?pfx=vertex-minuit-fit-xysigma-0.01-4cfe5e77_pions_n_004">0.01</a>
+   <tr>
+      <th>PPV
+      <td>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_20_VFPPVnoCTBBeamline/minbias">PPV</a>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_20_VFPPVnoCTBBeamline3D/minbias">PPV</a>
 
+   <tr>
+      <th>KFVF
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_20_KFVertex/minbias">KFVF</a>
+      <td colspan=2> <a href="plots.php?pfx=DEV_sti_Jun_20_KFVertexBeamline/minbias">KFVF</a>
 
-   <li>2 tracks
+   </table>
 
-   <br>beamline, beam width (cm):
-   <a href="plots.php?pfx=a1bae679-vertex-minuit-fit-beamline-xysigma-0.1_pions_n_002">0.1</a>&nbsp;&nbsp;&nbsp;
-   <a href="plots.php?pfx=a1bae679-vertex-minuit-fit-beamline-xysigma-0.01_pions_n_002">0.01</a>
-
-   <br>no beamline, beam width (cm):
-   <a href="plots.php?pfx=vertex-minuit-fit-xysigma-0.1-4cfe5e77_pions_n_002">0.1</a>&nbsp;&nbsp;&nbsp;
-   <a href="plots.php?pfx=vertex-minuit-fit-xysigma-0.01-4cfe5e77_pions_n_002">0.01</a>
 </ul>
 
 
-<h2 class="colsep">D<sup>0</sup> enhanced, HFT and TPC pile-up - by Liang</h2>
+<h2 class="colsep">pp with simulated pile-up</h2>
 
 <ul>
-   <li><a href="plots.php?pfx=vertex-ppv-fit-ccbar-sim">PPV + fit</a>
+   <li><b>D*, Beam width: 0.01 cm</b>
+
+   <p>
+   <table class="generic">
+   <tr>
+      <td>
+      <th>no beamline
+      <th>beamline (aka 1D fit)
+      <th>beamline3D (aka 3D fit)
+
+   <tr>
+      <th>VFMinuit
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_02_VFMinuit/dstar">VFMinuit</a>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_02_VFMinuitBeamline/dstar">VFMinuit</a>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_02_VFMinuitBeamline3D/dstar">VFMinuit</a>
+
+   <tr>
+      <th>PPV
+      <td>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_02_VFPPVnoCTBBeamline/dstar">PPV</a>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_02_VFPPVnoCTBBeamline3D/dstar">PPV</a>
+
+   <tr>
+      <th>KFVF
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_02_KFVertex/dstar">KFVF</a>
+      <td colspan=2> <a href="plots.php?pfx=DEV_sti_Jun_02_KFVertexBeamline/dstar">KFVF</a>
+
+   </table>
+
+   <li><b>K0, Beam width: 0.01 cm</b>
+
+   <p>
+   <table class="generic">
+   <tr>
+      <td>
+      <th>no beamline
+      <th>beamline (aka 1D fit)
+      <th>beamline3D (aka 3D fit)
+
+   <tr>
+      <th>VFMinuit
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_02_VFMinuit/k0short">VFMinuit</a>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_02_VFMinuitBeamline/k0short">VFMinuit</a>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_02_VFMinuitBeamline3D/k0short">VFMinuit</a>
+
+   <tr>
+      <th>PPV
+      <td>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_02_VFPPVnoCTBBeamline/k0short">PPV</a>
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_02_VFPPVnoCTBBeamline3D/k0short">PPV</a>
+
+   <tr>
+      <th>KFVF
+      <td> <a href="plots.php?pfx=DEV_sti_Jun_02_KFVertex/k0short">KFVF</a>
+      <td colspan=2> <a href="plots.php?pfx=DEV_sti_Jun_02_KFVertexBeamline/k0short">KFVF</a>
+
+   </table>
+
 </ul>
 
 
-<h2 class="colsep">W, no pile-up, no HFT hits</h2>
+
+<h2 class="colsep">STAR Vertex Finders with different beamline options</h2>
 
 <ul>
-   <li><a href="plots.php?pfx=vertex-ppv-5e4e0fc4">PPV</a>
-   <li><a href="plots.php?pfx=vertex-ppv-fitter-50ff3250">PPV + fit</a>
-   <li><a href="plots.php?pfx=vertex-minuit-5e4e0fc4">MinuitVF</a>
-   <li><a href="plots.php?pfx=vertex-kfv-0fd24f22">KFV</a>
-   <li><a href="plots.php?pfx=vertex-kfv-beam-err">KFV (with beamline error changed 0.01 -> 0.1 cm)</a>
-</ul>
+   <li><b>Beam width: 0.1 cm</b>
 
+   <p>
+   <table class="generic">
+   <tr>
+      <td>
+      <td>
+      <th>no beamline
+      <th>beamline (aka 1D fit)
+      <th>beamline3D (aka 3D fit)
+
+   <tr>
+      <th rowspan=2>VFMinuit
+      <th>16 tracks
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-minuit-beamlineno-xysigma-0.1_pions_n_016">VFMinuit/0.1/16</a>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-minuit-beamline1D-xysigma-0.1_pions_n_016">VFMinuit/0.1/16</a>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-minuit-beamline3D-xysigma-0.1_pions_n_016">VFMinuit/0.1/16</a>
+
+   <tr>
+
+      <th>2 tracks
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-minuit-beamlineno-xysigma-0.1_pions_n_002">VFMinuit/0.1/2</a>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-minuit-beamline1D-xysigma-0.1_pions_n_002">VFMinuit/0.1/2</a>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-minuit-beamline3D-xysigma-0.1_pions_n_002">VFMinuit/0.1/2</a>
+
+   <tr>
+      <th rowspan=2>PPV
+      <th>16 tracks
+      <td>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-ppv-beamline1D-xysigma-0.1_pions_n_016">PPV/0.1/16</a>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-ppv-beamline3D-xysigma-0.1_pions_n_016">PPV/0.1/16</a>
+
+   <tr>
+
+      <th>2 tracks
+      <td>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-ppv-beamline1D-xysigma-0.1_pions_n_002">PPV/0.1/2</a>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-ppv-beamline3D-xysigma-0.1_pions_n_002">PPV/0.1/2</a>
+
+   </table>
+
+
+   <li><b>Beam width: 0.01 cm</b>
+
+   <p>
+   <table class="generic">
+   <tr>
+      <td>
+      <td>
+      <th>no beamline
+      <th>beamline (aka 1D fit)
+      <th>beamline3D (aka 3D fit)
+
+   <tr>
+      <th rowspan=2>VFMinuit
+      <th>16 tracks
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-minuit-beamlineno-xysigma-0.01_pions_n_016">VFMinuit/0.01/16</a>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-minuit-beamline1D-xysigma-0.01_pions_n_016">VFMinuit/0.01/16</a>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-minuit-beamline3D-xysigma-0.01_pions_n_016">VFMinuit/0.01/16</a>
+
+   <tr>
+
+      <th>2 tracks
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-minuit-beamlineno-xysigma-0.01_pions_n_002">VFMinuit/0.01/2</a>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-minuit-beamline1D-xysigma-0.01_pions_n_002">VFMinuit/0.01/2</a>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-minuit-beamline3D-xysigma-0.01_pions_n_002">VFMinuit/0.01/2</a>
+
+   <tr>
+      <th rowspan=2>PPV
+      <th>16 tracks
+      <td>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-ppv-beamline1D-xysigma-0.01_pions_n_016">PPV/0.01/16</a>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-ppv-beamline3D-xysigma-0.01_pions_n_016">PPV/0.01/16</a>
+
+   <tr>
+
+      <th>2 tracks
+      <td>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-ppv-beamline1D-xysigma-0.01_pions_n_002">PPV/0.01/2</a>
+      <td> <a href="plots.php?pfx=cvs-160428-vertex-ppv-beamline3D-xysigma-0.01_pions_n_002">PPV/0.01/2</a>
+
+   </table>
+
+</ul>
 
 
 <?php
