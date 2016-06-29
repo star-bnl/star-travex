@@ -256,13 +256,14 @@ table.generic {
 
 table.generic th {
    vertical-align:text-top;
-   text-align: left;
+   text-align: center;
    border: 1px solid black;
    padding: 0.5em;
 }
 
 table.generic td {
    vertical-align:text-top;
+   text-align: center;
    border: 1px solid black;
    padding: 0.5em;
 }
