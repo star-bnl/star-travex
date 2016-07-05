@@ -13,13 +13,16 @@ void stack_hists(std::string histName=std::string("vertex/hMcRecoVertexDelta"))
       return;
    }
 
-   int colors[] = {kRed, kGreen, kBlue, kYellow, kMagenta, kCyan, kOrange, kSpring, kTeal, kAzure, kViolet, kPink};
+   int colors[] = {kRed, kGreen, kBlue, kMagenta, kCyan, kOrange, kSpring, kTeal, kAzure, kViolet, kPink};
 
    THStack *hists = new THStack("hists", "Overlayed histograms");
-   TLegend *legend = new TLegend(0.01, 0.90, 0.99, 0.99);
+   TLegend *legend = new TLegend(0.01, 0.80, 0.99, 0.99);
    legend->SetMargin(0.05);
 
    gROOT->Macro("style_hists.C");
+
+   TCanvas *canvas = new TCanvas("canvas", "canvas", 1200, 800);
+   canvas->UseCurrentStyle();
 
    TSeqCollection *files = gROOT->GetListOfFiles();
 
@@ -29,7 +32,8 @@ void stack_hists(std::string histName=std::string("vertex/hMcRecoVertexDelta"))
 
    while ( iFile = dynamic_cast<TFile*>(next()) )
    {
-      iFile->ls();
+      Info("stack_hists", "Processing file '%s'", iFile->GetName());
+
       TH1 *hist = dynamic_cast<TH1*>( iFile->Get(histName.c_str()) );
 
       if (!hist) {
@@ -44,11 +48,9 @@ void stack_hists(std::string histName=std::string("vertex/hMcRecoVertexDelta"))
       legend->AddEntry(hist, iFile->GetName(), "l");
    }
 
-   TCanvas *canvas = new TCanvas("canvas", "canvas", 1200, 600);
-   canvas->UseCurrentStyle();
-
    if (hists->GetNhists())
       hists->Draw("nostack");
+
    legend->Draw();
 
    gSystem->mkdir(histName.c_str(), true);
