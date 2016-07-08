@@ -13,17 +13,17 @@
 # Once the appropriate values are set the script can be simply executed with a
 # single argument specifying a STAR detector layer as:
 #
-# $ run_tvx_hify_star.sh pxl_1|pxl_2|ist_1|sst_1|tpc_#
+# $ run_star_hify.sh pxl_1|pxl_2|ist_1|sst_1|tpc_#
 #
 # One can always overwrite all or some of the arguments in following way:
 #
 # $ INPUT_FILE=/path/to/my_file.daq STAR_TRAVEX_INSTALL_DIR=/my/existing/dir \
-#   run_tvx_hify_star.sh pxl_1|pxl_2|ist_1|sst_1|tpc_#
+#   run_star_hify.sh pxl_1|pxl_2|ist_1|sst_1|tpc_#
 #
 # For example:
 #
 # $ cd my_star_travex_install_dir/
-# $ STAR_TRAVEX_INSTALL_DIR=./ run_tvx_hify_star.sh tpc_7
+# $ STAR_TRAVEX_INSTALL_DIR=./ run_star_hify.sh tpc_7
 #
 
 

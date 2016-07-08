@@ -24,7 +24,7 @@ setenv BFC_OPTIONS               `echo &JOB_BFC_OPTIONS; | sed 's/_/,/g'`
 setenv INPUT_FILE                &JOB_INPUT_FILE;
 setenv STAR_DEACTIVATE_DETECTOR  &STAR_DEACTIVATE_DETECTOR;
 
-set COMMAND='run_tvx_hify_star.sh &STAR_DETECTOR;'
+set COMMAND='run_star_hify.sh &STAR_DETECTOR;'
 echo
 echo "Executing..."
 echo  $COMMAND
@@ -32,7 +32,7 @@ eval '$COMMAND' >&amp;! &OUT_DIR;/&STAR_DETECTOR;_hify.log
 
 # Cleanup before transfering the files to the output dir
 rm *.geom.root *.geant.root *.event.root *.hist.root *.tags.root *.runco.root *.minimc.root
-rm -fr StRoot/ StarDb/ y2014a.root run_tvx_hify_star.sh
+rm -fr StRoot/ StarDb/ y2014a.root run_star_hify.sh
 
 ls -al
 

@@ -4,7 +4,7 @@
 #
 # Usage:
 #
-# $ submit_jobs_tvx_hify_star.sh
+# $ submit_jobs_star_hify.sh
 #
 # JOB_INPUT_FILE can be a text file with a list of actual files to process. In
 # this case the full path must be prepended with an '@' symbol
@@ -64,7 +64,7 @@ cd $OUT_DIR
 
 
 cp $SOURCE_DIR/y2014a.root $STAR_TRAVEX_INSTALL_DIR/
-cp $SOURCE_DIR/supple/run_tvx_hify_star.sh $STAR_TRAVEX_INSTALL_DIR/
+cp $SOURCE_DIR/supple/run_star_hify.sh $STAR_TRAVEX_INSTALL_DIR/
 
 
 for STAR_DETECTOR in "${STAR_DETECTOR_LAYERS[@]}"
@@ -75,7 +75,7 @@ do
 
    echo
    echo "Submitting job for $STAR_DETECTOR"
-   star-submit-template -template $SOURCE_DIR/supple/job_template_tvx_hify_star.xml \
+   star-submit-template -template $SOURCE_DIR/supple/job_template_star_hify.xml \
       -entities JOB_INPUT_FILE=$JOB_INPUT_FILE,JOB_NEVENTS=$JOB_NEVENTS,JOB_BFC_OPTIONS=$JOB_BFC_OPTIONS,OUT_DIR=$OUT_DIR,STAR_DETECTOR=$STAR_DETECTOR,STAR_DEACTIVATE_DETECTOR=$STAR_DEACTIVATE_DETECTOR
    echo
 done
