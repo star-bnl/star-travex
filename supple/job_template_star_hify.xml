@@ -48,11 +48,14 @@ echo "End of job: tralala"
 	<Location>&OUT_DIR;/sums/</Location>
 </Generator>
 
-<!-- Environment variable $STAR_TRAVEX_INSTALL_DIR must be set and visible -->
+<!--
+Environment variable $STAR_TRAVEX_INSTALL_DIR must be set and visible.
+$STAR_HOST_SYS is usually set by standard STAR login script.
+ -->
 <SandBox installer="ZIP">
 	<Package name="tarball_star_travex">
 		<File>file:$STAR_TRAVEX_INSTALL_DIR/*</File>
-		<File>file:$STAR_TRAVEX_INSTALL_DIR/.sl*</File>
+		<File>file:$STAR_TRAVEX_INSTALL_DIR/.$STAR_HOST_SYS/</File>
 	</Package>
 </SandBox>
 
