@@ -444,9 +444,8 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
       ofile->Write();
       ofile->Close();
    }
-
-   //--------------------------------------------------------------------------
 }
+
 
 // Print timers for all makers in chain
 class StMaker;

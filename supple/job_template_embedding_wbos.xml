@@ -1,57 +1,67 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <job filesPerHour="&filesPerHour;" maxFilesPerProcess="1" fileListSyntax="xrootd" simulateSubmission="false">
-    <command>
 
-	starver dev
+<command>
 
-	set RND_SEED=`expr &nIndex; \* 1000`
+starver dev
 
-	echo
-	echo "codePath:   " &codePath;
-	echo "RND_SEED:   " $RND_SEED
-	echo
+set RANDOM_SEED=`expr &RANDOM_SEED; \* 1000`
 
-	ls -al
+echo
+echo "SOURCE_DIR:   " &SOURCE_DIR;
+echo "RANDOM_SEED:  " $RANDOM_SEED
+echo
 
-	ln -s ./GenerateVertex.C ./GenerateVertex4WBoson.C
-	set my_command='root4star -q -b ./GenerateVertex4WBoson.C(0,&nEvents;,'$RND_SEED',"@'$FILELIST'","vertex.txt")'
-	echo
-	echo "Executing..."
-	echo  $my_command
-	eval '$my_command' >&amp;! &outPath;/log/${FILEBASENAME}_vertex.log
+pwd
+ls -al
 
-	set my_command="starsim -w 0 -b ./simWRequest.kumac nevents=&nEvents; config=&sample; run=&runNumber; seed=$RND_SEED file=$FILEBASENAME.fzd vertexfile=vertex.txt"
-	echo
-	echo "Executing..."
-	echo  $my_command
-	eval '$my_command' >&amp;! &outPath;/log/${FILEBASENAME}_starsim.log
+ln -s ./GenerateVertex.C ./GenerateVertex4WBoson.C
+set COMMAND='root4star -q -b ./GenerateVertex4WBoson.C(0,&JOB_NEVENTS;,'$RANDOM_SEED',"@'$FILELIST'","vertex.txt")'
+echo
+echo "Executing..."
+echo  $COMMAND
+eval '$COMMAND' >&amp;! &OUT_DIR;/log/${FILEBASENAME}_vertex.log
 
-	set my_command='root4star -q -b ./bfcMixer_pythia.C(&nEvents;,"@'$FILELIST'","'$FILEBASENAME'.fzd","P14igpp510","","W")'
-	echo
-	echo "Executing..."
-	echo  $my_command
-	eval '$my_command' >&amp;! &outPath;/log/${FILEBASENAME}_bfcMixer.log
+set COMMAND="starsim -w 0 -b ./simWRequest.kumac nevents=&JOB_NEVENTS; config=&sample; run=&RUN_ID; seed=$RANDOM_SEED file=$FILEBASENAME.fzd vertexfile=vertex.txt"
+echo
+echo "Executing..."
+echo  $COMMAND
+eval '$COMMAND' >&amp;! &OUT_DIR;/log/${FILEBASENAME}_starsim.log
 
-	ls -al
+set COMMAND='root4star -q -b ./bfcMixer_pythia.C(&JOB_NEVENTS;,"@'$FILELIST'","'$FILEBASENAME'.fzd","P14igpp510","","W")'
+echo
+echo "Executing..."
+echo  $COMMAND
+eval '$COMMAND' >&amp;! &OUT_DIR;/log/${FILEBASENAME}_bfcMixer.log
 
-	</command>
-	<input URL="file:&daqFile;" nFiles="1" />
-	<stdout URL="file:&outPath;/log/$FILEBASENAME.log" />
+ls -al
 
-	<output fromScratch="*.fzd"  toURL="file:&outPath;/fzd/" />
-	<output fromScratch="*.root" toURL="file:&outPath;/root/" />
+echo "End of job: tralala"
+
+</command>
+
+<input URL="file:&JOB_INPUT_FILE;" nFiles="1" />
+
+<output fromScratch="*.fzd"  toURL="file:&OUT_DIR;/fzd/" />
+<output fromScratch="*.root" toURL="file:&OUT_DIR;/root/" />
+
+<stdout URL="file:&OUT_DIR;/log/$FILEBASENAME.log" />
 
 <Generator>
-  <Location>&outPath;/sums/</Location>
+	<Location>&OUT_DIR;/sums/</Location>
 </Generator>
 
+<!--
+Environment variable $STAR_TRAVEX_INSTALL_DIR must be set and visible.
+$STAR_HOST_SYS is usually set by standard STAR login script.
+ -->
 <SandBox installer="ZIP">
 	<Package name="tarball_wbos_embed">
-	<File>file:./bfcMixer_pythia.C</File>
-	<File>file:./GenerateVertex.C</File>
-	<File>file:./simWRequest.kumac</File>
-	<File>file:./StarDb/Calibrations/tracker/</File>
-	<File>file:./.$STAR_HOST_SYS/</File>
+		<File>file:$STAR_TRAVEX_INSTALL_DIR/bfcMixer_pythia.C</File>
+		<File>file:$STAR_TRAVEX_INSTALL_DIR/GenerateVertex.C</File>
+		<File>file:$STAR_TRAVEX_INSTALL_DIR/simWRequest.kumac</File>
+		<File>file:$STAR_TRAVEX_INSTALL_DIR/StarDb/Calibrations/tracker/</File>
+		<File>file:$STAR_TRAVEX_INSTALL_DIR/.$STAR_HOST_SYS/</File>
 	</Package>
 </SandBox>
 
