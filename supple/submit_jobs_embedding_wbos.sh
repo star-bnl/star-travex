@@ -17,7 +17,7 @@ sample="Wplus_enu"
 : ${SOURCE_DIR:=${HOME}/star-travex} && SOURCE_DIR=`cd "$SOURCE_DIR"; pwd`
 
 # STAR_TRAVEX_INSTALL_DIR is the directory where star-travex was installed
-: ${STAR_TRAVEX_INSTALL_DIR:=${HOME}/star-travex/build_install} && STAR_TRAVEX_INSTALL_DIR=`cd "$STAR_TRAVEX_INSTALL_DIR"; pwd`
+: ${STAR_TRAVEX_INSTALL_DIR:=${HOME}/star-travex/build-install} && STAR_TRAVEX_INSTALL_DIR=`cd "$STAR_TRAVEX_INSTALL_DIR"; pwd`
 
 # $HOME/scratch/wbos_embed/
 : ${OUT_DIR:=/path/to/some_dir} && mkdir -p $OUT_DIR && OUT_DIR=`cd "$OUT_DIR"; pwd`
@@ -79,36 +79,36 @@ norm=1.0
 
 
 IFS=\  #set space as delimeter
-while read JOB_INPUT_FILE RUN_ID JOB_NEVENTS
+while read  JOB_INPUT_FILE  RUN_ID  JOB_NEVENTS
 do
 
-  nEventsScaled=$(expr $JOB_NEVENTS*$norm |tr -d $'\r'| bc)
-  nEventsPretty=`echo $nEventsScaled | awk '{printf("%d\n",$1+0.5)}'`
-  JOB_NEVENTS=$nEventsPretty
+   nEventsScaled=$(expr $JOB_NEVENTS*$norm |tr -d $'\r'| bc)
+   nEventsPretty=`echo $nEventsScaled | awk '{printf("%d\n",$1+0.5)}'`
+   JOB_NEVENTS=$nEventsPretty
 
 
-  #set queue length by # of target events
-  filesPerHour=0.01
-  if [ $JOB_NEVENTS -lt 50 ]
-  then
-    filesPerHour=0.21
-  fi
-  if [ $JOB_NEVENTS -lt 10 ]
-  then
-    filesPerHour=0.34
-  fi
+   #set queue length by # of target events
+   filesPerHour=0.01
+   if [ $JOB_NEVENTS -lt 50 ]
+   then
+     filesPerHour=0.21
+   fi
+   if [ $JOB_NEVENTS -lt 10 ]
+   then
+     filesPerHour=0.34
+   fi
 
 
-  echo -e "\nProcessing new line from input file list"
-  echo -e "\t RANDOM_SEED: $RANDOM_SEED"
-  echo -e "\t JOB_NEVENTS [nEventsScaled, nEventsPretty]: $JOB_NEVENTS [$nEventsScaled, $nEventsPretty]"
-  echo -e "\t JOB_INPUT_FILE: $JOB_INPUT_FILE"
-  echo -e "\t RUN_ID: $RUN_ID"
-  echo -e "\t filesPerHour: $filesPerHour"
+   echo -e "\nProcessing new line from input file list"
+   echo -e "\t RANDOM_SEED: $RANDOM_SEED"
+   echo -e "\t JOB_NEVENTS [nEventsScaled, nEventsPretty]: $JOB_NEVENTS [$nEventsScaled, $nEventsPretty]"
+   echo -e "\t JOB_INPUT_FILE: $JOB_INPUT_FILE"
+   echo -e "\t RUN_ID: $RUN_ID"
+   echo -e "\t filesPerHour: $filesPerHour"
 
-  star-submit-template -template $SOURCE_DIR/supple/job_template_embedding_wbos.xml \
-     -entities  JOB_NEVENTS=$JOB_NEVENTS,OUT_DIR=$OUT_DIR,SOURCE_DIR=$SOURCE_DIR,JOB_INPUT_FILE=$JOB_INPUT_FILE,RUN_ID=$RUN_ID,sample=$sample,RANDOM_SEED=$RANDOM_SEED,filesPerHour=$filesPerHour
+   star-submit-template -template $SOURCE_DIR/supple/job_template_embedding_wbos.xml \
+      -entities  JOB_NEVENTS=$JOB_NEVENTS,OUT_DIR=$OUT_DIR,SOURCE_DIR=$SOURCE_DIR,JOB_INPUT_FILE=$JOB_INPUT_FILE,RUN_ID=$RUN_ID,sample=$sample,RANDOM_SEED=$RANDOM_SEED,filesPerHour=$filesPerHour
 
-  RANDOM_SEED=`expr $RANDOM_SEED \+ 1`
+   RANDOM_SEED=`expr $RANDOM_SEED \+ 1`
 
 done < $INPUT_FILE_LIST
