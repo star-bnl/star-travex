@@ -38,6 +38,10 @@ endif()
 
 add_definitions(-D__ROOT__)
 
+# Remove dependency of "install" target on "all" target. This allows to
+# build and install individual libraries
+set(CMAKE_SKIP_INSTALL_ALL_DEPENDENCY true)
+
 
 # Some external files on which this project depends
 file(COPY asps/rexe/TGeant3/TGiant3.h asps/rexe/TGeant3/StarMC.h DESTINATION inc/)
@@ -255,6 +259,11 @@ endif()
 
 # Installation section
 install(DIRECTORY "ext/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
-install(TARGETS StiRootIO GeaRootIO AgUStep StiHifyLib StiScanLib
-	star-vertex-eval StMcAnalysisMaker DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib")
-install(TARGETS stiscan stihify vtxhist DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/bin")
+
+install(TARGETS
+	StiRootIO GeaRootIO AgUStep StiHifyLib StiScanLib
+	star-vertex-eval StMcAnalysisMaker
+	DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL)
+
+install(TARGETS stiscan stihify vtxhist
+	DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/bin" OPTIONAL)
