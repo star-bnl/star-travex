@@ -22,11 +22,13 @@ echo "Executing..."
 echo  $COMMAND
 eval '$COMMAND' >&amp;! &OUT_DIR;/log/${FILEBASENAME}_vertex.log
 
+mv .$STAR_HOST_SYS $STAR_HOST_SYS
 set COMMAND="starsim -w 0 -b ./simWRequest.kumac nevents=&JOB_NEVENTS; config=&sample; run=&RUN_ID; seed=$RANDOM_SEED file=$FILEBASENAME.fzd vertexfile=vertex.txt"
 echo
 echo "Executing..."
 echo  $COMMAND
 eval '$COMMAND' >&amp;! &OUT_DIR;/log/${FILEBASENAME}_starsim.log
+mv $STAR_HOST_SYS .$STAR_HOST_SYS
 
 set COMMAND='root4star -q -b ./bfcMixer_pythia.C(&JOB_NEVENTS;,"@'$FILELIST'","'$FILEBASENAME'.fzd","P14igpp510","","W")'
 echo
