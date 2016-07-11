@@ -65,6 +65,12 @@ else
 fi
 
 
+# Remove package from previous job execution
+rm -fr tarball_wbos_embed.package tarball_wbos_embed.zip
+
+trap '' DEBUG
+
+
 RANDOM_SEED=2000
 norm=1.0
 #norm=1.0 for 110K events (W+)
