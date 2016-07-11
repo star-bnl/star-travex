@@ -10,6 +10,9 @@ sample="Wplus_enu"
 #sample=Z_eplus_eminus_inter
 #sample=QCD
 
+
+: ${INPUT_FILE_LIST:=${HOME}/star-travex/filelist_zerobias_test.txt}
+
 # Path to your local `star-travex` directory
 : ${SOURCE_DIR:=${HOME}/star-travex} && SOURCE_DIR=`cd "$SOURCE_DIR"; pwd`
 
@@ -102,4 +105,4 @@ do
 
   RANDOM_SEED=`expr $RANDOM_SEED \+ 1`
 
-done <  $SOURCE_DIR/supple/filelist_zerobias.txt
+done < $INPUT_FILE_LIST
