@@ -7,6 +7,10 @@ starver dev
 
 set RANDOM_SEED=`expr &RANDOM_SEED; \* 1000`
 
+setenv BFC_OPTIONS_1 `echo &JOB_BFC_OPTIONS_1; | sed 's/\./,/g'`
+setenv BFC_OPTIONS_2 `echo &JOB_BFC_OPTIONS_2; | sed 's/\./,/g'`
+setenv BFC_OPTIONS_3 `echo &JOB_BFC_OPTIONS_3; | sed 's/\./,/g'`
+
 echo
 echo "SOURCE_DIR:   " &SOURCE_DIR;
 echo "RANDOM_SEED:  " $RANDOM_SEED
@@ -30,7 +34,8 @@ echo  $COMMAND
 eval '$COMMAND' >&amp;! &OUT_DIR;/log/${FILEBASENAME}_starsim.log
 mv $STAR_HOST_SYS .$STAR_HOST_SYS
 
-set COMMAND='root4star -q -b ./bfcMixer_pythia.C(&JOB_NEVENTS;,"@'$FILELIST'","'$FILEBASENAME'.fzd","P14igpp510","","W")'
+ln -s ./bfcMixer_pythia.C ./EmbeddingReco.C
+set COMMAND='root4star -q -b ./EmbeddingReco.C(&JOB_NEVENTS;,"@'$FILELIST'","'$FILEBASENAME'.fzd","'$BFC_OPTIONS_1'","'$BFC_OPTIONS_2'","'$BFC_OPTIONS_3'","W")'
 echo
 echo "Executing..."
 echo  $COMMAND

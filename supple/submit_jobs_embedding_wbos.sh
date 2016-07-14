@@ -30,6 +30,27 @@ sample="Wplus_enu"
 : ${STARSIM_KUMAC:="$SOURCE_DIR/supple/simWRequest.kumac"}
 
 
+# Parametric option to study available vertex finder performance
+#JOB_BFC_OPTIONS_VERTEX="VFMinuit"
+#JOB_BFC_OPTIONS_VERTEX="VFMinuit beamline"
+JOB_BFC_OPTIONS_VERTEX="VFMinuit beamline3D"
+#JOB_BFC_OPTIONS_VERTEX="VFPPVnoCTB beamline"
+#JOB_BFC_OPTIONS_VERTEX="VFPPVnoCTB beamline3D"
+#JOB_BFC_OPTIONS_VERTEX="KFVertex"
+#JOB_BFC_OPTIONS_VERTEX="KFVertex beamline"
+
+
+# Sample three chain options for embedding sample reconstruction
+JOB_BFC_OPTIONS_1="in magF tpcDb NoDefault TpxRaw -ittf NoOutput useXgeom"
+JOB_BFC_OPTIONS_2="fzin gen_T geomT sim_T TpcRS -ittf -tpc_daq nodefault ry2013_1c"
+JOB_BFC_OPTIONS_3="DbV20140905 pp2013b mtd btof fmsDat fgt fgtPoint $JOB_BFC_OPTIONS_VERTEX BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt -evout IdTruth TpxClu -hitfilt Embedding TpcMixer McAna -in NoInput useInTracker emcSim EEfs"
+
+# Replace all spaces in the above options with dots in order to pass the strings to condor *.xml files
+JOB_BFC_OPTIONS_1=`echo ${JOB_BFC_OPTIONS_1[*]} | sed 's/ /./g'`
+JOB_BFC_OPTIONS_2=`echo ${JOB_BFC_OPTIONS_2[*]} | sed 's/ /./g'`
+JOB_BFC_OPTIONS_3=`echo ${JOB_BFC_OPTIONS_3[*]} | sed 's/ /./g'`
+
+
 echo -e "Named arguments and their values:"
 echo -e "\t sample:                   $sample"
 echo -e "\t SOURCE_DIR:               $SOURCE_DIR"
@@ -39,6 +60,9 @@ echo -e "\t BFC_MIXER_MACRO:          $BFC_MIXER_MACRO"
 echo -e "\t VERTEX_GEN_MACRO:         $VERTEX_GEN_MACRO"
 echo -e "\t VERTEX_PARAMS_DB_FILE:    $VERTEX_PARAMS_DB_FILE"
 echo -e "\t STARSIM_KUMAC:            $STARSIM_KUMAC"
+echo -e "\t JOB_BFC_OPTIONS_1:        $JOB_BFC_OPTIONS_1"
+echo -e "\t JOB_BFC_OPTIONS_2:        $JOB_BFC_OPTIONS_2"
+echo -e "\t JOB_BFC_OPTIONS_3:        $JOB_BFC_OPTIONS_3"
 
 
 # After this 'trap' command print out all command before execution
@@ -106,8 +130,13 @@ do
    echo -e "\t RUN_ID: $RUN_ID"
    echo -e "\t filesPerHour: $filesPerHour"
 
-   star-submit-template -template $SOURCE_DIR/supple/job_template_embedding_wbos.xml \
-      -entities  JOB_NEVENTS=$JOB_NEVENTS,OUT_DIR=$OUT_DIR,SOURCE_DIR=$SOURCE_DIR,JOB_INPUT_FILE=$JOB_INPUT_FILE,RUN_ID=$RUN_ID,sample=$sample,RANDOM_SEED=$RANDOM_SEED,filesPerHour=$filesPerHour
+   COMMAND="star-submit-template -template $SOURCE_DIR/supple/job_template_embedding_wbos.xml \
+      -entities  JOB_NEVENTS=$JOB_NEVENTS,OUT_DIR=$OUT_DIR,SOURCE_DIR=$SOURCE_DIR,JOB_INPUT_FILE=$JOB_INPUT_FILE,RUN_ID=$RUN_ID,sample=$sample,RANDOM_SEED=$RANDOM_SEED,filesPerHour=$filesPerHour,JOB_BFC_OPTIONS_1=$JOB_BFC_OPTIONS_1,JOB_BFC_OPTIONS_2=$JOB_BFC_OPTIONS_2,JOB_BFC_OPTIONS_3=$JOB_BFC_OPTIONS_3"
+
+   echo $COMMAND
+   echo
+
+   eval $COMMAND
 
    RANDOM_SEED=`expr $RANDOM_SEED \+ 1`
 
