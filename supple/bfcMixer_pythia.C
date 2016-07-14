@@ -16,6 +16,7 @@
 // 27 July 2011
 //
 //////////////////////////////////////////////////////////////////////////
+#include <string>
 
 class StChain;
 StChain *Chain = 0;
@@ -164,6 +165,25 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
    // Add EEMC fast simulator to chain
    chain3Opt += ",EEfs";
 
+   EmbeddingReco(Nevents, daqfile, fzdfile, chain1Opt.Data(), chain2Opt.Data(), chain3Opt.Data(), flag);
+}
+
+
+/**
+ * This is an alternative to bfcMixer_pythia() allowing the user to explicitly
+ * specify BFC options for all three chains.
+ *
+ * Sample input values:
+ *
+ * daqFileList = "@run10148002.list"
+ * fzdFile     = "/path/to/my_pythia.fzd"
+ * flag        = "W"
+ *
+ */
+void EmbeddingReco(const int nEvents, const std::string daqFileList, const std::string fzdFile,
+   const std::string bfcOptionsChain1, const std::string bfcOptionsChain2, const std::string bfcOptionsChain3,
+   const std::string flag)
+{
    // Dynamically link some shared libs
    gROOT->LoadMacro("bfc.C");
 
@@ -172,13 +192,13 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
    //______________Create the main chain object______________________________________
    Chain = new StChain("Embedding");
    //________________________________________________________________________________
-   bfc(-1, chain1Opt, daqfile);
+   bfc(-1, bfcOptionsChain1.c_str(), daqFileList.c_str());
    chain1 = chain;
    chain1->SetName("One");
    chain1->SetAttr(".call", "SetActive(0)", "St_db_Maker::"); // Use DB cache to reduce overhead
    Chain->cd();
    //________________________________________________________________________________
-   bfc(-1, chain2Opt, fzdfile);
+   bfc(-1, bfcOptionsChain2.c_str(), fzdFile.c_str());
    chain2 = chain;
    chain2->SetName("Two");
    Chain->cd();
@@ -199,12 +219,12 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
    //  gSystem->Load("StFtpcMixerMaker");
    //  StFtpcMixerMaker  *ftpcmixer = new StFtpcMixerMaker("FtpcMixer","daq","trs");
    //________________________________________________________________________________
-   TString OutputFileName(gSystem->BaseName(fzdfile));
+   TString OutputFileName(gSystem->BaseName(fzdFile.c_str()));
    OutputFileName.ReplaceAll("*", "");
    OutputFileName.ReplaceAll(".fzd", "");
    //  OutputFileName.Append("_emb.root");
    OutputFileName.Append(".root");
-   bfc(-1, chain3Opt, 0, OutputFileName);
+   bfc(-1, bfcOptionsChain3.c_str(), 0, OutputFileName);
    chain3 = chain;
    chain3->SetName("Three");
    Chain->cd();
@@ -213,7 +233,7 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
 
    mixer->SetInput("Input1", "TpxRaw/.data/Event");
 
-   if (chain2Opt.Contains("TpcRS", TString::kIgnoreCase)) {
+	if (bfcOptionsChain2.find("TpcRS") != std::string::npos) {
       mixer->SetInput("Input2", "TpcRS/Event");
    }
    else {
@@ -273,7 +293,7 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
       gSystem->Load("StBfcTriggerFilterMaker");
 
       StPythiaEventMaker *pythia = new StPythiaEventMaker;
-      TString pyfile = gSystem->BaseName(fzdfile);
+      TString pyfile = gSystem->BaseName(fzdFile.c_str());
       pyfile.ReplaceAll(".fzd", ".pythia.root");
       pythia->SetPythiaFile(pyfile);
       chain3->AddAfter("geant", pythia);
@@ -347,7 +367,7 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
 #endif
 
       //--------------------------------------------------------------------------
-      TString trgfile = gSystem->BaseName(fzdfile);
+      TString trgfile = gSystem->BaseName(fzdFile.c_str());
       trgfile.ReplaceAll(".fzd", ".trig.root");
       TFile *ofile = TFile::Open(trgfile, "recreate");
       assert(ofile);
@@ -372,7 +392,7 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
    TBenchmark evnt;
    StIOMaker *inputStream = (StIOMaker *)chain1->GetMaker("inputStream");
 
-   for (int iEvent = 1; iEvent <= Nevents; ++iEvent) {
+   for (int iEvent = 1; iEvent <= nEvents; ++iEvent) {
       evnt.Reset();
       evnt.Start("QAInfo:");
       Chain->Clear();
