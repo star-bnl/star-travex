@@ -211,12 +211,7 @@ void bfcMixer_pythia(const Int_t Nevents = 1000,
    //________________________________________________________________________________
    StTpcMixerMaker  *mixer = (StTpcMixerMaker *) chain3->Maker("TpcMixer");
 
-   if ( prodName == "P08icAuAu200") {
-      mixer->SetInput("Input1", "MixerEvent");
-   }
-   else {
-      mixer->SetInput("Input1", "TpxRaw/.data/Event");
-   }
+   mixer->SetInput("Input1", "TpxRaw/.data/Event");
 
    if (chain2Opt.Contains("TpcRS", TString::kIgnoreCase)) {
       mixer->SetInput("Input2", "TpcRS/Event");
