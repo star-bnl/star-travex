@@ -110,28 +110,14 @@ do
    nEventsPretty=`echo $nEventsScaled | awk '{printf("%d\n",$1+0.5)}'`
    JOB_NEVENTS=$nEventsPretty
 
-
-   #set queue length by # of target events
-   filesPerHour=0.01
-   if [ $JOB_NEVENTS -lt 50 ]
-   then
-     filesPerHour=0.21
-   fi
-   if [ $JOB_NEVENTS -lt 10 ]
-   then
-     filesPerHour=0.34
-   fi
-
-
    echo -e "\nProcessing new line from input file list"
    echo -e "\t RANDOM_SEED: $RANDOM_SEED"
    echo -e "\t JOB_NEVENTS [nEventsScaled, nEventsPretty]: $JOB_NEVENTS [$nEventsScaled, $nEventsPretty]"
    echo -e "\t JOB_INPUT_FILE: $JOB_INPUT_FILE"
    echo -e "\t RUN_ID: $RUN_ID"
-   echo -e "\t filesPerHour: $filesPerHour"
 
    COMMAND="star-submit-template -template $SOURCE_DIR/supple/job_template_embedding_wbos.xml \
-      -entities  JOB_NEVENTS=$JOB_NEVENTS,OUT_DIR=$OUT_DIR,SOURCE_DIR=$SOURCE_DIR,JOB_INPUT_FILE=$JOB_INPUT_FILE,RUN_ID=$RUN_ID,sample=$sample,RANDOM_SEED=$RANDOM_SEED,filesPerHour=$filesPerHour,JOB_BFC_OPTIONS_1=$JOB_BFC_OPTIONS_1,JOB_BFC_OPTIONS_2=$JOB_BFC_OPTIONS_2,JOB_BFC_OPTIONS_3=$JOB_BFC_OPTIONS_3"
+      -entities  JOB_NEVENTS=$JOB_NEVENTS,OUT_DIR=$OUT_DIR,SOURCE_DIR=$SOURCE_DIR,JOB_INPUT_FILE=$JOB_INPUT_FILE,RUN_ID=$RUN_ID,sample=$sample,RANDOM_SEED=$RANDOM_SEED,JOB_BFC_OPTIONS_1=$JOB_BFC_OPTIONS_1,JOB_BFC_OPTIONS_2=$JOB_BFC_OPTIONS_2,JOB_BFC_OPTIONS_3=$JOB_BFC_OPTIONS_3"
 
    echo $COMMAND
    echo
