@@ -2,39 +2,52 @@ VtxEval: Vertex Reconstruction Evaluation and Efficiency at STAR
 ================================================================
 
 To build the library and the `vtxeval` executable follow the instructions in the
-project's [README.md](../README.md).
+project's top level [README.md](../README.md). Since in this study we are
+focusing on evaluation of the vertex finders one can build and install only the
+relevant libraries:
+
+    $ mkdir build/ && cd build/
+    $ cmake -D CMAKE_INSTALL_PREFIX=../build-install -D BOOST_ROOT=$OPTSTAR ../
+    $ make -j4 star-vertex
+    $ make install
 
 
 How to create embedding samples
 ===============================
 
-Checkout the code using the following command:
+Use STAR's `get_file_list.pl` to select a set of desired zerobias files from the
+database. Here is an example command with some selection constraints:
 
-    git clone --recursive https://github.com/star-bnl/star-vertex-eval.git
+    $ get_file_list.pl -keys path,filename,events -cond 'filename~st_zerobias_adc_1412%,year=2013,runnumber>14125000,sanity=1' -delim / -limit 20
 
-Select desired zerobias files from the database:
+You may choose to copy the files from `hpss` to some location on disk. In that
+case, the paths to files returned by `get_file_list.pl` can be adjusted to point
+to the actual file location. The final list of zerobias data files has to be in
+the following format:
 
-    get_file_list.pl -keys path,filename,events -cond 'filename~st_zerobias_adc_1412%,year=2013,runnumber>14125000' -delim / -limit 20
+    path/to/file.daq run_id num_of_events_to_process
 
-Create a text file with a list of zerobias data files in the following format
-(`path/to/file` `run_id` `num_of_events`), e.g.:
+The contents of your file may look like the following:
 
-    $cat supple/filelist_zerobias.txt
+    $ cat filelist_zerobias.lis
     /star/data05/daq/2013/embedding/st_zerobias_adc_14150005_raw_3330002.daq 14150005 103
     /star/data05/daq/2013/embedding/st_zerobias_adc_14150004_raw_1530002.daq 14150004 103
-	 ...
+    ...
     /star/data05/daq/2013/embedding/st_zerobias_adc_14150005_raw_8660002.daq 14150005 102
-	 ...
+    ...
 
 
 W boson
 -------
 
-Create a directory from where condor jobs will be submitted and run the script
-as:
+The script used for submitting W embedding jobs to condor is called
+`submit_jobs_embedding_wbos.sh` and can be found in `star-travex/supple/`. There
+is a number of named parameters which user may need to set to appropriate
+values. The two parameters likely to be changed often are `OUT_DIR` and
+`INPUT_FILE_LIST`. All named variables can be passed to the script in command
+line like this:
 
-    mkdir submit_wbos && cd submit_wbos
-    /path/to/star-vertex-eval/supple/submit_jobs_embedding_wbos.sh
+    $ OUT_DIR=/tmp/scratch/wbos_embed_results/ INPUT_FILE_LIST=~/star-travex/supple/filelist_zerobias.lis submit_jobs_embedding_wbos.sh
 
 
 J/psi
@@ -44,14 +57,14 @@ Create a directory from where condor jobs will be submitted and run the script
 as:
 
     mkdir submit_jpsi && cd submit_jpsi
-    /path/to/star-vertex-eval/supple/submit_jobs_embedding_jpsi.sh 200
+    /path/to/star-travex/supple/submit_jobs_embedding_jpsi.sh 200
 
 If the package was not checked out in the default location of
-${HOME}/star-vertex-eval/ then you should specify the correct location as:
+${HOME}/star-travex/ then you should specify the correct location as:
 
-    SOURCE_DIR=/path/to/star-vertex-eval/ \
+    SOURCE_DIR=/path/to/star-travex/ \
     OUTPUT_DIR=/tmp/jpsi_embed \
-    /path/to/star-vertex-eval/supple/submit_jobs_embedding_jpsi.sh 200
+    /path/to/star-travex/supple/submit_jobs_embedding_jpsi.sh 200
 
 There is a number of other script parameters which can be modified if the
 default values are not appropriate. Search for "NAMED ARGUMENTS" to find these

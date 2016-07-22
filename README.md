@@ -48,17 +48,17 @@ Prerequisites
 Build with cmake
 ----------------
 
-Checkout the code using one of the following commands:
+Checkout the code using the following command:
 
     git clone https://github.com/star-bnl/star-travex.git
 
 Compile and build the tools:
 
-    cd star-travex/
-    git submodule update --init --depth=50
-    mkdir build && cd build
-    cmake ../
-    make -j4 && make install
+    $ cd star-travex/
+    $ git submodule update --init --depth=50
+    $ mkdir build && cd build
+    $ cmake ../
+    $ make -j4 && make install
 
 The make tool will place the libraries in the local `.slXX_gccXXX` directory.
 
@@ -66,18 +66,15 @@ The make tool will place the libraries in the local `.slXX_gccXXX` directory.
 Build within STAR environment
 -----------------------------
 
-We assume that the user environment includes the standard shell variables
-available for a typical user account of the STAR experiment. The following
-environment variables should be set if needed:
+We assume that the user environment includes the shell variables availabe within
+a typical STAR account. Specifically, $OPTSTAR contains the prefix path and is
+used to help `cmake` find the appropriate `boost` release.
 
-    $STAR_LIB        # Used in supple/starsim_zslice_*.kumac
-    $OPTSTAR         # The prefix path to installed boost release
-
-    git clone https://github.com/star-bnl/star-travex.git
-    cd star-travex/
-    git submodule update --init --depth=50
-    mkdir build && cd build
-    cmake -D CMAKE_INSTALL_PREFIX=./ -D BOOST_ROOT=$OPTSTAR ../
-    make -j4 && make install
+    $ git clone https://github.com/star-bnl/star-travex.git
+    $ cd star-travex/
+    $ git submodule update --init --depth=50
+    $ mkdir build && cd build
+    $ cmake -D CMAKE_INSTALL_PREFIX=./ -D BOOST_ROOT=$OPTSTAR ../
+    $ make -j4 && make install
 
 The make tool will place the libraries in the local `.slXX_gccXXX` directory.
