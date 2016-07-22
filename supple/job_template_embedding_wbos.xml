@@ -27,7 +27,7 @@ echo  $COMMAND
 eval '$COMMAND' >&amp;! &OUT_DIR;/log/${FILEBASENAME}_vertex.log
 
 mv .$STAR_HOST_SYS $STAR_HOST_SYS
-set COMMAND="starsim -w 0 -b ./simWRequest.kumac nevents=&JOB_NEVENTS; config=&sample; run=&RUN_ID; seed=$RANDOM_SEED file=$FILEBASENAME.fzd vertexfile=vertex.txt"
+set COMMAND="starsim -w 0 -b ./simWRequest.kumac nevents=&JOB_NEVENTS; config=&STARSIM_MODE; run=&RUN_ID; seed=$RANDOM_SEED file=$FILEBASENAME.fzd vertexfile=vertex.txt"
 echo
 echo "Executing..."
 echo  $COMMAND

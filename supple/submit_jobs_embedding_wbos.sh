@@ -1,19 +1,12 @@
 #!/usr/bin/env bash
 #
-# See project's README.md for details
+# See star-travex/VtxEval/README.md for details.
 #
 
-sample="Wplus_enu"
-#sample=Wplus_taunu
-#sample=Wminus_enu
-#sample=Wminus_taunu
-#sample=Z_eplus_eminus_inter
-#sample=QCD
+# The file with a list of zerobias data files to use in embedding
+: ${INPUT_FILE_LIST:=${HOME}/star-travex/filelist_zerobias.lis}
 
-
-: ${INPUT_FILE_LIST:=${HOME}/star-travex/filelist_zerobias_test.txt}
-
-# Path to your local `star-travex` directory
+# Path to the local `star-travex` directory
 : ${SOURCE_DIR:=${HOME}/star-travex} && SOURCE_DIR=`cd "$SOURCE_DIR"; pwd`
 
 # STAR_TRAVEX_INSTALL_DIR is the directory where star-travex was installed
@@ -21,6 +14,7 @@ sample="Wplus_enu"
 
 # $HOME/scratch/wbos_embed/
 : ${OUT_DIR:=/path/to/some_dir} && mkdir -p $OUT_DIR && OUT_DIR=`cd "$OUT_DIR"; pwd`
+
 
 # Various macros from the source directory with customizalbe parameters
 # controlling event reconstruction.
@@ -30,14 +24,15 @@ sample="Wplus_enu"
 : ${STARSIM_KUMAC:="$SOURCE_DIR/supple/simWRequest.kumac"}
 
 
-# Parametric option to study available vertex finder performance
+# Parametric option to study available vertex finder performance. Pick one from
+# the following options:
 #JOB_BFC_OPTIONS_VERTEX="VFMinuit"
 #JOB_BFC_OPTIONS_VERTEX="VFMinuit beamline"
-JOB_BFC_OPTIONS_VERTEX="VFMinuit beamline3D"
+#JOB_BFC_OPTIONS_VERTEX="VFMinuit beamline3D"
 #JOB_BFC_OPTIONS_VERTEX="VFPPVnoCTB beamline"
 #JOB_BFC_OPTIONS_VERTEX="VFPPVnoCTB beamline3D"
 #JOB_BFC_OPTIONS_VERTEX="KFVertex"
-#JOB_BFC_OPTIONS_VERTEX="KFVertex beamline"
+JOB_BFC_OPTIONS_VERTEX="KFVertex beamline"
 
 
 # Sample three chain options for embedding sample reconstruction
@@ -51,8 +46,13 @@ JOB_BFC_OPTIONS_2=`echo ${JOB_BFC_OPTIONS_2[*]} | sed 's/ /./g'`
 JOB_BFC_OPTIONS_3=`echo ${JOB_BFC_OPTIONS_3[*]} | sed 's/ /./g'`
 
 
+# This variable defins the simulated signal in kumac passed to starsim. It can
+# take one of the following values:
+# Wplus_enu, Wplus_taunu, Wminus_enu, Wminus_taunu, Z_eplus_eminus_inter, QCD
+STARSIM_MODE="Wplus_enu"
+
+
 echo -e "Named arguments and their values:"
-echo -e "\t sample:                   $sample"
 echo -e "\t SOURCE_DIR:               $SOURCE_DIR"
 echo -e "\t STAR_TRAVEX_INSTALL_DIR:  $STAR_TRAVEX_INSTALL_DIR"
 echo -e "\t OUT_DIR:                  $OUT_DIR"
@@ -60,6 +60,7 @@ echo -e "\t BFC_MIXER_MACRO:          $BFC_MIXER_MACRO"
 echo -e "\t VERTEX_GEN_MACRO:         $VERTEX_GEN_MACRO"
 echo -e "\t VERTEX_PARAMS_DB_FILE:    $VERTEX_PARAMS_DB_FILE"
 echo -e "\t STARSIM_KUMAC:            $STARSIM_KUMAC"
+echo -e "\t STARSIM_MODE:             $STARSIM_MODE"
 echo -e "\t JOB_BFC_OPTIONS_1:        $JOB_BFC_OPTIONS_1"
 echo -e "\t JOB_BFC_OPTIONS_2:        $JOB_BFC_OPTIONS_2"
 echo -e "\t JOB_BFC_OPTIONS_3:        $JOB_BFC_OPTIONS_3"
@@ -117,7 +118,7 @@ do
    echo -e "\t RUN_ID: $RUN_ID"
 
    COMMAND="star-submit-template -template $SOURCE_DIR/supple/job_template_embedding_wbos.xml \
-      -entities  JOB_NEVENTS=$JOB_NEVENTS,OUT_DIR=$OUT_DIR,SOURCE_DIR=$SOURCE_DIR,JOB_INPUT_FILE=$JOB_INPUT_FILE,RUN_ID=$RUN_ID,sample=$sample,RANDOM_SEED=$RANDOM_SEED,JOB_BFC_OPTIONS_1=$JOB_BFC_OPTIONS_1,JOB_BFC_OPTIONS_2=$JOB_BFC_OPTIONS_2,JOB_BFC_OPTIONS_3=$JOB_BFC_OPTIONS_3"
+      -entities  JOB_NEVENTS=$JOB_NEVENTS,OUT_DIR=$OUT_DIR,SOURCE_DIR=$SOURCE_DIR,JOB_INPUT_FILE=$JOB_INPUT_FILE,RUN_ID=$RUN_ID,STARSIM_MODE=$STARSIM_MODE,RANDOM_SEED=$RANDOM_SEED,JOB_BFC_OPTIONS_1=$JOB_BFC_OPTIONS_1,JOB_BFC_OPTIONS_2=$JOB_BFC_OPTIONS_2,JOB_BFC_OPTIONS_3=$JOB_BFC_OPTIONS_3"
 
    echo $COMMAND
    echo
