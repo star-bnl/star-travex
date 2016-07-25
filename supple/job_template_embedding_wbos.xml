@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <job filesPerHour="1" maxFilesPerProcess="1" fileListSyntax="xrootd" simulateSubmission="false">
 
 <command>
@@ -59,7 +60,8 @@ echo "End of job: tralala"
 </Generator>
 
 <!--
-Environment variable $STAR_TRAVEX_INSTALL_DIR must be set and visible.
+Environment variable $STAR_TRAVEX_INSTALL_DIR must be set and visible at the
+time of star-submit execution.
 $STAR_HOST_SYS is usually set by standard STAR login script.
  -->
 <SandBox installer="ZIP">

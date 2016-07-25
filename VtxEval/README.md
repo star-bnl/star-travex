@@ -18,7 +18,7 @@ How to create embedding samples
 Use STAR's `get_file_list.pl` to select a set of desired zerobias files from the
 database. Here is an example command with some selection constraints:
 
-    $ get_file_list.pl -keys path,filename,events -cond 'filename~st_zerobias_adc_1412%,year=2013,runnumber>14125000,sanity=1' -delim / -limit 20
+    $ get_file_list.pl -keys path,filename,events -cond filename~st_zerobias_%,runnumber[]14115007-14120000,sanity=1,filetype=online_daq -delim / -limit 0
 
 You may choose to copy the files from `hpss` to some location on disk. In that
 case, the paths to files returned by `get_file_list.pl` can be adjusted to point
@@ -40,7 +40,7 @@ The contents of your file may look like the following:
 W boson
 -------
 
-The script used for submitting W embedding jobs to condor is called
+The script to submit W embedding jobs to condor is called
 `submit_jobs_embedding_wbos.sh` and can be found in `star-travex/supple/`. There
 is a number of named parameters which user may need to set to appropriate
 values. The two parameters likely to be changed often are `OUT_DIR` and

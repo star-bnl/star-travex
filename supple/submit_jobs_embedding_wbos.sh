@@ -47,6 +47,7 @@ STARSIM_MODE="Wplus_enu"
 
 
 echo -e "Named arguments and their values:"
+echo -e "\t INPUT_FILE_LIST:          $INPUT_FILE_LIST"
 echo -e "\t SOURCE_DIR:               $SOURCE_DIR"
 echo -e "\t STAR_TRAVEX_INSTALL_DIR:  $STAR_TRAVEX_INSTALL_DIR"
 echo -e "\t OUT_DIR:                  $OUT_DIR"
@@ -91,23 +92,14 @@ trap '' DEBUG
 
 
 RANDOM_SEED=2000
-norm=1.0
-#norm=1.0 for 110K events (W+)
-#norm=0.32 for 35K events (W-)
-#norm=0.23 for 25K events (Z/gamma*)
-
 
 IFS=\  #set space as delimeter
 while read  JOB_INPUT_FILE  RUN_ID  JOB_NEVENTS
 do
 
-   nEventsScaled=$(expr $JOB_NEVENTS*$norm |tr -d $'\r'| bc)
-   nEventsPretty=`echo $nEventsScaled | awk '{printf("%d\n",$1+0.5)}'`
-   JOB_NEVENTS=$nEventsPretty
-
    echo -e "\nProcessing new line from input file list"
    echo -e "\t RANDOM_SEED: $RANDOM_SEED"
-   echo -e "\t JOB_NEVENTS [nEventsScaled, nEventsPretty]: $JOB_NEVENTS [$nEventsScaled, $nEventsPretty]"
+   echo -e "\t JOB_NEVENTS: $JOB_NEVENTS"
    echo -e "\t JOB_INPUT_FILE: $JOB_INPUT_FILE"
    echo -e "\t RUN_ID: $RUN_ID"
 
