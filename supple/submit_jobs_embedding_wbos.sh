@@ -38,7 +38,7 @@ JOB_BFC_OPTIONS_VERTEX="KFVertex beamline"
 # Sample three chain options for embedding sample reconstruction
 JOB_BFC_OPTIONS_1="in magF tpcDb NoDefault TpxRaw -ittf NoOutput useXgeom"
 JOB_BFC_OPTIONS_2="fzin gen_T geomT sim_T TpcRS -ittf -tpc_daq nodefault ry2013_1c"
-JOB_BFC_OPTIONS_3="DbV20140905 pp2013b mtd btof fmsDat fgt fgtPoint $JOB_BFC_OPTIONS_VERTEX BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt -evout IdTruth TpxClu -hitfilt Embedding TpcMixer McAna -in NoInput useInTracker emcSim EEfs"
+JOB_BFC_OPTIONS_3="pp2013b mtd btof fmsDat fgt fgtPoint $JOB_BFC_OPTIONS_VERTEX BEmcChkStat Corr4 OSpaceZ2 OGridLeak3D -hitfilt -evout IdTruth TpxClu -hitfilt Embedding TpcMixer McAna -in NoInput useInTracker emcSim EEfs"
 
 # Replace all spaces in the above options with dots in order to pass the strings to condor *.xml files
 JOB_BFC_OPTIONS_1=`echo ${JOB_BFC_OPTIONS_1[*]} | sed 's/ /./g'`
