@@ -26,13 +26,7 @@
 
 # Parametric option to study available vertex finder performance. Pick one from
 # the following options:
-#JOB_BFC_OPTIONS_VERTEX="VFMinuit"
-#JOB_BFC_OPTIONS_VERTEX="VFMinuit beamline"
-#JOB_BFC_OPTIONS_VERTEX="VFMinuit beamline3D"
-#JOB_BFC_OPTIONS_VERTEX="VFPPVnoCTB beamline"
-#JOB_BFC_OPTIONS_VERTEX="VFPPVnoCTB beamline3D"
-#JOB_BFC_OPTIONS_VERTEX="KFVertex"
-JOB_BFC_OPTIONS_VERTEX="KFVertex beamline"
+JOB_BFC_OPTIONS_VERTEX=""
 
 
 # Sample three chain options for embedding sample reconstruction
