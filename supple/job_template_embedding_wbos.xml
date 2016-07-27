@@ -57,8 +57,7 @@ echo "End of job: tralala"
 
 <input URL="filelist:&INPUT_FILE_LIST;" />
 
-<output fromScratch="*.fzd"  toURL="file:&OUT_DIR;/fzd/" />
-<output fromScratch="*.root" toURL="file:&OUT_DIR;/root/" />
+<output fromScratch="*.MuDst.root" toURL="file:&OUT_DIR;/root/" />
 
 <stdout URL="file:&OUT_DIR;/log/$JOBID.log" />
 
