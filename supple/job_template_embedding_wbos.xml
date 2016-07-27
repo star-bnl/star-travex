@@ -6,40 +6,48 @@
 
 starver dev
 
-set RANDOM_SEED=`expr &RANDOM_SEED; \* 1000`
+set RANDOM_SEED=`echo "(&RANDOM_SEED; + $JOBINDEX) * 1000" | bc`
+set JOB_INPUT_FILE=`echo $INPUTFILE0 | awk '{printf($1)}'`
+set RUN_ID=`echo $INPUTFILE0 | awk '{printf($2)}'`
+set JOB_NEVENTS=`echo $INPUTFILE0 | awk '{printf($3)}'`
+set JOB_INPUT_FILEBASENAME=`basename $JOB_INPUT_FILE | sed 's/\.[^.]*$//'`
 
 setenv BFC_OPTIONS_1 `echo &JOB_BFC_OPTIONS_1; | sed 's/\./,/g'`
 setenv BFC_OPTIONS_2 `echo &JOB_BFC_OPTIONS_2; | sed 's/\./,/g'`
 setenv BFC_OPTIONS_3 `echo &JOB_BFC_OPTIONS_3; | sed 's/\./,/g'`
 
 echo
-echo "RANDOM_SEED:  " $RANDOM_SEED
+echo "RANDOM_SEED:             " $RANDOM_SEED
+echo "JOB_INPUT_FILE:          " $JOB_INPUT_FILE
+echo "RUN_ID:                  " $RUN_ID
+echo "JOB_NEVENTS:             " $JOB_NEVENTS
+echo "JOB_INPUT_FILEBASENAME:  " $JOB_INPUT_FILEBASENAME
 echo
 
 pwd
 ls -al
 
 ln -s ./GenerateVertex.C ./GenerateVertex4WBoson.C
-set COMMAND='root4star -q -b ./GenerateVertex4WBoson.C(0,&JOB_NEVENTS;,'$RANDOM_SEED',"@'$FILELIST'","vertex.txt")'
+set COMMAND='root4star -q -b ./GenerateVertex4WBoson.C(0,'$JOB_NEVENTS','$RANDOM_SEED',"'$JOB_INPUT_FILE'","vertex.txt")'
 echo
 echo "Executing..."
 echo  $COMMAND
-eval '$COMMAND' >&amp;! &OUT_DIR;/log/${FILEBASENAME}_vertex.log
+eval '$COMMAND' >&amp;! &OUT_DIR;/log/${JOB_INPUT_FILEBASENAME}_vertex.log
 
 mv .$STAR_HOST_SYS $STAR_HOST_SYS
-set COMMAND="starsim -w 0 -b ./simWRequest.kumac nevents=&JOB_NEVENTS; config=&STARSIM_MODE; run=&RUN_ID; seed=$RANDOM_SEED file=$FILEBASENAME.fzd vertexfile=vertex.txt"
+set COMMAND="starsim -w 0 -b ./simWRequest.kumac nevents=${JOB_NEVENTS} config=&STARSIM_MODE; run=$RUN_ID seed=$RANDOM_SEED file=$JOB_INPUT_FILEBASENAME.fzd vertexfile=vertex.txt"
 echo
 echo "Executing..."
 echo  $COMMAND
-eval '$COMMAND' >&amp;! &OUT_DIR;/log/${FILEBASENAME}_starsim.log
+eval '$COMMAND' >&amp;! &OUT_DIR;/log/${JOB_INPUT_FILEBASENAME}_starsim.log
 mv $STAR_HOST_SYS .$STAR_HOST_SYS
 
 ln -s ./bfcMixer_pythia.C ./EmbeddingReco.C
-set COMMAND='root4star -q -b ./EmbeddingReco.C(&JOB_NEVENTS;,"@'$FILELIST'","'$FILEBASENAME'.fzd","'$BFC_OPTIONS_1'","'$BFC_OPTIONS_2'","'$BFC_OPTIONS_3'","W")'
+set COMMAND='root4star -q -b ./EmbeddingReco.C('$JOB_NEVENTS',"'$JOB_INPUT_FILE'","'$JOB_INPUT_FILEBASENAME'.fzd","'$BFC_OPTIONS_1'","'$BFC_OPTIONS_2'","'$BFC_OPTIONS_3'","W")'
 echo
 echo "Executing..."
 echo  $COMMAND
-eval '$COMMAND' >&amp;! &OUT_DIR;/log/${FILEBASENAME}_bfcMixer.log
+eval '$COMMAND' >&amp;! &OUT_DIR;/log/${JOB_INPUT_FILEBASENAME}_bfcMixer.log
 
 ls -al
 
@@ -47,12 +55,12 @@ echo "End of job: tralala"
 
 </command>
 
-<input URL="file:&JOB_INPUT_FILE;" nFiles="1" />
+<input URL="filelist:&INPUT_FILE_LIST;" />
 
 <output fromScratch="*.fzd"  toURL="file:&OUT_DIR;/fzd/" />
 <output fromScratch="*.root" toURL="file:&OUT_DIR;/root/" />
 
-<stdout URL="file:&OUT_DIR;/log/$FILEBASENAME.log" />
+<stdout URL="file:&OUT_DIR;/log/$JOBID.log" />
 
 <Generator>
 	<Location>&OUT_DIR;/sums/</Location>

@@ -93,24 +93,14 @@ trap '' DEBUG
 
 RANDOM_SEED=2000
 
-IFS=\  #set space as delimeter
-while read  JOB_INPUT_FILE  RUN_ID  JOB_NEVENTS
-do
 
-   echo -e "\nProcessing new line from input file list"
-   echo -e "\t RANDOM_SEED: $RANDOM_SEED"
-   echo -e "\t JOB_NEVENTS: $JOB_NEVENTS"
-   echo -e "\t JOB_INPUT_FILE: $JOB_INPUT_FILE"
-   echo -e "\t RUN_ID: $RUN_ID"
+echo -e "\nProcessing new line from input file list"
+echo -e "\t RANDOM_SEED: $RANDOM_SEED"
 
-   COMMAND="star-submit-template -template $SOURCE_DIR/supple/job_template_embedding_wbos.xml \
-      -entities  JOB_NEVENTS=$JOB_NEVENTS,OUT_DIR=$OUT_DIR,JOB_INPUT_FILE=$JOB_INPUT_FILE,RUN_ID=$RUN_ID,STARSIM_MODE=$STARSIM_MODE,RANDOM_SEED=$RANDOM_SEED,JOB_BFC_OPTIONS_1=$JOB_BFC_OPTIONS_1,JOB_BFC_OPTIONS_2=$JOB_BFC_OPTIONS_2,JOB_BFC_OPTIONS_3=$JOB_BFC_OPTIONS_3"
+COMMAND="star-submit-template -template $SOURCE_DIR/supple/job_template_embedding_wbos.xml \
+   -entities  OUT_DIR=$OUT_DIR,INPUT_FILE_LIST=$INPUT_FILE_LIST,STARSIM_MODE=$STARSIM_MODE,RANDOM_SEED=$RANDOM_SEED,JOB_BFC_OPTIONS_1=$JOB_BFC_OPTIONS_1,JOB_BFC_OPTIONS_2=$JOB_BFC_OPTIONS_2,JOB_BFC_OPTIONS_3=$JOB_BFC_OPTIONS_3"
 
-   echo $COMMAND
-   echo
+echo $COMMAND
+echo
 
-   eval $COMMAND
-
-   RANDOM_SEED=`expr $RANDOM_SEED \+ 1`
-
-done < $INPUT_FILE_LIST
+eval $COMMAND
