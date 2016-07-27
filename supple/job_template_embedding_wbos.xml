@@ -71,7 +71,7 @@ time of star-submit execution.
 $STAR_HOST_SYS is usually set by standard STAR login script.
  -->
 <SandBox installer="ZIP">
-	<Package name="tarball_wbos_embed">
+	<Package name="tarball_&REQUEST_UID;">
 		<File>file:$STAR_TRAVEX_INSTALL_DIR/bfcMixer_pythia.C</File>
 		<File>file:$STAR_TRAVEX_INSTALL_DIR/GenerateVertex.C</File>
 		<File>file:$STAR_TRAVEX_INSTALL_DIR/simWRequest.kumac</File>

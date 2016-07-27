@@ -46,6 +46,10 @@ JOB_BFC_OPTIONS_3=`echo ${JOB_BFC_OPTIONS_3[*]} | sed 's/ /./g'`
 STARSIM_MODE="Wplus_enu"
 
 
+# We use the output directory as A human readable unique request ID
+REQUEST_UID=$(basename "${OUT_DIR}")
+
+
 echo -e "Named arguments and their values:"
 echo -e "\t INPUT_FILE_LIST:          $INPUT_FILE_LIST"
 echo -e "\t SOURCE_DIR:               $SOURCE_DIR"
@@ -59,6 +63,7 @@ echo -e "\t STARSIM_MODE:             $STARSIM_MODE"
 echo -e "\t JOB_BFC_OPTIONS_1:        $JOB_BFC_OPTIONS_1"
 echo -e "\t JOB_BFC_OPTIONS_2:        $JOB_BFC_OPTIONS_2"
 echo -e "\t JOB_BFC_OPTIONS_3:        $JOB_BFC_OPTIONS_3"
+echo -e "\t REQUEST_UID:              $REQUEST_UID"
 
 
 # After this 'trap' command print out all command before execution
@@ -98,7 +103,7 @@ echo -e "\nProcessing new line from input file list"
 echo -e "\t RANDOM_SEED: $RANDOM_SEED"
 
 COMMAND="star-submit-template -template $SOURCE_DIR/supple/job_template_embedding_wbos.xml \
-   -entities  OUT_DIR=$OUT_DIR,INPUT_FILE_LIST=$INPUT_FILE_LIST,STARSIM_MODE=$STARSIM_MODE,RANDOM_SEED=$RANDOM_SEED,JOB_BFC_OPTIONS_1=$JOB_BFC_OPTIONS_1,JOB_BFC_OPTIONS_2=$JOB_BFC_OPTIONS_2,JOB_BFC_OPTIONS_3=$JOB_BFC_OPTIONS_3"
+   -entities  OUT_DIR=$OUT_DIR,INPUT_FILE_LIST=$INPUT_FILE_LIST,STARSIM_MODE=$STARSIM_MODE,RANDOM_SEED=$RANDOM_SEED,JOB_BFC_OPTIONS_1=$JOB_BFC_OPTIONS_1,JOB_BFC_OPTIONS_2=$JOB_BFC_OPTIONS_2,JOB_BFC_OPTIONS_3=$JOB_BFC_OPTIONS_3,REQUEST_UID=$REQUEST_UID"
 
 echo $COMMAND
 echo
