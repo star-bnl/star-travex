@@ -66,17 +66,15 @@ echo "End of job: tralala"
 </Generator>
 
 <!--
-Environment variable $STAR_TRAVEX_INSTALL_DIR must be set and visible at the
-time of star-submit execution.
 $STAR_HOST_SYS is usually set by standard STAR login script.
  -->
 <SandBox installer="ZIP">
 	<Package name="tarball_&REQUEST_UID;">
-		<File>file:$STAR_TRAVEX_INSTALL_DIR/bfcMixer_pythia.C</File>
-		<File>file:$STAR_TRAVEX_INSTALL_DIR/GenerateVertex.C</File>
-		<File>file:$STAR_TRAVEX_INSTALL_DIR/simWRequest.kumac</File>
-		<File>file:$STAR_TRAVEX_INSTALL_DIR/StarDb/Calibrations/tracker/</File>
-		<File>file:$STAR_TRAVEX_INSTALL_DIR/.$STAR_HOST_SYS/</File>
+		<File>file:&STAR_TRAVEX_INSTALL_DIR;/bfcMixer_pythia.C</File>
+		<File>file:&STAR_TRAVEX_INSTALL_DIR;/GenerateVertex.C</File>
+		<File>file:&STAR_TRAVEX_INSTALL_DIR;/simWRequest.kumac</File>
+		<File>file:&STAR_TRAVEX_INSTALL_DIR;/StarDb/Calibrations/tracker/</File>
+		<File>file:&STAR_TRAVEX_INSTALL_DIR;/.$STAR_HOST_SYS/</File>
 	</Package>
 </SandBox>
 
