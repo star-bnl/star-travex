@@ -13,7 +13,6 @@ setenv BFC_OPTIONS_2 `echo &JOB_BFC_OPTIONS_2; | sed 's/\./,/g'`
 setenv BFC_OPTIONS_3 `echo &JOB_BFC_OPTIONS_3; | sed 's/\./,/g'`
 
 echo
-echo "SOURCE_DIR:   " &SOURCE_DIR;
 echo "RANDOM_SEED:  " $RANDOM_SEED
 echo
 
