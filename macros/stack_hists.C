@@ -6,7 +6,10 @@
  * $ root fileA.root fileB.root fileC.root 'stack_hists.C("vertex/hMcRecoVertexDelta")'
  *
  * The second argument `encl_func_name` can be used to draw an object from the
- * list of enclosed objects of the histogram
+ * list of enclosed objects of the histogram. E.g.:
+ *
+ * $ root fileA.root fileB.root fileC.root 'stack_hists.C("event/McRecMulAny_eff", "McRecMulT_clone")'
+ *
  */
 
 void stack_hists(std::string histName=std::string("vertex/hMcRecoVertexDelta"),
