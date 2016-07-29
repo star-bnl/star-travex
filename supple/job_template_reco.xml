@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<job filesPerHour="1" maxFilesPerProcess="1" fileListSyntax="xrootd" simulateSubmission="false">
+
+<command>
+
+starver dev
+
+setenv JOB_INPUT_FILE         `echo $INPUTFILE0 | awk '{printf($1)}'`
+setenv RUN_ID                 `echo $INPUTFILE0 | awk '{printf($2)}'`
+setenv JOB_NEVENTS            `echo $INPUTFILE0 | awk '{printf($3)}'`
+setenv JOB_INPUT_FILEBASENAME `basename $JOB_INPUT_FILE | sed 's/\.[^.]*$//'`
+setenv JOB_BFC_OPTIONS        `echo &JOB_BFC_OPTIONS; | sed 's/\./,/g'`
+
+echo
+echo "JOB_INPUT_FILE:          " $JOB_INPUT_FILE
+echo "RUN_ID:                  " $RUN_ID
+echo "JOB_NEVENTS:             " $JOB_NEVENTS
+echo "JOB_INPUT_FILEBASENAME:  " $JOB_INPUT_FILEBASENAME
+echo
+
+pwd
+ls -al
+
+set COMMAND='root4star -q -b -l bfc.C('$JOB_NEVENTS',"'$JOB_BFC_OPTIONS'","'$JOB_INPUT_FILE'")'
+echo
+echo "Executing..."
+echo  $COMMAND
+eval '$COMMAND' >&amp;! &OUT_DIR;/log/${JOB_INPUT_FILEBASENAME}_bfc.log
+
+ls -al
+
+</command>
+
+<input URL="filelist:&INPUT_FILE_LIST;" />
+
+<output fromScratch="*.MuDst.root" toURL="file:&OUT_DIR;/root/" />
+
+<stdout URL="file:&OUT_DIR;/log/$JOBID.log" />
+
+<Generator>
+	<Location>&OUT_DIR;/sums/</Location>
+</Generator>
+
+<!--
+$STAR_HOST_SYS is usually set by standard STAR login script.
+ -->
+<SandBox installer="ZIP">
+	<Package name="tarball_&REQUEST_UID;">
+		<File>file:&STAR_TRAVEX_INSTALL_DIR;/.$STAR_HOST_SYS/</File>
+	</Package>
+</SandBox>
+
+</job>
