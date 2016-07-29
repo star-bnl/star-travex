@@ -93,7 +93,7 @@ fi
 
 
 # Remove package from previous job execution
-rm -fr tarball_wbos_embed.package tarball_wbos_embed.zip
+rm -fr tarball_${REQUEST_UID}.package tarball_${REQUEST_UID}.zip
 
 trap '' DEBUG
 
