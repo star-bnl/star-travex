@@ -15,6 +15,8 @@
 # $HOME/scratch/wbos_embed/
 : ${OUT_DIR:=/path/to/some_dir} && mkdir -p $OUT_DIR && OUT_DIR=`cd "$OUT_DIR"; pwd`
 
+# Optional path to directory with *.fzd files
+: ${FZD_DIR:="./"}
 
 # Various macros from the source directory with customizalbe parameters
 # controlling event reconstruction.
@@ -64,6 +66,7 @@ echo -e "\t JOB_BFC_OPTIONS_1:        $JOB_BFC_OPTIONS_1"
 echo -e "\t JOB_BFC_OPTIONS_2:        $JOB_BFC_OPTIONS_2"
 echo -e "\t JOB_BFC_OPTIONS_3:        $JOB_BFC_OPTIONS_3"
 echo -e "\t REQUEST_UID:              $REQUEST_UID"
+echo -e "\t FZD_DIR:                  $FZD_DIR"
 
 
 # After this 'trap' command print out all command before execution
@@ -102,7 +105,7 @@ echo -e "\nProcessing new line from input file list"
 echo -e "\t RANDOM_SEED: $RANDOM_SEED"
 
 COMMAND="star-submit-template -template $SOURCE_DIR/supple/job_template_embedding_wbos.xml \
-   -entities  OUT_DIR=$OUT_DIR,INPUT_FILE_LIST=$INPUT_FILE_LIST,STARSIM_MODE=$STARSIM_MODE,RANDOM_SEED=$RANDOM_SEED,JOB_BFC_OPTIONS_1=$JOB_BFC_OPTIONS_1,JOB_BFC_OPTIONS_2=$JOB_BFC_OPTIONS_2,JOB_BFC_OPTIONS_3=$JOB_BFC_OPTIONS_3,REQUEST_UID=$REQUEST_UID,STAR_TRAVEX_INSTALL_DIR=$STAR_TRAVEX_INSTALL_DIR"
+   -entities  OUT_DIR=$OUT_DIR,INPUT_FILE_LIST=$INPUT_FILE_LIST,STARSIM_MODE=$STARSIM_MODE,RANDOM_SEED=$RANDOM_SEED,JOB_BFC_OPTIONS_1=$JOB_BFC_OPTIONS_1,JOB_BFC_OPTIONS_2=$JOB_BFC_OPTIONS_2,JOB_BFC_OPTIONS_3=$JOB_BFC_OPTIONS_3,REQUEST_UID=$REQUEST_UID,STAR_TRAVEX_INSTALL_DIR=$STAR_TRAVEX_INSTALL_DIR,FZD_DIR=$FZD_DIR"
 
 echo $COMMAND
 echo
