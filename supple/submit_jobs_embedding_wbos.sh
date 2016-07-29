@@ -47,6 +47,7 @@ JOB_BFC_OPTIONS_3=`echo ${JOB_BFC_OPTIONS_3[*]} | sed 's/ /./g'`
 # Wplus_enu, Wplus_taunu, Wminus_enu, Wminus_taunu, Z_eplus_eminus_inter, QCD
 STARSIM_MODE="Wplus_enu"
 
+RANDOM_SEED=2000
 
 # We use the output directory as A human readable unique request ID
 REQUEST_UID=$(basename "${OUT_DIR}")
@@ -67,12 +68,11 @@ echo -e "\t JOB_BFC_OPTIONS_2:        $JOB_BFC_OPTIONS_2"
 echo -e "\t JOB_BFC_OPTIONS_3:        $JOB_BFC_OPTIONS_3"
 echo -e "\t REQUEST_UID:              $REQUEST_UID"
 echo -e "\t FZD_DIR:                  $FZD_DIR"
+echo -e "\t RANDOM_SEED:              $RANDOM_SEED"
 
 
 # After this 'trap' command print out all command before execution
 trap 'echo "$ $BASH_COMMAND"' DEBUG
-
-# Export STAR_TRAVEX_INSTALL_DIR so we can use it in .xml template
 
 # Create output directories
 mkdir -p $OUT_DIR/root/
@@ -91,23 +91,19 @@ else
    echo -e "\nNOTICE: No \$VERTEX_PARAMS_DB_FILE was provided"
 fi
 
-
 # Remove package from previous job execution
 rm -fr tarball_${REQUEST_UID}.package tarball_${REQUEST_UID}.zip
 
+# Turn off shell debugging
 trap '' DEBUG
 
 
-RANDOM_SEED=2000
-
-
-echo -e "\nProcessing new line from input file list"
-echo -e "\t RANDOM_SEED: $RANDOM_SEED"
-
+# Form the command to submit jobs to farm
 COMMAND="star-submit-template -template $SOURCE_DIR/supple/job_template_embedding_wbos.xml \
    -entities  OUT_DIR=$OUT_DIR,INPUT_FILE_LIST=$INPUT_FILE_LIST,STARSIM_MODE=$STARSIM_MODE,RANDOM_SEED=$RANDOM_SEED,JOB_BFC_OPTIONS_1=$JOB_BFC_OPTIONS_1,JOB_BFC_OPTIONS_2=$JOB_BFC_OPTIONS_2,JOB_BFC_OPTIONS_3=$JOB_BFC_OPTIONS_3,REQUEST_UID=$REQUEST_UID,STAR_TRAVEX_INSTALL_DIR=$STAR_TRAVEX_INSTALL_DIR,FZD_DIR=$FZD_DIR"
 
-echo $COMMAND
 echo
+echo "Executing..."
+echo $COMMAND
 
 eval $COMMAND
