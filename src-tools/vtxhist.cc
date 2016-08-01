@@ -29,6 +29,11 @@ void process_muDst(VertexRootFile& outFile, int nevent=10000);
 // Verify whether this vertex has an HFT track with a PXL hit
 bool checkVertexHasPxlHit(int vertexIndex, const StMuDst& stMuDst);
 
+// Currently used to work around a bug in reco chains giving different numerical
+// values in the second event
+bool SkipCurrentEvent(const StMuDstMaker& maker);
+
+
 // A structure to hold info about a vertex
 struct VertexData {
    int event, index, rank, mult, refMult, maxmult;
@@ -139,6 +144,8 @@ void process_muDst(VertexRootFile& outFile, int nevent)
    // Main loop over events
    for (int iEvent = 0; iEvent < nevent; iEvent++) {
       if (maker->Make()) break;
+
+      if ( SkipCurrentEvent(*maker) ) continue;
 
       StMuDst *muDst = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
       StMuEvent *muEvent = muDst->event(); // get a pointer to the class holding event-wise information
@@ -275,6 +282,31 @@ bool checkVertexHasPxlHit(int vertexIndex, const StMuDst& stMuDst)
    return false;
 }
 
+
+
+bool SkipCurrentEvent(const StMuDstMaker& maker)
+{
+   static std::string prev_file_name("");
+   static std::string curr_file_name("");
+   static int curr_event_index = 0;
+
+   curr_file_name = maker.GetFileName();
+
+   if (curr_file_name != prev_file_name) {
+      std::cout << "Processing new file: " << curr_file_name << std::endl;
+      prev_file_name = curr_file_name;
+      curr_event_index = 0;
+   }
+
+   // Do not process the first two events from each file
+   if (curr_event_index < 2) {
+      std::cout << "Skipping this event index: " << curr_event_index << std::endl;
+      curr_event_index++;
+      return true;
+   }
+
+   return false;
+}
 
 
 vtxeval::VectorMcTracks vtxeval::getMcTracksMatchingMcVertex(const StMuDst& stMuDst, const StMuMcVertex* mcVertex)
