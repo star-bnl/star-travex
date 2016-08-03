@@ -91,6 +91,9 @@ else
    echo -e "\nNOTICE: No \$VERTEX_PARAMS_DB_FILE was provided"
 fi
 
+# In STAR framework LIB is used for optimized libraries, so create an alias
+ln -s lib /star/u/smirnovd/star-travex/build-install/.sl64_gcc482/LIB
+
 # Remove package from previous job execution
 rm -fr tarball_${REQUEST_UID}.package tarball_${REQUEST_UID}.zip
 

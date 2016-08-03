@@ -4,6 +4,7 @@
 
 <command>
 
+setenv NODEBUG yes
 starver dev
 
 set RANDOM_SEED=`echo "(&RANDOM_SEED; + $JOBINDEX) * 1000" | bc`
@@ -18,6 +19,8 @@ setenv BFC_OPTIONS_2 `echo &JOB_BFC_OPTIONS_2; | sed 's/\./,/g'`
 setenv BFC_OPTIONS_3 `echo &JOB_BFC_OPTIONS_3; | sed 's/\./,/g'`
 
 echo
+echo "NODEBUG:                 " $NODEBUG
+echo "STAR_LIB:                " $STAR_LIB
 echo "RANDOM_SEED:             " $RANDOM_SEED
 echo "JOB_INPUT_FILE:          " $JOB_INPUT_FILE
 echo "RUN_ID:                  " $RUN_ID
