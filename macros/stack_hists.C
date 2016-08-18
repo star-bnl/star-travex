@@ -68,7 +68,8 @@ void stack_hists(std::string histName=std::string("vertex/hMcRecoVertexDelta"),
          {
             TEfficiency* effcy = static_cast<TEfficiency*>(obj);
             effcy->SetLineWidth(3);
-            effcy->SetLineColor(*(iColor++));
+            effcy->SetLineColor(*(iColor));
+            effcy->SetMarkerColor(*(iColor++));
             effcy->Draw(draw_opt_same.c_str());
             draw_opt_same += draw_opt_same.empty() ? " same" : "";
 
@@ -78,7 +79,8 @@ void stack_hists(std::string histName=std::string("vertex/hMcRecoVertexDelta"),
       } else { // Process, i.e. draw, normal histograms
          hist->Print();
          hist->SetLineWidth(3);
-         hist->SetLineColor(*(iColor++));
+         hist->SetLineColor(*(iColor));
+         hist->SetMarkerColor(*(iColor++));
          hists->Add(hist);
 
          legend->AddEntry(hist, iFile->GetName(), "l");
