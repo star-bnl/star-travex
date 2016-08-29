@@ -4,7 +4,6 @@
 
 #include "TTree.h"
 #include "TChain.h"
-#include "TMath.h"
 
 #include "StarClassLibrary/StThreeVectorF.hh"
 #include "StEvent/StBTofHeader.h"
