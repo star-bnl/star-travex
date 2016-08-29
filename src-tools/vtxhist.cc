@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <string>
 
@@ -24,7 +25,7 @@
 namespace po = boost::program_options;
 
 
-void process_muDst(VertexRootFile& outFile, int nevent=10000);
+void process_muDst(VertexRootFile& outFile);
 
 // Verify whether this vertex has an HFT track with a PXL hit
 bool checkVertexHasPxlHit(int vertexIndex, const StMuDst& stMuDst);
@@ -74,7 +75,7 @@ int main(int argc, char **argv)
 
 
 
-void process_muDst(VertexRootFile& outFile, int nevent)
+void process_muDst(VertexRootFile& outFile)
 {
    VertexData primVtx;
 
@@ -133,8 +134,9 @@ void process_muDst(VertexRootFile& outFile, int nevent)
       maker->SetStatus(branchName.c_str(), 1);
 
    TChain *tree = maker->chain();
-   int nentries = tree->GetEntries();
-   nevent = TMath::Min(nevent, nentries);
+   unsigned int nentries = tree->GetEntries();
+   unsigned int nEventsUser = outFile.GetPrgOptions().GetMaxEventsUser();
+   unsigned int nevent = nEventsUser > 0 ? std::min(nEventsUser, nentries) : nentries;
    std::cout << nentries << " events in chain, " << nevent << " will be read." << std::endl;
    tree->SetCacheSize(-1);        //by setting the read cache to -1 we set it to the AutoFlush value when writing
    tree->SetCacheLearnEntries(1); //one entry is sufficient to learn
