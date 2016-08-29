@@ -79,31 +79,31 @@ void process_muDst(VertexRootFile& outFile, int nevent)
    VertexData primVtx;
 
    TTree *vertexTree = new TTree("vertexTree", "The Primary Vertices");
-   vertexTree->Branch("event",   &primVtx.event, "event/I");
-   vertexTree->Branch("index",   &primVtx.index, "index/I");
-   vertexTree->Branch("rank",    &primVtx.rank, "rank/I");
-   vertexTree->Branch("mult",    &primVtx.mult, "mult/I");
+   vertexTree->Branch("event",   &primVtx.event,   "event/I");
+   vertexTree->Branch("index",   &primVtx.index,   "index/I");
+   vertexTree->Branch("rank",    &primVtx.rank,    "rank/I");
+   vertexTree->Branch("mult",    &primVtx.mult,    "mult/I");
    vertexTree->Branch("refMult", &primVtx.refMult, "refMult/I");
    vertexTree->Branch("maxmult", &primVtx.maxmult, "maxmult/I");
-   vertexTree->Branch("primX",   &primVtx.primX, "primX/F");
-   vertexTree->Branch("primY",   &primVtx.primY, "primY/F");
-   vertexTree->Branch("primZ",   &primVtx.primZ, "primZ/F");
+   vertexTree->Branch("primX",   &primVtx.primX,   "primX/F");
+   vertexTree->Branch("primY",   &primVtx.primY,   "primY/F");
+   vertexTree->Branch("primZ",   &primVtx.primZ,   "primZ/F");
    vertexTree->Branch("positionError", &primVtx.positionError, "positionError/StThreeVectorF");
-   vertexTree->Branch("zVpd",    &primVtx.zVpd, "zVpd/F");
-   vertexTree->Branch("McX",     &primVtx.McX, "McX/F");
-   vertexTree->Branch("McY",     &primVtx.McY, "McY/F");
-   vertexTree->Branch("McZ",     &primVtx.McZ, "McZ/F");
-   vertexTree->Branch("chi2",    &primVtx.chi2, "chi2/F");
-   vertexTree->Branch("beam",    &primVtx.beam, "beam/I");
-   vertexTree->Branch("postx",   &primVtx.postx, "postx/I");
-   vertexTree->Branch("prompt",  &primVtx.prompt, "prompt/I");
-   vertexTree->Branch("cross",   &primVtx.cross, "cross/I");
-   vertexTree->Branch("tof",     &primVtx.tof, "tof/I");
-   vertexTree->Branch("notof",   &primVtx.notof, "notof/I");
-   vertexTree->Branch("EEMC",    &primVtx.EEMC, "EEMC/I");
-   vertexTree->Branch("noEEMC",  &primVtx.noEEMC, "noEEMC/I");
-   vertexTree->Branch("BEMC",    &primVtx.BEMC, "BEMC/I");
-   vertexTree->Branch("noBEMC",  &primVtx.noBEMC, "noBEMC/I");
+   vertexTree->Branch("zVpd",    &primVtx.zVpd,    "zVpd/F");
+   vertexTree->Branch("McX",     &primVtx.McX,     "McX/F");
+   vertexTree->Branch("McY",     &primVtx.McY,     "McY/F");
+   vertexTree->Branch("McZ",     &primVtx.McZ,     "McZ/F");
+   vertexTree->Branch("chi2",    &primVtx.chi2,    "chi2/F");
+   vertexTree->Branch("beam",    &primVtx.beam,    "beam/I");
+   vertexTree->Branch("postx",   &primVtx.postx,   "postx/I");
+   vertexTree->Branch("prompt",  &primVtx.prompt,  "prompt/I");
+   vertexTree->Branch("cross",   &primVtx.cross,   "cross/I");
+   vertexTree->Branch("tof",     &primVtx.tof,     "tof/I");
+   vertexTree->Branch("notof",   &primVtx.notof,   "notof/I");
+   vertexTree->Branch("EEMC",    &primVtx.EEMC,    "EEMC/I");
+   vertexTree->Branch("noEEMC",  &primVtx.noEEMC,  "noEEMC/I");
+   vertexTree->Branch("BEMC",    &primVtx.BEMC,    "BEMC/I");
+   vertexTree->Branch("noBEMC",  &primVtx.noBEMC,  "noBEMC/I");
 
 
 
@@ -114,6 +114,7 @@ void process_muDst(VertexRootFile& outFile, int nevent)
    //                                                    filter        apply filter to filenames, multiple filters are separated by ':'
    //                                                           10      maximum number of file to read
 
+   // Disable all branches
    maker->SetStatus("*", 0);
 
    std::vector<std::string> activeBranchNames = {
@@ -127,7 +128,9 @@ void process_muDst(VertexRootFile& outFile, int nevent)
       "StStMuMcTrack"
    };
 
-   for (const auto& branchName : activeBranchNames) maker->SetStatus(branchName.c_str(), 1); // Set Active braches
+   // Enable selected branches
+   for (const auto& branchName : activeBranchNames)
+      maker->SetStatus(branchName.c_str(), 1);
 
    TChain *tree = maker->chain();
    int nentries = tree->GetEntries();
@@ -139,7 +142,7 @@ void process_muDst(VertexRootFile& outFile, int nevent)
 
 
    // Keep track of the number of events with 0 reconstructed verticies
-   int noreco = 0;
+   int nEventsNoRecoVertex = 0;
 
    // Main loop over events
    for (int iEvent = 0; iEvent < nevent; iEvent++) {
@@ -155,7 +158,7 @@ void process_muDst(VertexRootFile& outFile, int nevent)
       TClonesArray *primaryVertices   = muDst->primaryVertices();
       int numPrimaryVertices = primaryVertices->GetEntriesFast();
 
-      if (numPrimaryVertices == 0) noreco++;
+      if (numPrimaryVertices == 0) nEventsNoRecoVertex++;
 
       TClonesArray *MuMcVertices   = muDst->mcArray(0);
       int NoMuMcVertices = MuMcVertices->GetEntriesFast();
@@ -202,7 +205,7 @@ void process_muDst(VertexRootFile& outFile, int nevent)
          primVtx.primY   = recoVertex->position().y();
          primVtx.primZ   = recoVertex->position().z();
          primVtx.zVpd    = BTofHeader ? BTofHeader->vpdVz() : 999;
-         primVtx.positionError  = recoVertex->posError();
+         primVtx.positionError = recoVertex->posError();
          primVtx.McX     = mcVertex ? mcVertex->XyzV().x() : 999.f;
          primVtx.McY     = mcVertex ? mcVertex->XyzV().y() : 999.f;
          primVtx.McZ     = mcVertex ? mcVertex->XyzV().z() : 999.f;
@@ -228,11 +231,12 @@ void process_muDst(VertexRootFile& outFile, int nevent)
          outFile.FillHists(*recoVertex, mcVertex);
 
          if (vtxeval::gDebugFlag) {
-            std::cout << Form("[%i]", iVertex) << Form(" %8.3f  %8.3f  %8.3f ", recoVertex->position().x(), recoVertex->position().y(), recoVertex->position().z())
-                      << Form("  Rank:%1.0f", recoVertex->ranking()) << "    Mult: " << primVtx.mult;
+            std::cout << Form("%5d: %8.3f %8.3f %8.3f, rank: %f, multiplicity: %d\n",
+               iVertex, recoVertex->position().x(), recoVertex->position().y(), recoVertex->position().z(),
+               recoVertex->ranking(), primVtx.mult);
 
-            if (primVtx.maxmult == 1 && iVertex != 0) std::cout << "\t WRONG RANK" << std::endl;
-            else std::cout << std::endl;
+            if (primVtx.maxmult == 1 && iVertex != 0)
+               std::cout << "\t WRONG RANK" << std::endl;
          }
       }
 
@@ -251,7 +255,8 @@ void process_muDst(VertexRootFile& outFile, int nevent)
 
    outFile.FillDerivedHists();
 
-   std::cout << "Number of events: " <<  nevent << ", with 0 reconstructed verticies: " << noreco << std::endl;
+   std::cout << "Number of events: " <<  nevent
+             << ", with 0 reconstructed verticies: " << nEventsNoRecoVertex << std::endl;
 }
 
 
