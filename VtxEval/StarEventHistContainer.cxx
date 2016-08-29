@@ -2,6 +2,7 @@
 
 #include "TEfficiency.h"
 #include "TH1I.h"
+#include "TH2I.h"
 
 #include "StarEventHistContainer.h"
 
@@ -24,6 +25,8 @@ StarEventHistContainer::StarEventHistContainer(const std::string name, TDirector
    Add(new TH1I("McRecMulT", "; Reconstructable multiplicity for trigger Mc Vertex; Num. of Reco Vertices; ", 50, 0, 500) );
    Add(new TH1I("McRecMulAny", "; MC Vertex Multiplicity; Num. of Reco Vertices matching MC (idTruth); ", 50, 0, 500) );
    Add(new TH1I("McRecMulGood", "; MC Vertex Multiplicity; Num. of Max Rank Reco Vertices matching MC (idTruth); ", 50, 0, 500) );
+
+   Add(new TH2I("hMcMultVsQATruth", "; MC Vertex Multiplicity; QA Truth; Counts", 50, 0, 50, 50, 0, 1) );
 }
 
 
@@ -49,6 +52,7 @@ void StarEventHistContainer::FillEfficyHists(const StMuDst &event, const StMuMcV
 
    if (recoVertex) {
       h("McRecMulAny")->Fill(nRecoTracks);
+      h("hMcMultVsQATruth")->Fill(nRecoTracks, recoVertex->qaTruth()/100.);
 
       if (recoVertex == recoVertexMaxRank)
          h("McRecMulGood")->Fill(nRecoTracks);
