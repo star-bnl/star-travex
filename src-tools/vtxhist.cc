@@ -5,7 +5,6 @@
 #include "TTree.h"
 #include "TChain.h"
 
-#include "StarClassLibrary/StThreeVectorF.hh"
 #include "StEvent/StBTofHeader.h"
 #include "StEvent/StTrackTopologyMap.h"
 #include "StMuDSTMaker/COMMON/StMuDst.h"
@@ -16,6 +15,7 @@
 #include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
 #include "StMuDSTMaker/COMMON/StMuTrack.h"
 #include "StSecondaryVertexMaker/DecayVertexFinder.h"
+#include "StVertexRootIO/TPrimaryVertex.h"
 #include "StVertexRootIO/TDecayVertexContainers.h"
 
 #include "travex/ProgramOptions.h"
@@ -34,26 +34,6 @@ bool checkVertexHasPxlHit(int vertexIndex, const StMuDst& stMuDst);
 // Currently used to work around a bug in reco chains giving different numerical
 // values in the second event
 bool SkipCurrentEvent(const StMuDstMaker& maker);
-
-
-// A structure to hold info about a vertex
-struct VertexData {
-   int event, index, rank, mult, refMult, maxmult;
-   float primX, primY, primZ, zVpd;
-   StThreeVectorF positionError;
-   float McX, McY, McZ;
-   float chi2;
-   int beam, postx, prompt, cross, tof, notof, EEMC, noEEMC, BEMC, noBEMC;
-
-   VertexData() { Init(); }
-
-   void Init() {
-      event = index = rank = mult = refMult = maxmult = -999;
-      primX = primY = primZ = zVpd = 999.f;
-      positionError.set(999.f, 999.f, 999.f);
-      McX = McY = McZ = chi2 = 999.f;
-   }
-};
 
 
 
@@ -78,34 +58,11 @@ int main(int argc, char **argv)
 
 void process_muDst(VertexRootFile& outFile)
 {
-   VertexData primVtx;
+   // Create a TTree with primary vertex info
+   TPrimaryVertex *primVtx = new TPrimaryVertex();
 
    TTree *vertexTree = new TTree("vertexTree", "The Primary Vertices");
-   vertexTree->Branch("event",   &primVtx.event,   "event/I");
-   vertexTree->Branch("index",   &primVtx.index,   "index/I");
-   vertexTree->Branch("rank",    &primVtx.rank,    "rank/I");
-   vertexTree->Branch("mult",    &primVtx.mult,    "mult/I");
-   vertexTree->Branch("refMult", &primVtx.refMult, "refMult/I");
-   vertexTree->Branch("maxmult", &primVtx.maxmult, "maxmult/I");
-   vertexTree->Branch("primX",   &primVtx.primX,   "primX/F");
-   vertexTree->Branch("primY",   &primVtx.primY,   "primY/F");
-   vertexTree->Branch("primZ",   &primVtx.primZ,   "primZ/F");
-   vertexTree->Branch("positionError", &primVtx.positionError, "positionError/StThreeVectorF");
-   vertexTree->Branch("zVpd",    &primVtx.zVpd,    "zVpd/F");
-   vertexTree->Branch("McX",     &primVtx.McX,     "McX/F");
-   vertexTree->Branch("McY",     &primVtx.McY,     "McY/F");
-   vertexTree->Branch("McZ",     &primVtx.McZ,     "McZ/F");
-   vertexTree->Branch("chi2",    &primVtx.chi2,    "chi2/F");
-   vertexTree->Branch("beam",    &primVtx.beam,    "beam/I");
-   vertexTree->Branch("postx",   &primVtx.postx,   "postx/I");
-   vertexTree->Branch("prompt",  &primVtx.prompt,  "prompt/I");
-   vertexTree->Branch("cross",   &primVtx.cross,   "cross/I");
-   vertexTree->Branch("tof",     &primVtx.tof,     "tof/I");
-   vertexTree->Branch("notof",   &primVtx.notof,   "notof/I");
-   vertexTree->Branch("EEMC",    &primVtx.EEMC,    "EEMC/I");
-   vertexTree->Branch("noEEMC",  &primVtx.noEEMC,  "noEEMC/I");
-   vertexTree->Branch("BEMC",    &primVtx.BEMC,    "BEMC/I");
-   vertexTree->Branch("noBEMC",  &primVtx.noBEMC,  "noBEMC/I");
+   vertexTree->Branch("v.", "TPrimaryVertex", &primVtx, 64000, 99);
 
    // Create a TTree with secondary decay vertex info
    TDecayVertexVec *decayVertices = new TDecayVertexVec();
@@ -180,8 +137,6 @@ void process_muDst(VertexRootFile& outFile)
       TClonesArray *MuMcVertices = muDst->mcArray(0);
       int NoMuMcVertices = MuMcVertices->GetEntriesFast();
 
-      StBTofHeader *BTofHeader = muDst->btofHeader();
-
       // Max multiplicity
       int maxVertexMult = 0;
       // Pointer to the max rank vertex
@@ -212,32 +167,10 @@ void process_muDst(VertexRootFile& outFile)
          int idTruth = recoVertex->idTruth();
          StMuMcVertex *mcVertex = (idTruth > 0 && idTruth <= NoMuMcVertices) ? (StMuMcVertex *) MuMcVertices->UncheckedAt(idTruth - 1) : nullptr;
 
-         primVtx.event   = iEvent;
-         primVtx.index   = iVertex;
-         primVtx.rank    = recoVertex->ranking();
-         primVtx.mult    = recoVertex->noTracks();
-         primVtx.refMult = recoVertex->refMult();
-         primVtx.maxmult = (maxVertexMult == primVtx.mult ? 1 : 0);
-         primVtx.primX   = recoVertex->position().x();
-         primVtx.primY   = recoVertex->position().y();
-         primVtx.primZ   = recoVertex->position().z();
-         primVtx.zVpd    = BTofHeader ? BTofHeader->vpdVz() : 999;
-         primVtx.positionError = recoVertex->posError();
-         primVtx.McX     = mcVertex ? mcVertex->XyzV().x() : 999.f;
-         primVtx.McY     = mcVertex ? mcVertex->XyzV().y() : 999.f;
-         primVtx.McZ     = mcVertex ? mcVertex->XyzV().z() : 999.f;
-         primVtx.chi2    = recoVertex->chiSquared();
-         primVtx.beam    = recoVertex->isBeamConstrained() ? 1 : 0;
-         primVtx.postx   = recoVertex->nPostXtracks();
-         primVtx.prompt  = recoVertex->nPromptTracks();
-         primVtx.cross   = recoVertex->nCrossCentralMembrane();
-         primVtx.tof     = recoVertex->nCTBMatch()    + recoVertex->nBTOFMatch();
-         primVtx.notof   = recoVertex->nCTBNotMatch() + recoVertex->nBTOFNotMatch();
-         primVtx.EEMC    = recoVertex->nEEMCMatch();
-         primVtx.noEEMC  = recoVertex->nEEMCNotMatch();
-         primVtx.BEMC    = recoVertex->nBEMCMatch();
-         primVtx.noBEMC  = recoVertex->nBEMCNotMatch();
+         float zVpd      = (muDst->btofHeader() ? muDst->btofHeader()->vpdVz(): 999.);
+         bool  isMaxMult = (recoVertex->noTracks() == maxVertexMult);
 
+         primVtx->Set(*recoVertex, mcVertex, isMaxMult, zVpd);
          vertexTree->Fill();
 
          bool hasPxlTrack = checkVertexHasPxlHit(iVertex, *muDst);
@@ -251,9 +184,9 @@ void process_muDst(VertexRootFile& outFile)
          if (vtxeval::gDebugFlag) {
             std::cout << Form("%5d: %8.3f %8.3f %8.3f, rank: %f, multiplicity: %d\n",
                iVertex, recoVertex->position().x(), recoVertex->position().y(), recoVertex->position().z(),
-               recoVertex->ranking(), primVtx.mult);
+               recoVertex->ranking(), primVtx->mult);
 
-            if (primVtx.maxmult == 1 && iVertex != 0)
+            if (primVtx->maxmult == 1 && iVertex != 0)
                std::cout << "\t WRONG RANK" << std::endl;
          }
       }
