@@ -165,6 +165,11 @@ void process_muDst(VertexRootFile& outFile)
 
          //////Mc info/////////
          int idTruth = recoVertex->idTruth();
+
+         // Proceed only if idTruth == 1, i.e. we reconstructed a candidate for the primary vertex
+         if (idTruth != 1)
+            continue;
+
          StMuMcVertex *mcVertex = (idTruth > 0 && idTruth <= NoMuMcVertices) ? (StMuMcVertex *) MuMcVertices->UncheckedAt(idTruth - 1) : nullptr;
 
          float zVpd      = (muDst->btofHeader() ? muDst->btofHeader()->vpdVz(): 999.);
