@@ -16,9 +16,6 @@ using VectorMcTracks = std::vector<const StMuMcTrack*>;
 //
 vtxeval::VectorMcTracks getMcTracksMatchingMcVertex(const StMuDst& stMuDst, const StMuMcVertex* mcVertex);
 
-
-static bool gDebugFlag = false;
-
 }
 
 #endif

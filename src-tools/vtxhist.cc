@@ -120,11 +120,6 @@ void process_muDst(VertexRootFile& outFile)
       StMuDst *muDst = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
       StMuEvent *muEvent = muDst->event(); // get a pointer to the class holding event-wise information
 
-      if (vtxeval::gDebugFlag)
-         std::cout << "Read event #" << iEvent
-                   << ", run: " << muEvent->runId()
-                   << ", id: " << muEvent->eventId() << std::endl;
-
       // Find and save into tree secondary decay vertices
       decayVertexFinder.Find(*muDst, decayVertices->mVertices);
       decayVertexTree->Fill();
@@ -185,15 +180,6 @@ void process_muDst(VertexRootFile& outFile)
 
          outFile.FillHists(*recoVertex, mcVertex);
          outFile.FillHists(*recoVertex, decayVertices->mVertices);
-
-         if (vtxeval::gDebugFlag) {
-            std::cout << Form("%5d: %8.3f %8.3f %8.3f, rank: %f, multiplicity: %d\n",
-               iVertex, recoVertex->position().x(), recoVertex->position().y(), recoVertex->position().z(),
-               recoVertex->ranking(), primVtx->mult);
-
-            if (primVtx->maxmult == 1 && iVertex != 0)
-               std::cout << "\t WRONG RANK" << std::endl;
-         }
       }
 
       // Consider vertex with maximum rank and its simulated counterpart if available
