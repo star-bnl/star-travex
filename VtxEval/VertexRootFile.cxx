@@ -10,6 +10,7 @@
 #include "VtxEval/StarEventHistContainer.h"
 #include "VtxEval/StarVertexHistContainer.h"
 #include "VtxEval/StarVertexHftHistContainer.h"
+#include "VtxEval/DecayVertexHists.h"
 
 
 VertexRootFile::VertexRootFile(tvx::ProgramOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
@@ -17,6 +18,7 @@ VertexRootFile::VertexRootFile(tvx::ProgramOptions& prgOpts, Option_t *option, c
 {
    fDirs["event"] = new StarEventHistContainer("event", this);
    fDirs["vertex"] = new StarVertexHistContainer("vertex", this);
+   fDirs["vertex_decay"] = new DecayVertexHists("vertex_decay", this);
    fDirs["vertex_hft"] = new StarVertexHftHistContainer("vertex_hft", this);
    fDirs["vertex_maxrank"] = new StarVertexHistContainer("vertex_maxrank", this);
 
@@ -65,6 +67,12 @@ void VertexRootFile::FillHists(const StMuDst &event)
 void VertexRootFile::FillHists(const StMuPrimaryVertex &vertex, const StMuMcVertex* mcVertex)
 {
    static_cast<StarVertexHistContainer*>(fDirs["vertex"])->FillHists(vertex, mcVertex);
+}
+
+
+void VertexRootFile::FillHists(const StMuPrimaryVertex &vertex, const std::vector<TDecayVertex>& decayVertices)
+{
+   static_cast<DecayVertexHists*>(fDirs["vertex_decay"])->FillHists(vertex, decayVertices);
 }
 
 

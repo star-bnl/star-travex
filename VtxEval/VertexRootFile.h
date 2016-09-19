@@ -2,6 +2,7 @@
 #define VertexRootFile_h
 
 #include "travex/RootFile.h"
+#include "StVertexRootIO/TDecayVertex.h"
 
 class StMuDst;
 class StMuPrimaryVertex;
@@ -16,6 +17,7 @@ public:
 
    void FillHists(const StMuDst &event);
    void FillHists(const StMuPrimaryVertex &vertex, const StMuMcVertex* mcVertex=nullptr);
+   void FillHists(const StMuPrimaryVertex &vertex, const std::vector<TDecayVertex>& decayVertices);
    void FillHistsHftTracks(const StMuPrimaryVertex &vertex, const StMuMcVertex* mcVertex=nullptr);
    void FillHistsMaxRank(const StMuPrimaryVertex &vertex, const StMuMcVertex* mcVertex=nullptr);
 
