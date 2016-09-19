@@ -15,6 +15,8 @@
 #include "StMuDSTMaker/COMMON/StMuMcVertex.h"
 #include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
 #include "StMuDSTMaker/COMMON/StMuTrack.h"
+#include "StSecondaryVertexMaker/DecayVertexFinder.h"
+#include "StVertexRootIO/TDecayVertexContainers.h"
 
 #include "travex/ProgramOptions.h"
 #include "src-tools/utils.h"
@@ -105,7 +107,13 @@ void process_muDst(VertexRootFile& outFile)
    vertexTree->Branch("BEMC",    &primVtx.BEMC,    "BEMC/I");
    vertexTree->Branch("noBEMC",  &primVtx.noBEMC,  "noBEMC/I");
 
+   // Create a TTree with secondary decay vertex info
+   TDecayVertexVec *decayVertices = new TDecayVertexVec();
 
+   TTree *decayVertexTree = new TTree("decayVertexTree", "Secondary Decay Vertices");
+   decayVertexTree->Branch("v.", "TDecayVertexVec", &decayVertices, 64000, 99);
+
+   DecayVertexFinder decayVertexFinder;
 
    StMuDstMaker *maker = new StMuDstMaker(0, 0, "", outFile.GetPrgOptions().PathToInputFile().c_str(), "st:MuDst.root", 1e9); // set up maker in read mode
    //                                     0, 0                        this mean read mode
@@ -160,6 +168,9 @@ void process_muDst(VertexRootFile& outFile)
                    << ", run: " << muEvent->runId()
                    << ", id: " << muEvent->eventId() << std::endl;
 
+      // Find and save into tree secondary decay vertices
+      decayVertexFinder.Find(*muDst, decayVertices->mVertices);
+      decayVertexTree->Fill();
 
       TClonesArray *primaryVertices = muDst->primaryVertices();
       int numPrimaryVertices = primaryVertices->GetEntriesFast();
@@ -235,6 +246,7 @@ void process_muDst(VertexRootFile& outFile)
             outFile.FillHistsHftTracks(*recoVertex, mcVertex);
 
          outFile.FillHists(*recoVertex, mcVertex);
+         outFile.FillHists(*recoVertex, decayVertices->mVertices);
 
          if (vtxeval::gDebugFlag) {
             std::cout << Form("%5d: %8.3f %8.3f %8.3f, rank: %f, multiplicity: %d\n",

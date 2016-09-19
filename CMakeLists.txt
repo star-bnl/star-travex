@@ -247,6 +247,9 @@ target_link_libraries(vtxhist
 	StDbLib
 	StEmcUtil
 	StStrangeMuDstMaker
+	StBichsel
+	StSecondaryVertexMaker
+	StVertexRootIO
 	StMuDSTMaker
 	${Boost_LIBRARIES} ${ROOT_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES} Table HistPainter pthread
 )
