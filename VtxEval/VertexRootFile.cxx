@@ -1,16 +1,15 @@
 #include <float.h>
 
-#include "VertexRootFile.h"
-
 #include "TClonesArray.h"
 
 #include "StMuDSTMaker/COMMON/StMuDst.h"
 #include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
 #include "StMuDSTMaker/COMMON/StMuMcVertex.h"
 
-#include "StarEventHistContainer.h"
-#include "StarVertexHistContainer.h"
-#include "StarVertexHftHistContainer.h"
+#include "VtxEval/VertexRootFile.h"
+#include "VtxEval/StarEventHistContainer.h"
+#include "VtxEval/StarVertexHistContainer.h"
+#include "VtxEval/StarVertexHftHistContainer.h"
 
 
 VertexRootFile::VertexRootFile(tvx::ProgramOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :

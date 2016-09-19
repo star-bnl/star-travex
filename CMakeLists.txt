@@ -140,7 +140,7 @@ root_generate_dictionary(
 root_generate_dictionary(
 	StMcAnalysisMaker_dict
 	StiHify/StMcAnalysisMaker.h
-   LINKDEF StiHify/StMcAnalysisMakerLinkDef.h
+	LINKDEF StiHify/StMcAnalysisMakerLinkDef.h
 )
 
 add_library(
@@ -196,6 +196,7 @@ add_library(
 	StiScan/StiScanRootFile.cxx
 	StiScan_dict.cxx
 )
+
 
 add_library(
 	star-vertex-eval

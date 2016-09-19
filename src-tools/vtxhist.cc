@@ -9,11 +9,11 @@
 #include "StEvent/StBTofHeader.h"
 #include "StEvent/StTrackTopologyMap.h"
 #include "StMuDSTMaker/COMMON/StMuDst.h"
+#include "StMuDSTMaker/COMMON/StMuDstMaker.h"
 #include "StMuDSTMaker/COMMON/StMuEvent.h"
-#include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
 #include "StMuDSTMaker/COMMON/StMuMcTrack.h"
 #include "StMuDSTMaker/COMMON/StMuMcVertex.h"
-#include "StMuDSTMaker/COMMON/StMuDstMaker.h"
+#include "StMuDSTMaker/COMMON/StMuPrimaryVertex.h"
 #include "StMuDSTMaker/COMMON/StMuTrack.h"
 
 #include "travex/ProgramOptions.h"
@@ -146,7 +146,8 @@ void process_muDst(VertexRootFile& outFile)
    int nEventsNoRecoVertex = 0;
 
    // Main loop over events
-   for (int iEvent = 0; iEvent < nevent; iEvent++) {
+   for (int iEvent = 0; iEvent < nevent; iEvent++)
+   {
       if (maker->Make()) break;
 
       if ( SkipCurrentEvent(*maker) ) continue;
@@ -154,21 +155,25 @@ void process_muDst(VertexRootFile& outFile)
       StMuDst *muDst = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
       StMuEvent *muEvent = muDst->event(); // get a pointer to the class holding event-wise information
 
-      if (vtxeval::gDebugFlag) std::cout << "Read event #" << iEvent << "\tRun\t" << muEvent->runId() << "\tId: " << muEvent->eventId() << std::endl;
+      if (vtxeval::gDebugFlag)
+         std::cout << "Read event #" << iEvent
+                   << ", run: " << muEvent->runId()
+                   << ", id: " << muEvent->eventId() << std::endl;
 
-      TClonesArray *primaryVertices   = muDst->primaryVertices();
+
+      TClonesArray *primaryVertices = muDst->primaryVertices();
       int numPrimaryVertices = primaryVertices->GetEntriesFast();
 
       if (numPrimaryVertices == 0) nEventsNoRecoVertex++;
 
-      TClonesArray *MuMcVertices   = muDst->mcArray(0);
+      TClonesArray *MuMcVertices = muDst->mcArray(0);
       int NoMuMcVertices = MuMcVertices->GetEntriesFast();
 
       StBTofHeader *BTofHeader = muDst->btofHeader();
 
       // Max multiplicity
-      // Usually the correct vertex
       int maxVertexMult = 0;
+      // Pointer to the max rank vertex
       StMuPrimaryVertex *maxRankVertex = nullptr;
       float vertexMaxRank = -1e10;
 
@@ -241,6 +246,7 @@ void process_muDst(VertexRootFile& outFile)
          }
       }
 
+      // Consider vertex with maximum rank and its simulated counterpart if available
       if (maxRankVertex)
       {
          int idTruth = maxRankVertex->idTruth();
