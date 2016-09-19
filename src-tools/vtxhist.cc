@@ -61,8 +61,8 @@ void process_muDst(VertexRootFile& outFile)
    // Create a TTree with primary vertex info
    TPrimaryVertex *primVtx = new TPrimaryVertex();
 
-   TTree *vertexTree = new TTree("vertexTree", "The Primary Vertices");
-   vertexTree->Branch("v.", "TPrimaryVertex", &primVtx, 64000, 99);
+   TTree *primVertexTree = new TTree("primVertexTree", "The Primary Vertices");
+   primVertexTree->Branch("v.", "TPrimaryVertex", &primVtx, 64000, 99);
 
    // Create a TTree with secondary decay vertex info
    TDecayVertexVec *decayVertices = new TDecayVertexVec();
@@ -130,12 +130,12 @@ void process_muDst(VertexRootFile& outFile)
       decayVertexTree->Fill();
 
       TClonesArray *primaryVertices = muDst->primaryVertices();
-      int numPrimaryVertices = primaryVertices->GetEntriesFast();
+      int nPrimaryVertices = primaryVertices->GetEntriesFast();
 
-      if (numPrimaryVertices == 0) nEventsNoRecoVertex++;
+      if (nPrimaryVertices == 0) nEventsNoRecoVertex++;
 
       TClonesArray *MuMcVertices = muDst->mcArray(0);
-      int NoMuMcVertices = MuMcVertices->GetEntriesFast();
+      int nMcVertices = MuMcVertices->GetEntriesFast();
 
       // Max multiplicity
       int maxVertexMult = 0;
@@ -144,16 +144,16 @@ void process_muDst(VertexRootFile& outFile)
       float vertexMaxRank = -1e10;
 
       // Loop over primary verticies in the event
-      for (int iVertex = 0; iVertex < numPrimaryVertices; iVertex++)
+      for (int iVertex = 0; iVertex < nPrimaryVertices; iVertex++)
       {
          StMuPrimaryVertex *recoVertex = (StMuPrimaryVertex *) primaryVertices->UncheckedAt(iVertex);
 
          if (!recoVertex) continue;
 
-         Float_t numTracksToVertex = recoVertex->noTracks();
+         Float_t nTracksToVertex = recoVertex->noTracks();
 
-         if (maxVertexMult < numTracksToVertex) {   //Amilkar: check if the numTracksToVertex is higher than previous
-            maxVertexMult = numTracksToVertex;      //Amilkar: asign the new maximum value
+         if (maxVertexMult < nTracksToVertex) {   //Amilkar: check if the nTracksToVertex is higher than previous
+            maxVertexMult = nTracksToVertex;      //Amilkar: asign the new maximum value
          }
 
          // Find the highest rank vertex
@@ -170,13 +170,13 @@ void process_muDst(VertexRootFile& outFile)
          if (idTruth != 1)
             continue;
 
-         StMuMcVertex *mcVertex = (idTruth > 0 && idTruth <= NoMuMcVertices) ? (StMuMcVertex *) MuMcVertices->UncheckedAt(idTruth - 1) : nullptr;
+         StMuMcVertex *mcVertex = (idTruth > 0 && idTruth <= nMcVertices) ? (StMuMcVertex *) MuMcVertices->UncheckedAt(idTruth - 1) : nullptr;
 
          float zVpd      = (muDst->btofHeader() ? muDst->btofHeader()->vpdVz(): 999.);
          bool  isMaxMult = (recoVertex->noTracks() == maxVertexMult);
 
          primVtx->Set(*recoVertex, mcVertex, isMaxMult, zVpd);
-         vertexTree->Fill();
+         primVertexTree->Fill();
 
          bool hasPxlTrack = checkVertexHasPxlHit(iVertex, *muDst);
 
@@ -200,7 +200,7 @@ void process_muDst(VertexRootFile& outFile)
       if (maxRankVertex)
       {
          int idTruth = maxRankVertex->idTruth();
-         StMuMcVertex* mcVertex = (idTruth > 0 && idTruth <= NoMuMcVertices) ?
+         StMuMcVertex* mcVertex = (idTruth > 0 && idTruth <= nMcVertices) ?
             (StMuMcVertex *) MuMcVertices->UncheckedAt(idTruth - 1) : nullptr;
 
          // Fill vertex hist container for max rank vertex
