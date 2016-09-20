@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cfloat>
 #include <iostream>
 #include <string>
 
@@ -132,11 +133,10 @@ void process_muDst(VertexRootFile& outFile)
       TClonesArray *MuMcVertices = muDst->mcArray(0);
       int nMcVertices = MuMcVertices->GetEntriesFast();
 
-      // Max multiplicity
-      int maxVertexMult = 0;
+      int maxMultiplicity = 0;
+      double maxRank = -DBL_MAX;
       // Pointer to the max rank vertex
       StMuPrimaryVertex *maxRankVertex = nullptr;
-      float vertexMaxRank = -1e10;
 
       // Loop over primary verticies in the event
       for (int iVertex = 0; iVertex < nPrimaryVertices; iVertex++)
@@ -145,16 +145,14 @@ void process_muDst(VertexRootFile& outFile)
 
          if (!recoVertex) continue;
 
-         Float_t nTracksToVertex = recoVertex->noTracks();
-
-         if (maxVertexMult < nTracksToVertex) {   //Amilkar: check if the nTracksToVertex is higher than previous
-            maxVertexMult = nTracksToVertex;      //Amilkar: asign the new maximum value
+         // Find vertex with the highest track multiplicity
+         if (recoVertex->noTracks() > maxMultiplicity) {
+            maxMultiplicity = recoVertex->noTracks();
          }
 
-         // Find the highest rank vertex
-         if (recoVertex->ranking() > vertexMaxRank )
-         {
-            vertexMaxRank = recoVertex->ranking();
+         // Find vertex with the highest rank
+         if (recoVertex->ranking() > maxRank) {
+            maxRank = recoVertex->ranking();
             maxRankVertex = recoVertex;
          }
 
@@ -162,13 +160,12 @@ void process_muDst(VertexRootFile& outFile)
          int idTruth = recoVertex->idTruth();
 
          // Proceed only if idTruth == 1, i.e. we reconstructed a candidate for the primary vertex
-         if (idTruth != 1)
-            continue;
+         if (idTruth != 1) continue;
 
          StMuMcVertex *mcVertex = (idTruth > 0 && idTruth <= nMcVertices) ? (StMuMcVertex *) MuMcVertices->UncheckedAt(idTruth - 1) : nullptr;
 
          float zVpd      = (muDst->btofHeader() ? muDst->btofHeader()->vpdVz(): 999.);
-         bool  isMaxMult = (recoVertex->noTracks() == maxVertexMult);
+         bool  isMaxMult = (recoVertex->noTracks() == maxMultiplicity);
 
          primVtx->Set(*recoVertex, mcVertex, isMaxMult, zVpd);
          primVertexTree->Fill();

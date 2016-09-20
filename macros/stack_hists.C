@@ -20,7 +20,7 @@ void stack_hists(std::string histName=std::string("vertex/hMcRecoVertexDelta"),
       return;
    }
 
-   int colors[] = {kRed, kGreen, kBlue, kMagenta, kCyan, kOrange, kSpring, kTeal, kAzure, kViolet, kPink};
+   int colors[] = {kRed, kBlue, kGreen, kMagenta, kCyan, kOrange, kSpring, kTeal, kAzure, kViolet, kPink};
 
    THStack *hists = new THStack("hists", "Overlayed histograms");
    TLegend *legend = new TLegend(0.01, 0.80, 0.99, 0.99);
