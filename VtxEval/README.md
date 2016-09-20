@@ -7,7 +7,9 @@ focusing on evaluation of the vertex finders one can build and install only the
 relevant libraries:
 
     $ mkdir build/ && cd build/
-    $ cmake -D CMAKE_INSTALL_PREFIX=../build-install -D BOOST_ROOT=$OPTSTAR ../
+    $ cmake -D CMAKE_INSTALL_PREFIX=../build-install \
+            -D BOOST_ROOT=$OPTSTAR \
+            -D CMAKE_BUILD_TYPE=Release ../
     $ make -j4 star-vertex
     $ make install
 
@@ -18,22 +20,25 @@ How to create embedding samples
 Use STAR's `get_file_list.pl` to select a set of desired zerobias files from the
 database. Here is an example command with some selection constraints:
 
-    $ get_file_list.pl -keys path,filename,events -cond filename~st_zerobias_%,runnumber[]14115007-14120000,sanity=1,filetype=online_daq -delim / -limit 0
+    $ get_file_list.pl -keys path,filename,events \
+      -cond filename~st_zerobias_%,runnumber[]14115007-14120000,sanity=1,filetype=online_daq \
+      -delim / -limit 0
 
 You may choose to copy the files from `hpss` to some location on disk. In that
 case, the paths to files returned by `get_file_list.pl` can be adjusted to point
 to the actual file location. The final list of zerobias data files has to be in
 the following format:
 
-    path/to/file.daq run_id num_of_events_to_process
+    string:"path/to/file.daq run_id num_of_events_to_process"
 
 The contents of your file may look like the following:
 
     $ cat filelist_zerobias.lis
-    /star/data05/daq/2013/embedding/st_zerobias_adc_14150005_raw_3330002.daq 14150005 103
-    /star/data05/daq/2013/embedding/st_zerobias_adc_14150004_raw_1530002.daq 14150004 103
     ...
-    /star/data05/daq/2013/embedding/st_zerobias_adc_14150005_raw_8660002.daq 14150005 102
+    string:"/star/data05/daq/2013/embedding/st_zerobias_adc_14115007_raw_1540001.daq 14115007 123"
+    string:"/star/data05/daq/2013/embedding/st_zerobias_adc_14115007_raw_2440001.daq 14115007 155"
+    ...
+    string:"/star/data05/daq/2013/embedding/st_zerobias_adc_14115007_raw_3330001.daq 14115007 111"
     ...
 
 
@@ -47,7 +52,20 @@ values. The two parameters likely to be changed often are `OUT_DIR` and
 `INPUT_FILE_LIST`. All named variables can be passed to the script in command
 line like this:
 
-    $ OUT_DIR=/tmp/scratch/wbos_embed_results/ INPUT_FILE_LIST=~/star-travex/supple/filelist_zerobias.lis submit_jobs_embedding_wbos.sh
+    $ OUT_DIR=/tmp/scratch/wbos_embed_results/ \
+      INPUT_FILE_LIST=~/star-travex/supple/filelist_zerobias.lis \
+      ~/star-travex/supple/submit_jobs_embedding_wbos.sh
+
+
+Lambda
+------
+
+A command submitting embedding jobs can look like this:
+
+    $ FZD_DIR=~/scratch/lambda_fzd/ \
+      OUT_DIR=~/scratch/lambda_embed_results/ \
+      INPUT_FILE_LIST=~/star-travex/supple/filelist_zerobias_lambda.lis \
+      ~/star-travex/supple/submit_jobs_embedding_generic.sh
 
 
 J/psi
@@ -71,8 +89,9 @@ default values are not appropriate. Search for "NAMED ARGUMENTS" to find these
 values.
 
 
-Study the ranking scheme in STAR
-================================
+
+Study the ranking scheme in STAR (deprecated)
+=============================================
 
 This section is outdated but left here for the reference until after all
 mentioned macros are removed from the repository...
