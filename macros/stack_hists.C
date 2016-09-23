@@ -13,7 +13,7 @@
  */
 
 void stack_hists(std::string histName=std::string("vertex/hMcRecoVertexDelta"),
-   std::string encl_func_name = "")
+   std::string encl_func_name = "", double norm=0.)
 {
    if ( histName.empty() ) {
       Error("stack_hists", "Histogram name must be provided");
@@ -77,6 +77,8 @@ void stack_hists(std::string histName=std::string("vertex/hMcRecoVertexDelta"),
          }
 
       } else { // Process, i.e. draw, normal histograms
+         if (norm > 0)
+            hist->Scale( norm/hist->Integral() );
          hist->Print();
          hist->SetLineWidth(3);
          hist->SetLineColor(*(iColor));
