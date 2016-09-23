@@ -17,5 +17,6 @@ DecayVertexHists::DecayVertexHists(const std::string name, TDirectory* motherDir
 void DecayVertexHists::FillHists(const StMuPrimaryVertex &vertex, const TDecayVertex& decayVtx)
 {
    h("hDecayLength")->Fill( decayVtx.dl_p );
-   h("hDLSignificance")->Fill( decayVtx.dl_p / vertex.posError().mag() );
+   double expected_decay_vertex_err2 = 0.15*0.15;
+   h("hDLSignificance")->Fill( decayVtx.dl_p / sqrt(vertex.posError().mag()*vertex.posError().mag() + expected_decay_vertex_err2) );
 }
