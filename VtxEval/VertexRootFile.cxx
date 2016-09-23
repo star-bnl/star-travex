@@ -18,7 +18,8 @@ VertexRootFile::VertexRootFile(tvx::ProgramOptions& prgOpts, Option_t *option, c
 {
    fDirs["event"] = new StarEventHistContainer("event", this);
    fDirs["vertex"] = new StarVertexHistContainer("vertex", this);
-   fDirs["vertex_decay"] = new DecayVertexHists("vertex_decay", this);
+   fDirs["vertex_decay_kaon"] = new DecayVertexHists("vertex_decay_kaon", this);
+   fDirs["vertex_decay_lambda"] = new DecayVertexHists("vertex_decay_lambda", this);
    fDirs["vertex_hft"] = new StarVertexHftHistContainer("vertex_hft", this);
    fDirs["vertex_maxrank"] = new StarVertexHistContainer("vertex_maxrank", this);
 
@@ -72,7 +73,19 @@ void VertexRootFile::FillHists(const StMuPrimaryVertex &vertex, const StMuMcVert
 
 void VertexRootFile::FillHists(const StMuPrimaryVertex &vertex, const std::vector<TDecayVertex>& decayVertices)
 {
-   static_cast<DecayVertexHists*>(fDirs["vertex_decay"])->FillHists(vertex, decayVertices);
+   for (const auto& decayVtx : decayVertices)
+   {
+      switch(decayVtx.parent)
+      {
+      case DecayParticle_t::Lambda:
+      case DecayParticle_t::AntiLambda:
+         static_cast<DecayVertexHists*>(fDirs["vertex_decay_lambda"])->FillHists(vertex, decayVtx);
+         break;
+      case DecayParticle_t::Kaon:
+         static_cast<DecayVertexHists*>(fDirs["vertex_decay_kaon"])->FillHists(vertex, decayVtx);
+         break;
+      }
+   }
 }
 
 
