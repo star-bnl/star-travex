@@ -14,11 +14,8 @@ DecayVertexHists::DecayVertexHists(const std::string name, TDirectory* motherDir
 }
 
 
-void DecayVertexHists::FillHists(const StMuPrimaryVertex &vertex, const std::vector<TDecayVertex>& decayVertices)
+void DecayVertexHists::FillHists(const StMuPrimaryVertex &vertex, const TDecayVertex& decayVtx)
 {
-   for (const auto& decayVtx : decayVertices)
-   {
-      h("hDecayLength")->Fill( decayVtx.dl_p );
-      h("hDLSignificance")->Fill( decayVtx.dl_p / vertex.posError().mag() );
-   }
+   h("hDecayLength")->Fill( decayVtx.dl_p );
+   h("hDLSignificance")->Fill( decayVtx.dl_p / vertex.posError().mag() );
 }
