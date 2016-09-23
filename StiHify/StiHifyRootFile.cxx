@@ -15,9 +15,9 @@ StiHifyRootFile::StiHifyRootFile(StiHifyPrgOptions& prgOpts, Option_t *option, c
 {
    treeMaker = new StiHifyAnalysisTreeMaker(prgOpts);
 
-   fDirs["sti_hit_any_node"] = new StiHifyHistContainer(prgOpts, "sti_hit_any_node", this);
-   fDirs["sti_hit_accepted"] = new StiHifyHistContainer(prgOpts, "sti_hit_accepted", this);
-   fDirs["sti_hit_rejected"] = new StiHifyHistContainer(prgOpts, "sti_hit_rejected", this);
+   Add( new StiHifyHistContainer(prgOpts, "sti_hit_any_node", this) );
+   Add( new StiHifyHistContainer(prgOpts, "sti_hit_accepted", this) );
+   Add( new StiHifyHistContainer(prgOpts, "sti_hit_rejected", this) );
 }
 
 

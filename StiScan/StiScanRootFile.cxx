@@ -21,9 +21,9 @@ StiScanRootFile::StiScanRootFile(StiScanPrgOptions& prgOpts, Option_t *option, c
       FindAutoRange();
    }
 
-   fDirs["sti_vol"] = new StiScanHistsByVolume(fPrgOptions, "sti_vol", this);
-   fDirs["sti_trk"] = new StiScanHistContainer(fPrgOptions, "sti_trk", this);
-   fDirs["gea"]     = new StiScanHistContainer(fPrgOptions, "gea", this); // Will create integral projections from 2D histograms
+   Add( new StiScanHistsByVolume(fPrgOptions, "sti_vol", this) );
+   Add( new StiScanHistContainer(fPrgOptions, "sti_trk", this) );
+   Add( new StiScanHistContainer(fPrgOptions, "gea", this) ); // Will create integral projections from 2D histograms
 }
 
 

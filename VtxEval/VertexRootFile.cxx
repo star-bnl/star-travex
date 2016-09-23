@@ -16,12 +16,12 @@
 VertexRootFile::VertexRootFile(tvx::ProgramOptions& prgOpts, Option_t *option, const char *ftitle, Int_t compress) :
    tvx::RootFile(prgOpts, option, ftitle, compress)
 {
-   fDirs["event"] = new StarEventHistContainer("event", this);
-   fDirs["vertex"] = new StarVertexHistContainer("vertex", this);
-   fDirs["vertex_decay_kaon"] = new DecayVertexHists("vertex_decay_kaon", this);
-   fDirs["vertex_decay_lambda"] = new DecayVertexHists("vertex_decay_lambda", this);
-   fDirs["vertex_hft"] = new StarVertexHftHistContainer("vertex_hft", this);
-   fDirs["vertex_maxrank"] = new StarVertexHistContainer("vertex_maxrank", this);
+   Add( new StarEventHistContainer("event", this) );
+   Add( new StarVertexHistContainer("vertex", this) );
+   Add( new DecayVertexHists("vertex_decay_kaon", this) );
+   Add( new DecayVertexHists("vertex_decay_lambda", this) );
+   Add( new StarVertexHftHistContainer("vertex_hft", this) );
+   Add( new StarVertexHistContainer("vertex_maxrank", this) );
 
    // When done creating hist containers make parent TDirectoryFile the current one
    cd();
