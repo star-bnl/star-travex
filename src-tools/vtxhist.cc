@@ -121,9 +121,8 @@ void process_muDst(VertexRootFile& outFile)
       StMuDst *muDst = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
       StMuEvent *muEvent = muDst->event(); // get a pointer to the class holding event-wise information
 
-      // Find and save into tree secondary decay vertices
+      // Identify secondary decay vertices and put them in the container
       decayVertexFinder.Find(*muDst, decayVertices->mVertices);
-      decayVertexTree->Fill();
 
       TClonesArray *primaryVertices = muDst->primaryVertices();
       int nPrimaryVertices = primaryVertices->GetEntriesFast();
@@ -191,6 +190,11 @@ void process_muDst(VertexRootFile& outFile)
       }
 
       outFile.FillHists(*muDst);
+
+      // Also add primary struct to the saved struct
+      decayVertices->mPrimaryVertex = *primVtx;
+      // Save the tree with secondary decay vertices
+      decayVertexTree->Fill();
    }
 
    outFile.FillDerivedHists();
