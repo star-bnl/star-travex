@@ -20,7 +20,7 @@ public:
    void FillEfficyHists(const StMuDst &event, const StMuMcVertex &mcVertex,
       const StMuPrimaryVertex *recoVertex=nullptr, const StMuPrimaryVertex *recoVertexMaxRank=nullptr);
 
-   virtual void FillDerivedHists();
+   virtual void Finalize();
 
 protected:
 

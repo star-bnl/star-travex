@@ -60,7 +60,7 @@ void StarEventHistContainer::FillEfficyHists(const StMuDst &event, const StMuMcV
 }
 
 
-void StarEventHistContainer::FillDerivedHists()
+void StarEventHistContainer::Finalize()
 {
    // Calculate efficiency for any reco vertex matching simulated vertex
    TEfficiency *eff_any = new TEfficiency(*h("McRecMulAny"), *h("McRecMulT"));
