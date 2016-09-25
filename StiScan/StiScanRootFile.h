@@ -21,7 +21,7 @@ public:
 
    void FillHists(const StiScanEvent &stiEvent, const std::set<std::string> *volumeList=0);
    void FillHists(const TGeaEvent &geaEvent, const std::set<std::string> *volumeList=0);
-   void FillDerivedHists();
+   void Finalize();
 
 protected:
 

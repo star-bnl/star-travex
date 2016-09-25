@@ -76,7 +76,7 @@ void loop_over_tree(StiHifyPrgOptions &prgOpts)
 
    delete stiHifyEvent;
 
-   outRootFile.FillDerivedHists();
+   outRootFile.Finalize();
    outRootFile.Write();
    outRootFile.Close();
 }

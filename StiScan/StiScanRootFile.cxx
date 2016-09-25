@@ -115,9 +115,9 @@ void StiScanRootFile::FillHists(const TGeaEvent &geaEvent, const std::set<std::s
 }
 
 
-void StiScanRootFile::FillDerivedHists()
+void StiScanRootFile::Finalize()
 {
-   tvx::RootFile::FillDerivedHists();
+   tvx::RootFile::Finalize();
 
    StiScanRatiosHistContainer *ratios;
    fDirs["sti_gea_ratio"] = ratios = new StiScanRatiosHistContainer("sti_gea_ratio", this);

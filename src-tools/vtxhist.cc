@@ -197,7 +197,7 @@ void process_muDst(VertexRootFile& outFile)
       decayVertexTree->Fill();
    }
 
-   outFile.FillDerivedHists();
+   outFile.Finalize();
 
    std::cout << "Number of events: " <<  nevent
              << ", with 0 reconstructed verticies: " << nEventsNoRecoVertex << std::endl;

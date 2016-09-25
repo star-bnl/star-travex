@@ -43,9 +43,9 @@ void StiHifyRootFile::FillHists(const StiHifyEvent &event)
 /**
  * Create ratios for all histograms whose name starts with hActiveLayerCounts.
  */
-void StiHifyRootFile::FillDerivedHists()
+void StiHifyRootFile::Finalize()
 {
-   tvx::RootFile::FillDerivedHists();
+   tvx::RootFile::Finalize();
 
    StiHifyRatiosHistContainer *ratios;
    fDirs["sti_hit_ratio"] = ratios = new StiHifyRatiosHistContainer("sti_hit_ratio", this);

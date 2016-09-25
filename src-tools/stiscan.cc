@@ -103,7 +103,7 @@ void loop_over_tree(StiScanPrgOptions &prgOpts)
    delete stiScanEvent;
    delete geantEvent;
 
-   outRootFile.FillDerivedHists();
+   outRootFile.Finalize();
    outRootFile.Write();
    outRootFile.Close();
 }

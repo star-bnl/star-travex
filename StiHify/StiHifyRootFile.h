@@ -19,7 +19,7 @@ public:
    StiHifyRootFile(StiHifyPrgOptions& prgOpts, Option_t* option="", const char* ftitle="", Int_t compress=1);
 
    void FillHists(const StiHifyEvent &event);
-   void FillDerivedHists();
+   void Finalize();
 
 private:
 
