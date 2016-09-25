@@ -30,7 +30,7 @@ VertexRootFile::VertexRootFile(tvx::ProgramOptions& prgOpts, Option_t *option, c
 
 void VertexRootFile::FillHists(const StMuDst &event)
 {
-   static_cast<StarEventHistContainer*>(fDirs["event"])->FillHists(event);
+   hc<StarEventHistContainer>("event")->FillHists(event);
 
    // Currently consider only one primary vertex with idTruth = 1
    int idTruth = 1;
@@ -61,13 +61,13 @@ void VertexRootFile::FillHists(const StMuDst &event)
       }
    }
 
-   static_cast<StarEventHistContainer*>(fDirs["event"])->FillEfficyHists(event, *mcVertex, recoVertex, recoVertexMaxRank);
+   hc<StarEventHistContainer>("event")->FillEfficyHists(event, *mcVertex, recoVertex, recoVertexMaxRank);
 }
 
 
 void VertexRootFile::FillHists(const StMuPrimaryVertex &vertex, const StMuMcVertex* mcVertex)
 {
-   static_cast<StarVertexHistContainer*>(fDirs["vertex"])->FillHists(vertex, mcVertex);
+   hc<StarVertexHistContainer>("vertex")->FillHists(vertex, mcVertex);
 }
 
 
@@ -79,10 +79,10 @@ void VertexRootFile::FillHists(const StMuPrimaryVertex &vertex, const std::vecto
       {
       case DecayParticle_t::Lambda:
       case DecayParticle_t::AntiLambda:
-         static_cast<DecayVertexHists*>(fDirs["vertex_decay_lambda"])->FillHists(vertex, decayVtx);
+         hc<DecayVertexHists>("vertex_decay_lambda")->FillHists(vertex, decayVtx);
          break;
       case DecayParticle_t::Kaon:
-         static_cast<DecayVertexHists*>(fDirs["vertex_decay_kaon"])->FillHists(vertex, decayVtx);
+         hc<DecayVertexHists>("vertex_decay_kaon")->FillHists(vertex, decayVtx);
          break;
       }
    }
@@ -91,11 +91,11 @@ void VertexRootFile::FillHists(const StMuPrimaryVertex &vertex, const std::vecto
 
 void VertexRootFile::FillHistsHftTracks(const StMuPrimaryVertex &vertex, const StMuMcVertex* mcVertex)
 {
-   static_cast<StarVertexHistContainer*>(fDirs["vertex_hft"])->FillHists(vertex, mcVertex);
+   hc<StarVertexHistContainer>("vertex_hft")->FillHists(vertex, mcVertex);
 }
 
 
 void VertexRootFile::FillHistsMaxRank(const StMuPrimaryVertex &vertex, const StMuMcVertex* mcVertex)
 {
-   static_cast<StarVertexHistContainer*>(fDirs["vertex_maxrank"])->FillHists(vertex, mcVertex);
+   hc<StarVertexHistContainer>("vertex_maxrank")->FillHists(vertex, mcVertex);
 }

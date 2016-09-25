@@ -27,16 +27,9 @@ void StiHifyRootFile::FillHists(const StiHifyEvent &event)
    treeMaker->FillTree(event, StiNodeHitStatus::Accepted);
    treeMaker->FillTree(event, StiNodeHitStatus::Rejected);
 
-   StiHifyHistContainer* container;
-
-   container = static_cast<StiHifyHistContainer*> (fDirs["sti_hit_any_node"]);
-   container->FillHists(event, StiNodeHitStatus::Any);
-
-   container = static_cast<StiHifyHistContainer*> (fDirs["sti_hit_accepted"]);
-   container->FillHists(event, StiNodeHitStatus::Accepted);
-
-   container = static_cast<StiHifyHistContainer*> (fDirs["sti_hit_rejected"]);
-   container->FillHists(event, StiNodeHitStatus::Rejected);
+   hc<StiHifyHistContainer>("sti_hit_any_node")->FillHists(event, StiNodeHitStatus::Any);
+   hc<StiHifyHistContainer>("sti_hit_accepted")->FillHists(event, StiNodeHitStatus::Accepted);
+   hc<StiHifyHistContainer>("sti_hit_rejected")->FillHists(event, StiNodeHitStatus::Rejected);
 }
 
 
@@ -47,11 +40,11 @@ void StiHifyRootFile::Finalize()
 {
    tvx::RootFile::Finalize();
 
-   StiHifyRatiosHistContainer *ratios;
-   fDirs["sti_hit_ratio"] = ratios = new StiHifyRatiosHistContainer("sti_hit_ratio", this);
+   StiHifyRatiosHistContainer *ratios = new StiHifyRatiosHistContainer("sti_hit_ratio", this);
+   Add(ratios);
 
 
-   const tvx::HistMap& hists = fDirs["sti_hit_any_node"]->GetHists();
+   const tvx::HistMap& hists = hc("sti_hit_any_node")->GetHists();
 
    for (const auto& hist_iter : hists)
    {
@@ -62,8 +55,8 @@ void StiHifyRootFile::Finalize()
 
       if (!matched) continue;
 
-      const tvx::HistContainer& hitsNumer(*fDirs["sti_hit_accepted"]);
-      const tvx::HistContainer& hitsDenom(*fDirs["sti_hit_any_node"]);
+      const tvx::HistContainer& hitsNumer( *hc("sti_hit_accepted") );
+      const tvx::HistContainer& hitsDenom( *hc("sti_hit_any_node") );
 
       const TH1* hitsAcc = hitsNumer.FindHist(hist_name);
       const TH1* hitsAll = hitsDenom.FindHist(hist_name);

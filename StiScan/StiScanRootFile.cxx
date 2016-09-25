@@ -98,20 +98,14 @@ void StiScanRootFile::FindAutoRange() const
 
 void StiScanRootFile::FillHists(const StiScanEvent &stiEvent, const std::set<std::string> *volumeList)
 {
-   StiScanHistContainer* container;
-
-   container = static_cast<StiScanHistContainer*> (fDirs["sti_vol"]);
-   container->FillHists(stiEvent, volumeList);
-
-   container = static_cast<StiScanHistContainer*> (fDirs["sti_trk"]);
-   container->FillHists(stiEvent, volumeList);
+   hc<StiScanHistContainer>("sti_vol")->FillHists(stiEvent, volumeList);
+   hc<StiScanHistContainer>("sti_trk")->FillHists(stiEvent, volumeList);
 }
 
 
 void StiScanRootFile::FillHists(const TGeaEvent &geaEvent, const std::set<std::string> *volumeList)
 {
-   StiScanHistContainer* container = static_cast<StiScanHistContainer*> (fDirs["gea"]);
-   container->FillHists(geaEvent, volumeList);
+   hc<StiScanHistContainer>("gea")->FillHists(geaEvent, volumeList);
 }
 
 
@@ -119,11 +113,11 @@ void StiScanRootFile::Finalize()
 {
    tvx::RootFile::Finalize();
 
-   StiScanRatiosHistContainer *ratios;
-   fDirs["sti_gea_ratio"] = ratios = new StiScanRatiosHistContainer("sti_gea_ratio", this);
+   StiScanRatiosHistContainer *ratios = new StiScanRatiosHistContainer("sti_gea_ratio", this);
+   Add(ratios);
 
-   const tvx::HistContainer* gea = fDirs["gea"];
-   const tvx::HistContainer* sti_trk = fDirs["sti_trk"];
+   const tvx::HistContainer* gea = hc("gea");
+   const tvx::HistContainer* sti_trk = hc("sti_trk");
 
    const TH1* gea_eloss = gea->FindHist("hELossVsPhiVsRVsZ_pyx");
    const TH1* sti_eloss = sti_trk->FindHist("hELossVsPhiVsRVsZ_pyx");
