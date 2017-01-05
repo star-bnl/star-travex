@@ -54,11 +54,11 @@ include_directories(
 	${LIBXML2_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR}/inc
-	ext/travex/include         # required by star-vertex-eval
+	ext/travex/include
 	ext/star-base
 	ext/star-bfchain
 	ext/star-daq
-	ext/star-muDst             # required by star-vertex-eval
+	ext/star-muDst
 	ext/star-db-calibrations
 	ext/star-emc
 	ext/star-fgt               # required by star-muDst
@@ -79,7 +79,7 @@ include_directories(
 	ext/star-tpc
 	ext/star-ftpc              # required by star-stevent
 	ext/star-vertex
-	ext/star-pams/global/inc   # required by star-vertex
+	ext/star-pams/global/inc   # required by star-emc
 )
 
 add_subdirectory(ext/travex)
