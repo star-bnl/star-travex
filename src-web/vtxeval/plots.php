@@ -5,14 +5,12 @@ include_once("../common/config.php");
 $page_title = "Vtxeval Plots";
 
 include_once(BASE_DIR."/common/head.php");
-include_once(BASE_DIR."/common/PlotHelper.php");
 
 
 $pfx = isset($_GET['pfx']) ? $_GET['pfx'] : "";
 $det = isset($_GET['det']) ? $_GET['det'] : "";
 
 $info_file = VTXEVAL_RESULTS_DIR."/".dirname($pfx)."/info.html";
-$gP = new PlotHelper(VTXEVAL_RESULTS_URL."/$pfx", "");
 
 ?>
 
@@ -46,17 +44,17 @@ if (file_exists($info_file))
 <table class="simple00 cntr">
 
 <tr>
-   <td><?php print $gP->img("event/hNumTracksPerEvent"); ?>
+   <td><img class="img_topdir" width=500 src="event/hNumTracksPerEvent.png">
    <div class="thumbcaption">
    Total number of tracks in event
    </div>
 
-   <td><?php print $gP->img("event/hNumTracksPerEventPrimary"); ?>
+   <td><img class="img_topdir" width=500 src="event/hNumTracksPerEventPrimary.png">
    <div class="thumbcaption">
    Total number of primary tracks in event
    </div>
 
-   <td><?php print $gP->img("event/hNumVertices"); ?>
+   <td><img class="img_topdir" width=500 src="event/hNumVertices.png">
    <div class="thumbcaption">
    Total number of vertices
    </div>
@@ -64,12 +62,12 @@ if (file_exists($info_file))
 <tr>
    <td>&nbsp;
 
-   <td><?php print $gP->img("event/McRecMulAny_eff"); ?>
+   <td><img class="img_topdir" width=500 src="event/McRecMulAny_eff.png">
    <div class="thumbcaption">
    Primary vertex reconstruction efficiency
    </div>
 
-   <td><?php print $gP->img("event/McRecMulGood_eff"); ?>
+   <td><img class="img_topdir" width=500 src="event/McRecMulGood_eff.png">
    <div class="thumbcaption">
    Reconstruction efficiency for the maximum rank vertex
    </div>
@@ -91,31 +89,31 @@ if (file_exists($info_file))
 <table class="simple00 cntr">
 
 <tr>
-   <td><?php print $gP->img("vertex/hMcVertexX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hMcVertexX.png">
    <div class="thumbcaption">
    Vertex position X
    </div>
 
    <td>&nbsp;
 
-   <td><?php print $gP->img("vertex/hMcVertexZvX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hMcVertexZvX.png">
    <div class="thumbcaption">
    Vertex position Z vs X
    </div>
 
 <tr>
 
-   <td><?php print $gP->img("vertex/hMcVertexXvY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hMcVertexXvY.png">
    <div class="thumbcaption">
    Vertex position X vs Y
    </div>
 
-   <td><?php print $gP->img("vertex/hMcVertexY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hMcVertexY.png">
    <div class="thumbcaption">
    Vertex position Y
    </div>
 
-   <td><?php print $gP->img("vertex/hMcVertexZvY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hMcVertexZvY.png">
    <div class="thumbcaption">
    Vertex position Z vs Y
    </div>
@@ -125,7 +123,7 @@ if (file_exists($info_file))
 
    <td>&nbsp;
 
-   <td><?php print $gP->img("vertex/hMcVertexZ"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hMcVertexZ.png">
    <div class="thumbcaption">
    Vertex position Z
    </div>
@@ -147,31 +145,31 @@ if (file_exists($info_file))
 <table class="simple00 cntr">
 
 <tr>
-   <td><?php print $gP->img("vertex/hVertexX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hVertexX.png">
    <div class="thumbcaption">
    Vertex position X
    </div>
 
    <td>&nbsp;
 
-   <td><?php print $gP->img("vertex/hVertexZvX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hVertexZvX.png">
    <div class="thumbcaption">
    Vertex position Z vs X
    </div>
 
 <tr>
 
-   <td><?php print $gP->img("vertex/hVertexXvY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hVertexXvY.png">
    <div class="thumbcaption">
    Vertex position X vs Y
    </div>
 
-   <td><?php print $gP->img("vertex/hVertexY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hVertexY.png">
    <div class="thumbcaption">
    Vertex position Y
    </div>
 
-   <td><?php print $gP->img("vertex/hVertexZvY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hVertexZvY.png">
    <div class="thumbcaption">
    Vertex position Z vs Y
    </div>
@@ -181,23 +179,23 @@ if (file_exists($info_file))
 
    <td>&nbsp;
 
-   <td><?php print $gP->img("vertex/hVertexZ"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hVertexZ.png">
    <div class="thumbcaption">
    Vertex position Z
    </div>
 
 <tr>
-   <td><?php print $gP->img("vertex/hVertexErrorX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hVertexErrorX.png">
    <div class="thumbcaption">
    Vertex position error X
    </div>
 
-   <td><?php print $gP->img("vertex/hVertexErrorY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hVertexErrorY.png">
    <div class="thumbcaption">
    Vertex position error Y
    </div>
 
-   <td><?php print $gP->img("vertex/hVertexErrorZ"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hVertexErrorZ.png">
    <div class="thumbcaption">
    Vertex position error Z
    </div>
@@ -219,31 +217,31 @@ if (file_exists($info_file))
 <table class="simple00 cntr">
 
 <tr>
-   <td><?php print $gP->img("vertex_hft/hVertexX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hVertexX.png">
    <div class="thumbcaption">
    Vertex position X
    </div>
 
    <td>&nbsp;
 
-   <td><?php print $gP->img("vertex_hft/hVertexZvX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hVertexZvX.png">
    <div class="thumbcaption">
    Vertex position Z vs X
    </div>
 
 <tr>
 
-   <td><?php print $gP->img("vertex_hft/hVertexXvY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hVertexXvY.png">
    <div class="thumbcaption">
    Vertex position X vs Y
    </div>
 
-   <td><?php print $gP->img("vertex_hft/hVertexY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hVertexY.png">
    <div class="thumbcaption">
    Vertex position Y
    </div>
 
-   <td><?php print $gP->img("vertex_hft/hVertexZvY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hVertexZvY.png">
    <div class="thumbcaption">
    Vertex position Z vs Y
    </div>
@@ -253,23 +251,23 @@ if (file_exists($info_file))
 
    <td>&nbsp;
 
-   <td><?php print $gP->img("vertex_hft/hVertexZ"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hVertexZ.png">
    <div class="thumbcaption">
    Vertex position Z
    </div>
 
 <tr>
-   <td><?php print $gP->img("vertex_hft/hVertexErrorX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hVertexErrorX.png">
    <div class="thumbcaption">
    Vertex position error X
    </div>
 
-   <td><?php print $gP->img("vertex_hft/hVertexErrorY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hVertexErrorY.png">
    <div class="thumbcaption">
    Vertex position error Y
    </div>
 
-   <td><?php print $gP->img("vertex_hft/hVertexErrorZ"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hVertexErrorZ.png">
    <div class="thumbcaption">
    Vertex position error Z
    </div>
@@ -291,33 +289,33 @@ if (file_exists($info_file))
 <table class="simple00 cntr">
 
 <tr>
-   <td><?php print $gP->img("vertex/hVertexPullX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hVertexPullX.png">
    <div class="thumbcaption">
    Vertex pull distribuition in X
    </div>
 
-   <td><?php print $gP->img("vertex/hVertexPullY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hVertexPullY.png">
    <div class="thumbcaption">
    Vertex pull distribuition in Y
    </div>
 
-   <td><?php print $gP->img("vertex/hVertexPullZ"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hVertexPullZ.png">
    <div class="thumbcaption">
    Vertex pull distribuition in Z
    </div>
 
 <tr>
-   <td><?php print $gP->img("vertex/hMcRecoVertexDeltaX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hMcRecoVertexDeltaX.png">
    <div class="thumbcaption">
    Delta X: Simu - Reco
    </div>
 
-   <td><?php print $gP->img("vertex/hMcRecoVertexDeltaY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hMcRecoVertexDeltaY.png">
    <div class="thumbcaption">
    Delta Y: Simu - Reco
    </div>
 
-   <td><?php print $gP->img("vertex/hMcRecoVertexDeltaZ"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hMcRecoVertexDeltaZ.png">
    <div class="thumbcaption">
    Delta Z: Simu - Reco
    </div>
@@ -325,7 +323,7 @@ if (file_exists($info_file))
 <tr>
    <td>&nbsp;
 
-   <td><?php print $gP->img("vertex/hMcRecoVertexDelta"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hMcRecoVertexDelta.png">
    <div class="thumbcaption">
    Distance: Simu - Reco
    </div>
@@ -349,33 +347,33 @@ if (file_exists($info_file))
 <table class="simple00 cntr">
 
 <tr>
-   <td><?php print $gP->img("vertex_hft/hVertexPullX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hVertexPullX.png">
    <div class="thumbcaption">
    Vertex pull distribuition in X
    </div>
 
-   <td><?php print $gP->img("vertex_hft/hVertexPullY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hVertexPullY.png">
    <div class="thumbcaption">
    Vertex pull distribuition in Y
    </div>
 
-   <td><?php print $gP->img("vertex_hft/hVertexPullZ"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hVertexPullZ.png">
    <div class="thumbcaption">
    Vertex pull distribuition in Z
    </div>
 
 <tr>
-   <td><?php print $gP->img("vertex_hft/hMcRecoVertexDeltaX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hMcRecoVertexDeltaX.png">
    <div class="thumbcaption">
    Delta X: Simu - Reco
    </div>
 
-   <td><?php print $gP->img("vertex_hft/hMcRecoVertexDeltaY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hMcRecoVertexDeltaY.png">
    <div class="thumbcaption">
    Delta Y: Simu - Reco
    </div>
 
-   <td><?php print $gP->img("vertex_hft/hMcRecoVertexDeltaZ"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hMcRecoVertexDeltaZ.png">
    <div class="thumbcaption">
    Delta Z: Simu - Reco
    </div>
@@ -383,7 +381,7 @@ if (file_exists($info_file))
 <tr>
    <td>&nbsp;
 
-   <td><?php print $gP->img("vertex_hft/hMcRecoVertexDelta"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_hft/hMcRecoVertexDelta.png">
    <div class="thumbcaption">
    Distance: Simu - Reco
    </div>
@@ -407,31 +405,31 @@ if (file_exists($info_file))
 <table class="simple00 cntr">
 
 <tr>
-   <td><?php print $gP->img("vertex_maxrank/hVertexX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_maxrank/hVertexX.png">
    <div class="thumbcaption">
    Vertex position X
    </div>
 
    <td>&nbsp;
 
-   <td><?php print $gP->img("vertex_maxrank/hVertexZvX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_maxrank/hVertexZvX.png">
    <div class="thumbcaption">
    Vertex position Z vs X
    </div>
 
 <tr>
 
-   <td><?php print $gP->img("vertex_maxrank/hVertexXvY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_maxrank/hVertexXvY.png">
    <div class="thumbcaption">
    Vertex position X vs Y
    </div>
 
-   <td><?php print $gP->img("vertex_maxrank/hVertexY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_maxrank/hVertexY.png">
    <div class="thumbcaption">
    Vertex position Y
    </div>
 
-   <td><?php print $gP->img("vertex_maxrank/hVertexZvY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_maxrank/hVertexZvY.png">
    <div class="thumbcaption">
    Vertex position Z vs Y
    </div>
@@ -441,23 +439,23 @@ if (file_exists($info_file))
 
    <td>&nbsp;
 
-   <td><?php print $gP->img("vertex_maxrank/hVertexZ"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_maxrank/hVertexZ.png">
    <div class="thumbcaption">
    Vertex position Z
    </div>
 
 <tr>
-   <td><?php print $gP->img("vertex_maxrank/hVertexErrorX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_maxrank/hVertexErrorX.png">
    <div class="thumbcaption">
    Vertex position error X
    </div>
 
-   <td><?php print $gP->img("vertex_maxrank/hVertexErrorY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_maxrank/hVertexErrorY.png">
    <div class="thumbcaption">
    Vertex position error Y
    </div>
 
-   <td><?php print $gP->img("vertex_maxrank/hVertexErrorZ"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_maxrank/hVertexErrorZ.png">
    <div class="thumbcaption">
    Vertex position error Z
    </div>
@@ -479,33 +477,33 @@ if (file_exists($info_file))
 <table class="simple00 cntr">
 
 <tr>
-   <td><?php print $gP->img("vertex_maxrank/hVertexPullX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_maxrank/hVertexPullX.png">
    <div class="thumbcaption">
    Vertex pull distribuition in X
    </div>
 
-   <td><?php print $gP->img("vertex_maxrank/hVertexPullY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_maxrank/hVertexPullY.png">
    <div class="thumbcaption">
    Vertex pull distribuition in Y
    </div>
 
-   <td><?php print $gP->img("vertex_maxrank/hVertexPullZ"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_maxrank/hVertexPullZ.png">
    <div class="thumbcaption">
    Vertex pull distribuition in Z
    </div>
 
 <tr>
-   <td><?php print $gP->img("vertex_maxrank/hMcRecoVertexDeltaX"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_maxrank/hMcRecoVertexDeltaX.png">
    <div class="thumbcaption">
    Delta X: Simu - Reco
    </div>
 
-   <td><?php print $gP->img("vertex_maxrank/hMcRecoVertexDeltaY"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_maxrank/hMcRecoVertexDeltaY.png">
    <div class="thumbcaption">
    Delta Y: Simu - Reco
    </div>
 
-   <td><?php print $gP->img("vertex_maxrank/hMcRecoVertexDeltaZ"); ?>
+   <td><img class="img_topdir" width=500 src="vertex_maxrank/hMcRecoVertexDeltaZ.png">
    <div class="thumbcaption">
    Delta Z: Simu - Reco
    </div>
@@ -513,7 +511,7 @@ if (file_exists($info_file))
 <tr>
    <td>&nbsp;
 
-   <td><?php print $gP->img("vertex/hMcRecoVertexDelta"); ?>
+   <td><img class="img_topdir" width=500 src="vertex/hMcRecoVertexDelta.png">
    <div class="thumbcaption">
    Distance: Simu - Reco
    </div>
