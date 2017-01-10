@@ -58,10 +58,10 @@ void StiHifyRootFile::Finalize()
       const tvx::HistContainer& hitsNumer( *hc("sti_hit_accepted") );
       const tvx::HistContainer& hitsDenom( *hc("sti_hit_any_node") );
 
-      const TH1* hitsAcc = hitsNumer.FindHist(hist_name);
-      const TH1* hitsAll = hitsDenom.FindHist(hist_name);
+      const TH1& hitsAcc = hitsNumer[hist_name];
+      const TH1& hitsAll = hitsDenom[hist_name];
 
-      ratios->CreateRatioHist(hitsAcc, hitsAll);
+      ratios->CreateRatioHist(&hitsAcc, &hitsAll);
    }
 
 }

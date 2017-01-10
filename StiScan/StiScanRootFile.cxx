@@ -116,18 +116,18 @@ void StiScanRootFile::Finalize()
    StiScanRatiosHistContainer *ratios = new StiScanRatiosHistContainer("sti_gea_ratio", this);
    Add(ratios);
 
-   const tvx::HistContainer* gea = hc("gea");
-   const tvx::HistContainer* sti_trk = hc("sti_trk");
+   const tvx::HistContainer& gea = *hc("gea");
+   const tvx::HistContainer& sti_trk = *hc("sti_trk");
 
-   const TH1* gea_eloss = gea->FindHist("hELossVsPhiVsRVsZ_pyx");
-   const TH1* sti_eloss = sti_trk->FindHist("hELossVsPhiVsRVsZ_pyx");
+   const TH1* gea_eloss = &gea["hELossVsPhiVsRVsZ_pyx"];
+   const TH1* sti_eloss = &sti_trk["hELossVsPhiVsRVsZ_pyx"];
    ratios->CreateRatioHist(sti_eloss, gea_eloss);
 
-   gea_eloss = gea->FindHist("hELossVsPhiVsRVsZ_pyx_px");
-   sti_eloss = sti_trk->FindHist("hELossVsPhiVsRVsZ_pyx_px");
+   gea_eloss = &gea["hELossVsPhiVsRVsZ_pyx_px"];
+   sti_eloss = &sti_trk["hELossVsPhiVsRVsZ_pyx_px"];
    ratios->CreateRatioHist(sti_eloss, gea_eloss);
 
-   gea_eloss = gea->FindHist("hELossVsXVsYVsZ_pyx");
-   sti_eloss = sti_trk->FindHist("hELossVsXVsYVsZ_pyx");
+   gea_eloss = &gea["hELossVsXVsYVsZ_pyx"];
+   sti_eloss = &sti_trk["hELossVsXVsYVsZ_pyx"];
    ratios->CreateRatioHist(sti_eloss, gea_eloss);
 }
