@@ -8,7 +8,6 @@ include_once(BASE_DIR."/common/head.php");
 
 
 $pfx = isset($_GET['pfx']) ? $_GET['pfx'] : "";
-$det = isset($_GET['det']) ? $_GET['det'] : "";
 
 $info_file = VTXEVAL_RESULTS_DIR."/".dirname($pfx)."/info.html";
 
