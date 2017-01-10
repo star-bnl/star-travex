@@ -1,6 +1,14 @@
 function doGet(request)
 {
   var userPath = request.parameter.pfx;
+
+  if ( !userPath )
+  {
+    var output = "ERROR: No valid path prefix provided";
+    Logger.log(output);
+    return ContentService.createTextOutput(output);
+  }
+
   var innermostFolderObj = getInnermostFolder(userPath);
 
   Logger.log( "innermostFolderObj: " + innermostFolderObj );
