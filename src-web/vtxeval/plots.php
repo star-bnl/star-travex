@@ -61,6 +61,19 @@ if (file_exists($info_file))
    Total number of vertices
    </div>
 
+<tr>
+   <td>&nbsp;
+
+   <td><?php print $gP->img("event/McRecMulAny_eff"); ?>
+   <div class="thumbcaption">
+   Primary vertex reconstruction efficiency
+   </div>
+
+   <td><?php print $gP->img("event/McRecMulGood_eff"); ?>
+   <div class="thumbcaption">
+   Reconstruction efficiency for the maximum rank vertex
+   </div>
+
 </table>
 
 
