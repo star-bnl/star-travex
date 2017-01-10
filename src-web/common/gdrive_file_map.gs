@@ -7,8 +7,9 @@ function doGet(request)
 
   if ( !innermostFolderObj )
   {
-    Logger.log("ERROR: Innermost folder NOT found in path: " + userPath);
-    return;
+    var output = "ERROR: Innermost folder NOT found in path: " + userPath;
+    Logger.log(output);
+    return ContentService.createTextOutput(output);
   }
 
   var gdriveFile = provideFileMap(innermostFolderObj);
@@ -16,9 +17,7 @@ function doGet(request)
 
   Logger.log( "fileMapObj size in bytes: " + fileMapObj.getBytes().length );
 
-  var output =
-    'var gdrive_file_map = ' + fileMapObj.getDataAsString() + ';\n' +
-    'document.getElementById("whereToPrint").innerHTML += "<br>pfx: ' + userPath + '";';
+  var output = 'var gdrive_file_map = ' + fileMapObj.getDataAsString() + ';';
 
   return ContentService.createTextOutput(output).setMimeType(ContentService.MimeType.JAVASCRIPT);
 }
@@ -48,7 +47,7 @@ function getInnermostFolder(path)
   // Remove empty elements
   var len = folders.length, i;
   // copy non-empty values to the end of the array
-  for(i = 0; i < len; i++ ) folders[i] && folders.push( folders[i]);
+  for (i = 0; i < len; i++) folders[i] && folders.push(folders[i]);
   // cut the array and leave only the non-empty values
   folders.splice(0 , len);
 
