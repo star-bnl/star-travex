@@ -86,45 +86,44 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">vtxhist.cc File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;iostream&gt;</code><br />
+<div class="textblock"><code>#include &lt;algorithm&gt;</code><br />
+<code>#include &lt;cfloat&gt;</code><br />
+<code>#include &lt;iostream&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &quot;TTree.h&quot;</code><br />
 <code>#include &quot;TChain.h&quot;</code><br />
-<code>#include &quot;TMath.h&quot;</code><br />
-<code>#include &quot;StarClassLibrary/StThreeVectorF.hh&quot;</code><br />
 <code>#include &quot;StEvent/StBTofHeader.h&quot;</code><br />
 <code>#include &quot;StEvent/StTrackTopologyMap.h&quot;</code><br />
 <code>#include &quot;StMuDSTMaker/COMMON/StMuDst.h&quot;</code><br />
+<code>#include &quot;StMuDSTMaker/COMMON/StMuDstMaker.h&quot;</code><br />
 <code>#include &quot;StMuDSTMaker/COMMON/StMuEvent.h&quot;</code><br />
-<code>#include &quot;StMuDSTMaker/COMMON/StMuPrimaryVertex.h&quot;</code><br />
 <code>#include &quot;StMuDSTMaker/COMMON/StMuMcTrack.h&quot;</code><br />
 <code>#include &quot;StMuDSTMaker/COMMON/StMuMcVertex.h&quot;</code><br />
-<code>#include &quot;StMuDSTMaker/COMMON/StMuDstMaker.h&quot;</code><br />
+<code>#include &quot;StMuDSTMaker/COMMON/StMuPrimaryVertex.h&quot;</code><br />
 <code>#include &quot;StMuDSTMaker/COMMON/StMuTrack.h&quot;</code><br />
+<code>#include &quot;StSecondaryVertexMaker/DecayVertexFinder.h&quot;</code><br />
+<code>#include &quot;StVertexRootIO/TPrimaryVertex.h&quot;</code><br />
+<code>#include &quot;StVertexRootIO/TDecayVertexContainers.h&quot;</code><br />
 <code>#include &quot;travex/ProgramOptions.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="utils_8h_source.html">src-tools/utils.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="VertexRootFile_8h_source.html">VtxEval/VertexRootFile.h</a>&quot;</code><br />
 </div>
 <p><a href="vtxhist_8cc_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structVertexData.html">VertexData</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a138dbb9f80924aba7f2fe07ef5b5329d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vtxhist_8cc.html#a138dbb9f80924aba7f2fe07ef5b5329d">process_muDst</a> (<a class="el" href="classVertexRootFile.html">VertexRootFile</a> &amp;outFile, int nevent=10000)</td></tr>
-<tr class="separator:a138dbb9f80924aba7f2fe07ef5b5329d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a621f22d2213f4bb27109b40fa1bb82c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vtxhist_8cc.html#a621f22d2213f4bb27109b40fa1bb82c7">process_muDst</a> (<a class="el" href="classVertexRootFile.html">VertexRootFile</a> &amp;outFile)</td></tr>
+<tr class="separator:a621f22d2213f4bb27109b40fa1bb82c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15849dbc394a293d90f9f02deef2a20e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vtxhist_8cc.html#a15849dbc394a293d90f9f02deef2a20e">checkVertexHasPxlHit</a> (int vertexIndex, const StMuDst &amp;stMuDst)</td></tr>
 <tr class="memdesc:a15849dbc394a293d90f9f02deef2a20e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if at least one PXL hit is on a track pointing to vertex with vertexIndex.  <a href="#a15849dbc394a293d90f9f02deef2a20e">More...</a><br /></td></tr>
 <tr class="separator:a15849dbc394a293d90f9f02deef2a20e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51e939f6cb2a559d261f6cf65dd389ef"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vtxhist_8cc.html#a51e939f6cb2a559d261f6cf65dd389ef">SkipCurrentEvent</a> (const StMuDstMaker &amp;maker)</td></tr>
+<tr class="separator:a51e939f6cb2a559d261f6cf65dd389ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vtxhist_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
 <tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -155,7 +154,7 @@ Functions</h2></td></tr>
 
 <p>Returns true if at least one PXL hit is on a track pointing to vertex with vertexIndex. </p>
 
-<p>Definition at line <a class="el" href="vtxhist_8cc_source.html#l00255">255</a> of file <a class="el" href="vtxhist_8cc_source.html">vtxhist.cc</a>.</p>
+<p>Definition at line <a class="el" href="vtxhist_8cc_source.html#l00211">211</a> of file <a class="el" href="vtxhist_8cc_source.html">vtxhist.cc</a>.</p>
 
 </div>
 </div>
@@ -183,11 +182,11 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vtxhist_8cc_source.html#l00053">53</a> of file <a class="el" href="vtxhist_8cc_source.html">vtxhist.cc</a>.</p>
+<p>Definition at line <a class="el" href="vtxhist_8cc_source.html#l00041">41</a> of file <a class="el" href="vtxhist_8cc_source.html">vtxhist.cc</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a138dbb9f80924aba7f2fe07ef5b5329d"></a>
+<a class="anchor" id="a621f22d2213f4bb27109b40fa1bb82c7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -195,30 +194,38 @@ Functions</h2></td></tr>
           <td class="memname">void process_muDst </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classVertexRootFile.html">VertexRootFile</a> &amp;&#160;</td>
-          <td class="paramname"><em>outFile</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>outFile</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>nevent</em> = <code>10000</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="vtxhist_8cc_source.html#l00072">72</a> of file <a class="el" href="vtxhist_8cc_source.html">vtxhist.cc</a>.</p>
+<p>Definition at line <a class="el" href="vtxhist_8cc_source.html#l00060">60</a> of file <a class="el" href="vtxhist_8cc_source.html">vtxhist.cc</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a51e939f6cb2a559d261f6cf65dd389ef"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SkipCurrentEvent </td>
+          <td>(</td>
+          <td class="paramtype">const StMuDstMaker &amp;&#160;</td>
+          <td class="paramname"><em>maker</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="vtxhist_8cc_source.html#l00236">236</a> of file <a class="el" href="vtxhist_8cc_source.html">vtxhist.cc</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 27 2016 13:32:57 for star-travex by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 11 2017 17:10:19 for star-travex by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

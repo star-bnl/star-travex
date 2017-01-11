@@ -194,7 +194,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;   <span class="keyword">delete</span> stiScanEvent;</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;   <span class="keyword">delete</span> geantEvent;</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   outRootFile.<a class="code" href="classStiScanRootFile.html#a2bbbf7666f7c9b58b500ce1c5163c641">FillDerivedHists</a>();</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;   outRootFile.<a class="code" href="classStiScanRootFile.html#a49b52d785f27d4fe1441dbcf14c3e58b">Finalize</a>();</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;   outRootFile.Write();</div>
 <div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;   outRootFile.Close();</div>
 <div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;}</div>
@@ -255,9 +255,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;      level--;</div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;   }</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;}</div>
-<div class="ttc" id="classStiScanRootFile_html_a2bbbf7666f7c9b58b500ce1c5163c641"><div class="ttname"><a href="classStiScanRootFile.html#a2bbbf7666f7c9b58b500ce1c5163c641">StiScanRootFile::FillDerivedHists</a></div><div class="ttdeci">void FillDerivedHists()</div><div class="ttdef"><b>Definition:</b> <a href="StiScanRootFile_8cxx_source.html#l00118">StiScanRootFile.cxx:118</a></div></div>
 <div class="ttc" id="classTGeaEvent_html_a3037de61e3f9c0382e7b6770526ea2e2"><div class="ttname"><a href="classTGeaEvent.html#a3037de61e3f9c0382e7b6770526ea2e2">TGeaEvent::fgHash2PathMap</a></div><div class="ttdeci">static void * fgHash2PathMap</div><div class="ttdef"><b>Definition:</b> <a href="TGeaEvent_8h_source.html#l00024">TGeaEvent.h:24</a></div></div>
 <div class="ttc" id="StiScanPrgOptions_8h_html"><div class="ttname"><a href="StiScanPrgOptions_8h.html">StiScanPrgOptions.h</a></div></div>
+<div class="ttc" id="classStiScanRootFile_html_a49b52d785f27d4fe1441dbcf14c3e58b"><div class="ttname"><a href="classStiScanRootFile.html#a49b52d785f27d4fe1441dbcf14c3e58b">StiScanRootFile::Finalize</a></div><div class="ttdeci">void Finalize()</div><div class="ttdef"><b>Definition:</b> <a href="StiScanRootFile_8cxx_source.html#l00112">StiScanRootFile.cxx:112</a></div></div>
 <div class="ttc" id="classStiScanRootFile_html"><div class="ttname"><a href="classStiScanRootFile.html">StiScanRootFile</a></div><div class="ttdef"><b>Definition:</b> <a href="StiScanRootFile_8h_source.html#l00016">StiScanRootFile.h:16</a></div></div>
 <div class="ttc" id="classTGeaEvent_html"><div class="ttname"><a href="classTGeaEvent.html">TGeaEvent</a></div><div class="ttdef"><b>Definition:</b> <a href="TGeaEvent_8h_source.html#l00016">TGeaEvent.h:16</a></div></div>
 <div class="ttc" id="stiscan_8cc_html_ab86863b2ad1c4ea08de3f7d2252443fb"><div class="ttname"><a href="stiscan_8cc.html#ab86863b2ad1c4ea08de3f7d2252443fb">Hash2StringMap</a></div><div class="ttdeci">std::unordered_map&lt; size_t, std::string &gt; Hash2StringMap</div><div class="ttdef"><b>Definition:</b> <a href="stiscan_8cc_source.html#l00016">stiscan.cc:16</a></div></div>
@@ -274,13 +274,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="classPrgOptionProcessor_html_ace45096744effc0640b84afb3abf4830"><div class="ttname"><a href="classPrgOptionProcessor.html#ace45096744effc0640b84afb3abf4830">PrgOptionProcessor::PathToGeometryFile</a></div><div class="ttdeci">std::string PathToGeometryFile() const </div><div class="ttdef"><b>Definition:</b> <a href="PrgOptionProcessor_8h_source.html#l00033">PrgOptionProcessor.h:33</a></div></div>
 <div class="ttc" id="classPrgOptionProcessor_html_ada7624ab1815b46bce62d5937389b1f1"><div class="ttname"><a href="classPrgOptionProcessor.html#ada7624ab1815b46bce62d5937389b1f1">PrgOptionProcessor::GetStiTChain</a></div><div class="ttdeci">TChain * GetStiTChain()</div><div class="ttdef"><b>Definition:</b> <a href="PrgOptionProcessor_8h_source.html#l00035">PrgOptionProcessor.h:35</a></div></div>
 <div class="ttc" id="classStiScanPrgOptions_html_a46eb8503f93b347c2a06b694c79c9ef0"><div class="ttname"><a href="classStiScanPrgOptions.html#a46eb8503f93b347c2a06b694c79c9ef0">StiScanPrgOptions::GetGeantStepChain</a></div><div class="ttdeci">TChain * GetGeantStepChain()</div><div class="ttdef"><b>Definition:</b> <a href="StiScanPrgOptions_8h_source.html#l00034">StiScanPrgOptions.h:34</a></div></div>
-<div class="ttc" id="classStiScanEvent_html"><div class="ttname"><a href="classStiScanEvent.html">StiScanEvent</a></div><div class="ttdef"><b>Definition:</b> <a href="StiScanEvent_8h_source.html#l00008">StiScanEvent.h:8</a></div></div>
+<div class="ttc" id="classStiScanEvent_html"><div class="ttname"><a href="classStiScanEvent.html">StiScanEvent</a></div><div class="ttdef"><b>Definition:</b> <a href="StiScanEvent_8h_source.html#l00007">StiScanEvent.h:7</a></div></div>
 <div class="ttc" id="classPrgOptionProcessor_html_aac716af0a72f46d41dbc16519523e37a"><div class="ttname"><a href="classPrgOptionProcessor.html#aac716af0a72f46d41dbc16519523e37a">PrgOptionProcessor::GetVolumeList</a></div><div class="ttdeci">const std::set&lt; std::string &gt; &amp; GetVolumeList() const </div><div class="ttdef"><b>Definition:</b> <a href="PrgOptionProcessor_8h_source.html#l00034">PrgOptionProcessor.h:34</a></div></div>
 <div class="ttc" id="stiscan_8cc_html_ad54976922c04f519dbd28b123fc36c30"><div class="ttname"><a href="stiscan_8cc.html#ad54976922c04f519dbd28b123fc36c30">create_volume_hash_map</a></div><div class="ttdeci">void create_volume_hash_map(TGeoNavigator &amp;geoNav, Hash2StringMap &amp;hash2PathMap)</div><div class="ttdef"><b>Definition:</b> <a href="stiscan_8cc_source.html#l00112">stiscan.cc:112</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 27 2016 13:32:56 for star-travex by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 11 2017 17:10:19 for star-travex by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

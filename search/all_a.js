@@ -1,14 +1,10 @@
 var searchData=
 [
-  ['main',['main',['../stihify_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;stihify.cc'],['../stiscan_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;stiscan.cc'],['../vtxhist_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;vtxhist.cc']]],
+  ['main',['main',['../stihify_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;stihify.cc'],['../stiscan_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;stiscan.cc'],['../vtxhist_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;vtxhist.cc'],['../vtxreco_8cxx.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;vtxreco.cxx']]],
   ['make',['Make',['../classStiHifyTreeMaker.html#a54e5a3a9400ff2a0eb3f8a952bf8ef79',1,'StiHifyTreeMaker::Make()'],['../classStMcAnalysisMaker.html#a9c80375ae4a5fb406e38451a941f87e7',1,'StMcAnalysisMaker::Make()'],['../classStiTreeMaker.html#a27a9bfe6d8c08a1ec54102c75f30b9e3',1,'StiTreeMaker::Make()'],['../classStiScanTreeMaker.html#a9f8ca7804c24663f78108e8e7deced10',1,'StiScanTreeMaker::Make()']]],
   ['mass',['mass',['../classTGeaTrack.html#acb055a07c022da49390034d61acabeb2',1,'TGeaTrack']]],
   ['massoc',['mAssoc',['../classStMcAnalysisMaker.html#a31b330299d4e1e2f34409c741d2aa01f',1,'StMcAnalysisMaker']]],
   ['matchedvolname',['MatchedVolName',['../classTGeaStep.html#a0112b2298495216ba39d21fdd364668e',1,'TGeaStep::MatchedVolName(const std::string &amp;pattern) const '],['../classTGeaStep.html#a2a1ce71ac7e338a01d6f41996bdb0809',1,'TGeaStep::MatchedVolName(const std::set&lt; std::string &gt; &amp;patterns) const '],['../classPrgOptionProcessor.html#a779902d29a80d24864d7a17a904c16cc',1,'PrgOptionProcessor::MatchedVolName()'],['../classTStiKalmanTrackNode.html#a3127184e393ecbec0c6a75489352c772',1,'TStiKalmanTrackNode::MatchedVolName(const std::string &amp;pattern) const '],['../classTStiKalmanTrackNode.html#a0fc4900e894612d4926b6bf7d7aae830',1,'TStiKalmanTrackNode::MatchedVolName(const std::set&lt; std::string &gt; &amp;patterns) const ']]],
-  ['maxmult',['maxmult',['../structVertexData.html#ade315aaa16307ee5a79a8c8fa4ecc732',1,'VertexData']]],
-  ['mcx',['McX',['../structVertexData.html#a82b83f0ab8fbbcd936f24e6b07b20b1c',1,'VertexData']]],
-  ['mcy',['McY',['../structVertexData.html#ac382a122d79267dad13323fba2ed97ee',1,'VertexData']]],
-  ['mcz',['McZ',['../structVertexData.html#a00247de546c9a2a84574e2e0b3f81681',1,'VertexData']]],
   ['mdoprojection',['mDoProjection',['../classStiScanHistContainer.html#a87d7e281aedd45959bc738e82fab1b77',1,'StiScanHistContainer']]],
   ['mevent',['mEvent',['../classAgUStep.html#ab0001e28ef01dab43f997357eebb6fe5',1,'AgUStep']]],
   ['mfile',['mFile',['../classAgUStep.html#a8b3ade3dfb7b6f309529fd4f2546f33f',1,'AgUStep::mFile()'],['../classStMcAnalysisMaker.html#aaf35fd36a3dacbe77743041d0d4e7d9d',1,'StMcAnalysisMaker::mFile()']]],
@@ -23,7 +19,6 @@ var searchData=
   ['mtpcntuple',['mTpcNtuple',['../classStMcAnalysisMaker.html#a7531eb33e1acc441abef01d5f0666572',1,'StMcAnalysisMaker']]],
   ['mtrack',['mTrack',['../classAgUStep.html#a20ad46a525b34af5e907c1f804b86fa1',1,'AgUStep']]],
   ['mtree',['mTree',['../classAgUStep.html#a563be3abf3709bd79079068e51218317',1,'AgUStep']]],
-  ['mult',['mult',['../structVertexData.html#afe00c7c5abc1d70d43a7dd33727923de',1,'VertexData']]],
   ['multiply',['Multiply',['../classProfile2D.html#a9e2fa06b244463a798cce7fc4395281e',1,'Profile2D']]],
   ['mumcprvkfv2012',['MuMcPrVKFV2012',['../MuMcPrVKFV2012_8C.html#a62304387f12aa4795c973f893ead2c68',1,'MuMcPrVKFV2012(Long64_t nevent, const char *file, const std::string &amp;outFile, bool fillNtuple):&#160;MuMcPrVKFV2012.C'],['../MuMcPrVKFV2012_8h.html#aa8240e21fe1b074b4e9b9941f76cba22',1,'MuMcPrVKFV2012(Long64_t nevent=999999, const char *file=&quot;/*.MuDst.root&quot;, const std::string &amp;outFile=&quot;trial&quot;, bool fillNtuple=false):&#160;MuMcPrVKFV2012.C']]],
   ['mumcprvkfv2012_2ec',['MuMcPrVKFV2012.C',['../MuMcPrVKFV2012_8C.html',1,'']]],

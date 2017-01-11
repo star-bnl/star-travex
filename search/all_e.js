@@ -2,12 +2,10 @@ var searchData=
 [
   ['r',['r',['../classTGeaStep.html#af9bdadd25a56f1884ff004f349748000',1,'TGeaStep']]],
   ['r_5f_5fassert',['R__ASSERT',['../H3D_8cxx.html#a38854ea0db3a06380321437dc51386c5',1,'H3D.cxx']]],
-  ['rank',['rank',['../structVertexData.html#af713425fd82abd7bacf52381db4bc2d3',1,'VertexData']]],
   ['readme_2emd',['README.md',['../StiHify_2README_8md.html',1,'']]],
   ['readme_2emd',['README.md',['../README_8md.html',1,'']]],
   ['readme_2emd',['README.md',['../StiScan_2README_8md.html',1,'']]],
   ['readme_2emd',['README.md',['../VtxEval_2README_8md.html',1,'']]],
-  ['refmult',['refMult',['../structVertexData.html#a056e0dc3fae8ad678bcd3037a931509d',1,'VertexData']]],
   ['refx',['refX',['../H3D_8cxx.html#a0845c74365d29c3f52015c6548d030b4',1,'H3D.cxx']]],
   ['refy',['refY',['../H3D_8cxx.html#ad50856a7dde6739641c7ee150fbc4317',1,'H3D.cxx']]],
   ['refz',['refZ',['../H3D_8cxx.html#afe72133921ce7f426d1ec39320a47048',1,'H3D.cxx']]],

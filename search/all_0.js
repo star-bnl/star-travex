@@ -19,7 +19,6 @@ var searchData=
   ['any',['Any',['../TStiKalmanTrackNode_8h.html#a687fd8f333c40e51d51d9ca13baf92afaed36a1ef76a59ee3f15180e0441188ad',1,'TStiKalmanTrackNode.h']]],
   ['applyclassifier',['ApplyClassifier',['../ApplyClassifier_8C.html#a3b677c0318decd024cec302184cb2f66',1,'ApplyClassifier.C']]],
   ['applyclassifier_2ec',['ApplyClassifier.C',['../ApplyClassifier_8C.html',1,'']]],
-  ['ask_5fuser',['ask_user',['../namespacevtxeval.html#a51c927e74a3b2f5958ef0be8ab0b926b',1,'vtxeval']]],
   ['assignclosestcandidatehit',['AssignClosestCandidateHit',['../classStiHifyEvent.html#aa1db0f318349b06988bff7db03cb25a4',1,'StiHifyEvent::AssignClosestCandidateHit()'],['../classTStiKalmanTrack.html#ab22d54ea2788dc38df9dde2a1cfdd91d',1,'TStiKalmanTrack::AssignClosestCandidateHit()'],['../classTStiKalmanTrackNode.html#a247e8f05276c58329f8e42e50e61f80f',1,'TStiKalmanTrackNode::AssignClosestCandidateHit()']]],
   ['astep',['aStep',['../classAgUStep.html#afc3ecee542fa0e4299b62834b189aac3',1,'AgUStep']]],
   ['atree',['aTree',['../classStiHifyAnalysisTreeMaker.html#a4a1bd54b4af21b40cf29eb0ae0cde3cf',1,'StiHifyAnalysisTreeMaker']]]

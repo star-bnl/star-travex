@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['stack_5fhists_2ec',['stack_hists.C',['../stack__hists_8C.html',1,'']]],
   ['stareventhistcontainer_2ecxx',['StarEventHistContainer.cxx',['../StarEventHistContainer_8cxx.html',1,'']]],
   ['stareventhistcontainer_2eh',['StarEventHistContainer.h',['../StarEventHistContainer_8h.html',1,'']]],
   ['starvertexhfthistcontainer_2ecxx',['StarVertexHftHistContainer.cxx',['../StarVertexHftHistContainer_8cxx.html',1,'']]],

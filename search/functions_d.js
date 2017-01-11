@@ -12,8 +12,8 @@ var searchData=
   ['setrrange',['SetRRange',['../classStiScanHistContainer.html#ae55df3c4ff7c81295b33e7c6cbfee0e5',1,'StiScanHistContainer']]],
   ['settreevariables',['SetTreeVariables',['../ApplyClassifier_8C.html#a78209d54b671c420f4462990004b7157',1,'ApplyClassifier.C']]],
   ['setzrange',['SetZRange',['../classStiScanHistContainer.html#ac7514797c06248265844f010044ca9e7',1,'StiScanHistContainer']]],
+  ['skipcurrentevent',['SkipCurrentEvent',['../vtxhist_8cc.html#a51e939f6cb2a559d261f6cf65dd389ef',1,'vtxhist.cc']]],
   ['splithistsbyvolume',['SplitHistsByVolume',['../classStiHifyPrgOptions.html#a9a9960ef03b1bc828431461207e7518b',1,'StiHifyPrgOptions']]],
-  ['stack_5fhists',['stack_hists',['../stack__hists_8C.html#a66322f72d74a688af074b1faa685bea7',1,'stack_hists.C']]],
   ['stareventhistcontainer',['StarEventHistContainer',['../classStarEventHistContainer.html#a6aa7046890ac8b20671e04c5f7c0023d',1,'StarEventHistContainer']]],
   ['starvertexhfthistcontainer',['StarVertexHftHistContainer',['../classStarVertexHftHistContainer.html#a80f23bf996cf3e6c0e7683a42ee8e400',1,'StarVertexHftHistContainer']]],
   ['starvertexhistcontainer',['StarVertexHistContainer',['../classStarVertexHistContainer.html#a3ec2a4f023cdb9db196f28aae1aeaee7',1,'StarVertexHistContainer']]],
@@ -35,5 +35,6 @@ var searchData=
   ['stiscantreemaker',['StiScanTreeMaker',['../classStiScanTreeMaker.html#a929135cb827813b75b7c0d0fd45d0df7',1,'StiScanTreeMaker']]],
   ['stitreemaker',['StiTreeMaker',['../classStiTreeMaker.html#a6de9cc62775cfe71f64c69f117534293',1,'StiTreeMaker']]],
   ['stivolumefilter',['StiVolumeFilter',['../classStiVolumeFilter.html#abd5e8efecfc9e24bdc4d17286a6c005f',1,'StiVolumeFilter::StiVolumeFilter()'],['../classStiVolumeFilter.html#ac5bdcfb3192604ad1b3557a18005224a',1,'StiVolumeFilter::StiVolumeFilter(const StiVolumeFilter &amp;)=delete']]],
-  ['stmcanalysismaker',['StMcAnalysisMaker',['../classStMcAnalysisMaker.html#a71adf0417604e5e35d218d6c46d2e37a',1,'StMcAnalysisMaker']]]
+  ['stmcanalysismaker',['StMcAnalysisMaker',['../classStMcAnalysisMaker.html#a71adf0417604e5e35d218d6c46d2e37a',1,'StMcAnalysisMaker']]],
+  ['switched_5ffile',['switched_file',['../vtxreco_8cxx.html#a8a7ea6c6e5898c5d6492f2298a4ba552',1,'vtxreco.cxx']]]
 ];

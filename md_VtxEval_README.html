@@ -79,34 +79,48 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">VtxEval: Vertex Reconstruction Evaluation and Efficiency at STAR </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>To build the library and the <code>vtxeval</code> executable follow the instructions in the project's ../README.md "README.md".</p>
-<h1>How to create embedding samples </h1>
-<p>Checkout the code using the following command: </p><pre class="fragment">git clone --recursive https://github.com/star-bnl/star-vertex-eval.git
-</pre><p>Select desired zerobias files from the database: </p><pre class="fragment">get_file_list.pl -keys path,filename,events -cond 'filename~st_zerobias_adc_1412%,year=2013,runnumber&gt;14125000' -delim / -limit 20
-</pre><p>Create a text file with a list of zerobias data files in the following format (<code>path/to/file</code> <code>run_id</code> <code>num_of_events</code>), e.g.: </p><pre class="fragment">$cat supple/filelist_zerobias.txt
-/star/data05/daq/2013/embedding/st_zerobias_adc_14150005_raw_3330002.daq 14150005 103
-/star/data05/daq/2013/embedding/st_zerobias_adc_14150004_raw_1530002.daq 14150004 103
- ...
-/star/data05/daq/2013/embedding/st_zerobias_adc_14150005_raw_8660002.daq 14150005 102
- ...
+<div class="textblock"><p>To build the library and the <code>vtxeval</code> executable follow the instructions in the project's top level ../README.md "README.md". Since in this study we are focusing on evaluation of the vertex finders one can build and install only the relevant libraries: </p><pre class="fragment">$ mkdir build/ &amp;&amp; cd build/
+$ cmake -D CMAKE_INSTALL_PREFIX=../build-install \
+        -D BOOST_ROOT=$OPTSTAR \
+        -D CMAKE_BUILD_TYPE=Release ../
+$ make -j4 star-vertex
+$ make install
+</pre><h1>How to create embedding samples </h1>
+<p>Use STAR's <code>get_file_list.pl</code> to select a set of desired zerobias files from the database. Here is an example command with some selection constraints: </p><pre class="fragment">$ get_file_list.pl -keys path,filename,events \
+  -cond filename~st_zerobias_%,runnumber[]14115007-14120000,sanity=1,filetype=online_daq \
+  -delim / -limit 0
+</pre><p>You may choose to copy the files from <code>hpss</code> to some location on disk. In that case, the paths to files returned by <code>get_file_list.pl</code> can be adjusted to point to the actual file location. The final list of zerobias data files has to be in the following format: </p><pre class="fragment">string:"path/to/file.daq run_id num_of_events_to_process"
+</pre><p>The contents of your file may look like the following: </p><pre class="fragment">$ cat filelist_zerobias.lis
+...
+string:"/star/data05/daq/2013/embedding/st_zerobias_adc_14115007_raw_1540001.daq 14115007 123"
+string:"/star/data05/daq/2013/embedding/st_zerobias_adc_14115007_raw_2440001.daq 14115007 155"
+...
+string:"/star/data05/daq/2013/embedding/st_zerobias_adc_14115007_raw_3330001.daq 14115007 111"
+...
 </pre><h2>W boson </h2>
-<p>Create a directory from where condor jobs will be submitted and run the script as: </p><pre class="fragment">mkdir submit_wbos &amp;&amp; cd submit_wbos
-/path/to/star-vertex-eval/supple/submit_jobs_embedding_wbos.sh
+<p>The script to submit W embedding jobs to condor is called <code>submit_jobs_embedding_wbos.sh</code> and can be found in <code>star-travex/supple/</code>. There is a number of named parameters which user may need to set to appropriate values. The two parameters likely to be changed often are <code>OUT_DIR</code> and <code>INPUT_FILE_LIST</code>. All named variables can be passed to the script in command line like this: </p><pre class="fragment">$ OUT_DIR=/tmp/scratch/wbos_embed_results/ \
+  INPUT_FILE_LIST=~/star-travex/supple/filelist_zerobias.lis \
+  ~/star-travex/supple/submit_jobs_embedding_wbos.sh
+</pre><h2>Lambda </h2>
+<p>A command submitting embedding jobs can look like this: </p><pre class="fragment">$ FZD_DIR=~/scratch/lambda_fzd/ \
+  OUT_DIR=~/scratch/lambda_embed_results/ \
+  INPUT_FILE_LIST=~/star-travex/supple/filelist_zerobias_lambda.lis \
+  ~/star-travex/supple/submit_jobs_embedding_generic.sh
 </pre><h2>J/psi </h2>
 <p>Create a directory from where condor jobs will be submitted and run the script as: </p><pre class="fragment">mkdir submit_jpsi &amp;&amp; cd submit_jpsi
-/path/to/star-vertex-eval/supple/submit_jobs_embedding_jpsi.sh 200
-</pre><p>If the package was not checked out in the default location of ${HOME}/star-vertex-eval/ then you should specify the correct location as: </p><pre class="fragment">SOURCE_DIR=/path/to/star-vertex-eval/ \
+/path/to/star-travex/supple/submit_jobs_embedding_jpsi.sh 200
+</pre><p>If the package was not checked out in the default location of ${HOME}/star-travex/ then you should specify the correct location as: </p><pre class="fragment">SOURCE_DIR=/path/to/star-travex/ \
 OUTPUT_DIR=/tmp/jpsi_embed \
-/path/to/star-vertex-eval/supple/submit_jobs_embedding_jpsi.sh 200
+/path/to/star-travex/supple/submit_jobs_embedding_jpsi.sh 200
 </pre><p>There is a number of other script parameters which can be modified if the default values are not appropriate. Search for "NAMED ARGUMENTS" to find these values.</p>
-<h1>Study the ranking scheme in STAR </h1>
+<h1>Study the ranking scheme in STAR (deprecated) </h1>
 <p>This section is outdated but left here for the reference until after all mentioned macros are removed from the repository...</p>
 <p>1.- The macro VertexRank.C will read the MuDst sample and create a tree with some vertex information. To run (e.g. 100 events and output file outvertex.root): </p><pre class="fragment">$root -l -b -q lMuDst.C 'VertexRank.C(100, "path/to/*.MuDst.root", "outvertex")'
 </pre><p>2.- Run TMVA to classify signal and background. A separate set of signal and background must be given, with a define set of variables for the training. Also need to specify the classifier. To run (e.g. with classifiers Fisher and Likelihood): </p><pre class="fragment">$root TMVAClassification.C\(\"Fisher,Likelihood\"\)
 </pre><p>3.- Apply the results of the classification with <a class="el" href="ApplyClassifier_8C.html">ApplyClassifier.C</a>. The output will be the same tree for step (1) but with a new branch with the classifier response. Run: </p><pre class="fragment">$root ApplyClassifier.C</pre> </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 27 2016 13:32:57 for star-travex by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 11 2017 17:10:19 for star-travex by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

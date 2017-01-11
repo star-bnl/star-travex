@@ -135,17 +135,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;Build with cmake</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;----------------</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;Checkout the code using one of the following commands:</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;Checkout the code using the following command:</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    git clone https://github.com/star-bnl/star-travex.git</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;Compile and build the tools:</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    cd star-travex/</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    git submodule update --init --depth=50</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    mkdir build &amp;&amp; cd build</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    cmake ../</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    make -j4 &amp;&amp; make install</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    $ cd star-travex/</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    $ git submodule update --init --depth=50</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    $ mkdir build &amp;&amp; cd build</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    $ cmake ../</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    $ make -j4 &amp;&amp; make install</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;The make tool will place the libraries in the local `.slXX_gccXXX` directory.</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
@@ -153,25 +153,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;Build within STAR environment</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;-----------------------------</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;We assume that the user environment includes the standard shell variables</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;available for a typical user account of the STAR experiment. The following</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;environment variables should be set if needed:</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;We assume that the user environment includes the shell variables availabe within</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;a typical STAR account. Specifically, $OPTSTAR contains the prefix path and is</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;used to help `cmake` find the appropriate `boost` release.</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    $STAR_LIB        # Used in supple/starsim_zslice_*.kumac</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    $OPTSTAR         # The prefix path to installed boost release</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    git clone https://github.com/star-bnl/star-travex.git</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    cd star-travex/</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    git submodule update --init --depth=50</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    mkdir build &amp;&amp; cd build</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    cmake -D CMAKE_INSTALL_PREFIX=./ -D BOOST_ROOT=$OPTSTAR ../</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    make -j4 &amp;&amp; make install</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;The make tool will place the libraries in the local `.slXX_gccXXX` directory.</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    $ git clone https://github.com/star-bnl/star-travex.git</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    $ cd star-travex/</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    $ git submodule update --init --depth=50</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    $ mkdir build &amp;&amp; cd build</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    $ cmake -D CMAKE_INSTALL_PREFIX=./ -D BOOST_ROOT=$OPTSTAR ../</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    $ make -j4 &amp;&amp; make install</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;The make tool will place the libraries in the local `.slXX_gccXXX` directory.</div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Jun 27 2016 13:32:56 for star-travex by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 11 2017 17:10:19 for star-travex by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.8
 </small></address>

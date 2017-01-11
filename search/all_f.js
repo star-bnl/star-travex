@@ -15,9 +15,8 @@ var searchData=
   ['settreevariables',['SetTreeVariables',['../ApplyClassifier_8C.html#a78209d54b671c420f4462990004b7157',1,'ApplyClassifier.C']]],
   ['setzrange',['SetZRange',['../classStiScanHistContainer.html#ac7514797c06248265844f010044ca9e7',1,'StiScanHistContainer']]],
   ['sinstance',['sInstance',['../classAgUStep.html#a0583409221c062287f89f2da24b3c015',1,'AgUStep']]],
+  ['skipcurrentevent',['SkipCurrentEvent',['../vtxhist_8cc.html#a51e939f6cb2a559d261f6cf65dd389ef',1,'vtxhist.cc']]],
   ['splithistsbyvolume',['SplitHistsByVolume',['../classStiHifyPrgOptions.html#a9a9960ef03b1bc828431461207e7518b',1,'StiHifyPrgOptions']]],
-  ['stack_5fhists',['stack_hists',['../stack__hists_8C.html#a66322f72d74a688af074b1faa685bea7',1,'stack_hists.C']]],
-  ['stack_5fhists_2ec',['stack_hists.C',['../stack__hists_8C.html',1,'']]],
   ['stareventhistcontainer',['StarEventHistContainer',['../classStarEventHistContainer.html',1,'StarEventHistContainer'],['../classStarEventHistContainer.html#a6aa7046890ac8b20671e04c5f7c0023d',1,'StarEventHistContainer::StarEventHistContainer()']]],
   ['stareventhistcontainer_2ecxx',['StarEventHistContainer.cxx',['../StarEventHistContainer_8cxx.html',1,'']]],
   ['stareventhistcontainer_2eh',['StarEventHistContainer.h',['../StarEventHistContainer_8h.html',1,'']]],
@@ -90,5 +89,6 @@ var searchData=
   ['stmcanalysismaker',['StMcAnalysisMaker',['../classStMcAnalysisMaker.html',1,'StMcAnalysisMaker'],['../classStMcAnalysisMaker.html#a71adf0417604e5e35d218d6c46d2e37a',1,'StMcAnalysisMaker::StMcAnalysisMaker()']]],
   ['stmcanalysismaker_2ecxx',['StMcAnalysisMaker.cxx',['../StMcAnalysisMaker_8cxx.html',1,'']]],
   ['stmcanalysismaker_2eh',['StMcAnalysisMaker.h',['../StMcAnalysisMaker_8h.html',1,'']]],
-  ['stmcanalysismakerlinkdef_2eh',['StMcAnalysisMakerLinkDef.h',['../StMcAnalysisMakerLinkDef_8h.html',1,'']]]
+  ['stmcanalysismakerlinkdef_2eh',['StMcAnalysisMakerLinkDef.h',['../StMcAnalysisMakerLinkDef_8h.html',1,'']]],
+  ['switched_5ffile',['switched_file',['../vtxreco_8cxx.html#a8a7ea6c6e5898c5d6492f2298a4ba552',1,'vtxreco.cxx']]]
 ];

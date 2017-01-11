@@ -11,6 +11,5 @@ var searchData=
   ['addtrack',['AddTrack',['../classTGeaEvent.html#aff6135df98f037afd3a36b6956b7ae03',1,'TGeaEvent']]],
   ['agustep',['AgUStep',['../classAgUStep.html#a80f64835f1957110bd37af5c8a5aec54',1,'AgUStep']]],
   ['applyclassifier',['ApplyClassifier',['../ApplyClassifier_8C.html#a3b677c0318decd024cec302184cb2f66',1,'ApplyClassifier.C']]],
-  ['ask_5fuser',['ask_user',['../namespacevtxeval.html#a51c927e74a3b2f5958ef0be8ab0b926b',1,'vtxeval']]],
   ['assignclosestcandidatehit',['AssignClosestCandidateHit',['../classStiHifyEvent.html#aa1db0f318349b06988bff7db03cb25a4',1,'StiHifyEvent::AssignClosestCandidateHit()'],['../classTStiKalmanTrack.html#ab22d54ea2788dc38df9dde2a1cfdd91d',1,'TStiKalmanTrack::AssignClosestCandidateHit()'],['../classTStiKalmanTrackNode.html#a247e8f05276c58329f8e42e50e61f80f',1,'TStiKalmanTrackNode::AssignClosestCandidateHit()']]]
 ];

@@ -2,10 +2,6 @@ var searchData=
 [
   ['mass',['mass',['../classTGeaTrack.html#acb055a07c022da49390034d61acabeb2',1,'TGeaTrack']]],
   ['massoc',['mAssoc',['../classStMcAnalysisMaker.html#a31b330299d4e1e2f34409c741d2aa01f',1,'StMcAnalysisMaker']]],
-  ['maxmult',['maxmult',['../structVertexData.html#ade315aaa16307ee5a79a8c8fa4ecc732',1,'VertexData']]],
-  ['mcx',['McX',['../structVertexData.html#a82b83f0ab8fbbcd936f24e6b07b20b1c',1,'VertexData']]],
-  ['mcy',['McY',['../structVertexData.html#ac382a122d79267dad13323fba2ed97ee',1,'VertexData']]],
-  ['mcz',['McZ',['../structVertexData.html#a00247de546c9a2a84574e2e0b3f81681',1,'VertexData']]],
   ['mdoprojection',['mDoProjection',['../classStiScanHistContainer.html#a87d7e281aedd45959bc738e82fab1b77',1,'StiScanHistContainer']]],
   ['mevent',['mEvent',['../classAgUStep.html#ab0001e28ef01dab43f997357eebb6fe5',1,'AgUStep']]],
   ['mfile',['mFile',['../classAgUStep.html#a8b3ade3dfb7b6f309529fd4f2546f33f',1,'AgUStep::mFile()'],['../classStMcAnalysisMaker.html#aaf35fd36a3dacbe77743041d0d4e7d9d',1,'StMcAnalysisMaker::mFile()']]],
@@ -20,7 +16,6 @@ var searchData=
   ['mtpcntuple',['mTpcNtuple',['../classStMcAnalysisMaker.html#a7531eb33e1acc441abef01d5f0666572',1,'StMcAnalysisMaker']]],
   ['mtrack',['mTrack',['../classAgUStep.html#a20ad46a525b34af5e907c1f804b86fa1',1,'AgUStep']]],
   ['mtree',['mTree',['../classAgUStep.html#a563be3abf3709bd79079068e51218317',1,'AgUStep']]],
-  ['mult',['mult',['../structVertexData.html#afe00c7c5abc1d70d43a7dd33727923de',1,'VertexData']]],
   ['mydefaultvertexfiles',['myDefaultVertexFiles',['../VxEff_8C.html#affa92c9c8c1bdb6f4063306b60cd00cb',1,'myDefaultVertexFiles():&#160;VxEff.C'],['../VxEff_8h.html#affa92c9c8c1bdb6f4063306b60cd00cb',1,'myDefaultVertexFiles():&#160;VxEff.C']]],
   ['mymarkerstyles',['myMarkerStyles',['../VxEff_8C.html#aa3e03e4a285fa160d3a6739f7957ce57',1,'VxEff.C']]]
 ];
