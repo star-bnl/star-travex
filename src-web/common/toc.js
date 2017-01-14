@@ -259,8 +259,6 @@ generated_toc = {
       a2.onclick = toggleView(i, a, a2, olstatus, lists);
 
       cur_list_el.appendChild(li);
-
-      headings[i].innerHTML += " <span style='float:right; font-size: 80%; font-weight: bold;'><a href=#top>&uarr; top &uarr;</a></span>";
     }
 
   },
