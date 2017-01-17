@@ -31,7 +31,7 @@ function updateGDriveImages(urlParams)
   var head = document.getElementsByTagName('head')[0];
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src = 'https://script.google.com/macros/s/AKfycbxhd0vLTV37YHWm3T7JWGQ-vM0rIQsfBUAGiqi8mHoDAAXETu1i/dev?pfx=' + urlParams.pfx;
+  script.src = 'https://script.google.com/macros/s/AKfycbxhd0vLTV37YHWm3T7JWGQ-vM0rIQsfBUAGiqi8mHoDAAXETu1i/dev?pfx=public/' + urlParams.pfx;
   
   // Then bind the event to the callback function.
   // There are several events for cross browser compatibility.
