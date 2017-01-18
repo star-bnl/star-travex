@@ -13,8 +13,8 @@ gStyle->SetLabelFont(42, "X");
 gStyle->SetLabelFont(42, "Y");
 gStyle->SetLabelFont(42, "Z");
 
-gStyle->SetLabelSize(0.06, "XYZ");
-gStyle->SetTitleSize(0.06, "XYZ");
+gStyle->SetLabelSize(0.05, "XYZ");
+gStyle->SetTitleSize(0.05, "XYZ");
 gStyle->SetFrameLineWidth(2);
 
 gStyle->SetLineColor(kBlack);
@@ -34,9 +34,9 @@ gStyle->SetStatX(0.99);
 gStyle->SetStatY(0.99);
 gStyle->SetStatW(0.15);
 gStyle->SetStatH(0.15);
-gStyle->SetPadLeftMargin(0.08);
-gStyle->SetPadRightMargin(0.30);
+gStyle->SetPadTopMargin(0.01);
+gStyle->SetPadLeftMargin(0.10);
+gStyle->SetPadRightMargin(0.25);
 gStyle->SetPadBottomMargin(0.10);
-gStyle->SetPadTopMargin(0.05);
 gStyle->SetStatBorderSize(1); // removes shadow
 }
