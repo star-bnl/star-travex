@@ -52,7 +52,8 @@ values. The two parameters likely to be changed often are `OUT_DIR` and
 `INPUT_FILE_LIST`. All named variables can be passed to the script in command
 line like this:
 
-    $ OUT_DIR=/tmp/scratch/wbos_embed_results/ \
+    $ FZD_DIR=~/scratch-star/wemb_fzd/ \
+      OUT_DIR=~/scratch-star/wemb_results/ \
       INPUT_FILE_LIST=~/star-travex/supple/filelist_zerobias.lis \
       ~/star-travex/supple/submit_jobs_embedding_wbos.sh
 

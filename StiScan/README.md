@@ -100,7 +100,7 @@ Reconstruction chain examples
 Run over an fzd file produced by `starsim` with the following options to produce
 a MuDst.root file with simulated tracker response and reconstruced events.
 
-    root4star -q -b -l 'bfc.C(1, 100, "fzin y2015a AgML usexgeom FieldOn tpcRS MakeEvent VFMinuit Sti BAna Idst NoSsdIt NoSvtIt StiHftC TpcHitMover TpxClu l0 Tree logger tpcDB tags emcY2 EEfs -dstout IdTruth big MiniMcMk clearmem StiScanTreeMaker", "starsim_zslice.fz")'
+    root4star -q -b -l 'bfc.C(1, 100, "fzin y2015a AgML usexgeom FieldOn tpcRS MakeEvent VFMinuit Sti BAna Idst NoSsdIt NoSvtIt StiHftC TpcHitMover TpxClu l0 Tree logger tpcDB tags emcY2 EEfs -dstout IdTruth big clearmem StiScanTreeMaker", "starsim_zslice.fz")'
 
 
 Regular expressions matching geometry volumes used at STAR

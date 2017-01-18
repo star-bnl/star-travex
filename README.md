@@ -74,7 +74,7 @@ used to help `cmake` find the appropriate `boost` release.
     $ cd star-travex/
     $ git submodule update --init --depth=50
     $ mkdir build && cd build
-    $ cmake -D CMAKE_INSTALL_PREFIX=./ -D BOOST_ROOT=$OPTSTAR ../
+    $ cmake -D CMAKE_INSTALL_PREFIX=./ -D BOOST_ROOT=$OPTSTAR -D CMAKE_BUILD_TYPE=Release ../
     $ make -j4 && make install
 
 The make tool will place the libraries in the local `.slXX_gccXXX` directory.
