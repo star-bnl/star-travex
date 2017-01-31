@@ -18,7 +18,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/star-cmake")
 find_package( Boost 1.54.0 REQUIRED COMPONENTS program_options regex filesystem)
 
 # This project depends on ROOT
-find_package(ROOT)
+find_package(ROOT COMPONENTS Table HistPainter Minuit Geom) # EG needed?
 
 if(NOT ROOT_FOUND)
    message(FATAL_ERROR "Fatal error: ROOT package not found")
@@ -219,13 +219,13 @@ add_executable(stihify src-tools/stihify.cc)
 target_link_libraries(stiscan
 	travex
 	StiScanLib GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
-	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table Geom HistPainter EG pthread
+	${Boost_LIBRARIES} ${ROOT_LIBRARIES} pthread
 )
 
 target_link_libraries(stihify
 	travex
 	StiHifyLib StiScanLib GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
-	${Boost_LIBRARIES} ${ROOT_LIBRARIES} Table Geom HistPainter EG pthread
+	${Boost_LIBRARIES} ${ROOT_LIBRARIES} pthread
 )
 
 
@@ -251,7 +251,7 @@ target_link_libraries(vtxhist
 	StSecondaryVertexMaker
 	StVertexRootIO
 	StMuDSTMaker
-	${Boost_LIBRARIES} ${ROOT_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES} Table HistPainter pthread
+	${Boost_LIBRARIES} ${ROOT_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES} pthread
 )
 
 
