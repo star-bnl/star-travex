@@ -119,7 +119,6 @@ void process_muDst(VertexRootFile& outFile)
       if ( SkipCurrentEvent(*maker) ) continue;
 
       StMuDst *muDst = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
-      StMuEvent *muEvent = muDst->event(); // get a pointer to the class holding event-wise information
 
       // Identify secondary decay vertices and put them in the container
       decayVertexFinder.Find(*muDst, decayVertices->mVertices);
