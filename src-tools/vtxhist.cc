@@ -118,17 +118,19 @@ void process_muDst(VertexRootFile& outFile)
 
       if ( SkipCurrentEvent(maker) ) continue;
 
-      StMuDst *muDst = maker.muDst();   // get a pointer to the StMuDst class, the class that points to all the data
+      // Get a pointer to the StMuDst object that provides access to all of the
+      // event data
+      StMuDst &muDst = *maker.muDst();
 
       // Identify secondary decay vertices and put them in the container
-      decayVertexFinder.Find(*muDst, decayVertices->mVertices);
+      decayVertexFinder.Find(muDst, decayVertices->mVertices);
 
-      TClonesArray *primaryVertices = muDst->primaryVertices();
+      TClonesArray *primaryVertices = muDst.primaryVertices();
       int nPrimaryVertices = primaryVertices->GetEntriesFast();
 
       if (nPrimaryVertices == 0) nEventsNoRecoVertex++;
 
-      TClonesArray *MuMcVertices = muDst->mcArray(0);
+      TClonesArray *MuMcVertices = muDst.mcArray(0);
       int nMcVertices = MuMcVertices->GetEntriesFast();
 
       int maxMultiplicity = 0;
@@ -162,13 +164,13 @@ void process_muDst(VertexRootFile& outFile)
 
          StMuMcVertex *mcVertex = (idTruth > 0 && idTruth <= nMcVertices) ? (StMuMcVertex *) MuMcVertices->UncheckedAt(idTruth - 1) : nullptr;
 
-         float zVpd      = (muDst->btofHeader() ? muDst->btofHeader()->vpdVz(): 999.);
+         float zVpd      = (muDst.btofHeader() ? muDst.btofHeader()->vpdVz(): 999.);
          bool  isMaxMult = (recoVertex->noTracks() == maxMultiplicity);
 
          primVtx->Set(*recoVertex, mcVertex, isMaxMult, zVpd);
          primVertexTree->Fill();
 
-         bool hasPxlTrack = checkVertexHasPxlHit(iVertex, *muDst);
+         bool hasPxlTrack = checkVertexHasPxlHit(iVertex, muDst);
 
          if (hasPxlTrack)
             outFile.FillHistsHftTracks(*recoVertex, mcVertex);
@@ -188,7 +190,7 @@ void process_muDst(VertexRootFile& outFile)
          outFile.FillHistsMaxRank(*maxRankVertex, mcVertex);
       }
 
-      outFile.FillHists(*muDst);
+      outFile.FillHists(muDst);
 
       // Also add primary struct to the saved struct
       decayVertices->mPrimaryVertex = *primVtx;
