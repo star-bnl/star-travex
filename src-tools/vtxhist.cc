@@ -73,7 +73,7 @@ void process_muDst(VertexRootFile& outFile)
 
    DecayVertexFinder decayVertexFinder;
 
-   StMuDstMaker *maker = new StMuDstMaker(0, 0, "", outFile.GetPrgOptions().PathToInputFile().c_str(), "st:MuDst.root", 1e9); // set up maker in read mode
+   StMuDstMaker maker(0, 0, "", outFile.GetPrgOptions().PathToInputFile().c_str(), "st:MuDst.root", 1e9); // set up maker in read mode
    //                                     0, 0                        this mean read mode
    //                                           dir                    read all files in this directory
    //                                               file               bla.lis real all file in this list, if (file!="") dir is ignored
@@ -81,7 +81,7 @@ void process_muDst(VertexRootFile& outFile)
    //                                                           10      maximum number of file to read
 
    // Disable all branches
-   maker->SetStatus("*", 0);
+   maker.SetStatus("*", 0);
 
    std::vector<std::string> activeBranchNames = {
       "MuEvent",
@@ -96,9 +96,9 @@ void process_muDst(VertexRootFile& outFile)
 
    // Enable selected branches
    for (const auto& branchName : activeBranchNames)
-      maker->SetStatus(branchName.c_str(), 1);
+      maker.SetStatus(branchName.c_str(), 1);
 
-   TChain *tree = maker->chain();
+   TChain *tree = maker.chain();
    unsigned int nentries = tree->GetEntries();
    unsigned int nEventsUser = outFile.GetPrgOptions().GetMaxEventsUser();
    unsigned int nevent = nEventsUser > 0 ? std::min(nEventsUser, nentries) : nentries;
@@ -114,11 +114,11 @@ void process_muDst(VertexRootFile& outFile)
    // Main loop over events
    for (int iEvent = 0; iEvent < nevent; iEvent++)
    {
-      if (maker->Make()) break;
+      if (maker.Make()) break;
 
-      if ( SkipCurrentEvent(*maker) ) continue;
+      if ( SkipCurrentEvent(maker) ) continue;
 
-      StMuDst *muDst = maker->muDst();   // get a pointer to the StMuDst class, the class that points to all the data
+      StMuDst *muDst = maker.muDst();   // get a pointer to the StMuDst class, the class that points to all the data
 
       // Identify secondary decay vertices and put them in the container
       decayVertexFinder.Find(*muDst, decayVertices->mVertices);
