@@ -103,9 +103,6 @@ void process_muDst(VertexRootFile& outFile)
    unsigned int nEventsUser = outFile.GetPrgOptions().GetMaxEventsUser();
    unsigned int nevent = nEventsUser > 0 ? std::min(nEventsUser, nentries) : nentries;
    std::cout << nentries << " events in chain, " << nevent << " will be read." << std::endl;
-   tree->SetCacheSize(-1);        //by setting the read cache to -1 we set it to the AutoFlush value when writing
-   tree->SetCacheLearnEntries(1); //one entry is sufficient to learn
-   tree->SetCacheEntryRange(0, nevent);
 
 
    // Keep track of the number of events with 0 reconstructed verticies
