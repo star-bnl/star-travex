@@ -99,17 +99,19 @@ void process_muDst(VertexRootFile& outFile)
       maker.SetStatus(branchName.c_str(), 1);
 
    TChain *tree = maker.chain();
-   unsigned int nentries = tree->GetEntries();
+
+   unsigned int nEntries = tree->GetEntries();
    unsigned int nEventsUser = outFile.GetPrgOptions().GetMaxEventsUser();
-   unsigned int nevent = nEventsUser > 0 ? std::min(nEventsUser, nentries) : nentries;
-   std::cout << nentries << " events in chain, " << nevent << " will be read." << std::endl;
+   unsigned int nEventsToRead = nEventsUser > 0 ? std::min(nEventsUser, nEntries) : nEntries;
+
+   std::cout << nEntries << " events in chain, " << nEventsToRead << " will be read." << std::endl;
 
 
    // Keep track of the number of events with 0 reconstructed verticies
    int nEventsNoRecoVertex = 0;
 
    // Main loop over events
-   for (int iEvent = 0; iEvent < nevent; iEvent++)
+   for (unsigned int iEvent = 0; iEvent < nEventsToRead; iEvent++)
    {
       if (maker.Make()) break;
 
@@ -197,7 +199,7 @@ void process_muDst(VertexRootFile& outFile)
 
    outFile.Finalize();
 
-   std::cout << "Number of events: " <<  nevent
+   std::cout << "Number of events: " <<  nEventsToRead
              << ", with 0 reconstructed verticies: " << nEventsNoRecoVertex << std::endl;
 }
 
