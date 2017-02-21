@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 
 void process_muDst(VtxRecoProgramOptions& prgOpts)
 {
-   StMuDstMaker *muDstMaker = new StMuDstMaker(0, 0, "", prgOpts.PathToInputFile().c_str(), "st:MuDst.root", 1e9); // set up maker in read mode
+   StMuDstMaker muDstMaker(0, 0, "", prgOpts.PathToInputFile().c_str(), "st:MuDst.root", 1e9); // set up maker in read mode
    //                                     0, 0                        this mean read mode
    //                                           dir                    read all files in this directory
    //                                               file               bla.lis real all file in this list, if (file!="") dir is ignored
@@ -49,7 +49,7 @@ void process_muDst(VtxRecoProgramOptions& prgOpts)
    //                                                           10      maximum number of file to read
 
    // Specify (active) branches to read but first disable all branches
-   muDstMaker->SetStatus("*", 0);
+   muDstMaker.SetStatus("*", 0);
 
    std::vector<std::string> activeBranchNames = {
       "MuEvent",
@@ -64,11 +64,11 @@ void process_muDst(VtxRecoProgramOptions& prgOpts)
 
    // Enable selected branches
    for (const auto& branchName : activeBranchNames)
-      muDstMaker->SetStatus(branchName.c_str(), 1);
+      muDstMaker.SetStatus(branchName.c_str(), 1);
 
-   TChain *muDstChain = muDstMaker->chain();
+   TChain &muDstChain = *muDstMaker.chain();
 
-   unsigned int nEntries      = muDstChain->GetEntries();
+   unsigned int nEntries      = muDstChain.GetEntries();
    unsigned int nEventsUser   = prgOpts.GetMaxEventsUser();
    unsigned int nEventsToRead = nEventsUser > 0 ? std::min(nEventsUser, nEntries) : nEntries;
 
@@ -78,7 +78,7 @@ void process_muDst(VtxRecoProgramOptions& prgOpts)
    TClonesArray  *verticesRefitted = new TClonesArray("StMuPrimaryVertex", 1000);
 
    TFile* outFile = new TFile(prgOpts.GetOutFileName("vtxreco", ".MuDst.root").c_str(), "RECREATE");
-   TTree* muDstTreeOut = muDstMaker->chain()->CloneTree(0);
+   TTree* muDstTreeOut = muDstMaker.chain()->CloneTree(0);
 
    muDstTreeOut->Branch("PrimaryVertices", &verticesRefitted, 65536, 99);
 
@@ -96,10 +96,10 @@ void process_muDst(VtxRecoProgramOptions& prgOpts)
    // Main loop over events
    for (unsigned int iEvent = 0; iEvent < nEventsToRead; iEvent++)
    {
-      if ( muDstMaker->Make() ) break;
+      if ( muDstMaker.Make() ) break;
 
       // Access all event data
-      StMuDst *muDst = muDstMaker->muDst();
+      StMuDst *muDst = muDstMaker.muDst();
 
       // Access event header-wise information
       StMuEvent *muEvent = muDst->event();

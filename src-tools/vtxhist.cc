@@ -34,7 +34,7 @@ bool checkVertexHasPxlHit(int vertexIndex, const StMuDst& stMuDst);
 
 // Currently used to work around a bug in reco chains giving different numerical
 // values in the second event
-bool SkipCurrentEvent(const StMuDstMaker& maker);
+bool SkipCurrentEvent(const StMuDstMaker& muDstMaker);
 
 
 
@@ -73,7 +73,7 @@ void process_muDst(VertexRootFile& outFile)
 
    DecayVertexFinder decayVertexFinder;
 
-   StMuDstMaker maker(0, 0, "", outFile.GetPrgOptions().PathToInputFile().c_str(), "st:MuDst.root", 1e9); // set up maker in read mode
+   StMuDstMaker muDstMaker(0, 0, "", outFile.GetPrgOptions().PathToInputFile().c_str(), "st:MuDst.root", 1e9); // set up maker in read mode
    //                                     0, 0                        this mean read mode
    //                                           dir                    read all files in this directory
    //                                               file               bla.lis real all file in this list, if (file!="") dir is ignored
@@ -81,7 +81,7 @@ void process_muDst(VertexRootFile& outFile)
    //                                                           10      maximum number of file to read
 
    // Disable all branches
-   maker.SetStatus("*", 0);
+   muDstMaker.SetStatus("*", 0);
 
    std::vector<std::string> activeBranchNames = {
       "MuEvent",
@@ -96,12 +96,12 @@ void process_muDst(VertexRootFile& outFile)
 
    // Enable selected branches
    for (const auto& branchName : activeBranchNames)
-      maker.SetStatus(branchName.c_str(), 1);
+      muDstMaker.SetStatus(branchName.c_str(), 1);
 
-   TChain *tree = maker.chain();
+   TChain &muDstChain = *muDstMaker.chain();
 
-   unsigned int nEntries = tree->GetEntries();
-   unsigned int nEventsUser = outFile.GetPrgOptions().GetMaxEventsUser();
+   unsigned int nEntries      = muDstChain.GetEntries();
+   unsigned int nEventsUser   = outFile.GetPrgOptions().GetMaxEventsUser();
    unsigned int nEventsToRead = nEventsUser > 0 ? std::min(nEventsUser, nEntries) : nEntries;
 
    std::cout << nEntries << " events in chain, " << nEventsToRead << " will be read." << std::endl;
@@ -113,13 +113,13 @@ void process_muDst(VertexRootFile& outFile)
    // Main loop over events
    for (unsigned int iEvent = 0; iEvent < nEventsToRead; iEvent++)
    {
-      if (maker.Make()) break;
+      if (muDstMaker.Make()) break;
 
-      if ( SkipCurrentEvent(maker) ) continue;
+      if ( SkipCurrentEvent(muDstMaker) ) continue;
 
       // Get a pointer to the StMuDst object that provides access to all of the
       // event data
-      StMuDst &muDst = *maker.muDst();
+      StMuDst &muDst = *muDstMaker.muDst();
 
       // Identify secondary decay vertices and put them in the container
       decayVertexFinder.Find(muDst, decayVertices->mVertices);
@@ -233,13 +233,13 @@ bool checkVertexHasPxlHit(int vertexIndex, const StMuDst& stMuDst)
 
 
 
-bool SkipCurrentEvent(const StMuDstMaker& maker)
+bool SkipCurrentEvent(const StMuDstMaker& muDstMaker)
 {
    static std::string prev_file_name("");
    static std::string curr_file_name("");
    static int curr_event_index = 0;
 
-   curr_file_name = maker.GetFileName();
+   curr_file_name = muDstMaker.GetFileName();
 
    if (curr_file_name != prev_file_name) {
       std::cout << "Processing new file: " << curr_file_name << std::endl;
