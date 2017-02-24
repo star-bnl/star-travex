@@ -17,17 +17,17 @@
 #include "StGenericVertexMaker/StGenericVertexFinder.h"
 #include "StGenericVertexMaker/StiPPVertex/StPPVertexFinder.h"
 
-#include "travex/ProgramOptions.h"
+#include "VtxEval/VtxRecoProgramOptions.h"
 
 
 bool switched_file(const StMuDstMaker& maker);
-void process_muDst(tvx::ProgramOptions& prgOpts);
+void process_muDst(VtxRecoProgramOptions& prgOpts);
 
 
 
 int main(int argc, char **argv)
 {
-   tvx::ProgramOptions prgOpts(argc, argv);
+   VtxRecoProgramOptions prgOpts(argc, argv);
 
    prgOpts.ProcessOptions();
    prgOpts.Print();
@@ -39,7 +39,7 @@ int main(int argc, char **argv)
 
 
 
-void process_muDst(tvx::ProgramOptions& prgOpts)
+void process_muDst(VtxRecoProgramOptions& prgOpts)
 {
    StMuDstMaker *muDstMaker = new StMuDstMaker(0, 0, "", prgOpts.PathToInputFile().c_str(), "st:MuDst.root", 1e9); // set up maker in read mode
    //                                     0, 0                        this mean read mode
@@ -84,10 +84,7 @@ void process_muDst(tvx::ProgramOptions& prgOpts)
 
    using VertexFit_t = StGenericVertexFinder::VertexFit_t;
 
-   //StGenericVertexFinder* vertexFinder = new StPPVertexFinder(VertexFit_t::NoBeamline);
-   StGenericVertexFinder* vertexFinder = new StPPVertexFinder(VertexFit_t::Beamline1D);
-   //StGenericVertexFinder* vertexFinder = new StPPVertexFinder(VertexFit_t::Beamline3D);
-
+   StGenericVertexFinder* vertexFinder = new StPPVertexFinder(prgOpts.GetVertexFit());
    vertexFinder->SetDebugLevel(0);
    vertexFinder->Init();
 

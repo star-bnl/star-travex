@@ -258,6 +258,7 @@ add_executable(vtxreco src-tools/vtxreco.cxx)
 
 target_link_libraries(vtxreco
 	travex
+	star-vertex-eval
 	StarRoot
 	StChain
 	St_Tables
