@@ -207,6 +207,7 @@ add_library(
 	VtxEval/StarVertexHftHistContainer.cxx
 	VtxEval/DecayVertexHists.cxx
 	VtxEval/VertexRootFile.cxx
+	VtxEval/VtxRecoProgramOptions.cxx
 )
 
 
