@@ -21,10 +21,19 @@ PrgOptionProcessor::PrgOptionProcessor(int argc, char **argv, const std::string&
 {
    // Declare supported options
    fOptions.add_options()
-      ("geom-file",           po::value<std::string>(&fGeomFilePath)->default_value("y2014a.root"), "Full path to a ROOT file with TGeo geometry")
-      ("volume-pattern,p",    po::value<std::string>(&fVolumePattern)->implicit_value("process_all_volumes"),
-                              "A regex pattern to match Sti/TGeo volume names. If specified without a value all volumes will be matched")
-      ("volume-pattern-flist,l",   po::value<std::string>(&fVolumeListFile), "Full path to a text file with regex patterns to match Sti/TGeo volume names")
+
+      ("geom-file",
+       po::value<std::string>(&fGeomFilePath)->default_value("y2014a.root"),
+       "Full path to a ROOT file with TGeo geometry")
+
+      ("volume-pattern,p",
+       po::value<std::string>(&fVolumePattern)->implicit_value("process_all_volumes"),
+       "A regex pattern to match Sti/TGeo volume names. " \
+       "If specified without a value all volumes will be matched")
+
+      ("volume-pattern-flist,l",
+       po::value<std::string>(&fVolumeListFile),
+       "Full path to a text file with regex patterns to match Sti/TGeo volume names")
    ;
 
    // Set default values for Sti volume name patterns. These are used if the user does not specify any
