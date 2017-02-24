@@ -10,8 +10,6 @@
 #include "StiRootIO/PrgOptionProcessor.h"
 
 
-PrgOptionProcessor::PrgOptionProcessor() : PrgOptionProcessor(0, nullptr) { }
-
 
 PrgOptionProcessor::PrgOptionProcessor(int argc, char **argv, const std::string& stiTreeName) :
    tvx::ProgramOptions(argc, argv),

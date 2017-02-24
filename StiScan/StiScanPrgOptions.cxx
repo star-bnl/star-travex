@@ -7,8 +7,6 @@
 #include "StiScan/StiScanPrgOptions.h"
 
 
-StiScanPrgOptions::StiScanPrgOptions() : StiScanPrgOptions(0, nullptr) { }
-
 
 StiScanPrgOptions::StiScanPrgOptions(int argc, char **argv, const std::string& stiTreeName, const std::string& geantStepTreeName) :
    PrgOptionProcessor(argc, argv, stiTreeName), fDoGeantStepTree(false), fDoAutoHistRange(true),

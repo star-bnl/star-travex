@@ -25,7 +25,6 @@ class StiScanPrgOptions : public PrgOptionProcessor
 {
 public:
 
-   StiScanPrgOptions();
    StiScanPrgOptions(int argc, char **argv, const std::string& stiTreeName="t", const std::string& geantStepTreeName="stepping");
    ~StiScanPrgOptions();
 

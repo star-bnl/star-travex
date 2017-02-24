@@ -25,7 +25,6 @@ class PrgOptionProcessor : public tvx::ProgramOptions
 {
 public:
 
-   PrgOptionProcessor();
    PrgOptionProcessor(int argc, char **argv, const std::string& stiTreeName="t");
    ~PrgOptionProcessor();
 

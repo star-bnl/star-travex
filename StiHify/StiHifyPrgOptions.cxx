@@ -1,8 +1,6 @@
 #include "StiHify/StiHifyPrgOptions.h"
 
 
-StiHifyPrgOptions::StiHifyPrgOptions() : StiHifyPrgOptions(0, nullptr) { }
-
 
 StiHifyPrgOptions::StiHifyPrgOptions(int argc, char **argv, const std::string& stiTreeName) :
    PrgOptionProcessor(argc, argv, stiTreeName),

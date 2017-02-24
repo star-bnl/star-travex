@@ -22,7 +22,6 @@ class StiHifyPrgOptions : public PrgOptionProcessor
 {
 public:
 
-   StiHifyPrgOptions();
    StiHifyPrgOptions(int argc, char **argv, const std::string& stiTreeName="t");
 
    bool   AcceptCandidateHit() const { return fAcceptCandidateHit; }
