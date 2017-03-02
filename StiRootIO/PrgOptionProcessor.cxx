@@ -56,11 +56,10 @@ PrgOptionProcessor::~PrgOptionProcessor()
  */
 void PrgOptionProcessor::ProcessOptions()
 {
-   po::store(po::parse_command_line(fArgc, fArgv, fOptions), fOptionsValues);
-   po::notify(fOptionsValues);
+   // First do basic common processing as defined in the base class
+   tvx::ProgramOptions::ProcessOptions();
 
-   VerifyOptions();
-
+   // Then do extra processing specific for this class
    // Create chains based on the user input
    BuildInputChains();
 }
