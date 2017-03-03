@@ -21,13 +21,13 @@ VtxRecoProgramOptions::VtxRecoProgramOptions(int argc, char **argv, const std::s
 {
    // Declare supported options
    fOptions.add_options()
-      ("vertex-fit,f",
-          po::value<VertexFit_t>(&fVertexFit)->default_value(VertexFit_t::Beamline3D),
-          "Type of vertex fit")
-
       ("vertex-seed-finder,v",
           po::value<SeedFinder_t>(&fSeedFinder)->default_value(SeedFinder_t::PPVLikelihood),
-          "Type of vertex seeding algorithm")
+          "Type of vertex seeding algorithm. Currently supported values are: PPVLikelihood")
+
+      ("vertex-fit,f",
+          po::value<VertexFit_t>(&fVertexFit)->default_value(VertexFit_t::Beamline3D),
+          "Type of vertex fit. Currently supported values are: NoBeamline, Beamline1D, and Beamline3D")
    ;
 }
 
