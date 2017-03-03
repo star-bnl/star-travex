@@ -113,7 +113,7 @@ void process_muDst(VtxRecoProgramOptions& prgOpts)
          vertexFinder->InitRun(currRunNumber, st_db_maker);
       }
 
-      vertexFinder->Fit(*muDst);
+      vertexFinder->fit(*muDst);
       vertexFinder->result(*verticesRefitted); // container refilled
 
       muDstTreeOut->Fill();
