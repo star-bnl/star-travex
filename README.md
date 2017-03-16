@@ -22,11 +22,11 @@ For single hit efficiency studies with `stihify` we developed a method
 independent of the actual reconstruction algorithm used for finding particle
 tracks.
 
-- `vtxeval` ([VtxEval/README.md](VtxEval/README.md)) is aimed to evaluate the
-performance of vertex finding algorithms.
+- `vtxhist` and `vtxreco` ([VtxEval/README.md](VtxEval/README.md)) are aimed to
+evaluate the performance of vertex finding algorithms.
 
 - `stiscan` ([StiScan/README.md](StiScan/README.md)) is used to verify the
-accuracy of the modeled detector material
+accuracy of the modeled detector material.
 
 Documentation gerated by `doxygen` can be found at <http://star-bnl.github.io/star-travex>
 
@@ -50,17 +50,18 @@ Build with cmake
 
 Checkout the code using the following command:
 
-    git clone https://github.com/star-bnl/star-travex.git
+    $ git clone --recursively https://github.com/star-bnl/star-travex.git
 
 Compile and build the tools:
 
     $ cd star-travex/
-    $ git submodule update --init --depth=50
     $ mkdir build && cd build
     $ cmake ../
     $ make -j4 && make install
 
-The make tool will place the libraries in the local `.slXX_gccXXX` directory.
+If the environment variable `$STAR_HOST_SYS` is specified the binaries will be
+placed in the `CMAKE_INSTALL_PREFIX/.$STAR_HOST_SYS` directory with
+`CMAKE_INSTALL_PREFIX` being the current directory by default.
 
 
 Build within STAR environment
@@ -70,11 +71,10 @@ We assume that the user environment includes the shell variables availabe within
 a typical STAR account. Specifically, $OPTSTAR contains the prefix path and is
 used to help `cmake` find the appropriate `boost` release.
 
-    $ git clone https://github.com/star-bnl/star-travex.git
+    $ git clone --recursively https://github.com/star-bnl/star-travex.git
     $ cd star-travex/
-    $ git submodule update --init --depth=50
     $ mkdir build && cd build
-    $ cmake -D CMAKE_INSTALL_PREFIX=./ -D BOOST_ROOT=$OPTSTAR -D CMAKE_BUILD_TYPE=Release ../
+    $ cmake -D CMAKE_INSTALL_PREFIX=./ \
+            -D BOOST_ROOT=$OPTSTAR \
+            -D CMAKE_BUILD_TYPE=RelWithDebInfo ../
     $ make -j4 && make install
-
-The make tool will place the libraries in the local `.slXX_gccXXX` directory.

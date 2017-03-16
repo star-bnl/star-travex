@@ -1,17 +1,38 @@
-VtxEval: Vertex Reconstruction Evaluation and Efficiency at STAR
-================================================================
+Evaluation of Vertex Reconstruction Efficiency
+==============================================
 
-To build the library and the `vtxeval` executable follow the instructions in the
-project's top level [README.md](../README.md). Since in this study we are
-focusing on evaluation of the vertex finders one can build and install only the
-relevant libraries:
+To build the library and the `vtxhist` and `vtxreco` executables follow the
+instructions in the project's top level [README.md](../README.md).
 
+One can choose to build and install only the libraries relevant to vertex
+reconstruction:
+
+    $ git clone --recursively https://github.com/star-bnl/star-travex.git
+    $ cd star-travex/
     $ mkdir build/ && cd build/
     $ cmake -D CMAKE_INSTALL_PREFIX=../build-install \
             -D BOOST_ROOT=$OPTSTAR \
-            -D CMAKE_BUILD_TYPE=Release ../
+            -D CMAKE_BUILD_TYPE=RelWithDebInfo ../
     $ make -j4 star-vertex
     $ make install
+
+Once the binaries are built `vtxreco` can be used to reconstruct vertices from
+either a ROOT file or a text file with a list of ROOT files containing `muDST`
+TTrees. For example,
+
+    $ cat some_file.list
+    /path/to/my_file_1.MuDst.root
+    ...
+    /path/to/my_file_2.MuDst.root
+    ...
+
+    $ vtxreco -i some_file.list
+    $ vtxreco -i some_file.MuDst.root
+ 
+The above should produce a new ROOT file (e.g. `some_file_vtxreco.MuDst.root`)
+with an updated `PrimaryVertices` branch in the `muDST` TTree.
+
+For more available options run `vtxreco --help`.
 
 
 How to create embedding samples
