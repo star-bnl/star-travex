@@ -77,7 +77,7 @@ void process_muDst(VtxRecoProgramOptions& prgOpts)
    // Create new branch
    TClonesArray  *verticesRefitted = new TClonesArray("StMuPrimaryVertex", 1000);
 
-   TFile* outFile = new TFile(prgOpts.GetOutFileName("vtxreco", ".MuDst.root").c_str(), "RECREATE");
+   TFile* outFile = new TFile(prgOpts.GetOutFileName().c_str(), "RECREATE");
    TTree* muDstTreeOut = muDstMaker.chain()->CloneTree(0);
 
    muDstTreeOut->Branch("PrimaryVertices", &verticesRefitted, 65536, 99);

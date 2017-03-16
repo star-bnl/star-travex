@@ -18,7 +18,7 @@ class VtxRecoProgramOptions : public tvx::ProgramOptions
 
 public:
 
-   VtxRecoProgramOptions(int argc, char **argv, const std::string& out_sfx="vtxreco", const std::string& out_ext="MuDst.root");
+   VtxRecoProgramOptions(int argc, char **argv, const std::string& postfix="_vtxreco.MuDst.root..");
 
    void Print() const;
 

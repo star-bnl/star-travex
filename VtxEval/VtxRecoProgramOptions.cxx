@@ -14,8 +14,8 @@ using VertexFit_t = star_vertex::VertexFit_t;
 using SeedFinder_t = star_vertex::SeedFinder_t;
 
 
-VtxRecoProgramOptions::VtxRecoProgramOptions(int argc, char **argv, const std::string& out_sfx, const std::string& out_ext) :
-   tvx::ProgramOptions(argc, argv, out_sfx, out_ext),
+VtxRecoProgramOptions::VtxRecoProgramOptions(int argc, char **argv, const std::string& postfix) :
+   tvx::ProgramOptions(argc, argv, postfix),
    fVertexFit(VertexFit_t::Unspecified),
    fSeedFinder(SeedFinder_t::Unspecified)
 {

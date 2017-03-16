@@ -40,7 +40,7 @@ bool SkipCurrentEvent(const StMuDstMaker& muDstMaker);
 
 int main(int argc, char **argv)
 {
-   tvx::ProgramOptions prgOpts(argc, argv, "vtxhist");
+   tvx::ProgramOptions prgOpts(argc, argv, "_vtxhist.root..");
 
    prgOpts.ProcessOptions();
    prgOpts.Print();
