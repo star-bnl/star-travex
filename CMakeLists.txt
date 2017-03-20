@@ -95,6 +95,7 @@ add_subdirectory(ext/star-sim)
 add_subdirectory(ext/star-trigger)
 add_subdirectory(ext/star-tables)
 add_subdirectory(ext/star-stdb)
+add_subdirectory(ext/star-tof)
 
 root_generate_dictionary(
 	StiRootIO_dict
@@ -251,6 +252,39 @@ target_link_libraries(vtxhist
 	StSecondaryVertexMaker
 	StVertexRootIO
 	StMuDSTMaker
+)
+
+add_executable(vtxreco src-tools/vtxreco.cxx)
+
+target_link_libraries(vtxreco
+	travex
+	StarRoot
+	StChain
+	St_Tables
+	StUtilities
+	StarClassLibrary
+	StTriggerDataMaker
+	StEvent
+	StEmcUtil
+	StEEmcUtil
+	St_Tables
+	StStrangeMuDstMaker
+	StBichsel
+	StMuDSTMaker
+	StStrangeMuDstMaker
+	St_base           # Has to go last to avoid no dictionary for StObject available
+	Sti
+	StGenericVertexMaker
+	Sti
+	St_db_Maker
+	StDbBroker
+	StDbLib
+	StBTofUtil        # required by mudst or stevent
+	StTableUtilities  # required by mudst or stevent
+	St_base
+	StChain
+	StarRoot
+	StarClassLibrary
 	${Boost_LIBRARIES} ${ROOT_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES} pthread
 )
 
@@ -259,6 +293,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 	set_target_properties(stiscan PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 	set_target_properties(stihify PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 	set_target_properties(vtxhist PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
+	set_target_properties(vtxreco PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 endif()
 
 
@@ -270,5 +305,5 @@ install(TARGETS
 	star-vertex-eval StMcAnalysisMaker
 	DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL)
 
-install(TARGETS stiscan stihify vtxhist
+install(TARGETS stiscan stihify vtxhist vtxreco
 	DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/bin" OPTIONAL)
