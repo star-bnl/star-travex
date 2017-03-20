@@ -60,4 +60,5 @@ script:
   - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./lib
   - ./bin/stiscan --help
   - ./bin/stihify --help
+  - ./bin/vtxhist --help
   - ./bin/vtxreco --help

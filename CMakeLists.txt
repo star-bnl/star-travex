@@ -237,22 +237,24 @@ target_link_libraries(vtxhist
 	travex
 	star-vertex-eval
 	StTableUtilities
-	StarRoot
-	St_base
-	StChain
 	St_Tables
 	StUtilities
 	StIOMaker
-	StarClassLibrary
 	StTriggerDataMaker
 	StEvent
 	StDbLib
 	StEmcUtil
-	StStrangeMuDstMaker
+	St_Tables
 	StBichsel
 	StSecondaryVertexMaker
 	StVertexRootIO
 	StMuDSTMaker
+	StStrangeMuDstMaker
+	St_base
+	StChain
+	StarRoot
+	StarClassLibrary
+	${Boost_LIBRARIES} ${ROOT_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES} pthread
 )
 
 add_executable(vtxreco src-tools/vtxreco.cxx)
