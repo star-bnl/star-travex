@@ -19,6 +19,8 @@ VtxRecoProgramOptions::VtxRecoProgramOptions(int argc, char **argv, const std::s
    fVertexFit(VertexFit_t::Unspecified),
    fSeedFinder(SeedFinder_t::Unspecified)
 {
+   ProgramOptions::RemoveOptions({"sparsity", "save-graph"});
+
    // Declare supported options
    fOptions.add_options()
       ("vertex-seed-finder,v",
