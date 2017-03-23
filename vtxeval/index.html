@@ -1,0 +1,353 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+  <title>vtxeval: Results</title>
+
+  <link rel="stylesheet" type="text/css" href="../css/main.css">
+
+  <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script src="../common/common.js"></script>
+
+</head>
+
+<body bgcolor="#ffffff">
+
+<div id="header"></div>
+
+<h1>Vtxeval Results</h1>
+
+
+
+<h2 class="colsep">Tests with W embedding</h2>
+
+<p>Test of standard vs muDst vertex reconstruction, a704cb55 + "nolimit PPV"
+
+   <p>
+   <table class="generic">
+   <tr>
+      <td>
+      <th>no beamline
+      <th>beamline (aka 1D fit)
+      <th>beamline3D (aka 3D fit)
+
+   <tr>
+      <th>VFMinuit
+      <td> <a href="plots.html?pfx=wemb_VFM_blno_vtx_a704cb55/o">StEvent</a>
+      <td> <a href="plots.html?pfx=wemb_VFM_bl1D_vtx_a704cb55/o">StEvent</a>
+      <td> <a href="plots.html?pfx=wemb_VFM_bl3D_vtx_a704cb55/o">StEvent</a>
+
+   <tr>
+      <th>PPV
+      <td> <a href="plots.html?pfx=wemb_PPV_blno_vtx_a704cb55/o">StEvent</a><br><hr>
+           <a href="plots.html?pfx=wemb_PPV_blno_vtx_a704cb55/o/mudst">muDst (older)</a><br>
+           <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_a704cb55/fit_nobl">muDst v3.0</a>
+
+      <td> <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_a704cb55/o">StEvent</a><br><hr>
+           <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_a704cb55/o/mudst">muDst (older)</a><br>
+           <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_a704cb55/fit_bl1D">muDst v3.0</a><br>
+           <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_a704cb55/sigma10">sigma10</a>,
+           <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_a704cb55/sigma20">sigma20</a>,
+           <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_a704cb55/sigma30">sigma30</a>,
+           <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_a704cb55/sigma40">sigma40</a>,
+           <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_a704cb55/sigma50">sigma50</a>
+
+      <td> <a href="plots.html?pfx=wemb_PPV_bl3D_vtx_a704cb55/o">StEvent</a><br><hr>
+           <a href="plots.html?pfx=wemb_PPV_bl3D_vtx_a704cb55/o/mudst">muDst (older)</a><br>
+           <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_a704cb55/fit_bl3D">muDst v3.0</a>
+
+   </table>
+
+
+<p>Test of "no static obj" branch, 1b5bda26 vs 3e5901d4
+
+   <p>
+   <table class="generic">
+   <tr>
+      <td>
+      <th>no beamline
+      <th>beamline (aka 1D fit)
+      <th>beamline3D (aka 3D fit)
+
+   <tr>
+      <th>VFMinuit
+      <td> <a href="plots.html?pfx=wemb_VFM_blno_vtx_1b5bda26/o">1b5bda26</a>,
+           <a href="plots.html?pfx=wemb_VFM_blno_vtx_3e5901d4/o">3e5901d4</a>
+
+      <td> <a href="plots.html?pfx=wemb_VFM_bl1D_vtx_1b5bda26/o">1b5bda26</a>,
+           <a href="plots.html?pfx=wemb_VFM_bl1D_vtx_3e5901d4/o">3e5901d4</a>
+
+      <td> <a href="plots.html?pfx=wemb_VFM_bl3D_vtx_1b5bda26/o">1b5bda26</a>,
+           <a href="plots.html?pfx=wemb_VFM_bl3D_vtx_3e5901d4/o">3e5901d4</a>
+
+   <tr>
+      <th>PPV
+      <td> <a href="plots.html?pfx=wemb_PPV_blno_vtx_1b5bda26/o">1b5bda26</a>,
+           <a href="plots.html?pfx=wemb_PPV_blno_vtx_3e5901d4/o">3e5901d4</a>
+
+      <td> <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_1b5bda26/o">1b5bda26</a>,
+           <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_3e5901d4/o">3e5901d4</a>
+
+      <td> <a href="plots.html?pfx=wemb_PPV_bl3D_vtx_1b5bda26/o">1b5bda26</a>,
+           <a href="plots.html?pfx=wemb_PPV_bl3D_vtx_3e5901d4/o">3e5901d4</a>
+
+   </table>
+
+<p>Test of standard vs muDst vertex reconstruction, 9a5f3dea + "nolimit PPV"
+
+   <p>
+   <table class="generic">
+   <tr>
+      <td>
+      <th>no beamline
+      <th>beamline (aka 1D fit)
+      <th>beamline3D (aka 3D fit)
+
+   <tr>
+      <th>PPV
+
+      <td>
+      <a href="plots.html?pfx=wemb_PPV_blno_vtx_9a5f3dea/o">StEvent</a><br>
+      <a href="plots.html?pfx=wemb_PPV_blno_vtx_9a5f3dea/o/mudst_sigma10">sigma 1.0</a><br>
+      <a href="plots.html?pfx=wemb_PPV_blno_vtx_9a5f3dea/o/mudst_sigma15">sigma 1.5</a><br>
+      <a href="plots.html?pfx=wemb_PPV_blno_vtx_9a5f3dea/o/mudst_sigma20">sigma 2.0</a>
+
+      <td>
+      <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_9a5f3dea/o">StEvent</a><br>
+      <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_9a5f3dea/o/mudst_sigma10">sigma 1.0</a><br>
+      <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_9a5f3dea/o/mudst_sigma15">sigma 1.5</a><br>
+      <a href="plots.html?pfx=wemb_PPV_bl1D_vtx_9a5f3dea/o/mudst_sigma20">sigma 2.0</a>
+
+      <td>
+      <a href="plots.html?pfx=wemb_PPV_bl3D_vtx_9a5f3dea/o">StEvent</a><br>
+      <a href="plots.html?pfx=wemb_PPV_bl3D_vtx_9a5f3dea/o/mudst_sigma10">sigma 1.0</a><br>
+      <a href="plots.html?pfx=wemb_PPV_bl3D_vtx_9a5f3dea/o/mudst_sigma15">sigma 1.5</a><br>
+      <a href="plots.html?pfx=wemb_PPV_bl3D_vtx_9a5f3dea/o/mudst_sigma20">sigma 2.0</a>
+
+   </table>
+
+
+<h2 class="colsep">pp, signal, pile-up</h2>
+
+<ul>
+
+   <li><b>K0, Beam width: 0.01 cm</b>
+
+   <p>
+   <table class="generic">
+   <tr>
+      <td>
+      <th>no beamline
+      <th>beamline (aka 1D fit)
+      <th>beamline3D (aka 3D fit)
+
+   <tr>
+      <th>VFMinuit
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_20_VFMinuit/k0short.lis_result">VFMinuit</a>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_20_VFMinuitBeamline/k0short.lis_result">VFMinuit</a>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_20_VFMinuitBeamline3D/k0short.lis_result">VFMinuit</a>
+
+   <tr>
+      <th>PPV
+      <td>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_20_VFPPVnoCTBBeamline/k0short.lis_result">PPV</a>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_20_VFPPVnoCTBBeamline3D/k0short.lis_result">PPV</a>
+
+   <tr>
+      <th>KFVF
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_20_KFVertex/k0short.lis_result">KFVF</a>
+      <td colspan=2> <a href="plots.html?pfx=DEV_sti_Jun_20_KFVertexBeamline/k0short.lis_result">KFVF</a>
+
+   </table>
+
+   <li><b>minbias, Beam width: 0.01 cm</b>
+
+   <p>
+   <table class="generic">
+   <tr>
+      <td>
+      <th>no beamline
+      <th>beamline (aka 1D fit)
+      <th>beamline3D (aka 3D fit)
+
+   <tr>
+      <th>VFMinuit
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_20_VFMinuit/minbias.lis_result">VFMinuit</a>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_20_VFMinuitBeamline/minbias.lis_result">VFMinuit</a>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_20_VFMinuitBeamline3D/minbias.lis_result">VFMinuit</a>
+
+   <tr>
+      <th>PPV
+      <td>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_20_VFPPVnoCTBBeamline/minbias.lis_result">PPV</a>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_20_VFPPVnoCTBBeamline3D/minbias.lis_result">PPV</a>
+
+   <tr>
+      <th>KFVF
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_20_KFVertex/minbias.lis_result">KFVF</a>
+      <td colspan=2> <a href="plots.html?pfx=DEV_sti_Jun_20_KFVertexBeamline/minbias.lis_result">KFVF</a>
+
+   </table>
+
+</ul>
+
+
+<h2 class="colsep">pp with simulated pile-up</h2>
+
+<ul>
+   <li><b>D*, Beam width: 0.01 cm</b>
+
+   <p>
+   <table class="generic">
+   <tr>
+      <td>
+      <th>no beamline
+      <th>beamline (aka 1D fit)
+      <th>beamline3D (aka 3D fit)
+
+   <tr>
+      <th>VFMinuit
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_02_VFMinuit/dstar.lis_result">VFMinuit</a>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_02_VFMinuitBeamline/dstar.lis_result">VFMinuit</a>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_02_VFMinuitBeamline3D/dstar.lis_result">VFMinuit</a>
+
+   <tr>
+      <th>PPV
+      <td>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_02_VFPPVnoCTBBeamline/dstar.lis_result">PPV</a>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_02_VFPPVnoCTBBeamline3D/dstar.lis_result">PPV</a>
+
+   <tr>
+      <th>KFVF
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_02_KFVertex/dstar.lis_result">KFVF</a>
+      <td colspan=2> <a href="plots.html?pfx=DEV_sti_Jun_02_KFVertexBeamline/dstar.lis_result">KFVF</a>
+
+   </table>
+
+   <li><b>K0, Beam width: 0.01 cm</b>
+
+   <p>
+   <table class="generic">
+   <tr>
+      <td>
+      <th>no beamline
+      <th>beamline (aka 1D fit)
+      <th>beamline3D (aka 3D fit)
+
+   <tr>
+      <th>VFMinuit
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_02_VFMinuit/k0short.lis_result">VFMinuit</a>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_02_VFMinuitBeamline/k0short.lis_result">VFMinuit</a>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_02_VFMinuitBeamline3D/k0short.lis_result">VFMinuit</a>
+
+   <tr>
+      <th>PPV
+      <td>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_02_VFPPVnoCTBBeamline/k0short.lis_result">PPV</a>
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_02_VFPPVnoCTBBeamline3D/k0short.lis_result">PPV</a>
+
+   <tr>
+      <th>KFVF
+      <td> <a href="plots.html?pfx=DEV_sti_Jun_02_KFVertex/k0short.lis_result">KFVF</a>
+      <td colspan=2> <a href="plots.html?pfx=DEV_sti_Jun_02_KFVertexBeamline/k0short.lis_result">KFVF</a>
+
+   </table>
+
+</ul>
+
+
+
+<h2 class="colsep">STAR Vertex Finders with different beamline options</h2>
+
+<ul>
+   <li><b>Beam width: 0.1 cm</b>
+
+   <p>
+   <table class="generic">
+   <tr>
+      <td>
+      <td>
+      <th>no beamline
+      <th>beamline (aka 1D fit)
+      <th>beamline3D (aka 3D fit)
+
+   <tr>
+      <th rowspan=2>VFMinuit
+      <th>16 tracks
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-minuit-beamlineno-xysigma-0.1_pions_n_016.lis_result">VFMinuit/0.1/16</a>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-minuit-beamline1D-xysigma-0.1_pions_n_016.lis_result">VFMinuit/0.1/16</a>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-minuit-beamline3D-xysigma-0.1_pions_n_016.lis_result">VFMinuit/0.1/16</a>
+
+   <tr>
+
+      <th>2 tracks
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-minuit-beamlineno-xysigma-0.1_pions_n_002.lis_result">VFMinuit/0.1/2</a>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-minuit-beamline1D-xysigma-0.1_pions_n_002.lis_result">VFMinuit/0.1/2</a>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-minuit-beamline3D-xysigma-0.1_pions_n_002.lis_result">VFMinuit/0.1/2</a>
+
+   <tr>
+      <th rowspan=2>PPV
+      <th>16 tracks
+      <td>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-ppv-beamline1D-xysigma-0.1_pions_n_016.lis_result">PPV/0.1/16</a>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-ppv-beamline3D-xysigma-0.1_pions_n_016.lis_result">PPV/0.1/16</a>
+
+   <tr>
+
+      <th>2 tracks
+      <td>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-ppv-beamline1D-xysigma-0.1_pions_n_002.lis_result">PPV/0.1/2</a>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-ppv-beamline3D-xysigma-0.1_pions_n_002.lis_result">PPV/0.1/2</a>
+
+   </table>
+
+
+   <li><b>Beam width: 0.01 cm</b>
+
+   <p>
+   <table class="generic">
+   <tr>
+      <td>
+      <td>
+      <th>no beamline
+      <th>beamline (aka 1D fit)
+      <th>beamline3D (aka 3D fit)
+
+   <tr>
+      <th rowspan=2>VFMinuit
+      <th>16 tracks
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-minuit-beamlineno-xysigma-0.01_pions_n_016.lis_result">VFMinuit/0.01/16</a>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-minuit-beamline1D-xysigma-0.01_pions_n_016.lis_result">VFMinuit/0.01/16</a>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-minuit-beamline3D-xysigma-0.01_pions_n_016.lis_result">VFMinuit/0.01/16</a>
+
+   <tr>
+
+      <th>2 tracks
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-minuit-beamlineno-xysigma-0.01_pions_n_002.lis_result">VFMinuit/0.01/2</a>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-minuit-beamline1D-xysigma-0.01_pions_n_002.lis_result">VFMinuit/0.01/2</a>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-minuit-beamline3D-xysigma-0.01_pions_n_002.lis_result">VFMinuit/0.01/2</a>
+
+   <tr>
+      <th rowspan=2>PPV
+      <th>16 tracks
+      <td>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-ppv-beamline1D-xysigma-0.01_pions_n_016.lis_result">PPV/0.01/16</a>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-ppv-beamline3D-xysigma-0.01_pions_n_016.lis_result">PPV/0.01/16</a>
+
+   <tr>
+
+      <th>2 tracks
+      <td>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-ppv-beamline1D-xysigma-0.01_pions_n_002.lis_result">PPV/0.01/2</a>
+      <td> <a href="plots.html?pfx=cvs-160428-vertex-ppv-beamline3D-xysigma-0.01_pions_n_002.lis_result">PPV/0.01/2</a>
+
+   </table>
+
+</ul>
+
+
+<div id="footer"></div>
+
+</body>
+
+</html>
