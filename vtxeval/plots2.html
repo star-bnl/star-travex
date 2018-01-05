@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+  <title>vtxeval: Plots</title>
+
+  <link rel="stylesheet" type="text/css" href="../css/main.css">
+
+  <script type="text/javascript" src="https://root.cern.ch/js/latest/scripts/JSRootCore.js?io&onload=plotHists"></script>
+
+</head>
+
+<body bgcolor="#ffffff">
+
+<script type='text/javascript'>
+
+function plotHists()
+{
+  var filename = "https://star-bnl.github.io/star-travex-data/wemb_PPV_bl1D_vtx_a704cb55/fit_bl3D/file_vtxreco_vtxhist.root";
+
+  var rootfile = new JSROOT.TFile(filename, function(file) {
+    file.ReadObject("vertex/hVertexXvY;1", function(obj) {
+      JSROOT.draw("vertex\\/hVertexXvY", obj, "colz");
+    });
+  });
+
+}
+
+</script>
+
+
+<div id="vertex/hVertexXvY" style="width: 800px; height: 600px">hVertexXvY plot</div>
+
+
+</body>
+
+</html>
