@@ -5,23 +5,19 @@ project( star-travex )
 # Add to path in order to pick up the FindXXX.cmake files included in this project
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
-find_package(Boost 1.54.0 REQUIRED COMPONENTS program_options filesystem)
 find_package(ROOT COMPONENTS Table HistPainter Minuit Geom Spectrum EG MathMore)
 
-# Perform some setup standard to STAR experiment environment
-include(StarCommon)
+if( ${ROOT_CXX_FLAGS} MATCHES "-m32" )
+	message(STATUS "Found -m32 option in $ROOT_CXX_FLAGS (root-config). Will add it to $CMAKE_CXX_FLAGS")
+	set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS FALSE)
+	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32" )
+endif()
 
-# Search for mysql package after StarCommon is loaded as there some properties
-# set to help choose the appropriate version
+find_package(STAR COMPONENTS StTpcDb)
+find_package(Boost 1.54.0 COMPONENTS program_options filesystem)
 find_package(MySQL)
 find_package(LibXml2)
 find_package(CURL)
-
-add_definitions(-D__ROOT__)
-
-# Remove dependency of "install" target on "all" target. This allows to
-# build and install individual libraries
-set(CMAKE_SKIP_INSTALL_ALL_DEPENDENCY true)
 
 
 # Some external files on which this project depends
