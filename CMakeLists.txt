@@ -1,28 +1,12 @@
-# Basic usage:
-#
-# cd <project_dir>
-# mkdir build && cd build
-# cmake ../
-# make
-# make install
+cmake_minimum_required( VERSION 2.8 FATAL_ERROR )
 
-cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
-
-project(star-travex)
-
+project( star-travex )
 
 # Add to path in order to pick up the FindXXX.cmake files included in this project
-list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/star-cmake")
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
-# This project depends on Boost
-find_package( Boost 1.54.0 REQUIRED COMPONENTS program_options regex filesystem)
-
-# This project depends on ROOT
-find_package(ROOT COMPONENTS Table HistPainter Minuit Geom) # EG needed?
-
-if(NOT ROOT_FOUND)
-   message(FATAL_ERROR "Fatal error: ROOT package not found")
-endif()
+find_package(Boost 1.54.0 REQUIRED COMPONENTS program_options filesystem)
+find_package(ROOT COMPONENTS Table HistPainter Minuit Geom Spectrum EG MathMore)
 
 # Perform some setup standard to STAR experiment environment
 include(StarCommon)
@@ -31,10 +15,7 @@ include(StarCommon)
 # set to help choose the appropriate version
 find_package(MySQL)
 find_package(LibXml2)
-
-if(NOT LIBXML2_FOUND)
-	message(FATAL_ERROR "Fatal error: LibXml2 package not found")
-endif()
+find_package(CURL)
 
 add_definitions(-D__ROOT__)
 
