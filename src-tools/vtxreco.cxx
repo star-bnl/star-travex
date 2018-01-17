@@ -20,7 +20,6 @@
 #include "VtxEval/VtxRecoProgramOptions.h"
 
 
-bool switched_file(const StMuDstMaker& maker);
 void process_muDst(VtxRecoProgramOptions& prgOpts);
 
 
@@ -127,22 +126,4 @@ void process_muDst(VtxRecoProgramOptions& prgOpts)
    delete st_db_maker;
    delete vertexFinder;
    delete outFile;
-}
-
-
-bool switched_file(const StMuDstMaker& maker)
-{
-   static std::string prev_file_name("");
-   static std::string curr_file_name("");
-
-   curr_file_name = maker.GetFileName();
-
-   if (curr_file_name != prev_file_name) {
-      std::cout << "Processing new file: " << curr_file_name << std::endl;
-      prev_file_name = curr_file_name;
-
-      return true;
-   }
-
-   return false;
 }
