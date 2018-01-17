@@ -13,8 +13,7 @@ namespace vtxeval
 
 using VectorMcTracks = std::vector<const StMuMcTrack*>;
 
-//
-vtxeval::VectorMcTracks getMcTracksMatchingMcVertex(const StMuDst& stMuDst, const StMuMcVertex* mcVertex);
+VectorMcTracks getMcTracksMatchingMcVertex(const StMuDst& stMuDst, const StMuMcVertex* mcVertex);
 
 }
 

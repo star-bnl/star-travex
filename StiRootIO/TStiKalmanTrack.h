@@ -19,6 +19,7 @@ public:
    TStiKalmanTrack();
    explicit TStiKalmanTrack(TStiEvent* event);
    TStiKalmanTrack(const StiKalmanTrack& stiKTrack, TStiEvent* event=nullptr);
+
    const TStiEvent* GetParentEvent() const { return fEvent; }
    std::pair<std::set<TStiHit>::iterator, bool> AddToParentEvent(const TStiHit& stiHit);
    const std::set<TStiKalmanTrackNode>& GetNodes() const { return fNodes; }
@@ -31,9 +32,13 @@ public:
 
 protected:
 
-   TStiEvent  *fEvent;   //!< Pointer to mother event containing this track
+   /// Pointer to mother event containing this track
+   TStiEvent  *fEvent;
+
    std::set<TStiKalmanTrackNode> fNodes;
-   double   fEnergyLosses;      ///< Total track energy lost in all volumes
+
+   /// Total track energy lost in all volumes
+   double  fEnergyLosses;
 
    ClassDef(TStiKalmanTrack, 2)
 };

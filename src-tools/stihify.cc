@@ -3,8 +3,6 @@
 
 #include "TChain.h"
 #include "TError.h"
-#include "TGeoNavigator.h"
-#include "TGeoManager.h"
 #include "TRandom.h"
 
 #include "StiHify/StiHifyEvent.h"

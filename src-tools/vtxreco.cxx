@@ -93,7 +93,7 @@ void process_muDst(VtxRecoProgramOptions& prgOpts)
    int currRunNumber = 0;
 
    // Main loop over events
-   for (unsigned int iEvent = 0; iEvent < nEventsToRead; iEvent++)
+   for (unsigned int iEvent = 1; iEvent <= nEventsToRead; iEvent++)
    {
       if ( muDstMaker.Make() ) break;
 

@@ -24,9 +24,6 @@
 #include "VtxEval/VertexRootFile.h"
 
 
-namespace po = boost::program_options;
-
-
 void process_muDst(VertexRootFile& outFile);
 
 // Verify whether this vertex has an HFT track with a PXL hit
