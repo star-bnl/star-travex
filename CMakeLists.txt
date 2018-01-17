@@ -213,7 +213,6 @@ add_library(
 
 link_directories( ${Boost_LIBRARY_DIR} ${ROOT_LIBRARY_DIR} )
 
-configure_file(src-tools/config.h.in inc/src-tools/config.h)
 
 add_executable(stiscan src-tools/stiscan.cc)
 add_executable(stihify src-tools/stihify.cc)

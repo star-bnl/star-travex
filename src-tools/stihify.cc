@@ -7,8 +7,6 @@
 #include "TGeoManager.h"
 #include "TRandom.h"
 
-#include "src-tools/config.h"
-
 #include "StiHify/StiHifyEvent.h"
 #include "StiHify/StiHifyPrgOptions.h"
 #include "StiHify/StiHifyRootFile.h"
