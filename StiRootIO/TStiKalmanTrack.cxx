@@ -26,8 +26,6 @@ TStiKalmanTrack::TStiKalmanTrack(const StiKalmanTrack& stiKTrack, TStiEvent* eve
       if (fEvent && fEvent->AcceptTrackNode(stiNode) ) {
          fNodes.insert( TStiKalmanTrackNode(stiNode, this) );
       }
-
-      fEnergyLosses += stiNode.getEnergyLosses();
    }
 }
 

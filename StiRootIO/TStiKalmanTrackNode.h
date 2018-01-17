@@ -23,7 +23,6 @@ public:
    TStiKalmanTrackNode();
    TStiKalmanTrackNode(const StiKalmanTrackNode &stiKTN, TStiKalmanTrack* const parent=nullptr);
    bool  IsValid() const { return fValid; }
-   bool  IsInsideVolume() const { return fIsInsideVolume; }
    const TVector3& GetTrackP() const { return fTrackP; }
    const TVector3& GetPosition() const { return fPosition; }
    const TVector3& GetError() const { return fError; }
@@ -35,7 +34,6 @@ public:
    float GetNodeCenterRefAngle() const { return fNodeCenterRefAngle; }
    float GetNodeMaterialDensity() const { return fNodeMaterialDensity; }
    float GetNodeRelRadLength() const { return fNodeRelRadLength; }
-   float GetNodeTrackLength() const { return fNodeTrackLength; }
    std::string GetVolumeName() const { return fVolumeName; }
    const TStiHit* GetHit() const { return fAcceptedStiHit; }
    const TStiHit* GetClosestHit() const { return fClosestStiHit; }
@@ -71,9 +69,6 @@ protected:
    /// A flag taken directly from StiKalmanTrackNode
    float  fValid;
 
-   /// A flag taken directly from StiKalmanTrackNode
-   int  fIsInsideVolume;
-
    /// Global coordinates of the final (post re-fit) track node position
    TVector3  fPosition;
 
@@ -103,9 +98,6 @@ protected:
 
    /// Density of the material of this node/volume
    float  fNodeMaterialDensity;
-
-   /// Relative radiation length
-   float  fNodeTrackLength;
 
    /// Relative radiation length
    float  fNodeRelRadLength;

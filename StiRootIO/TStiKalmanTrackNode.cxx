@@ -11,14 +11,13 @@
 
 TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
    fStiTrackNode(nullptr),
-   fTrack(nullptr), fValid(false), fIsInsideVolume(-1),
+   fTrack(nullptr), fValid(false),
    fPosition(),
    fError(),
    fPositionLocal(),
    fProjPositionLocal(),
    fProjError(),
    fTrackP(), fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
-   fNodeTrackLength(0),
    fNodeRelRadLength(0), fVolumeName(""), fAcceptedStiHit(nullptr), fClosestStiHit(nullptr),
    fCandidateStiHits()
 {
@@ -27,7 +26,7 @@ TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
 
 TStiKalmanTrackNode::TStiKalmanTrackNode(const StiKalmanTrackNode &stiKTN, TStiKalmanTrack* const parent) : TObject(),
    fStiTrackNode(&stiKTN),
-   fTrack(parent), fValid(stiKTN.isValid()), fIsInsideVolume(stiKTN.inside(1+2+4)),
+   fTrack(parent), fValid(stiKTN.isValid()),
    fPosition(stiKTN.x_g(), stiKTN.y_g(), stiKTN.z_g()),
    fError(stiKTN.fitErrs()._cXX, stiKTN.fitErrs()._cYY, stiKTN.fitErrs()._cZZ),
    fPositionLocal(stiKTN.x(), stiKTN.y(), stiKTN.z()),
@@ -35,13 +34,9 @@ TStiKalmanTrackNode::TStiKalmanTrackNode(const StiKalmanTrackNode &stiKTN, TStiK
    fProjError(),
    fTrackP(stiKTN.getGlobalMomentum().x(), stiKTN.getGlobalMomentum().y(), stiKTN.getGlobalMomentum().z()),
    fEnergyLosses(-1), fNodeRadius(0), fNodeCenterRefAngle(0), fNodeMaterialDensity(0),
-   fNodeTrackLength(stiKTN.getTrackLength()),
    fNodeRelRadLength(0), fVolumeName(""), fAcceptedStiHit(nullptr), fClosestStiHit(nullptr),
    fCandidateStiHits()
 {
-   fEnergyLosses = stiKTN.getEnergyLosses() * 1e6; // Get losses in volume material and convert GeV to keV
-   fNodeRelRadLength = stiKTN.getRelRadLength();
-
    const StiDetector* stiKTNDet = stiKTN.getDetector();
 
    if (stiKTNDet)

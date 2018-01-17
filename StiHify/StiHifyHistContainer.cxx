@@ -127,7 +127,7 @@ void StiHifyHistContainer::FillDerivedHists()
 
 void StiHifyHistContainer::FillHists(const TStiKalmanTrackNode &trkNode)
 {
-   if (trkNode.GetVolumeName().empty() || !trkNode.IsInsideVolume())
+   if ( trkNode.GetVolumeName().empty() )
       return;
 
    if ( !fPrgOptions.MatchedVolName(trkNode.GetVolumeName()) )

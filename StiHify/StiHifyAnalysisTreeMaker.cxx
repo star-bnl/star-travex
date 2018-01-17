@@ -53,7 +53,7 @@ void StiHifyAnalysisTreeMaker::FillTree(const StiHifyEvent &event, StiNodeHitSta
 
 void StiHifyAnalysisTreeMaker::FillTree(const TStiKalmanTrackNode &trkNode, errorInfo_t &eI )
 {
-  if (trkNode.GetVolumeName().empty() || !trkNode.IsInsideVolume())
+  if ( trkNode.GetVolumeName().empty() )
     return;
 
   if (!fPrgOptions.MatchedVolName(trkNode.GetVolumeName()) ) // Limit to only volumes in volumeList
