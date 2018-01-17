@@ -1,7 +1,5 @@
 #include "StiRootIO/TStiHit.h"
 
-ClassImp(TStiHit)
-
 
 TStiHit::TStiHit() : TObject(),
    fStiHit(nullptr),

@@ -5,8 +5,6 @@
 #include "TError.h"
 #include "TMath.h"
 
-ClassImp(H3D)
-
 
 TH2D *H3D::DoProject2D(const char* name, const char * title, TAxis* projX, TAxis* projY,  
                     bool computeErrors, bool originalRange,

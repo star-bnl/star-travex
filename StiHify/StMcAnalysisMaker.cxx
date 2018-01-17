@@ -36,7 +36,6 @@
 
 #include "StDetectorDbMaker/StDetectorDbTriggerID.h"
 
-ClassImp(StMcAnalysisMaker);
 
 StMcAnalysisMaker::StMcAnalysisMaker(const char *name, const char *title): StMaker(name), mFile(NULL),
    mIsNtuple(true) , mNtuple(NULL), mTpcNtuple(NULL)

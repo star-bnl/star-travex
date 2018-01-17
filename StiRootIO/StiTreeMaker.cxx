@@ -7,8 +7,6 @@
 #include "StEvent/StEnumerations.h"
 #include "StEvent/StEnumerations.h"
 
-ClassImp(StiTreeMaker)
-
 
 StiTreeMaker::StiTreeMaker(const std::string &name, const std::string &suffix) : StMaker(name.c_str()),
    fFile(nullptr),

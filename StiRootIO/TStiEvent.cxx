@@ -6,8 +6,6 @@
 #include "Sti/StiTrack.h"
 #include "Sti/StiKalmanTrack.h"
 
-ClassImp(TStiEvent);
-
 
 TStiEvent::TStiEvent() : TObject(),
    fStiVolumeFilter(StiVolumeFilter::GetInstance()),

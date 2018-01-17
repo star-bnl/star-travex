@@ -11,8 +11,6 @@
 #include "StiRootIO/StiVolumeFilter.h"
 #include "StiHify/StiHifyEvent.h"
 
-ClassImp(StiHifyTreeMaker)
-
 
 StiHifyTreeMaker::StiHifyTreeMaker(const std::string &name) : StiTreeMaker(name, "stihify"),
    fStiVolumeFilter(StiVolumeFilter::GetInstance())

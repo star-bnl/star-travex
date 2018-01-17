@@ -1,7 +1,5 @@
 #include "StiRootIO/H2D.h"
 
-ClassImp(H2D)
-
 
 H2D::H2D() : TH2D()
 {

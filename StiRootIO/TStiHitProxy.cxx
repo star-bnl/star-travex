@@ -2,9 +2,6 @@
 #include "StiRootIO/TStiKalmanTrackNode.h"
 
 
-ClassImp(TStiHitProxy)
-
-
 TStiHitProxy::TStiHitProxy() :
    TObject(),
    fTStiHit(nullptr),

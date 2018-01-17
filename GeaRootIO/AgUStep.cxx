@@ -5,9 +5,6 @@
 #include "GeaRootIO/AgUStep.h"
 
 
-ClassImp(AgUStep)
-
-
 extern "C" {
 
   void agustep_() {

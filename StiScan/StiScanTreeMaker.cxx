@@ -9,8 +9,6 @@
 
 #include "StiScan/StiScanEvent.h"
 
-ClassImp(StiScanTreeMaker)
-
 
 StiScanTreeMaker::StiScanTreeMaker(const std::string &name) : StiTreeMaker(name, "stiscan")
 {

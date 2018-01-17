@@ -4,8 +4,6 @@
 #include "StiHify/StiHifyEvent.h"
 #include "Sti/StiKalmanTrack.h"
 
-ClassImp(StiHifyEvent)
-
 
 StiHifyEvent::StiHifyEvent() : TStiEvent()
 {

@@ -8,9 +8,6 @@
 #include "TGiant3.h"
 #include "TError.h"
 
-ClassImp(TGeaEvent)
-ClassImp(TGeaTrack)
-ClassImp(TGeaStep)
 
 void*    TGeaEvent::fgHash2PathMap = nullptr;
 TGiant3* TGeaEvent::geant3 = nullptr;

@@ -11,9 +11,6 @@ class DifferentBinLimits: public std::exception {};
 class DifferentLabels: public std::exception {};
 
 
-ClassImp(Profile2D)
-
-
 Profile2D::Profile2D() : TProfile2D()
 {
 }

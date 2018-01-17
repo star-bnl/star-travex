@@ -8,8 +8,6 @@
 #include "StiRootIO/TStiKalmanTrack.h"
 
 
-ClassImp(TStiKalmanTrackNode)
-
 
 TStiKalmanTrackNode::TStiKalmanTrackNode() : TObject(),
    fStiTrackNode(nullptr),

@@ -5,9 +5,6 @@
 #include "StiRootIO/TStiEvent.h"
 
 
-ClassImp(TStiKalmanTrack)
-
-
 TStiKalmanTrack::TStiKalmanTrack() : TObject(),
    fEvent(nullptr), fNodes(), fEnergyLosses(0)
 {
