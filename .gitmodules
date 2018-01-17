@@ -67,9 +67,6 @@
 [submodule "star-pams"]
 	path = ext/star-pams
 	url = https://github.com/star-bnl/star-pams.git
-[submodule "star-cmake"]
-	path = star-cmake
-	url = https://github.com/star-bnl/star-cmake.git
 [submodule "travex"]
 	path = ext/travex
 	url = https://github.com/plexoos/travex.git
