@@ -1,6 +1,6 @@
 #include "StiRootIO/TStiKalmanTrackNode.h"
 
-#include <boost/regex.hpp>
+#include <regex>
 #include <algorithm>
 
 #include "StarClassLibrary/StThreeVector.hh"
@@ -114,8 +114,8 @@ bool TStiKalmanTrackNode::MatchedVolName(const std::string & pattern) const
 {
    if (fVolumeName.empty()) return true;
 
-   boost::regex r(pattern);
-   bool matched = boost::regex_match(fVolumeName, r);
+   std::regex r(pattern);
+   bool matched = std::regex_match(fVolumeName, r);
 
    //if (matched)
    //   Info("MatchedVolName", "Volume [%s] matched pattern [%s]", fVolumeName.c_str(), pattern.c_str());
