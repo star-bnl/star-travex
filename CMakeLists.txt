@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 2.8 FATAL_ERROR )
+cmake_minimum_required( VERSION 3.2 FATAL_ERROR )
 
 project( star-travex )
 
@@ -19,6 +19,7 @@ find_package(MySQL)
 find_package(LibXml2)
 find_package(CURL)
 
+set( CMAKE_CXX_STANDARD 11 )
 
 # Some external files on which this project depends
 file(COPY asps/rexe/TGeant3/TGiant3.h asps/rexe/TGeant3/StarMC.h DESTINATION inc/)
