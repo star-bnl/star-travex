@@ -34,47 +34,9 @@ include_directories(
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR}/inc
 	ext/travex/include
-	ext/star-base
-	ext/star-bfchain
-	ext/star-daq
-	ext/star-muDst
-	ext/star-db-calibrations
-	ext/star-emc
-	ext/star-fgt               # required by star-muDst
-	ext/star-geant
-	ext/star-ist
-	ext/star-pxl
-	ext/star-RTS
-	ext/star-ssd
-	ext/star-stdb
-	ext/star-stevent
-	ext/star-sti
-	ext/star-ca-tracker        # required by star-sti
-	ext/star-svt
-	ext/star-tables
-	ext/star-tables/tables     # required by star-stevent
-	ext/star-sim               # required by star-muDst
-	ext/star-tof
-	ext/star-tpc
-	ext/star-ftpc              # required by star-stevent
-	ext/star-vertex
-	ext/star-pams/global/inc   # required by star-emc
 )
 
 add_subdirectory(ext/travex)
-add_subdirectory(ext/star-vertex)
-add_subdirectory(ext/star-base)
-add_subdirectory(ext/star-sti)
-add_subdirectory(ext/star-bfchain)
-add_subdirectory(ext/star-muDst)
-add_subdirectory(ext/star-pxl)
-add_subdirectory(ext/star-stevent)
-add_subdirectory(ext/star-emc)
-add_subdirectory(ext/star-sim)
-add_subdirectory(ext/star-trigger)
-add_subdirectory(ext/star-tables)
-add_subdirectory(ext/star-stdb)
-add_subdirectory(ext/star-tof)
 
 root_generate_dictionary(
 	StiRootIO_dict
