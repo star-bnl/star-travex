@@ -192,8 +192,6 @@ add_library(
 )
 
 
-link_directories( ${Boost_LIBRARY_DIR} ${ROOT_LIBRARY_DIR} )
-
 
 add_executable(stiscan src-tools/stiscan.cc)
 add_executable(stihify src-tools/stihify.cc)
