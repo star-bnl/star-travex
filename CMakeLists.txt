@@ -163,6 +163,7 @@ target_link_libraries(stiscan
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
+	stiglob
 )
 
 target_link_libraries(stihify
@@ -171,6 +172,7 @@ target_link_libraries(stihify
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
+	stiglob
 )
 
 
@@ -182,6 +184,7 @@ target_link_libraries(vtxhist
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
+	stiglob
 )
 
 
@@ -193,6 +196,7 @@ target_link_libraries(vtxreco
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
+	stiglob
 )
 
 
@@ -201,7 +205,10 @@ add_executable(stigeo src-tools/stigeo.cxx)
 target_link_libraries( stigeo
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
+	stiglob
 )
+
+add_library( stiglob SHARED src-tools/stiglob.cxx )
 
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
