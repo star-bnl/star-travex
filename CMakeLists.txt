@@ -196,11 +196,20 @@ target_link_libraries(vtxreco
 )
 
 
+add_executable(stigeo src-tools/stigeo.cxx)
+
+target_link_libraries( stigeo
+	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
+	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
+)
+
+
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 	set_target_properties(stiscan PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 	set_target_properties(stihify PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 	set_target_properties(vtxhist PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 	set_target_properties(vtxreco PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
+	set_target_properties(stigeo  PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
 endif()
 
 
