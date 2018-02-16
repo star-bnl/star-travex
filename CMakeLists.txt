@@ -13,7 +13,7 @@ if( ${ROOT_CXX_FLAGS} MATCHES "-m32" )
 	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32" )
 endif()
 
-find_package(STAR COMPONENTS StTpcDb)
+find_package(STAR)
 find_package(Boost 1.54.0 COMPONENTS program_options filesystem)
 find_package(MySQL)
 find_package(LibXml2)
@@ -30,6 +30,7 @@ include_directories(
 	${ROOT_INCLUDE_DIR}
 	${MYSQL_INCLUDE_DIRS}
 	${LIBXML2_INCLUDE_DIR}
+	${STAR_INCLUDE_DIRS}
 	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR}/inc
 	ext/travex/include
@@ -195,14 +196,18 @@ add_executable(stihify src-tools/stihify.cc)
 
 target_link_libraries(stiscan
 	travex
-	StiScanLib GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
-	${Boost_LIBRARIES} ${ROOT_LIBRARIES} pthread
+	StiScanLib GeaRootIO StiRootIO
+	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
+	${Boost_LIBRARIES}
+	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
 )
 
 target_link_libraries(stihify
 	travex
-	StiHifyLib StiScanLib GeaRootIO StiRootIO Sti StiUtilities St_base StChain StarRoot StarClassLibrary StarMagField
-	${Boost_LIBRARIES} ${ROOT_LIBRARIES} pthread
+	StiHifyLib StiScanLib GeaRootIO StiRootIO
+	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
+	${Boost_LIBRARIES}
+	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
 )
 
 
@@ -211,60 +216,20 @@ add_executable(vtxhist src-tools/vtxhist.cc)
 target_link_libraries(vtxhist
 	travex
 	star-vertex-eval
-	StTableUtilities
-	St_Tables
-	StUtilities
-	StIOMaker
-	StTriggerDataMaker
-	StEvent
-	StDbLib
-	StEmcUtil
-	St_Tables
-	StBichsel
-	StSecondaryVertexMaker
-	StVertexRootIO
-	StMuDSTMaker
-	StStrangeMuDstMaker
-	St_base
-	StChain
-	StarRoot
-	StarClassLibrary
-	${Boost_LIBRARIES} ${ROOT_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES} pthread
+	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
+	${Boost_LIBRARIES}
+	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
 )
+
 
 add_executable(vtxreco src-tools/vtxreco.cxx)
 
 target_link_libraries(vtxreco
 	travex
 	star-vertex-eval
-	StarRoot
-	StChain
-	St_Tables
-	StUtilities
-	StarClassLibrary
-	StTriggerDataMaker
-	StEvent
-	StEmcUtil
-	StEEmcUtil
-	St_Tables
-	StStrangeMuDstMaker
-	StBichsel
-	StMuDSTMaker
-	StStrangeMuDstMaker
-	St_base           # Has to go last to avoid no dictionary for StObject available
-	Sti
-	StGenericVertexMaker
-	Sti
-	St_db_Maker
-	StDbBroker
-	StDbLib
-	StBTofUtil        # required by mudst or stevent
-	StTableUtilities  # required by mudst or stevent
-	St_base
-	StChain
-	StarRoot
-	StarClassLibrary
-	${Boost_LIBRARIES} ${ROOT_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES} pthread
+	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
+	${Boost_LIBRARIES}
+	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
 )
 
 
@@ -277,7 +242,6 @@ endif()
 
 
 # Installation section
-install(DIRECTORY "ext/star-db-calibrations/tracker" DESTINATION "StarDb/Calibrations")
 
 install(TARGETS
 	StiRootIO GeaRootIO AgUStep StiHifyLib StiScanLib
