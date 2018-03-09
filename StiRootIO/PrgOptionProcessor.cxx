@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
-#include <boost/regex.hpp>
+#include <regex>
 
 #include "TFile.h"
 #include "TSystem.h"
@@ -99,9 +99,9 @@ void PrgOptionProcessor::VerifyOptions()
          volListFile >> pattern;
 
          try {
-            boost::regex re(pattern);
+            std::regex re(pattern);
          }
-         catch (boost::regex_error& e) {
+         catch (std::regex_error& e) {
             TVX_FATAL("Provided regex \"%s\" is not valid", pattern.c_str());
          }
 
@@ -127,9 +127,9 @@ void PrgOptionProcessor::VerifyOptions()
       else {
 
          try {
-            boost::regex re(fVolumePattern);
+            std::regex re(fVolumePattern);
          }
-         catch (boost::regex_error& e) {
+         catch (std::regex_error& e) {
             TVX_FATAL("Provided regex \"%s\" is not valid", fVolumePattern.c_str());
          }
 
@@ -156,9 +156,9 @@ bool PrgOptionProcessor::MatchedVolName(const std::string & volName) const
 
    for( ; iPattern != fVolumeList.end(); ++iPattern )
    {
-      boost::regex r(*iPattern);
+      std::regex r(*iPattern);
 
-      if ( boost::regex_match(volName, r) )
+      if ( std::regex_match(volName, r) )
          return true;
    }
 

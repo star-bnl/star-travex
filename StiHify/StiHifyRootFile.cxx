@@ -1,5 +1,5 @@
 #include <boost/filesystem.hpp>
-#include <boost/regex.hpp>
+#include <regex>
 
 #include "StiHifyRootFile.h"
 
@@ -51,7 +51,7 @@ void StiHifyRootFile::Finalize()
       std::string hist_name = hist_iter.first;
 
       // We select only histograms with names matching the following regex
-      bool matched = boost::regex_match(hist_name, boost::regex("^hActiveLayerCounts.*$"));
+      bool matched = std::regex_match(hist_name, std::regex("^hActiveLayerCounts.*$"));
 
       if (!matched) continue;
 

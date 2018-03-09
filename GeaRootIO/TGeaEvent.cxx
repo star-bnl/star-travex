@@ -1,4 +1,4 @@
-#include <boost/regex.hpp>
+#include <regex>
 #include <string>
 #include <set>
 #include <unordered_map>
@@ -158,8 +158,8 @@ bool TGeaStep::MatchedVolName(const std::string & pattern) const
 
    if (volumeNamePath.empty()) return true;
 
-   boost::regex r(pattern);
-   bool matched = boost::regex_match(volumeNamePath, r);
+   std::regex r(pattern);
+   bool matched = std::regex_match(volumeNamePath, r);
 
    return matched;
 }

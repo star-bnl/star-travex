@@ -1,7 +1,8 @@
 #ifndef StiVolumeFilter_h
 #define StiVolumeFilter_h
 
-#include <boost/regex.hpp>
+#include <regex>
+#include <string>
 
 #include "StEvent/StEnumerations.h"
 
@@ -24,7 +25,7 @@ public:
    bool AcceptTrack(const StiKalmanTrack& track) const;
    bool AcceptTrackNode(const StiKalmanTrackNode& node) const;
    bool HasAcceptedNode(const StiKalmanTrack& track) const;
-   const std::set<boost::regex>& GetNamePatterns() const { return fgVolumeSelectPatterns; }
+   const std::set<std::string>& GetNamePatterns() const { return fgVolumeSelectPatterns; }
 
 protected:
 
@@ -32,7 +33,7 @@ protected:
    bool                   fgDetActiveOnly;     //!< Another selection criteria to save nodes
    /// A set of regex patterns to select and save track nodes passing through
    /// volumes with matching names
-   std::set<boost::regex> fgVolumeSelectPatterns;
+   std::set<std::string> fgVolumeSelectPatterns;
 
 private:
 

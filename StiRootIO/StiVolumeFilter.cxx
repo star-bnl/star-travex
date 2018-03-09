@@ -18,10 +18,10 @@ StiVolumeFilter::StiVolumeFilter() : fgDetGroupId(kMaxDetectorId), fgDetActiveOn
    while ( std::getline(volumePatternFile, pattern) )
    {
       try {
-         boost::regex volNameRegex(pattern);
-         fgVolumeSelectPatterns.insert(volNameRegex);
+         std::regex volNameRegex(pattern);
+         fgVolumeSelectPatterns.insert(pattern);
       }
-      catch (boost::regex_error& e) {
+      catch (std::regex_error& e) {
          Warning(__FUNCTION__, "Regex [%s] found in [%s] is not valid", pattern.c_str(), patternFileName.c_str());
       }
    }
@@ -74,7 +74,7 @@ bool StiVolumeFilter::AcceptTrackNode(const StiKalmanTrackNode& node) const
 
    for (const auto& volNamePattern : fgVolumeSelectPatterns)
    {
-      if ( boost::regex_match(volumeName, volNamePattern) ) return true;
+      if ( std::regex_match(volumeName, std::regex(volNamePattern)) ) return true;
    }
 
    return false;
