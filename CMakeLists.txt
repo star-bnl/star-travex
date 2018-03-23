@@ -88,7 +88,6 @@ root_generate_dictionary(
 
 add_library(
 	StiRootIO
-	SHARED
 	StiRootIO/H2D.cxx
 	StiRootIO/H3D.cxx
 	StiRootIO/PrgOptionProcessor.cxx
@@ -104,19 +103,17 @@ add_library(
 	StiRootIO_dict.cxx
 )
 
-add_library( GeaRootIO SHARED GeaRootIO/TGeaEvent.cxx GeaRootIO_dict.cxx)
-add_library( AgUStep SHARED GeaRootIO/AgUStep.cxx AgUStep_dict.cxx)
+add_library( GeaRootIO GeaRootIO/TGeaEvent.cxx GeaRootIO_dict.cxx)
+add_library( AgUStep GeaRootIO/AgUStep.cxx AgUStep_dict.cxx)
 
 add_library(
 	StMcAnalysisMaker
-	SHARED
 	StiHify/StMcAnalysisMaker.cxx
 	StMcAnalysisMaker_dict.cxx
 )
 
 add_library(
 	StiHifyLib
-	SHARED
 	StiHify/StiHifyEvent.cxx
 	StiHify/StiHifyTreeMaker.cxx
 	StiHify/StiHifyHistContainer.cxx
@@ -129,7 +126,6 @@ add_library(
 
 add_library(
 	StiScanLib
-	SHARED
 	StiScan/StiScanEvent.cxx
 	StiScan/StiScanTreeMaker.cxx
 	StiScan/StiScanHistContainer.cxx
@@ -143,7 +139,6 @@ add_library(
 
 add_library(
 	star-vertex-eval
-	SHARED
 	VtxEval/StarEventHistContainer.cxx
 	VtxEval/StarVertexHistContainer.cxx
 	VtxEval/StarVertexHftHistContainer.cxx
@@ -208,7 +203,7 @@ target_link_libraries( stigeo
 	stiglob
 )
 
-add_library( stiglob SHARED src-tools/stiglob.cxx )
+add_library( stiglob src-tools/stiglob.cxx )
 
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
