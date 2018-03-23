@@ -9,7 +9,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 OPTION( BUILD_SHARED_LIBS "Global flag to cause add_library to create shared libraries if on" ON )
 
 
-find_package(ROOT COMPONENTS Table HistPainter Minuit Geom Spectrum EG MathMore)
+find_package(ROOT COMPONENTS Cint Table HistPainter Minuit Geom Spectrum EG MathMore)
 
 if( ${ROOT_CXX_FLAGS} MATCHES "-m32" )
 	message(STATUS "Found -m32 option in $ROOT_CXX_FLAGS (root-config). Will add it to $CMAKE_CXX_FLAGS")
