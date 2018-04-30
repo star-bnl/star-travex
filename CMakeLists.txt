@@ -5,6 +5,10 @@ project( star-travex )
 # Add to path in order to pick up the FindXXX.cmake files included in this project
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
+# By default build shared libraries but allow the user to change if desired
+OPTION( BUILD_SHARED_LIBS "Global flag to cause add_library to create shared libraries if on" ON )
+
+
 find_package(ROOT COMPONENTS Table HistPainter Minuit Geom Spectrum EG MathMore)
 
 if( ${ROOT_CXX_FLAGS} MATCHES "-m32" )
