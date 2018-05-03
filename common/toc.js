@@ -321,19 +321,6 @@ generated_toc = {
     }
   },
 
-  /* cookie handling: http://www.quirksmode.org/js/cookies.html */
-  createCookie: function(name, value, days)
-  {
-    if (days) {
-      var date = new Date();
-      date.setTime(date.getTime()+(days*24*60*60*1000));
-      var expires = "; expires="+date.toGMTString();
-    }
-    else var expires = "";
-
-    document.cookie = name+"="+value+expires+"; path=/";
-  },
-
 
   createCookie2: function(value, days)
   {
@@ -406,11 +393,6 @@ generated_toc = {
 
      this.createCookie2(newstr, 30);
      alert(headingIndex + ", " + value + "\n" + cookieValue + "\n" + newstr);
-  },
-
-
-  eraseCookie: function(name) {
-    createCookie(name,"",-1);
   },
 
 
