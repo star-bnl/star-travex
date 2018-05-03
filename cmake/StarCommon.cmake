@@ -6,66 +6,37 @@ else()
 	set(StarCommonLoaded TRUE)
 endif()
 
+# By default build shared libraries but allow the user to change if desired
+OPTION( BUILD_SHARED_LIBS "Global flag to cause add_library to create shared libraries if on" ON )
 
-# Special treatment of linker options for MacOS X to get a gcc linux-like behavior
+# Special treatment of linker options for MacOS X to get a linux-like behavior for gcc
 if(APPLE)
 	set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -undefined dynamic_lookup")
 	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -undefined dynamic_lookup")
 endif()
 
-# Set compile warning options for gcc compilers
-if( CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX )
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
-endif()
+
+find_program(ROOT_DICTGEN_EXECUTABLE NAMES rootcling rootcint HINTS $ENV{ROOTSYS}/bin)
 
 
-# Check whether the compiler supports c++11
-include(CheckCXXCompilerFlag)
+# Define common STAR_ and CMAKE_ variables used to build the STAR code
 
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+# -D_UCMLOGGER_ required by StStarLogger
+# -DNEW_DAQ_READER required by StTofHitMaker
+set(STAR_C_CXX_DEFINITIONS "-D__ROOT__ -D_UCMLOGGER_ -DNEW_DAQ_READER")
+set(STAR_Fortran_DEFINITIONS "-DCERNLIB_TYPE -DCERNLIB_DOUBLE -DCERNLIB_NOQUAD -DCERNLIB_LINUX")
+set(STAR_Fortran_FLAGS "-fd-lines-as-code -std=legacy -fno-second-underscore -fno-automatic")
 
-if(COMPILER_SUPPORTS_CXX11)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif(COMPILER_SUPPORTS_CXX0X)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-else()
-	message(STATUS "StarCommon: The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
-endif()
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${STAR_C_CXX_DEFINITIONS}")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${STAR_C_CXX_DEFINITIONS}")
+set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} ${STAR_Fortran_FLAGS} ${STAR_Fortran_DEFINITIONS}")
 
-
-# STAR software heavily depends on ROOT
-find_package( ROOT COMPONENTS Table HistPainter Minuit Geom Spectrum )
-
-# Since most of STAR projects depend on ROOT check the flags and use the same
-if(ROOT_FOUND)
-
-	string(REGEX MATCH "(^|[\t ]+)-m([\t ]*)(32|64)([\t ]+|$)" STAR_ROOT_CXX_FLAGS_M ${ROOT_CXX_FLAGS})
-
-	if (STAR_ROOT_CXX_FLAGS_M)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m${CMAKE_MATCH_3}")
-		message(STATUS "StarCommon: Found -m${CMAKE_MATCH_3} option in $ROOT_CXX_FLAGS (root-config). Will add it to $CMAKE_CXX_FLAGS")
-
-		if (CMAKE_MATCH_3 EQUAL 32)
-			set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS FALSE)
-		endif()
-
-	endif()
-
-else()
-	message(FATAL_ERROR "StarCommon: FATAL: ROOT package not found")
-endif()
-
-
-message(STATUS "StarCommon: CMAKE_CXX_FLAGS = \"${CMAKE_CXX_FLAGS}\"")
-
-
-add_definitions( -D__ROOT__ )
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Remove dependency of "install" target on "all" target. This allows to
 # build and install individual libraries
-set( CMAKE_SKIP_INSTALL_ALL_DEPENDENCY TRUE )
-
+set(CMAKE_SKIP_INSTALL_ALL_DEPENDENCY TRUE)
 
 # Make use of the $STAR_HOST_SYS evironment variable. If it is set use it as the
 # typical STAR installation prefix
@@ -75,29 +46,53 @@ if(DEFINED ENV{STAR_HOST_SYS})
 	set(STAR_ADDITIONAL_INSTALL_PREFIX ".$ENV{STAR_HOST_SYS}")
 endif()
 
+set( STAR_CMAKE_DIR "${CMAKE_CURRENT_LIST_DIR}" )
+
+set(STAR_LIB_DIR_BLACKLIST
+	StarVMC/GeoTestMaker
+	StarVMC/minicern
+	StarVMC/StarBASE
+	StarVMC/StarGeometry      # library built from StarVMC/Geometry
+	StarVMC/StarSim
+	StarVMC/StarVMCApplication
+	StarVMC/StVMCMaker
+	StarVMC/StVmcTools
+	StarVMC/xgeometry         # library built from StarVMC/Geometry
+	StRoot/html
+	StRoot/macros
+	StRoot/qainfo
+	StRoot/StarGenerator
+	StRoot/StEEmcPool         # requires subdir processing
+	StRoot/StFgtPool          # blacklisted in cons
+	StRoot/StFlowMaker        # missing from lib/
+	StRoot/St_geom_Maker      # requires qt4/include/QtGui
+	StRoot/StHbtMaker         # fortran error
+	StRoot/StHighptPool       # blacklisted in cons
+	StRoot/StJetMaker
+	StRoot/StJetFinder        # needs FindFastJet.cmake
+	StRoot/StSpinMaker        # blacklisted due to error in fortran code
+	StRoot/StSpinPool         # blacklisted in cons
+	StRoot/StTofPool          # missing from lib/
+)
 
 
 #
-# Builds a list of header files from which a ROOT dictionary can be created for
-# a given subdirectory `stroot_dir`. The list is put into the `headers_for_dict`
+# Generates a list of header files from which a ROOT dictionary can be created for
+# a given subdirectory `star_lib_dir`. The list is put into the `headers_for_dict`
 # variable that is returned to the parent scope. Only *.h and *.hh files
-# containing ROOT's ClassDef macro are selected while any LinkDef files are
-# ignored. With optional argument VERIFY the headers can be checked to contain
-# the 'ClassDef' macro.
+# are selected while any LinkDef files are ignored.
 #
-function( STAR_HEADERS_FOR_ROOT_DICTIONARY stroot_dir headers_for_dict )
+function(STAR_HEADERS_FOR_ROOT_DICTIONARY star_lib_dir headers_for_dict)
 
-	cmake_parse_arguments(ARG "VERIFY" "" "" ${ARGN})
-
-	# Get all header files in 'stroot_dir'
-	file(GLOB_RECURSE stroot_dir_headers "${CMAKE_CURRENT_SOURCE_DIR}/${stroot_dir}/*.h"
-	                                     "${CMAKE_CURRENT_SOURCE_DIR}/${stroot_dir}/*.hh")
+	# Get all header files in 'star_lib_dir'
+	file(GLOB_RECURSE star_lib_dir_headers "${star_lib_dir}/*.h"
+	                                       "${star_lib_dir}/*.hh")
 
 	# Create an empty list
 	set(valid_headers)
 
-	# stroot_dir_headers should containd absolute paths to globed headers
-	foreach( full_path_header ${stroot_dir_headers} )
+	# star_lib_dir_headers should containd absolute paths to globed headers
+	foreach( full_path_header ${star_lib_dir_headers} )
 
 		get_filename_component( header_file_name ${full_path_header} NAME )
 
@@ -105,20 +100,10 @@ function( STAR_HEADERS_FOR_ROOT_DICTIONARY stroot_dir headers_for_dict )
 
 		# Skip LinkDef files from globbing result
 		if( ${header_file_name} MATCHES "linkdef" )
-			# Uncomment next line to make it verbose
-			#message( STATUS "StarCommon: WARNING: Skipping LinkDef header ${full_path_header}" )
 			continue()
 		endif()
 
-		set( valid_header TRUE )
-
-		if( ${ARG_VERIFY} )
-			star_verify_header_for_root_dictionary( ${full_path_header} valid_header)
-		endif()
-
-		if( ${valid_header} )
-			list( APPEND valid_headers ${full_path_header} )
-		endif()
+		list( APPEND valid_headers ${full_path_header} )
 
 	endforeach()
 
@@ -128,381 +113,745 @@ endfunction()
 
 
 #
-# Checks whether the file contains at least one ClassDef macro
+# Generates ${star_lib_dir}_LinkDef.h and ${star_lib_dir}_DictInc.h header files
+# used in ROOT dictionary generation by rootcint/rootcling. Only header files
+# passed in LINKDEF_HEADERS argument are used. The user can optionally pass an
+# existing LinkDef file in LINKDEF argument to be incorporated in the generated
+# ${star_lib_dir}_LinkDef.h
 #
-function( STAR_VERIFY_HEADER_FOR_ROOT_DICTIONARY header_file valid_header )
-
-	find_program( EXEC_GREP NAMES grep )
-
-	if( NOT EXEC_GREP )
-		message( FATAL_ERROR "StarCommon: FATAL: STAR_VERIFY_HEADER_FOR_ROOT_DICTIONARY function requires grep" )
-	endif()
-
-	# May want to verify that the header file does exist in the include directories
-	#get_filename_component( headerFileName ${userHeader} NAME)
-	#find_file(headerFile ${headerFileName} HINTS ${incdirs})
-
-	set( valid )
-
-	# Check for at least one ClassDef macro in the header file
-	execute_process( COMMAND ${EXEC_GREP} -m1 -H "^[[:space:]]*ClassDef" ${header_file} RESULT_VARIABLE exit_code OUTPUT_QUIET )
-
-	if( NOT ${exit_code} )
-		set( valid TRUE )
-	else()
-		message( STATUS "StarCommon: WARNING: No ClassDef macro found in ${header_file}" )
-		set( valid FALSE )
-	endif()
-
-	set( ${valid_header} ${valid} PARENT_SCOPE )
-
-endfunction()
-
-
-#
-# Generates a basic LinkDef header ${CMAKE_CURRENT_BINARY_DIR}/${stroot_dir}_LinkDef.h
-# by parsing the user provided header files with standard linux utilities awk and sed.
-#
-function(STAR_GENERATE_LINKDEF stroot_dir dict_headers)
-
-	# Set default name for LinkDef file
-	set( linkdef_file "${CMAKE_CURRENT_BINARY_DIR}/${stroot_dir}_LinkDef.h" )
-	set_source_files_properties(${linkdef_file} PROPERTIES GENERATED TRUE)
-
-	message(STATUS "StarCommon: Generating LinkDef header: ${linkdef_file}")
-
-	# Check availability of required system tools
-	find_program(EXEC_AWK NAMES gawk awk)
-	find_program(EXEC_SED NAMES gsed sed)
-
-	if(NOT EXEC_AWK OR NOT EXEC_SED)
-		message(FATAL_ERROR "StarCommon: FATAL: STAR_GENERATE_LINKDEF function requires awk and sed commands")
-	endif()
-
+function(STAR_GENERATE_LINKDEF star_lib_dir)
 	cmake_parse_arguments(ARG "" "" "LINKDEF;LINKDEF_HEADERS" ${ARGN})
 
-	# If provided by the user read the contents of their LinkDef file into a list
-	set( linkdef_contents )
+	# Set default name for LinkDef file
+	set( linkdef_file "${star_lib_dir}_LinkDef.h" )
+	set( dictinc_file "${star_lib_dir}_DictInc.h" )
+
+	# Pass both files to get_likdef.sh as -o arguments
+	set( gen_linkdef_args "-l;${linkdef_file};-d;${dictinc_file};${ARG_LINKDEF_HEADERS}" )
 
 	if( ARG_LINKDEF )
-		file(READ ${ARG_LINKDEF} linkdef_contents)
-		# Convert file lines into a CMake list
-		STRING(REGEX REPLACE ";" "\\\\;" linkdef_contents "${linkdef_contents}")
-		STRING(REGEX REPLACE "\n" ";" linkdef_contents "${linkdef_contents}")
+		list( APPEND gen_linkdef_args "-i;${ARG_LINKDEF}" )
 	endif()
 
-	# Parse header files for ClassDef() statements and collect all entities into
-	# a list
-	set( dict_entities )
-	set( dict_valid_headers )
-
-	foreach( header ${ARG_LINKDEF_HEADERS} )
-
-		# Parse for special namespace marked with $NMSPC in the header file
-		set( my_exec_cmd ${EXEC_AWK} "match($0,\"namespace[[:space:]]+(\\\\w+).*\\\\$NMSPC\", a) { printf(a[1]\"\\r\") }" )
-		execute_process(COMMAND ${my_exec_cmd} ${header} OUTPUT_VARIABLE extracted_namespace OUTPUT_STRIP_TRAILING_WHITESPACE)
-
-		set( my_exec_cmd ${EXEC_AWK} "match($0,\"^[[:space:]]*ClassDef[[:space:]]*\\\\(([^#]+),.*\\\\)\",a){ printf(a[1]\"\\r\") }" )
-
-		execute_process( COMMAND ${my_exec_cmd} ${header} COMMAND ${EXEC_SED} -e "s/\\s\\+/;/g"
-			OUTPUT_VARIABLE extracted_dict_objects OUTPUT_STRIP_TRAILING_WHITESPACE )
-
-		# Prepend dictionary types with namespace
-		if( extracted_namespace )
-			string(REGEX REPLACE "([^;]+)" "${extracted_namespace}::\\1" extracted_dict_objects "${extracted_dict_objects}")
-		endif()
-
-		list( APPEND dict_entities ${extracted_dict_objects} )
-
-		if( extracted_dict_objects )
-			list( APPEND dict_valid_headers ${header} )
-		else()
-			# if header base name matches linkdef_contents then use this header
-			get_filename_component( header_base_name ${header} NAME_WE )
-
-			if( "${linkdef_contents}" MATCHES "${header_base_name}" )
-				list( APPEND dict_valid_headers ${header} )
-			endif()
-		endif()
-
-	endforeach()
-
-
-	# Special case dealing with StEvent containers
-	set( dict_entities_stcontainers )
-
-	if( "${stroot_dir}" MATCHES "StEvent" )
-		foreach( header ${ARG_LINKDEF_HEADERS} )
-			set( my_exec_cmd ${EXEC_AWK} "match($0,\"^[[:space:]]*StCollectionDef[[:space:]]*\\\\(([^#]+)\\\\)\",a){ printf(a[1]\"\\r\") }" )
-			
-			execute_process( COMMAND ${my_exec_cmd} ${header} COMMAND ${EXEC_SED} -e "s/\\s\\+/;/g"
-				OUTPUT_VARIABLE extracted_dict_objects OUTPUT_STRIP_TRAILING_WHITESPACE )
-
-			list( APPEND dict_entities_stcontainers ${extracted_dict_objects} )
-
-			if( extracted_dict_objects )
-				list( APPEND dict_valid_headers ${header} )
-			endif()
-		endforeach()
-	endif()
-
-	# Assign new validated headers 
-	set( ${dict_headers} ${dict_valid_headers} PARENT_SCOPE )
-
-	# Write contents to the generated *_LinkDef.h file
-
-	if( "${linkdef_contents}" MATCHES "pragma[ \t]+link[ \t]+off[ \t]+all" )
-		file(WRITE ${linkdef_file} "#ifdef __CINT__\n\n")
-	else()
-		file(WRITE ${linkdef_file} "#ifdef __CINT__\n\n#pragma link off all globals;\n#pragma link off all classes;\n#pragma link off all functions;\n\n")
-	endif()
-
-	foreach( linkdef_line ${linkdef_contents} )
-		if( "${linkdef_line}" MATCHES "#pragma[ \t]+link")
-			file( APPEND ${linkdef_file} "${linkdef_line}\n" )
-		endif()
-	endforeach()
-	
-	file( APPEND ${linkdef_file} "\n\n// Collected dictionary entities\n\n" )
-
-	foreach( dict_entity ${dict_entities} )
-		if( NOT "${linkdef_contents}" MATCHES "class[ ]+${dict_entity}[< ;+-]+")
-			file( APPEND ${linkdef_file} "#pragma link C++ class ${dict_entity}+;\n" )
-		endif()
-	endforeach()
-
-	file( APPEND ${linkdef_file} "\n\n" )
-
-	foreach( dict_entity ${dict_entities_stcontainers} )
-		file( APPEND ${linkdef_file} "#pragma link C++ class StPtrVec${dict_entity}-;\n" )
-		file( APPEND ${linkdef_file} "#pragma link C++ class StSPtrVec${dict_entity}-;\n" )
-	endforeach()
-
-	file( APPEND ${linkdef_file} "#endif\n" )
+	# Generate the above files to be used in dictionary generation by ROOT
+	add_custom_command(
+		OUTPUT ${linkdef_file} ${dictinc_file}
+		COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/gen_linkdef.sh" ${gen_linkdef_args}
+		DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/gen_linkdef.sh" ${ARG_LINKDEF_HEADERS})
 
 endfunction()
 
 
 #
-# Generates a ROOT dictionary for `stroot_dir`.
+# Generates a ROOT dictionary for `star_lib_dir` in ${STAR_SRC}.
 #
-function(STAR_GENERATE_DICTIONARY stroot_dir)
+function(STAR_GENERATE_DICTIONARY star_lib_name star_lib_dir star_lib_dir_out)
 
-	cmake_parse_arguments(ARG "" "" "LINKDEF;LINKDEF_HEADERS;LINKDEF_OPTIONS;EXCLUDE" "" ${ARGN})
+	cmake_parse_arguments(ARG "" "" "LINKDEF_HEADERS;LINKDEF_OPTIONS;EXCLUDE" "" ${ARGN})
+
+	# Search for default LinkDef if not specified
+	file( GLOB user_linkdefs "${star_lib_dir}/*LinkDef.h"
+	                         "${star_lib_dir}/*LinkDef.hh" )
+
+	# Get the first LinkDef from the list
+	if( user_linkdefs )
+		list( GET user_linkdefs 0 user_linkdef )
+	endif()
 
 	# If the user provided header files use them in addition to automatically
 	# collected ones.
-	set( linkdef_headers )
-	star_headers_for_root_dictionary( ${stroot_dir} linkdef_headers )
+	star_headers_for_root_dictionary( ${star_lib_dir} linkdef_headers )
 
-	if( ARG_EXCLUDE )
-		FILTER_LIST( linkdef_headers "${ARG_EXCLUDE}" )
+	FILTER_LIST( linkdef_headers EXCLUDE ${ARG_EXCLUDE} )
+
+	# This is a hack for the call to this function from STAR_ADD_LIBRARY_GEOMETRY() where the
+	# headers are generated at runtime and cannot be globbed. So, we can specify them by hand.
+	if( NOT linkdef_headers )
+		set(linkdef_headers ${ARG_LINKDEF_HEADERS})
 	endif()
 
 	# Generate a basic LinkDef file and, if available, merge with the one
 	# provided by the user
-	set( dict_headers )
-	star_generate_linkdef( ${stroot_dir} dict_headers LINKDEF ${ARG_LINKDEF} LINKDEF_HEADERS ${linkdef_headers})
+	star_generate_linkdef( ${star_lib_dir_out} LINKDEF ${user_linkdef} LINKDEF_HEADERS ${linkdef_headers} )
 
-	file( GLOB_RECURSE user_linkdef_headers ${ARG_LINKDEF_HEADERS} )
-	list( APPEND dict_headers ${user_linkdef_headers} )
+	# Prepare include directories to be used during ROOT dictionary generation.
+	# These directories are tied to the `star_lib_name` target via the
+	# INCLUDE_DIRECTORIES property.
+	get_target_property( target_include_dirs ${star_lib_name} INCLUDE_DIRECTORIES )
+	string( REGEX REPLACE "([^;]+)" "-I\\1" dict_include_dirs "${target_include_dirs}" )
 
-	root_generate_dictionary( ${CMAKE_CURRENT_BINARY_DIR}/${stroot_dir}_dict ${dict_headers}
-		LINKDEF ${CMAKE_CURRENT_BINARY_DIR}/${stroot_dir}_LinkDef.h
-		OPTIONS ${ARG_LINKDEF_OPTIONS}
-	)
-
+	# Generate ROOT dictionary using the *_LinkDef.h and *_DictInc.h files
+	add_custom_command(OUTPUT ${star_lib_dir_out}_dict.cxx ${star_lib_dir_out}_dict.h
+	                   COMMAND ${ROOT_DICTGEN_EXECUTABLE} -cint -f ${star_lib_dir_out}_dict.cxx
+	                   -c ${ARG_LINKDEF_OPTIONS} ${dict_include_dirs}
+	                   ${ARG_LINKDEF_HEADERS} ${star_lib_dir_out}_DictInc.h ${star_lib_dir_out}_LinkDef.h
+	                   DEPENDS ${ARG_LINKDEF_HEADERS} ${star_lib_dir_out}_DictInc.h ${star_lib_dir_out}_LinkDef.h
+	                   VERBATIM)
 endfunction()
 
 
 #
 # Adds a target to build a library from all source files (*.cxx, *.cc, and *.cpp)
-# recursively found in the specified subdirectory `stroot_dir`. It is possible
+# recursively found in the specified subdirectory `star_lib_dir`. It is possible
 # to EXCLUDE some files matching an optional pattern.
 #
-function(STAR_ADD_LIBRARY stroot_dir)
+function(STAR_ADD_LIBRARY star_lib_dir)
 
-	cmake_parse_arguments(ARG "" "" "LINKDEF;LINKDEF_HEADERS;LINKDEF_OPTIONS;EXCLUDE" "" ${ARGN})
+	star_target_paths(${star_lib_dir} star_lib_name star_lib_dir_abs star_lib_dir_out)
 
-	# Set default regex'es to exclude from globbed
-	list( APPEND ARG_EXCLUDE "${stroot_dir}.*macros;${stroot_dir}.*doc;${stroot_dir}.*examples" )
+	# Get first optional unnamed parameter
+	set(user_lib_name ${ARGV1})
+	set(star_lib_name_for_tables)
 
-	# Deal with headers
-
-	# Search for default LinkDef if not specified
-	file( GLOB user_linkdefs "${CMAKE_CURRENT_SOURCE_DIR}/${stroot_dir}/*LinkDef.h"
-	                         "${CMAKE_CURRENT_SOURCE_DIR}/${stroot_dir}/*LinkDef.hh" )
-
-	if( NOT ARG_LINKDEF AND user_linkdefs )
-		# Get the first LinkDef from the list
-		list( GET user_linkdefs 0 user_linkdef )
-		set( ARG_LINKDEF ${user_linkdef} )
+	if( user_lib_name )
+		set(star_lib_name_for_tables ${star_lib_name})
+		set(star_lib_name ${user_lib_name})
 	endif()
-
-	# Set default options
-	list(APPEND ARG_LINKDEF_OPTIONS "-p;-D__ROOT__" )
-
-	star_generate_dictionary( ${stroot_dir}
-		LINKDEF ${ARG_LINKDEF}
-		LINKDEF_HEADERS ${ARG_LINKDEF_HEADERS}
-		LINKDEF_OPTIONS ${ARG_LINKDEF_OPTIONS}
-		EXCLUDE ${ARG_EXCLUDE}
-	)
 
 	# Deal with sources
-	file(GLOB_RECURSE sources "${CMAKE_CURRENT_SOURCE_DIR}/${stroot_dir}/*.cxx"
-	                          "${CMAKE_CURRENT_SOURCE_DIR}/${stroot_dir}/*.cc"
-	                          "${CMAKE_CURRENT_SOURCE_DIR}/${stroot_dir}/*.cpp")
 
-	if( ARG_EXCLUDE )
-		FILTER_LIST( sources "${ARG_EXCLUDE}" )
-	endif()
+	GET_EXCLUDE_LIST( ${star_lib_name} star_lib_exclude )
 
-	add_library(${stroot_dir} SHARED ${sources} ${CMAKE_CURRENT_BINARY_DIR}/${stroot_dir}_dict.cxx)
+	file(GLOB_RECURSE sources_cpp
+		"${star_lib_dir_abs}/*.cxx"
+		"${star_lib_dir_abs}/*.cc"
+		"${star_lib_dir_abs}/*.c"
+		"${star_lib_dir_abs}/*.cpp")
+	FILTER_LIST(sources_cpp EXCLUDE ${star_lib_exclude})
+
+	file(GLOB_RECURSE f_files "${star_lib_dir_abs}/*.F")
+	FILTER_LIST(f_files EXCLUDE ${star_lib_exclude})
+	star_process_f(${star_lib_name} "${f_files}" ${star_lib_dir_out} sources_F)
+
+	file(GLOB_RECURSE g_files "${star_lib_dir_abs}/*.g")
+	FILTER_LIST(g_files EXCLUDE ${star_lib_exclude})
+	star_process_g("${g_files}" ${star_lib_dir_out} sources_gtoF)
+
+	file(GLOB_RECURSE idl_files "${star_lib_dir_abs}/*.idl")
+	FILTER_LIST(idl_files EXCLUDE ${star_lib_exclude})
+	string(REPLACE "+" "\\\\+" idl_path_exclude_regex "${star_lib_dir_abs}/idl")
+	FILTER_LIST(idl_files EXCLUDE ${idl_path_exclude_regex})
+	star_process_idl("${idl_files}" "${star_lib_name_for_tables}" ${star_lib_dir_out} sources_idl headers_idl)
+
+	set(sources ${sources_cpp} ${sources_idl} ${sources_gtoF} ${sources_F})
+
+	# XXX The hardcoded .cxx extension below should be defined by cmake?
+	add_library(${star_lib_name} ${sources} ${star_lib_dir_out}_dict.cxx)
+
+	# Output the library to the respecitve subdirectory in the binary directory
+	set_target_properties(${star_lib_name} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${star_lib_dir_out})
+
+	GET_SUBDIRS(${star_lib_dir_abs} star_lib_subdirs INCLUDE_PARENT)
+	target_include_directories(${star_lib_name} PRIVATE
+		"${star_lib_subdirs}"
+		"${CMAKE_CURRENT_BINARY_DIR}/include"
+		"${CMAKE_CURRENT_BINARY_DIR}/include/tables/${star_lib_name_for_tables}")
+
+	# Generate the _dict.cxx file for the library
+	star_generate_dictionary(${star_lib_name} ${star_lib_dir_abs} ${star_lib_dir_out}
+		LINKDEF_HEADERS ${${star_lib_name}_LINKDEF_HEADERS}
+		LINKDEF_OPTIONS "-p;-D__ROOT__"
+		EXCLUDE ${star_lib_exclude})
+
+	install(TARGETS ${star_lib_name}
+		LIBRARY DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL
+		ARCHIVE DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL)
+
+	install(FILES ${headers_idl}
+		DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/include/tables/${star_lib_name_for_tables}" OPTIONAL)
 
 endfunction()
 
 
-function( FILTER_LIST arg_list arg_regexs )
+macro(FILTER_LIST arg_list)
 
 	# Starting cmake 3.6 one can simply use list( FILTER ... )
 	#list( FILTER sources EXCLUDE REGEX "${ARG_EXCLUDE}" )
 
-	foreach( item ${${arg_list}} )
-		foreach( regex ${arg_regexs} )
+	cmake_parse_arguments(ARG "" "" "EXCLUDE" ${ARGN})
 
-			if( ${item} MATCHES "${regex}" )
-				list(REMOVE_ITEM ${arg_list} ${item})
-				break()
-			endif()
+	if( ${arg_list} AND ARG_EXCLUDE )
 
+		foreach( item ${${arg_list}} )
+			foreach( regex ${ARG_EXCLUDE} )
+
+				if( ${item} MATCHES "${regex}" )
+					list(REMOVE_ITEM ${arg_list} ${item})
+					break()
+				endif()
+
+			endforeach()
 		endforeach()
-	endforeach()
 
-	set( ${arg_list} ${${arg_list}} PARENT_SCOPE)
+		set( ${arg_list} ${${arg_list}} )
 
-endfunction()
+	endif()
+
+endmacro()
 
 
-# Creates a list of subdirectories starting with "St" of all directories passed
-# to this function
-function(STAR_INCLUDE_DIRECTORIES star_include_dirs)
+# Return list of regex'es to exclude from globbed paths for target `star_lib_name`
+macro(GET_EXCLUDE_LIST star_lib_name exclude_list)
+	set( ${exclude_list}
+	     ${star_lib_name}.*macros
+	     ${star_lib_name}.*doc
+	     ${star_lib_name}.*examples
+	     ${${star_lib_name}_EXCLUDE} )
+endmacro()
 
-	cmake_parse_arguments(ARG "" "" "" "" ${ARGN})
 
-	set( inc_dirs "" )
+# Builds a list of subdirectories with complete path found in the
+# 'directories'
+macro(GET_SUBDIRS directories subdirectories)
 
-	foreach( inc_dir ${ARG_UNPARSED_ARGUMENTS})
+	cmake_parse_arguments(ARG "INCLUDE_PARENT" "" "" ${ARGN})
 
-		list( APPEND inc_dirs "${CMAKE_SOURCE_DIR}/${inc_dir}" )
+	set( sub_dirs "" )
 
-		# star-detectors is exceptional in a sense that it has too many subdirectories
-		# So, don't include them in the final list. The user can add necessary
-		# subdirectories by hand
-		if( ${inc_dir} MATCHES "star-detectors")
+	foreach( dir ${directories} )
+		if( NOT IS_ABSOLUTE ${dir})
+			set( dir ${STAR_SRC}/${dir})
+		endif()
+
+		if( NOT IS_DIRECTORY ${dir} )
+			message( WARNING "StarCommon: Directory ${dir} not found" )
 			continue()
 		endif()
 
-		file( GLOB inc_subdirs ${inc_dir}/St* )
+		file( GLOB all_files RELATIVE ${dir} ${dir}/* )
 
-		# For each subdir do...
-		foreach( inc_subdir ${inc_subdirs} )
-			if( IS_DIRECTORY ${inc_subdir} )
-				list( APPEND inc_dirs "${inc_subdir}" )
+		# Include the parent directory in the list
+		if( ${ARG_INCLUDE_PARENT} )
+			list( APPEND sub_dirs ${dir} )
+		endif()
+
+		foreach( sub_dir ${all_files} )
+			if( IS_DIRECTORY ${dir}/${sub_dir} )
+				list( APPEND sub_dirs ${dir}/${sub_dir} )
 			endif()
 		endforeach()
 
 	endforeach()
+	
+	set( ${subdirectories} ${sub_dirs} )
 
-	set( ${star_include_dirs} ${inc_dirs} PARENT_SCOPE)
+endmacro()
+
+
+#
+# From the path provided by the user (`star_lib_dir`) extracts the library
+# target name (`lib_name`), an absolute path to the library source code
+# (`path_abs`), and the corresponding output path where the generated or built
+# code can be placed (`path_out`). The input path `star_lib_dir` can be either
+# absolute or relative to ${STAR_SRC}
+#
+function(STAR_TARGET_PATHS star_lib_dir lib_name path_abs path_out)
+
+	set(path_abs_)
+	set(path_out_)
+
+	if( IS_ABSOLUTE ${star_lib_dir} )
+
+		get_filename_component(star_src_abs ${STAR_SRC} ABSOLUTE)
+		if( ${star_src_abs} MATCHES ${star_lib_dir} )
+			message( FATAL "StarCommon: Absolute path \"${star_lib_dir}\" must match ${star_src_abs}" )
+		endif()
+
+		set(path_abs_ ${star_lib_dir})
+		file(RELATIVE_PATH path_rel_ ${STAR_SRC} ${star_lib_dir})
+		set(path_out_ ${CMAKE_CURRENT_BINARY_DIR}/${path_rel_})
+	else()
+		set(path_abs_ ${STAR_SRC}/${star_lib_dir})
+		set(path_out_ ${CMAKE_CURRENT_BINARY_DIR}/${star_lib_dir})
+	endif()
+
+	# First check that the path exists
+	if( NOT IS_DIRECTORY ${path_abs_} )
+		message( FATAL "StarCommon: Directory \"${path_abs_}\" not found" )
+	endif()
+
+	get_filename_component(lib_name_ ${star_lib_dir} NAME)
+
+	set(${lib_name} ${lib_name_} PARENT_SCOPE)
+	set(${path_abs} ${path_abs_} PARENT_SCOPE)
+	set(${path_out} ${path_out_} PARENT_SCOPE)
 
 endfunction()
 
 
-# A list of regex'es to exclude from any processing in star_repo directories
-set( STAR_BLACKLIST_DIR_NAMES
-	.git
-	cmake
-	macros
-	Mini
-	Pool
-	StarGenerator
-	StBTofSimMaker
-	StBTofMixerMaker
-	StFgt
-	StFtpc
-	StHbt
-	StJetMaker
-	StTagsMaker
-	StTofHitMaker
-	StTrgDatFileReader
-	StTrgMaker
-	StTriggerUtilities
-	Geometry
-	StarAgmlChecker
-	StarAgmlViewer
-	StarGeometry
-	StarVMCApplication
-	Stv
-	StVmcTools
-	xgeometry
+# special cases
+set( St_base_LINKDEF_HEADERS "${STAR_SRC}/StRoot/St_base/Stypes.h" )
+set( StAnalysisUtilities_LINKDEF_HEADERS "$ENV{ROOTSYS}/include/TFile.h" )
+set( StBFChain_LINKDEF_HEADERS "$ENV{ROOTSYS}/include/TFile.h" )
+set( StEvent_LINKDEF_HEADERS
+	"${STAR_SRC}/StRoot/StDaqLib/TRG/trgStructures.h"
+	"${STAR_SRC}/StRoot/StDaqLib/TRG/trgStructures2000.h"
+	"${STAR_SRC}/StRoot/StDaqLib/TRG/trgStructures2002.h"
+	"${STAR_SRC}/StRoot/StDaqLib/TRG/trgStructures2003.h"
+	"${STAR_SRC}/StRoot/StDaqLib/TRG/trgStructures2004.h"
+	"${STAR_SRC}/StRoot/StDaqLib/TRG/trgStructures2005.h"
+	"${STAR_SRC}/StRoot/StDaqLib/TRG/trgStructures2007.h"
+	"${STAR_CMAKE_DIR}/star-aux/StArray_cint.h"
 )
+set( StEStructPool_LINKDEF_HEADERS
+	"$ENV{ROOTSYS}/include/TVector2.h"
+	"${STAR_CMAKE_DIR}/star-aux/StArray_cint.h"
+)
+set( StGammaMaker_LINKDEF_HEADERS "$ENV{ROOTSYS}/include/TVector3.h" )
+set( StTriggerUtilities_LINKDEF_HEADERS "${STAR_SRC}/StRoot/StChain/StMaker.h" )
+set( StiMaker_LINKDEF_HEADERS "$ENV{ROOTSYS}/include/TH1K.h" )
+set( Stv_LINKDEF_HEADERS "${STAR_SRC}/StRoot/StarRoot/THelixTrack.h" )
+set( St_base_EXCLUDE "StRoot/St_base/St_staf_dummies.c" )
+set( StDb_Tables_EXCLUDE "StDb/idl/tpcDedxPidAmplDb.idl" )
+set( St_g2t_INCLUDE_DIRECTORIES
+	"${STAR_SRC}/asps/Simulation/geant321/include"
+	"${STAR_SRC}/asps/Simulation/starsim/include")
+set( StarMiniCern_EXCLUDE
+	"StarVMC/minicern/allgs"
+	"StarVMC/minicern/hpxgs"
+	"StarVMC/minicern/lnxgs"
+	"StarVMC/minicern/lnxppcgs"
+	"StarVMC/minicern/kerngen"
+	"StarVMC/minicern/qutyinv"
+	"StarVMC/minicern/qutyz32"
+	"StarVMC/minicern/sungs")
 
 
-function(STAR_ADD_SUBDIRECTORY star_repo)
+#
+# Flattens the hierarchy of header files found in select subdirectories in
+# `${STAR_SRC}` by copying them to `destination_dir` at the same level
+#
+function(STAR_PREINSTALL_HEADERS destination_dir)
 
-	cmake_parse_arguments(ARG "" "" "INCLUDE_DIRS" "" ${ARGN})
+	# Collect files from some subdirectiries
+	file(GLOB header_files
+		"${STAR_SRC}/StRoot/*/*.h"
+		"${STAR_SRC}/StRoot/*/*.hh"
+		"${STAR_SRC}/StRoot/*/*.inc"
+		"${STAR_SRC}/StarVMC/*/*.h"
+		"${STAR_SRC}/StarVMC/*/*.hh"
+		"${STAR_SRC}/StarVMC/*/*.inc"
+		"${STAR_SRC}/asps/rexe/TGeant3/*.h"
+		"${STAR_SRC}/pams/*/inc/*.h"
+		"${STAR_SRC}/pams/*/inc/*.inc")
 
-	star_include_directories( include_dirs ${ARG_INCLUDE_DIRS} ${star_repo})
-
-	# special cases
-	set( St_base_LINKDEF_HEADERS "star-base/St_base/Stypes.h" )
-	set( StEvent_LINKDEF_OPTIONS "-p;-D__STEVENT_CONTAINERS_CINT__" )
-	set( StMcEvent_LINKDEF_OPTIONS "-p;-D__STEVENT_CONTAINERS_CINT__" )
-
-	file(GLOB stroot_dir_candidates RELATIVE ${CMAKE_SOURCE_DIR}/${star_repo} ${star_repo}/*)
-	#file(GLOB stroot_dir_candidates ${star_repo}/*)
-
-	FILTER_LIST( stroot_dir_candidates "${STAR_BLACKLIST_DIR_NAMES}" )
-
-	# Save include dirs property for the current dir. This is needed because we
-	# don't go into the directories
-	get_directory_property(parent_include_dirs INCLUDE_DIRECTORIES)
-
-	set( stroot_dirs "" )
-
-	foreach(stroot_dir ${stroot_dir_candidates})
-		if(IS_DIRECTORY  ${CMAKE_SOURCE_DIR}/${star_repo}/${stroot_dir})
-
-			# The following setup is necessary to fool the call to
-			# star_add_library() and other functions because we don't really switch
-			# the directories but traverse them anyway
-			set( CMAKE_CURRENT_SOURCE_DIR "${CMAKE_SOURCE_DIR}/${star_repo}" )
-			set( CMAKE_CURRENT_BINARY_DIR "${CMAKE_BINARY_DIR}/${star_repo}" )
-			set( CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${star_repo}" )
-
-			set_directory_properties( PROPERTIES INCLUDE_DIRECTORIES "${parent_include_dirs};${include_dirs}" )
-
-			list( APPEND stroot_dirs "${stroot_dir}" )
-
-			star_add_library( ${stroot_dir} LINKDEF_HEADERS "${${stroot_dir}_LINKDEF_HEADERS}" LINKDEF_OPTIONS "${${stroot_dir}_LINKDEF_OPTIONS}" )
-
-		endif()
+	foreach( header_file ${header_files} )
+		get_filename_component( header_file_name ${header_file} NAME )
+		configure_file( "${header_file}" "${destination_dir}/${header_file_name}" COPYONLY )
 	endforeach()
 
-	set_directory_properties( PROPERTIES INCLUDE_DIRECTORIES "${parent_include_dirs}" )
+endfunction()
 
-	# A collective target to build all libraries in this project. Can be used to
-	# build all specified targets from a parent project
-	add_custom_target( ${star_repo} DEPENDS "${stroot_dirs}" )
 
-	# Installation section
-	install(TARGETS ${stroot_dirs}
-		DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL
-	)
+#
+# Creates ROOT TGeo geometries from xml files
+#
+function(STAR_ADD_LIBRARY_GEOMETRY star_lib_dir)
 
-	if( ${star_repo} MATCHES "star-bfchain" )
-		install(DIRECTORY "star-bfchain/StBFChain" DESTINATION "${CMAKE_BINARY_DIR}/StRoot")
+	star_target_paths(${star_lib_dir} star_lib_name star_lib_dir_abs star_lib_dir_out)
+
+	# Change the name of the library/target and output directory if an
+	# optional unnamed parameter is provided by the user
+	set(user_lib_name ${ARGV1})
+
+	if( user_lib_name )
+		string(REPLACE ${star_lib_name} ${user_lib_name} star_lib_dir_out ${star_lib_dir_out})
+		set(star_lib_name ${user_lib_name})
 	endif()
 
+	set(geo_py_parser ${STAR_SRC}/mgr/agmlParser.py)
+
+	find_program(EXEC_PYTHON NAMES python2.7 python2)
+
+	file(GLOB_RECURSE geo_xml_paths "${star_lib_dir_abs}/*.xml")
+	FILTER_LIST( geo_xml_paths EXCLUDE "Compat" )
+
+	foreach( geo_xml_path ${geo_xml_paths} )
+
+		get_filename_component(geo_name ${geo_xml_path} NAME_WE)
+
+		set(geo_header ${star_lib_dir_out}/${geo_name}.h)
+		set(geo_source ${star_lib_dir_out}/${geo_name}.cxx)
+
+		add_custom_command(
+			OUTPUT ${geo_header} ${geo_source}
+			COMMAND ${EXEC_PYTHON} ${geo_py_parser} --file=${geo_xml_path} --module=${geo_name} --export=AgROOT --path=${star_lib_dir_out}
+			DEPENDS ${geo_py_parser} ${geo_xml_path})
+
+		if( ${geo_name} MATCHES "Config")
+			list(APPEND geo_config_headers ${geo_header})
+		endif()
+		list(APPEND geo_sources ${geo_source})
+		list(APPEND geo_headers ${geo_header})
+
+	endforeach()
+
+	# Create a string by replacing ; with gcc compiler options
+	string(REGEX REPLACE "([^;]+);" "-include \\1 " geo_config_headers_include "${geo_config_headers};")
+
+	# Special treatment required for the aggregate geometry file
+	set_source_files_properties(${star_lib_dir_out}/StarGeo.cxx
+		PROPERTIES COMPILE_FLAGS "${geo_config_headers_include}")
+
+	add_library(${star_lib_name} ${geo_sources} ${star_lib_dir_out}_dict.cxx)
+	set_target_properties(${star_lib_name} PROPERTIES
+		LIBRARY_OUTPUT_DIRECTORY ${star_lib_dir_out}
+		PUBLIC_HEADER "${geo_headers}")
+
+	target_include_directories(${star_lib_name} PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
+
+	# Generate the _dict.cxx file for the library
+	star_generate_dictionary(${star_lib_name} ${star_lib_dir_out} ${star_lib_dir_out}
+		LINKDEF_HEADERS ${star_lib_dir_out}/StarGeo.h
+		LINKDEF_OPTIONS "-p;-D__ROOT__")
+
+	# Get relative path for the generated headers to be used at installation
+	# stage
+	file(RELATIVE_PATH geo_headers_rel_path ${CMAKE_CURRENT_BINARY_DIR} ${star_lib_dir_out})
+	install(TARGETS ${star_lib_name}
+		LIBRARY DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL
+		ARCHIVE DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL
+		PUBLIC_HEADER DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/include/${geo_headers_rel_path}" OPTIONAL)
+endfunction()
+
+
+#
+# Creates a library from fortran sources without doing any preprocessing
+#
+function(STAR_ADD_LIBRARY_MINICERN star_lib_dir)
+
+	star_target_paths(${star_lib_dir} star_lib_name star_lib_dir_abs star_lib_dir_out)
+
+	# Change the name of the library/target and output directory if an
+	# optional unnamed parameter is provided by the user
+	set(user_lib_name ${ARGV1})
+
+	if( user_lib_name )
+		string(REPLACE ${star_lib_name} ${user_lib_name} star_lib_dir_out ${star_lib_dir_out})
+		set(star_lib_name ${user_lib_name})
+	endif()
+
+	file(GLOB_RECURSE cxx_files "${star_lib_dir_abs}/*.cxx")
+	file(GLOB_RECURSE c_files "${star_lib_dir_abs}/*.c")
+	FILTER_LIST( c_files EXCLUDE ${${star_lib_name}_EXCLUDE} )
+	file(GLOB_RECURSE f_files "${star_lib_dir_abs}/*.F")
+	FILTER_LIST( f_files EXCLUDE ${${star_lib_name}_EXCLUDE} )
+
+	add_library(${star_lib_name} ${f_files} ${cxx_files} ${c_files})
+	GET_SUBDIRS(${star_lib_dir_abs} star_lib_subdirs INCLUDE_PARENT)
+	target_include_directories(${star_lib_name} PRIVATE "${star_lib_subdirs}")
+	set_target_properties(${star_lib_name} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${star_lib_dir_out})
+
+	install(TARGETS ${star_lib_name}
+		LIBRARY DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL
+		ARCHIVE DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL)
+
+endfunction()
+
+
+# Builds a ${star_lib_name}_Tables library from ${star_lib_dir}/idl/*.idl files
+function(STAR_ADD_LIBRARY_TABLE star_lib_dir )
+
+	star_target_paths(${star_lib_dir} star_lib_name star_lib_dir_abs star_lib_dir_out)
+
+	set(star_lib_name ${star_lib_name}_Tables)
+
+	file(GLOB_RECURSE idl_files ${star_lib_dir_abs}/idl/*.idl)
+	FILTER_LIST( idl_files EXCLUDE ${${star_lib_name}_EXCLUDE} )
+	star_process_idl("${idl_files}" "" ${star_lib_dir_out} sources_idl headers_idl)
+
+	add_library(${star_lib_name} ${sources_idl})
+	set_target_properties(${star_lib_name} PROPERTIES
+		LIBRARY_OUTPUT_DIRECTORY ${star_lib_dir_out}
+		PUBLIC_HEADER "${headers_idl}")
+
+	install(TARGETS ${star_lib_name}
+		LIBRARY DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL
+		ARCHIVE DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL
+		PUBLIC_HEADER DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/include/tables" OPTIONAL)
+endfunction()
+
+
+# Build customized library StGenericVertexMakerNoSti based on StGenericVertexMaker
+function(STAR_ADD_LIBRARY_VERTEXNOSTI star_lib_dir )
+
+	star_target_paths(${star_lib_dir} star_lib_name star_lib_dir_abs star_lib_dir_out)
+
+	string(REPLACE ${star_lib_name} StGenericVertexMakerNoSti star_lib_dir_out ${star_lib_dir_out})
+	set(vtxnosti_headers
+		${star_lib_dir_abs}/StGenericVertexMaker.h
+		${star_lib_dir_abs}/Minuit/St_VertexCutsC.h)
+	set(linkdef_file "${star_lib_dir_out}_LinkDef.h")
+	set(dictinc_file "${star_lib_dir_out}_DictInc.h")
+
+	add_library(StGenericVertexMakerNoSti SHARED
+		${star_lib_dir_abs}/StCtbUtility.cxx
+		${star_lib_dir_abs}/StFixedVertexFinder.cxx
+		${star_lib_dir_abs}/StGenericVertexFinder.cxx
+		${star_lib_dir_abs}/StGenericVertexMaker.cxx
+		${star_lib_dir_abs}/StppLMVVertexFinder.cxx
+		${star_lib_dir_abs}/VertexFinderOptions.cxx
+		${star_lib_dir_abs}/Minuit/StMinuitVertexFinder.cxx
+		${star_lib_dir_abs}/Minuit/St_VertexCutsC.cxx
+		${star_lib_dir_out}_dict.cxx )
+	# Output the library to the respecitve subdirectory in the binary directory
+	set_target_properties(StGenericVertexMakerNoSti PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${star_lib_dir_out})
+
+	add_custom_command(
+		OUTPUT ${dictinc_file} ${linkdef_file}
+		COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/gen_linkdef.sh -l ${linkdef_file} -d ${dictinc_file} ${vtxnosti_headers}
+		DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/gen_linkdef.sh ${vtxnosti_headers} )
+
+	get_property(global_include_dirs DIRECTORY PROPERTY INCLUDE_DIRECTORIES)
+	string( REGEX REPLACE "([^;]+)" "-I\\1" global_include_dirs "${global_include_dirs}" )
+
+	# Generate ROOT dictionary using the *_LinkDef.h and *_DictInc.h files
+	add_custom_command(
+		OUTPUT ${star_lib_dir_out}_dict.cxx
+		COMMAND ${ROOT_DICTGEN_EXECUTABLE} -cint -f ${star_lib_dir_out}_dict.cxx
+		-c -p -D__ROOT__ ${global_include_dirs}
+		${vtxnosti_headers} ${dictinc_file} ${linkdef_file}
+		DEPENDS ${vtxnosti_headers} ${dictinc_file} ${linkdef_file}
+		VERBATIM )
+
+	install(TARGETS StGenericVertexMakerNoSti
+		LIBRARY DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL
+		ARCHIVE DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL)
+endfunction()
+
+
+# Generate source from idl files
+function(STAR_PROCESS_IDL idl_files star_lib_name star_lib_dir_out out_sources_idl out_headers_idl)
+
+	set(out_sources_idl_)
+	set(out_headers_idl_)
+
+	set(outpath_table_struct ${CMAKE_CURRENT_BINARY_DIR}/include)
+	set(outpath_table_ttable ${CMAKE_CURRENT_BINARY_DIR}/include/tables/${star_lib_name})
+
+	foreach( idll ${idl_files} )
+
+		file(STRINGS ${idll} idl_matches_module REGEX "interface.*:.*amiModule")
+
+		if( idl_matches_module )
+			star_process_idl_module(${idll} sources_idl_ headers_idl_)
+		else()
+			star_process_idl_file(${idll} sources_idl_ headers_idl_)
+		endif()
+
+		list(APPEND out_sources_idl_ ${sources_idl_})
+		list(APPEND out_headers_idl_ ${headers_idl_})
+	endforeach()
+
+	set(${out_sources_idl} ${out_sources_idl_} PARENT_SCOPE)
+	set(${out_headers_idl} ${out_headers_idl_} PARENT_SCOPE)
+endfunction()
+
+
+
+function(STAR_PROCESS_IDL_FILE idll out_sources out_headers)
+
+	find_program(PERL_EXECUTABLE perl)
+
+	# For the file and variable names we closely follow the convention in mgr/Conscript-standard
+	get_filename_component(idl ${idll} NAME_WE)
+	set(idlh "${outpath_table_struct}/${idl}.h")
+	set(idli "${outpath_table_struct}/${idl}.inc")
+	set(idlH "${outpath_table_ttable}/St_${idl}_Table.h")
+	set(idlC "${star_lib_dir_out}/St_${idl}_Table.cxx")
+	set(idlLinkDef "${star_lib_dir_out}/${idl}LinkDef.h")
+	set(idlCintH "${star_lib_dir_out}/St_${idl}_TableCint.h")
+	set(idlCintC "${star_lib_dir_out}/St_${idl}_TableCint.cxx")
+
+
+	add_custom_command(
+		OUTPUT ${idlh} ${idli}
+		COMMAND ${CMAKE_CURRENT_BINARY_DIR}/stic -q ${idll}
+		COMMAND ${CMAKE_COMMAND} -E make_directory ${outpath_table_struct}
+		COMMAND ${CMAKE_COMMAND} -E rename ${idl}.h ${idlh}
+		COMMAND ${CMAKE_COMMAND} -E rename ${idl}.inc ${idli}
+		DEPENDS ${idll} stic
+		VERBATIM )
+
+	add_custom_command(
+		OUTPUT ${idlH} ${idlC} ${idlLinkDef}
+		COMMAND ${CMAKE_COMMAND} -E make_directory ${outpath_table_ttable}
+		COMMAND ${PERL_EXECUTABLE} ${STAR_SRC}/mgr/ConstructTable.pl ${idll} ${idlH}
+		COMMAND ${PERL_EXECUTABLE} ${STAR_SRC}/mgr/ConstructTable.pl ${idll} ${idlC}
+		COMMAND ${PERL_EXECUTABLE} ${STAR_SRC}/mgr/ConstructTable.pl ${idll} ${idlLinkDef}
+		DEPENDS ${STAR_SRC}/mgr/ConstructTable.pl ${idll}
+		VERBATIM )
+
+	add_custom_command(
+		OUTPUT ${idlCintC} ${idlCintH}
+		COMMAND ${ROOT_DICTGEN_EXECUTABLE} -cint -f ${idlCintC} -c -p -D__ROOT__
+		-I${outpath_table_struct} -I${outpath_table_ttable} ${idlh} ${idlH} ${idlLinkDef}
+		DEPENDS ${idlh} ${idlH} ${idlLinkDef}
+		VERBATIM )
+
+	set(${out_sources} ${idlC} ${idlCintC} PARENT_SCOPE)
+	set(${out_headers} ${idlH} PARENT_SCOPE)
+endfunction()
+
+
+
+function(STAR_PROCESS_IDL_MODULE idll out_sources out_headers)
+
+	# For the file and variable names we closely follow the convention in mgr/Conscript-standard
+	get_filename_component(idl ${idll} NAME_WE)
+	set(idlh "${outpath_table_struct}/${idl}.h")
+	set(idli "${outpath_table_struct}/${idl}.inc")
+	set(modH "${outpath_table_ttable}/St_${idl}_Module.h")
+	set(modC "${star_lib_dir_out}/St_${idl}_Module.cxx")
+	set(idlLinkDef "${star_lib_dir_out}/${idl}LinkDef.h")
+	set(idlCintH "${star_lib_dir_out}/St_${idl}_ModuleCint.h")
+	set(idlCintC "${star_lib_dir_out}/St_${idl}_ModuleCint.cxx")
+
+	add_custom_command(
+		OUTPUT ${idlh} ${idli} ${modH} ${modC} ${idlLinkDef}
+		COMMAND ${CMAKE_CURRENT_BINARY_DIR}/stic -s -r -q ${idll}
+		COMMAND ${CMAKE_COMMAND} -E make_directory ${star_lib_dir_out}
+		COMMAND ${CMAKE_COMMAND} -E make_directory ${outpath_table_struct}
+		COMMAND ${CMAKE_COMMAND} -E make_directory ${outpath_table_ttable}
+		COMMAND ${CMAKE_COMMAND} -E rename St_${idl}_Module.h ${modH}
+		COMMAND ${CMAKE_COMMAND} -E rename St_${idl}_Module.cxx ${modC}
+		COMMAND ${CMAKE_COMMAND} -E rename ${idl}.h ${idlh}
+		COMMAND ${CMAKE_COMMAND} -E rename ${idl}.inc ${idli}
+		COMMAND ${CMAKE_COMMAND} -E remove ${idl}.c.template ${idl}.F.template ${idl}_i.cc
+		COMMAND ${CMAKE_COMMAND} -E echo "#pragma link C++ class St_${idl}-;" > ${idlLinkDef}
+		DEPENDS ${idll} stic
+		VERBATIM )
+
+	add_custom_command(
+		OUTPUT ${idlCintC} ${idlCintH}
+		COMMAND ${ROOT_DICTGEN_EXECUTABLE} -cint -f ${idlCintC} -c -p -D__ROOT__
+		-I${outpath_table_struct} -I${outpath_table_ttable} ${modH} ${idlLinkDef}
+		DEPENDS ${modH} ${idlLinkDef}
+		VERBATIM )
+
+	set(${out_sources} ${modC} ${idlCintC} PARENT_SCOPE)
+	set(${out_headers} ${modH} PARENT_SCOPE)
+endfunction()
+
+
+
+function(STAR_PROCESS_F star_lib_name in_F_files star_lib_dir_out out_F_files)
+
+	set(out_F_files_)
+
+	get_property(currdir_include_dirs DIRECTORY PROPERTY INCLUDE_DIRECTORIES)
+	set(target_include_dirs ${currdir_include_dirs} ${${star_lib_name}_INCLUDE_DIRECTORIES})
+	string( REGEX REPLACE "([^;]+)" "-I\\1" target_include_dirs "${target_include_dirs}" )
+
+	foreach( f_file ${in_F_files} )
+		get_filename_component(f_file_name_we ${f_file} NAME_WE)
+		set(g_file "${star_lib_dir_out}/${f_file_name_we}.g")
+		set(out_F_file "${star_lib_dir_out}/${f_file_name_we}.F")
+
+		add_custom_command(
+			OUTPUT ${g_file} ${out_F_file}
+			COMMAND ${CMAKE_COMMAND} -E make_directory ${star_lib_dir_out}
+			COMMAND ${CMAKE_C_COMPILER} -E -P ${STAR_Fortran_DEFINITIONS} ${target_include_dirs} ${f_file} -o ${g_file}
+			COMMAND ${CMAKE_CURRENT_BINARY_DIR}/agetof -V 1 ${g_file} -o ${out_F_file}
+			DEPENDS ${f_file} agetof VERBATIM)
+
+		list(APPEND out_F_files_ ${out_F_file})
+	endforeach()
+
+	set(${out_F_files} ${out_F_files_} PARENT_SCOPE)
+endfunction()
+
+
+
+function(STAR_PROCESS_G in_g_files star_lib_dir_out out_F_files)
+
+	set(out_F_files_)
+
+	foreach( g_file ${in_g_files} )
+		get_filename_component(g_file_name_we ${g_file} NAME_WE)
+		set(out_F_file "${star_lib_dir_out}/${g_file_name_we}.F")
+
+		add_custom_command(
+			OUTPUT ${out_F_file}
+			COMMAND ${CMAKE_COMMAND} -E make_directory ${star_lib_dir_out}
+			COMMAND ${CMAKE_CURRENT_BINARY_DIR}/agetof -V 1 ${g_file} -o ${out_F_file}
+			DEPENDS ${g_file} agetof VERBATIM)
+
+		list(APPEND out_F_files_ ${out_F_file})
+	endforeach()
+
+	set( ${out_F_files} ${out_F_files_} PARENT_SCOPE )
+endfunction()
+
+
+
+function(STAR_ADD_EXECUTABLE_AGETOF star_exec_dir)
+
+	star_target_paths(${star_exec_dir} dummy exec_dir_abs dummy)
+
+	add_executable( agetof
+		${exec_dir_abs}/readlink.c
+		${exec_dir_abs}/afexist.F
+		${exec_dir_abs}/afname.F
+		${exec_dir_abs}/cccard.F
+		${exec_dir_abs}/crit.F
+		${exec_dir_abs}/define.F
+		${exec_dir_abs}/doit.F
+		${exec_dir_abs}/dumdum.F
+		${exec_dir_abs}/expand.F
+		${exec_dir_abs}/filter.F
+		${exec_dir_abs}/find.F
+		${exec_dir_abs}/inital.F
+		${exec_dir_abs}/ispec.F
+		${exec_dir_abs}/kat.F
+		${exec_dir_abs}/krunc.F
+		${exec_dir_abs}/lexp.F
+		${exec_dir_abs}/linf.F
+		${exec_dir_abs}/llong.F
+		${exec_dir_abs}/mactrc.F
+		${exec_dir_abs}/main.F
+		${exec_dir_abs}/mesage.F
+		${exec_dir_abs}/muser.F
+		${exec_dir_abs}/n5.F
+		${exec_dir_abs}/nib.F
+		${exec_dir_abs}/nxtcrd.F
+		${exec_dir_abs}/raw.F
+		${exec_dir_abs}/rw.F
+		${exec_dir_abs}/user.F
+	)
+
+	add_custom_command(TARGET agetof PRE_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy ${exec_dir_abs}/agetof.def ${CMAKE_CURRENT_BINARY_DIR}
+		VERBATIM)
+
+	target_link_libraries(agetof ${ROOT_LIBRARIES})
+endfunction()
+
+
+
+function(STAR_ADD_EXECUTABLE_STIC star_exec_dir)
+
+	star_target_paths(${star_exec_dir} orig_exec_name exec_dir_abs exec_dir_out)
+
+	string(REPLACE ${orig_exec_name} stic exec_dir_out ${exec_dir_out})
+
+	add_executable(stic ${exec_dir_out}/idl-yacc.c ${exec_dir_abs}/templateStuff.c)
+	target_include_directories(stic PRIVATE ${exec_dir_abs} ${exec_dir_out})
+	target_link_libraries(stic fl)
+
+	find_program(BISON_EXECUTABLE NAMES bison yacc)
+	add_custom_command(
+		OUTPUT ${exec_dir_out}/idl-yacc.c
+		COMMAND ${CMAKE_COMMAND} -E make_directory ${exec_dir_out}
+		COMMAND ${BISON_EXECUTABLE} -o ${exec_dir_out}/idl-yacc.c ${exec_dir_abs}/idl.y
+		DEPENDS ${exec_dir_abs}/idl.y ${exec_dir_abs}/stic.h ${exec_dir_out}/idl-lex.c
+		VERBATIM)
+
+	find_program(FLEX_EXECUTABLE flex)
+	add_custom_command(
+		OUTPUT ${exec_dir_out}/idl-lex.c
+		COMMAND ${CMAKE_COMMAND} -E make_directory ${exec_dir_out}
+		COMMAND ${FLEX_EXECUTABLE} -o ${exec_dir_out}/idl-lex.c ${exec_dir_abs}/idl.l
+		DEPENDS ${exec_dir_abs}/idl.l
+		VERBATIM)
 endfunction()
