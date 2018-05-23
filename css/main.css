@@ -238,6 +238,11 @@ div.section {
    display: block;
 }
 
+div.canvas_jsroot {
+   width: 800px;
+   height: 400px;
+}
+
 .padding0 td {
    padding: 0em !important;
 }
