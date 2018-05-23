@@ -1,0 +1,198 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <title>STAR Fast Offline QA Results</title>
+ 
+   <link rel="stylesheet" type="text/css" href="../css/main.css">
+ 
+   <script src="../common/jquery-1.10.2.js"></script>
+   <script src="https://root.cern.ch/js/latest/scripts/JSRootCore.js?io"></script>
+   <script src="../common/common.js"></script>
+</head>
+
+<body>
+
+<div id="header"></div>
+
+
+<p>
+<table class="simple00 cntr">
+
+
+<tr>
+
+   <td><div class="canvas_jsroot" id="StEMBQaGtrkNPntT"></div>
+   <div class="thumbcaption">
+	Description...
+   </div>
+
+   <td><div class="canvas_jsroot" id="StEMBQaGtrkNPntMaxT"></div>
+   <div class="thumbcaption">
+	Description...
+   </div>
+
+
+<tr>
+
+   <td><div class="canvas_jsroot" id="StEMBQaGtrkNPntFitT"></div>
+   <div class="thumbcaption">
+	Description...
+   </div>
+
+   <td>&nbsp;
+
+<tr>
+   <td><div class="canvas_jsroot" id="StEMBQaGtrkGood"></div>
+   <div class="thumbcaption">
+   Distribution of the number of good global tracks in the TPC per trigger;
+   including pileup.
+   </div>
+
+   <td><div class="canvas_jsroot" id="StEMBQaPointZhits"></div>
+   <div class="thumbcaption">
+   Distribution of reconstructed space points in TPC with respect to
+   z-coordinate. There is a broad peak above the nominally flat background at
+   z=0. This is intentional and is done in order to allow identification of
+   post-trigger pileup events. Watch out for any other anamolous steps (could be
+   a hot collider bunch) or unusual spikes or dips. The peaks just outside |z|
+   = 200 cm are new in Run 10 and are OK (they are prompt hits on the TPC anode
+   wires).
+   </div>
+
+<tr>
+
+   <td><div class="canvas_jsroot" id="StEMBQaGtrkDcaBeamZ2"></div>
+   <div class="thumbcaption">
+   Fine scale distribution along the z-axis (from -50 to +50 cm) of the DCA
+   points to the nominal beam line (z-axis, x=y=0) for all TPC global tracks.
+   Peaks indicate probable locations of individual collision vertices.
+   </div>
+
+   <td><div class="canvas_jsroot" id="StEMBQaGtrkDetId"></div>
+   <div class="thumbcaption">
+   Global track detector IDs for good tracks. Refer to:
+   $STAR/StRoot/StEvent/StDetectorDefinitions.h for Detector ID codes. At the
+   moment, the track topology map says there are SVT (2) and SSD (8) hits when
+   there are actually PXL (27) and SST (36) hits.
+   </div>
+
+<tr>
+
+   <td><div class="canvas_jsroot" id="StEMBQaGtrkPhifT_1_East"></div>
+   <div class="divcenter"> East </div>
+   <div class="thumbcaption">
+   Distribution of first fitted space point with respect to azimuthal angle
+   (phi) for TPC-only global tracks. The solid (dashed) line is for the east
+   (west) half of the TPC. These should be approximately equal and flat within
+   statistics, except for the 12-sector structure.
+   </div>
+
+   <td><div class="canvas_jsroot" id="StEMBQaGtrkPhifT_2_West"></div>
+   <div class="divcenter"> West </div>
+
+<tr>
+
+   <td><div class="canvas_jsroot" id="StEMBQaPointPhiT_1_East"></div>
+   <div class="divcenter"> East </div>
+   <div class="thumbcaption">
+   Distribution of reconstructed space points in TPC with respect to azimuthal
+   coordinate (phi) for east (solid line) and west (dashed line) halves. Should
+   be flat except for the 12-fold sector structure or masked RDOs (as shown).
+   Dead RDO's will produce dips and gaps; hot pads or FEE cards will produce
+   spikes.
+   </div>
+
+   <td><div class="canvas_jsroot" id="StEMBQaPointPhiT_2_West"></div>
+   <div class="divcenter"> West </div>
+
+<tr>
+
+   <td><div class="canvas_jsroot" id="StEMBQaPointPadrowT_1_East"></div>
+   <div class="divcenter"> East </div>
+   <div class="thumbcaption">
+   Distribution of reconstructed space points in TPC with respect to padrow
+   number 1-45. Should display gradual fall-off; watch for anamolous spikes and
+   dips. Missing RDO's cause drops in the distribution.
+   </div>
+
+   <td><div class="canvas_jsroot" id="StEMBQaPointPadrowT_2_West"></div>
+   <div class="divcenter"> West </div>
+
+</table>
+
+
+<script>
+
+var query = window.location.search.substring(1);
+var urlParams = $.deparam(query, true);
+var str = JSON.stringify(urlParams, null, 2);
+
+plotHists(urlParams);
+
+function plotHists(urlParams)
+{
+  var path = urlParams.path;
+  var files = urlParams.files;
+  var thstacks = {};
+
+  $('div.canvas_jsroot').each( function() {
+    var div = $(this);
+    var obj_name = div.attr('id');
+    var div_name = div.attr('id').replace(/\//g, "\\/");
+
+    thstacks[obj_name] = JSROOT.Create("THStack");
+  });
+
+  JSROOT.gStyle.fPadGridX = true;
+  JSROOT.gStyle.fPadGridY = true;
+  JSROOT.gStyle.fPadBottomMargin = 0.1;
+  JSROOT.gStyle.fPadRightMargin = 0.1;
+  JSROOT.gStyle.fStatStyle = 0;
+  JSROOT.gStyle.fStatFontSize = 0.5;
+  JSROOT.gStyle.fStatX = 1;
+  JSROOT.gStyle.fStatY = 1;
+  JSROOT.gStyle.fStatW = 0.25;
+  JSROOT.gStyle.fStatH = 0.30;
+
+
+  for (var i = 0; i < files.length; i++) {
+
+    var filename = path + files[i];
+
+    (function(findex) {
+
+      JSROOT.OpenFile(filename, function(file) {
+
+        $('div.canvas_jsroot').each( function() {
+
+          var $div = $(this);
+          var obj_name = $div.attr('id');
+          var div_name = $div.attr('id').replace(/\//g, "\\/");
+
+          file.ReadObject(obj_name, function(obj) {
+
+            if (obj == null) return;
+
+            obj.fLineColor = findex+2;
+            obj.fLineWidth = 2;
+
+            thstacks[obj_name].fHists.Add(obj);
+
+            JSROOT.redraw(div_name, thstacks[obj_name], "nostack");
+          });
+        });
+      });
+    })(i);
+  }
+
+};
+
+</script>
+
+
+<div id="footer"></div>
+
+</body>
+
+</html>
