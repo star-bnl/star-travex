@@ -153,8 +153,8 @@ add_library(
 
 
 
-add_executable(stiscan src-tools/stiscan.cc)
-add_executable(stihify src-tools/stihify.cc)
+add_executable(stiscan src-tools/stiscan.cxx)
+add_executable(stihify src-tools/stihify.cxx)
 
 target_link_libraries(stiscan
 	travex
@@ -175,7 +175,7 @@ target_link_libraries(stihify
 )
 
 
-add_executable(vtxhist src-tools/vtxhist.cc)
+add_executable(vtxhist src-tools/vtxhist.cxx)
 
 target_link_libraries(vtxhist
 	travex
