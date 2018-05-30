@@ -2,6 +2,7 @@
 #define StiVolumeFilter_h
 
 #include <regex>
+#include <set>
 #include <string>
 
 #include "StEvent/StEnumerations.h"
