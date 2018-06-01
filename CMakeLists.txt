@@ -9,7 +9,7 @@ list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 OPTION( BUILD_SHARED_LIBS "Global flag to cause add_library to create shared libraries if on" ON )
 
 
-find_package(ROOT COMPONENTS Cint Table HistPainter Minuit Geom Spectrum EG MathMore)
+find_package(ROOT COMPONENTS Cint Table HistPainter Minuit Geom Spectrum EG MathMore Eve RGL)
 
 if( ${ROOT_CXX_FLAGS} MATCHES "-m32" )
 	message(STATUS "Found -m32 option in $ROOT_CXX_FLAGS (root-config). Will add it to $CMAKE_CXX_FLAGS")
@@ -36,6 +36,7 @@ include_directories(
 	${LIBXML2_INCLUDE_DIR}
 	${STAR_INCLUDE_DIRS}
 	${STAR_VERTEX_INCLUDE_DIR}
+	${CMAKE_CURRENT_SOURCE_DIR}/src
 	${CMAKE_CURRENT_BINARY_DIR}/inc
 	ext/travex/include
 )
@@ -205,6 +206,23 @@ target_link_libraries(stigeo
 	stiglob
 )
 
+
+add_executable(evedisp
+	src/evedisp/evedisp.cxx
+	src/evedisp/EventReader.cxx
+	src/evedisp/ProgramOptions.cxx
+	src/geo/common.cxx
+	src/common/root_v6.cxx
+)
+
+target_link_libraries(evedisp
+	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
+	${Boost_LIBRARIES}
+	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
+	stiglob
+)
+
+
 add_library( stiglob src/stiglob.cxx )
 
 
@@ -224,5 +242,5 @@ install(TARGETS
 	star-vertex-eval StMcAnalysisMaker
 	DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL)
 
-install(TARGETS stiscan stihify vtxhist vtxreco
+install(TARGETS stiscan stihify vtxhist vtxreco evedisp
 	DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/bin" OPTIONAL)
