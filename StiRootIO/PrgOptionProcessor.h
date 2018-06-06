@@ -4,18 +4,9 @@
 #include <set>
 #include <string>
 
-#include <boost/program_options/options_description.hpp>
-#include <boost/program_options/variables_map.hpp>
-#include <boost/program_options/parsers.hpp>
-
 #include "TChain.h"
 
 #include "travex/ProgramOptions.h"
-
-
-namespace {
-   namespace po = boost::program_options;
-}
 
 
 /**
