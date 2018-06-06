@@ -1,7 +1,6 @@
 #ifndef StiScanPrgOptions_h
 #define StiScanPrgOptions_h
 
-#include <set>
 #include <string>
 
 #include "TChain.h"
