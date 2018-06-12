@@ -18,7 +18,7 @@ if( ${ROOT_CXX_FLAGS} MATCHES "-m32" )
 endif()
 
 find_package(STAR)
-find_package(Boost 1.54.0 COMPONENTS program_options filesystem)
+find_package(Boost 1.54.0 COMPONENTS filesystem program_options regex system)
 find_package(MySQL)
 find_package(LibXml2)
 find_package(CURL)
