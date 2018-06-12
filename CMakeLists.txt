@@ -1,6 +1,6 @@
 cmake_minimum_required( VERSION 3.2 FATAL_ERROR )
 
-project( star-travex )
+project( star-travex LANGUAGES CXX )
 
 # Add to path in order to pick up the FindXXX.cmake files included in this project
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
