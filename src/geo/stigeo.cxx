@@ -31,14 +31,6 @@ int main(int argc, char **argv)
    StTpcDb* myStTpcDb = StTpcDb::instance();
    gStTpcDb->SetTpcRotations();
 
-   // Initialize gGeoManager with geometry from a ROOT file
-   //gGeoManager = new TGeoManager("star", "star geo");
-   //std::cout << "XXX gGeoManager " << gGeoManager << std::endl;
-
-   ////TGeoManager::Import("tgeo.root", "dyson");
-   //////gGeoManager = myGeoManager;
-   ////std::cout << "XXX myGeoManager " << myGeoManager << std::endl;
-
    int tmpErrorIgnoreLevel = gErrorIgnoreLevel;
    gErrorIgnoreLevel = 9999;
    StarTGeoStacker *stacker = new StarTGeoStacker();
@@ -49,19 +41,16 @@ int main(int argc, char **argv)
 
    gGeoManager->CloseGeometry();
  
-   StiTpcDetectorBuilder detBuilder(true);
-   detBuilder.build(*st_db_maker);
+   StiTpcDetectorBuilder stiTpcDetectorBuilder(true);
+   stiTpcDetectorBuilder.build(*st_db_maker);
 
-   //gGeoManager->Export("tgeo.root");
 
    TFile stigeo_out("stigeo.root", "RECREATE");
 
-   StiDetectorVolume stiDetectorVolume(detBuilder);
+   StiDetectorVolume stiDetectorVolume(stiTpcDetectorBuilder);
    stiDetectorVolume.Write();
 
    stigeo_out.Close();
-
-   //delete myGeoManager;
 
    return EXIT_SUCCESS;
 }
