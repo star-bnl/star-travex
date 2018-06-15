@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 {
    StiToolkit* stitk = new StiDefaultToolkit();
  
-   St_db_Maker* st_db_maker = new St_db_Maker("db", "MySQL:StarDb", "$STAR/StarDb", "StarDb");
+   St_db_Maker* st_db_maker = new St_db_Maker("db", "MySQL:StarDb", "StarDb");
    st_db_maker->Init();
    st_db_maker->SetDateTime(20180101, 0);
 
