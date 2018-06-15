@@ -16,16 +16,16 @@ evaluation [https://github.com/plexoos/travex].
 
 The following individual tools are available:
 
-- `stihify` ([StiHify/README.md](StiHify/README.md)) is used to measure the
+- `stihify` ([stihify/README.md](src/stihify/README.md)) is used to measure the
 efficiency of hits assigned to the track by a track reconstruction algorithm.
 For single hit efficiency studies with `stihify` we developed a method
 independent of the actual reconstruction algorithm used for finding particle
 tracks.
 
-- `vtxhist` and `vtxreco` ([VtxEval/README.md](VtxEval/README.md)) are aimed to
+- `vtxhist` and `vtxreco` ([vtxeval/README.md](src/vtxeval/README.md)) are aimed to
 evaluate the performance of vertex finding algorithms.
 
-- `stiscan` ([StiScan/README.md](StiScan/README.md)) is used to verify the
+- `stiscan` ([stiscan/README.md](src/stiscan/README.md)) is used to verify the
 accuracy of the modeled detector material.
 
 Documentation gerated by `doxygen` can be found at <http://star-bnl.github.io/star-travex>

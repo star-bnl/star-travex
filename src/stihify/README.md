@@ -1,4 +1,4 @@
-StiHify: Track Reconstruction Evaluation at STAR
+stihify: Track Reconstruction Evaluation at STAR
 ================================================
 
 Introduction
@@ -31,7 +31,7 @@ How to use
 ==========
 
 To build the library and the executable follow the installation instructions in
-the project's [README.md](../README.md). Once the `StiHify` library is built it
+the project's [README.md](../../README.md). Once the `stihifylib` library is built it
 can be loaded and the `StiHifyTreeMaker` can be added to the reconstruction
 chain by using the `StiHifyTreeMaker` option as:
 

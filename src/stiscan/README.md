@@ -1,11 +1,11 @@
-StiScan: Detector Material Evaluation at STAR
+stiscan: Detector Material Evaluation at STAR
 =============================================
 
 How to use
 ==========
 
 To build the library and the executable follow the installation instructions in
-the project's [README.md](../README.md). Once the `StiScan` library is built it
+the project's [README.md](../../README.md). Once the `stiscanlib` library is built it
 can be loaded and the `StiScanTreeMaker` can be added to the reconstruction
 chain by using the `StiScanTreeMaker` option as:
 

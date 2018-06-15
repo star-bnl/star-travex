@@ -2,7 +2,7 @@ Evaluation of Vertex Reconstruction Efficiency
 ==============================================
 
 To build the library and the `vtxhist` and `vtxreco` executables follow the
-instructions in the project's top level [README.md](../README.md).
+instructions in the project's top level [README.md](../../README.md).
 
 One can choose to build and install only the libraries relevant to vertex
 reconstruction:
