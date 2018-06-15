@@ -199,7 +199,7 @@ target_link_libraries(vtxreco
 )
 
 
-add_executable(stigeo src-tools/stigeo.cxx)
+add_executable(stigeo src/geo/stigeo.cxx)
 
 target_link_libraries( stigeo
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
@@ -207,7 +207,7 @@ target_link_libraries( stigeo
 	stiglob
 )
 
-add_library( stiglob src-tools/stiglob.cxx )
+add_library( stiglob src/stiglob.cxx )
 
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
