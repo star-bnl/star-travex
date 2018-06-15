@@ -36,7 +36,6 @@ include_directories(
 	${LIBXML2_INCLUDE_DIR}
 	${STAR_INCLUDE_DIRS}
 	${STAR_VERTEX_INCLUDE_DIR}
-	${CMAKE_CURRENT_SOURCE_DIR}
 	${CMAKE_CURRENT_BINARY_DIR}/inc
 	ext/travex/include
 )
@@ -44,24 +43,24 @@ include_directories(
 add_subdirectory(ext/travex)
 
 root_generate_dictionary(
-	StiRootIO_dict
-	StiRootIO/H2D.h
-	StiRootIO/H3D.h
-	StiRootIO/Profile2D.h
-	StiRootIO/Profile3D.h
-	StiRootIO/StiTreeMaker.h
-	StiRootIO/TStiEvent.h
-	StiRootIO/TStiHit.h
-	StiRootIO/TStiHitProxy.h
-	StiRootIO/TStiKalmanTrack.h
-	StiRootIO/TStiKalmanTrackNode.h
-	LINKDEF StiRootIO/StiRootIOLinkDef.h
+	stirootio_dict
+	stirootio/H2D.h
+	stirootio/H3D.h
+	stirootio/Profile2D.h
+	stirootio/Profile3D.h
+	stirootio/StiTreeMaker.h
+	stirootio/TStiEvent.h
+	stirootio/TStiHit.h
+	stirootio/TStiHitProxy.h
+	stirootio/TStiKalmanTrack.h
+	stirootio/TStiKalmanTrackNode.h
+	LINKDEF stirootio/stirootioLinkDef.h
 )
 
 root_generate_dictionary(
-	GeaRootIO_dict
-	GeaRootIO/TGeaEvent.h
-	LINKDEF GeaRootIO/GeaRootIOLinkDef.h
+	gearootio_dict
+	gearootio/TGeaEvent.h
+	LINKDEF gearootio/LinkDef.h
 )
 
 root_generate_dictionary(
@@ -71,94 +70,93 @@ root_generate_dictionary(
 )
 
 root_generate_dictionary(
-	StiHify_dict
-	StiHify/StiHifyEvent.h
-	StiHify/StiHifyTreeMaker.h
-	LINKDEF StiHify/StiHifyLinkDef.h
+	stihify_dict
+	stihify/StiHifyEvent.h
+	stihify/StiHifyTreeMaker.h
+	LINKDEF stihify/StiHifyLinkDef.h
 )
 
 root_generate_dictionary(
-	StiScan_dict
-	StiScan/StiScanEvent.h
-	StiScan/StiScanTreeMaker.h
-	LINKDEF StiScan/StiScanLinkDef.h
+	stiscan_dict
+	stiscan/StiScanEvent.h
+	stiscan/StiScanTreeMaker.h
+	LINKDEF stiscan/StiScanLinkDef.h
 )
 
 root_generate_dictionary(
 	StMcAnalysisMaker_dict
-	StiHify/StMcAnalysisMaker.h
-	LINKDEF StiHify/StMcAnalysisMakerLinkDef.h
+	stihify/StMcAnalysisMaker.h
+	LINKDEF stihify/StMcAnalysisMakerLinkDef.h
 )
 
-add_library(
-	StiRootIO
-	StiRootIO/H2D.cxx
-	StiRootIO/H3D.cxx
-	StiRootIO/PrgOptionProcessor.cxx
-	StiRootIO/Profile2D.cxx
-	StiRootIO/Profile3D.cxx
-	StiRootIO/StiTreeMaker.cxx
-	StiRootIO/StiVolumeFilter.cxx
-	StiRootIO/TStiEvent.cxx
-	StiRootIO/TStiHit.cxx
-	StiRootIO/TStiHitProxy.cxx
-	StiRootIO/TStiKalmanTrack.cxx
-	StiRootIO/TStiKalmanTrackNode.cxx
-	StiRootIO_dict.cxx
+add_library(stirootiolib
+	src/stirootio/H2D.cxx
+	src/stirootio/H3D.cxx
+	src/stirootio/PrgOptionProcessor.cxx
+	src/stirootio/Profile2D.cxx
+	src/stirootio/Profile3D.cxx
+	src/stirootio/StiTreeMaker.cxx
+	src/stirootio/StiVolumeFilter.cxx
+	src/stirootio/TStiEvent.cxx
+	src/stirootio/TStiHit.cxx
+	src/stirootio/TStiHitProxy.cxx
+	src/stirootio/TStiKalmanTrack.cxx
+	src/stirootio/TStiKalmanTrackNode.cxx
+	stirootio_dict.cxx
 )
 
-add_library( GeaRootIO GeaRootIO/TGeaEvent.cxx GeaRootIO_dict.cxx)
+add_library(gearootiolib src/gearootio/TGeaEvent.cxx gearootio_dict.cxx)
 add_library( AgUStep GeaRootIO/AgUStep.cxx AgUStep_dict.cxx)
 
 add_library(
 	StMcAnalysisMaker
-	StiHify/StMcAnalysisMaker.cxx
+	src/stihify/StMcAnalysisMaker.cxx
 	StMcAnalysisMaker_dict.cxx
 )
 
 add_library(
-	StiHifyLib
-	StiHify/StiHifyEvent.cxx
-	StiHify/StiHifyTreeMaker.cxx
-	StiHify/StiHifyHistContainer.cxx
-	StiHify/StiHifyAnalysisTreeMaker.cxx
-	StiHify/StiHifyRatiosHistContainer.cxx
-	StiHify/StiHifyPrgOptions.cxx
-	StiHify/StiHifyRootFile.cxx
-	StiHify_dict.cxx
+	stihifylib
+	src/stihify/StiHifyEvent.cxx
+	src/stihify/StiHifyTreeMaker.cxx
+	src/stihify/StiHifyHistContainer.cxx
+	src/stihify/StiHifyAnalysisTreeMaker.cxx
+	src/stihify/StiHifyRatiosHistContainer.cxx
+	src/stihify/StiHifyPrgOptions.cxx
+	src/stihify/StiHifyRootFile.cxx
+	stihify_dict.cxx
 )
 
 add_library(
-	StiScanLib
-	StiScan/StiScanEvent.cxx
-	StiScan/StiScanTreeMaker.cxx
-	StiScan/StiScanHistContainer.cxx
-	StiScan/StiScanRatiosHistContainer.cxx
-	StiScan/StiScanHistsByVolume.cxx
-	StiScan/StiScanPrgOptions.cxx
-	StiScan/StiScanRootFile.cxx
-	StiScan_dict.cxx
+	stiscanlib
+	src/stiscan/StiScanEvent.cxx
+	src/stiscan/StiScanTreeMaker.cxx
+	src/stiscan/StiScanHistContainer.cxx
+	src/stiscan/StiScanRatiosHistContainer.cxx
+	src/stiscan/StiScanHistsByVolume.cxx
+	src/stiscan/StiScanPrgOptions.cxx
+	src/stiscan/StiScanRootFile.cxx
+	stiscan_dict.cxx
 )
 
 
 add_library(
 	star-vertex-eval
-	VtxEval/StarEventHistContainer.cxx
-	VtxEval/StarVertexHistContainer.cxx
-	VtxEval/StarVertexHftHistContainer.cxx
-	VtxEval/DecayVertexHists.cxx
-	VtxEval/VertexRootFile.cxx
-	VtxEval/VtxRecoProgramOptions.cxx
+	src/vtxeval/StarEventHistContainer.cxx
+	src/vtxeval/StarVertexHistContainer.cxx
+	src/vtxeval/StarVertexHftHistContainer.cxx
+	src/vtxeval/DecayVertexHists.cxx
+	src/vtxeval/VertexRootFile.cxx
+	src/vtxeval/VtxRecoProgramOptions.cxx
 )
 
 
 
-add_executable(stiscan src-tools/stiscan.cxx)
-add_executable(stihify src-tools/stihify.cxx)
+add_executable(stiscan src/stiscan//stiscan.cxx)
+add_executable(stihify src/stihify/stihify.cxx)
 
 target_link_libraries(stiscan
 	travex
-	StiScanLib GeaRootIO StiRootIO
+	stiscanlib gearootiolib stirootiolib
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
@@ -167,7 +165,7 @@ target_link_libraries(stiscan
 
 target_link_libraries(stihify
 	travex
-	StiHifyLib StiScanLib GeaRootIO StiRootIO
+	stihifylib stiscanlib gearootiolib stirootiolib
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
@@ -175,7 +173,7 @@ target_link_libraries(stihify
 )
 
 
-add_executable(vtxhist src-tools/vtxhist.cxx)
+add_executable(vtxhist src/vtxeval/vtxhist.cxx)
 
 target_link_libraries(vtxhist
 	travex
@@ -187,7 +185,7 @@ target_link_libraries(vtxhist
 )
 
 
-add_executable(vtxreco src-tools/vtxreco.cxx)
+add_executable(vtxreco src/vtxeval/vtxreco.cxx)
 
 target_link_libraries(vtxreco
 	travex
@@ -201,7 +199,7 @@ target_link_libraries(vtxreco
 
 add_executable(stigeo src/geo/stigeo.cxx)
 
-target_link_libraries( stigeo
+target_link_libraries(stigeo
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
 	stiglob
@@ -222,7 +220,7 @@ endif()
 # Installation section
 
 install(TARGETS
-	StiRootIO GeaRootIO AgUStep StiHifyLib StiScanLib
+	stirootiolib gearootiolib AgUStep stihifylib stiscanlib
 	star-vertex-eval StMcAnalysisMaker
 	DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL)
 
