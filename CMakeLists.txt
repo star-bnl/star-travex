@@ -256,15 +256,6 @@ target_link_libraries(tgeo2shapes ${ROOT_LIBRARIES} ${Boost_LIBRARIES})
 add_library( stiglob src/stiglob.cxx )
 
 
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-	set_target_properties(stiscan PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
-	set_target_properties(stihify PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
-	set_target_properties(vtxhist PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
-	set_target_properties(vtxreco PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
-	set_target_properties(stigeo  PROPERTIES LINK_FLAGS "-Wl,--warn-unresolved-symbols")
-endif()
-
-
 # Installation section
 
 install(TARGETS
