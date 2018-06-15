@@ -227,6 +227,16 @@ target_link_libraries(evedisp
 )
 
 
+add_executable(tgeo2shapes
+	src/geo/tgeo2shapes.cxx
+	src/geo/ProgramOptions.cxx
+	src/geo/common.cxx
+	src/common/root_v6.cxx
+)
+
+target_link_libraries(tgeo2shapes ${ROOT_LIBRARIES} ${Boost_LIBRARIES})
+
+
 add_library( stiglob src/stiglob.cxx )
 
 
