@@ -51,7 +51,10 @@ int main(int argc, char **argv)
    //export_sti2tvol(stiTpcDetectorBuilder);
    export_sti2tgeo(stiTpcDetectorBuilder);
 
-   return EXIT_SUCCESS;
+   // Use _exit() to hide a "double free or corruption". No time to investigate
+   // but it is likely that somewhere in stiTpcDetectorBuilder.build() another 
+   // gGeoManager is registered...
+   _exit(EXIT_SUCCESS);
 }
 
 
