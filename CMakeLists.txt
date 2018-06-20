@@ -200,6 +200,21 @@ target_link_libraries(vtxreco
 )
 
 
+add_executable(stargeo src/geo/stargeo.cxx)
+
+target_link_libraries(stargeo
+	${STAR_LIBRARY_StarRoot}
+	${STAR_LIBRARY_StChain}
+	${STAR_LIBRARY_StUtilities}
+	${STAR_LIBRARY_St_base}
+	${STAR_LIBRARY_StarGeometry}
+	${STAR_LIBRARY_StarAgmlLib}
+	${STAR_LIBRARY_StarAgmlUtil}
+	${ROOT_LIBRARIES}
+	${Boost_LIBRARIES}
+)
+
+
 add_executable(stigeo src/geo/stigeo.cxx)
 
 target_link_libraries(stigeo
