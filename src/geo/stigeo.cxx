@@ -44,6 +44,13 @@ int main(int argc, char **argv)
    StiTpcDetectorBuilder stiTpcDetectorBuilder(true);
    stiTpcDetectorBuilder.build(*st_db_maker);
 
+   // In order to create another gGeoManager the current one needs to be
+   // invalidated
+   gGeoManager = nullptr;
+
+   //export_sti2tvol(stiTpcDetectorBuilder);
+   export_sti2tgeo(stiTpcDetectorBuilder);
+
    return EXIT_SUCCESS;
 }
 
