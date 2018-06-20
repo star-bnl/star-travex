@@ -19,6 +19,7 @@
 #include "TGeoManager.h"
 
 
+void export_sti2tvol(const StiDetectorBuilder& builder, unsigned select = StiDetectorVolume::kAll);
 void export_sti2tgeo(const StiDetectorBuilder& builder, unsigned select = StiDetectorVolume::kAll);
 
 TGeoMedium*  create_medium(const TGeoManager& tgeo, const StiMaterial& sti_material);
@@ -43,15 +44,17 @@ int main(int argc, char **argv)
    StiTpcDetectorBuilder stiTpcDetectorBuilder(true);
    stiTpcDetectorBuilder.build(*st_db_maker);
 
-
-   TFile stigeo_out("stigeo.root", "RECREATE");
-
-   StiDetectorVolume stiDetectorVolume(stiTpcDetectorBuilder);
-   stiDetectorVolume.Write();
-
-   stigeo_out.Close();
-
    return EXIT_SUCCESS;
+}
+
+
+
+void export_sti2tvol(const StiDetectorBuilder& builder, unsigned select)
+{
+   TFile stigeo_out("stigeo_tpc.root", "RECREATE");
+   StiDetectorVolume stiDetectorVolume(builder);
+   stiDetectorVolume.Write();
+   stigeo_out.Close();
 }
 
 
