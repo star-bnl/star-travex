@@ -17,6 +17,8 @@
 
 int main(int argc, char **argv)
 {
+   TGeoManager::Import("stargeo_y2017a.root");
+
    StiToolkit* stitk = new StiDefaultToolkit();
  
    St_db_Maker* st_db_maker = new St_db_Maker("db", "MySQL:StarDb", "StarDb");
@@ -28,16 +30,6 @@ int main(int argc, char **argv)
    StTpcDb* myStTpcDb = StTpcDb::instance();
    gStTpcDb->SetTpcRotations();
 
-   int tmpErrorIgnoreLevel = gErrorIgnoreLevel;
-   gErrorIgnoreLevel = 9999;
-   StarTGeoStacker *stacker = new StarTGeoStacker();
-   AgBlock::SetStacker( stacker );
-   StarGeometry* starGeometry = new StarGeometry();
-   starGeometry->Construct("y2017a");
-   gErrorIgnoreLevel = tmpErrorIgnoreLevel;
-
-   gGeoManager->CloseGeometry();
- 
    StiTpcDetectorBuilder stiTpcDetectorBuilder(true);
    stiTpcDetectorBuilder.build(*st_db_maker);
 
