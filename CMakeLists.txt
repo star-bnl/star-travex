@@ -41,6 +41,8 @@ include_directories(
 	ext/travex/include
 )
 
+include(cmake/ExternalProject_trackml.cmake)
+
 add_subdirectory(ext/travex)
 
 root_generate_dictionary(
@@ -214,8 +216,10 @@ add_executable(evedisp
 	src/geo/common.cxx
 	src/common/root_v6.cxx
 )
-
+target_include_directories(evedisp PRIVATE ${TRACKML_INCLUDE_DIR})
+add_dependencies(evedisp trackml)
 target_link_libraries(evedisp
+	${TRACKML_LIBRARIES}
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
