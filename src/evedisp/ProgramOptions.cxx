@@ -33,6 +33,8 @@ ProgramOptions::ProgramOptions(int argc, char **argv) :
                           "Full path to a ROOT file containing TGeo geometry")
       ("input-file,i",    po::value<std::string>(&fInputFile),
                           "Full path to a ROOT file with event information")
+      ("event-type,t",    po::value<std::string>()->default_value("st"),
+                          "Type of event in the input file")
       ("top-node",        po::value<std::string>(&fTopNode),
                           "Path to TGeo top node")
       ("visible-volume-pattern",
@@ -117,6 +119,19 @@ void ProgramOptions::VerifyOptions()
          throw po::error("Input file " + fInputFile + " does not exist");
    } else
       throw po::required_option("input-file");
+
+
+   if (fOptionsValues.count("event-type"))
+   {
+      std::string event_type( fOptionsValues["event-type"].as<std::string>() );
+
+      if ( event_type != "st" && event_type != "tml" )
+      {
+         throw po::invalid_option_value("Supported values are: [\"st\"], \"tml\"");
+      }
+   }
+   else
+      throw po::required_option("event-type");
 }
 
 
