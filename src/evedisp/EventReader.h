@@ -7,7 +7,8 @@
 
 #include "tml/event.hpp"
 
-enum class EventType { kStEvent };
+
+enum class EventType { kStEvent, kTmlEvent };
 
 
 class EventReader
@@ -44,3 +45,31 @@ public:
 
 
 
+class TmlEventReader : public EventReader
+{
+public:
+
+   TmlEventReader(std::string file_name, TEvePointSet &hits, TEveTrackList &tracks,
+                     TEvePointSetArray &trackHits) :
+      EventReader(file_name, hits, tracks, trackHits),
+      fTmlTree(new TChain("tree", "READ")),
+      fTmlEvent(new tml::Event())
+   {
+       fTmlTree->AddFile(file_name.c_str());
+       fTmlTree->SetBranchAddress<tml::Event>("event", &fTmlEvent);
+   }
+
+   virtual ~TmlEventReader()
+   {
+       delete fTmlTree; fTmlTree = nullptr;
+       delete fTmlEvent; fTmlEvent = nullptr;
+   }
+
+   virtual void ReadNext();
+
+private:
+
+   TChain*     fTmlTree;
+   tml::Event* fTmlEvent;
+
+};

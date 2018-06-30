@@ -281,6 +281,8 @@ EventReader *create_event_reader(std::string input_file, EventType inputEventTyp
       eventReader = new StEventReader(input_file, hits, tracks, trackHits);
       break;
 
+   case EventType::kTmlEvent:
+      eventReader = new TmlEventReader(input_file, hits, tracks, trackHits);
       break;
 
    default:

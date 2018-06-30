@@ -235,3 +235,70 @@ void StEventReader::ReadNext()
    fTracks.SetRnrState(true);
    fTrackHits.SetRnrState(true);
 }
+
+
+
+void TmlEventReader::ReadNext()
+{
+   fTmlTree->GetEntry(0);
+
+
+   for (const tml::Hit& hit : fTmlEvent->hits)
+   {
+      fHits.SetNextPoint(hit.x, hit.y, hit.z);
+   }
+
+
+   fTrackHits.InitBins("track_bins", fTmlEvent->particles.size(), 1, fTmlEvent->particles.size() + 1);
+   //fTrackHits.InitBins("track_bins", 10, 1, 10 + 1);
+
+   TEveTrackPropagator *trkProp = fTracks.GetPropagator();
+   std::ostringstream oss("");
+   int i_track = 1;
+
+   for (const tml::Particle& particle : fTmlEvent->particles)
+   {
+      //if (i_track > 10) break;
+
+      TEveRecTrackT<double> eveRecTrack;
+      eveRecTrack.fIndex = particle.particle_id;
+      eveRecTrack.fP = TEveVectorT<double>( particle.px, particle.py, particle.pz );
+      eveRecTrack.fV = TEveVectorT<double>( particle.vx, particle.vy, particle.vz );
+      eveRecTrack.fSign = particle.q;
+
+      oss.str("");
+      oss << boost::format("gth_%|04|") % i_track;
+      fTrackHits.GetBin(i_track)->SetRnrState(false);
+      fTrackHits.GetBin(i_track)->SetName(oss.str().c_str());
+
+      for (int hit_id : particle.hit_ids) {
+	 tml::Hit& hit = fTmlEvent->hits[hit_id-1];
+         fTrackHits.Fill(hit.x, hit.y, hit.z, i_track);
+      }
+
+      oss.str("");
+      oss << boost::format("gt_%|04|") % i_track;
+
+      TEveTrack *eveTrack = new TEveTrack(&eveRecTrack, trkProp);
+      eveTrack->AddElement(fTrackHits.GetBin(i_track));
+      eveTrack->SetName( oss.str().c_str() );
+      eveTrack->SetAttLineAttMarker(&fTracks);
+
+      if (i_track%20 == 0)
+         eveTrack->SetRnrSelf(true);
+      else
+         eveTrack->SetRnrSelf(false);
+
+      eveTrack->SetRnrChildren(false);
+
+      fTracks.AddElement(eveTrack);
+
+      i_track++;
+   }
+
+   fTracks.MakeTracks();
+   fTracks.SetRnrState(false);
+   fTracks.SetRnrSelf(true);
+   fTracks.SetRnrChildren(true);
+   fTrackHits.SetRnrState(false);
+}
