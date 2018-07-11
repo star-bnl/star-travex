@@ -41,6 +41,7 @@ include_directories(
 	ext/travex/include
 )
 
+include(cmake/ExternalProject_star-vertex.cmake)
 include(cmake/ExternalProject_trackml.cmake)
 
 add_subdirectory(ext/travex)
@@ -177,11 +178,15 @@ target_link_libraries(stihify
 
 
 add_executable(vtxhist src/vtxeval/vtxhist.cxx)
-
+target_include_directories(vtxhist PRIVATE ${STAR_VERTEX_INCLUDE_DIR})
+add_dependencies(vtxhist star-vertex)
+set(star_libraries_except_vertex ${STAR_LIBRARIES})
+list(FILTER star_libraries_except_vertex EXCLUDE REGEX StGenericVertexMaker)
 target_link_libraries(vtxhist
 	travex
 	star-vertex-eval
-	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
+	${STAR_VERTEX_LIBRARIES}
+	${star_libraries_except_vertex} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
 	stiglob
@@ -189,7 +194,6 @@ target_link_libraries(vtxhist
 
 
 add_executable(vtxreco src/vtxeval/vtxreco.cxx)
-
 target_link_libraries(vtxreco
 	travex
 	star-vertex-eval
