@@ -1,12 +1,12 @@
-cmake_minimum_required( VERSION 3.2 FATAL_ERROR )
+cmake_minimum_required(VERSION 3.6 FATAL_ERROR)
 
-project( star-travex LANGUAGES CXX )
+project(star-travex LANGUAGES CXX)
 
 # Add to path in order to pick up the FindXXX.cmake files included in this project
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
 # By default build shared libraries but allow the user to change if desired
-OPTION( BUILD_SHARED_LIBS "Global flag to cause add_library to create shared libraries if on" ON )
+OPTION(BUILD_SHARED_LIBS "Global flag to cause add_library to create shared libraries if on" ON)
 
 
 find_package(ROOT COMPONENTS Cint Table HistPainter Minuit Geom Spectrum EG MathMore Eve RGL)
@@ -23,7 +23,7 @@ find_package(MySQL)
 find_package(LibXml2)
 find_package(CURL)
 
-set( CMAKE_CXX_STANDARD 11 )
+set(CMAKE_CXX_STANDARD 11)
 
 # Some external files on which this project depends
 file(COPY asps/rexe/TGeant3/TGiant3.h asps/rexe/TGeant3/StarMC.h DESTINATION inc/)
