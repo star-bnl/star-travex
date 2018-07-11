@@ -144,18 +144,6 @@ add_library(
 )
 
 
-add_library(
-	star-vertex-eval
-	src/vtxeval/StarEventHistContainer.cxx
-	src/vtxeval/StarVertexHistContainer.cxx
-	src/vtxeval/StarVertexHftHistContainer.cxx
-	src/vtxeval/DecayVertexHists.cxx
-	src/vtxeval/VertexRootFile.cxx
-	src/vtxeval/VtxRecoProgramOptions.cxx
-)
-
-
-
 add_executable(stiscan src/stiscan//stiscan.cxx)
 add_executable(stihify src/stihify/stihify.cxx)
 
@@ -178,14 +166,20 @@ target_link_libraries(stihify
 )
 
 
-add_executable(vtxhist src/vtxeval/vtxhist.cxx)
+add_executable(vtxhist
+	src/vtxeval/vtxhist.cxx
+	src/vtxeval/StarEventHistContainer.cxx
+	src/vtxeval/StarVertexHistContainer.cxx
+	src/vtxeval/StarVertexHftHistContainer.cxx
+	src/vtxeval/DecayVertexHists.cxx
+	src/vtxeval/VertexRootFile.cxx
+)
 target_include_directories(vtxhist PRIVATE ${STAR_VERTEX_INCLUDE_DIR})
 add_dependencies(vtxhist star-vertex)
 set(star_libraries_except_vertex ${STAR_LIBRARIES})
 list(FILTER star_libraries_except_vertex EXCLUDE REGEX StGenericVertexMaker)
 target_link_libraries(vtxhist
 	travex
-	star-vertex-eval
 	${STAR_VERTEX_LIBRARIES}
 	${star_libraries_except_vertex} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
@@ -194,10 +188,12 @@ target_link_libraries(vtxhist
 )
 
 
-add_executable(vtxreco src/vtxeval/vtxreco.cxx)
+add_executable(vtxreco
+	src/vtxeval/vtxreco.cxx
+	src/vtxeval/VtxRecoProgramOptions.cxx
+)
 target_link_libraries(vtxreco
 	travex
-	star-vertex-eval
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
@@ -273,7 +269,7 @@ endif()
 
 install(TARGETS
 	stirootiolib gearootiolib AgUStep stihifylib stiscanlib
-	star-vertex-eval StMcAnalysisMaker
+	StMcAnalysisMaker
 	DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL)
 
 install(TARGETS stiscan stihify vtxhist vtxreco evedisp
