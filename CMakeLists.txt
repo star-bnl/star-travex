@@ -47,8 +47,7 @@ include(cmake/ExternalProject_trackml.cmake)
 
 add_subdirectory(ext/travex)
 
-root_generate_dictionary(
-	stirootio_dict
+root_generate_dictionary(stirootio_dict
 	stirootio/H2D.h
 	stirootio/H3D.h
 	stirootio/Profile2D.h
@@ -62,8 +61,7 @@ root_generate_dictionary(
 	LINKDEF stirootio/stirootioLinkDef.h
 )
 
-root_generate_dictionary(
-	gearootio_dict
+root_generate_dictionary(gearootio_dict
 	gearootio/TGeaEvent.h
 	LINKDEF gearootio/LinkDef.h
 )
@@ -74,15 +72,13 @@ root_generate_dictionary(
 	LINKDEF GeaRootIO/AgUStepLinkDef.h
 )
 
-root_generate_dictionary(
-	stihify_dict
+root_generate_dictionary(stihify_dict
 	stihify/StiHifyEvent.h
 	stihify/StiHifyTreeMaker.h
 	LINKDEF stihify/StiHifyLinkDef.h
 )
 
-root_generate_dictionary(
-	stiscan_dict
+root_generate_dictionary(stiscan_dict
 	stiscan/StiScanEvent.h
 	stiscan/StiScanTreeMaker.h
 	LINKDEF stiscan/StiScanLinkDef.h
@@ -110,17 +106,19 @@ add_library(stirootiolib
 	stirootio_dict.cxx
 )
 
-add_library(gearootiolib src/gearootio/TGeaEvent.cxx gearootio_dict.cxx)
-add_library( AgUStep GeaRootIO/AgUStep.cxx AgUStep_dict.cxx)
+add_library(gearootiolib
+	src/gearootio/TGeaEvent.cxx
+	gearootio_dict.cxx
+)
 
-add_library(
-	StMcAnalysisMaker
+add_library(AgUStep GeaRootIO/AgUStep.cxx AgUStep_dict.cxx)
+
+add_library(StMcAnalysisMaker
 	src/stihify/StMcAnalysisMaker.cxx
 	StMcAnalysisMaker_dict.cxx
 )
 
-add_library(
-	stihifylib
+add_library(stihifylib
 	src/stihify/StiHifyEvent.cxx
 	src/stihify/StiHifyTreeMaker.cxx
 	src/stihify/StiHifyHistContainer.cxx
@@ -131,8 +129,7 @@ add_library(
 	stihify_dict.cxx
 )
 
-add_library(
-	stiscanlib
+add_library(stiscanlib
 	src/stiscan/StiScanEvent.cxx
 	src/stiscan/StiScanTreeMaker.cxx
 	src/stiscan/StiScanHistContainer.cxx
@@ -144,25 +141,29 @@ add_library(
 )
 
 
-add_executable(stiscan src/stiscan//stiscan.cxx)
-add_executable(stihify src/stihify/stihify.cxx)
-
+add_executable(stiscan
+	src/stiscan/stiscan.cxx
+	src/common/stiglob.cxx
+)
 target_link_libraries(stiscan
 	travex
 	stiscanlib gearootiolib stirootiolib
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
-	stiglob
 )
 
+
+add_executable(stihify
+	src/stihify/stihify.cxx
+	src/common/stiglob.cxx
+)
 target_link_libraries(stihify
 	travex
-	stihifylib stiscanlib gearootiolib stirootiolib
+	stihifylib stirootiolib
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
-	stiglob
 )
 
 
@@ -173,6 +174,7 @@ add_executable(vtxhist
 	src/vtxeval/StarVertexHftHistContainer.cxx
 	src/vtxeval/DecayVertexHists.cxx
 	src/vtxeval/VertexRootFile.cxx
+	src/common/stiglob.cxx
 )
 target_include_directories(vtxhist PRIVATE ${STAR_VERTEX_INCLUDE_DIR})
 add_dependencies(vtxhist star-vertex)
@@ -184,25 +186,25 @@ target_link_libraries(vtxhist
 	${star_libraries_except_vertex} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
-	stiglob
 )
 
 
 add_executable(vtxreco
 	src/vtxeval/vtxreco.cxx
 	src/vtxeval/VtxRecoProgramOptions.cxx
+	src/common/stiglob.cxx
 )
 target_link_libraries(vtxreco
 	travex
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
-	stiglob
 )
 
 
-add_executable(stargeo src/geo/stargeo.cxx)
-
+add_executable(stargeo
+	src/geo/stargeo.cxx
+)
 target_link_libraries(stargeo
 	${STAR_LIBRARY_StarRoot}
 	${STAR_LIBRARY_StChain}
@@ -216,12 +218,13 @@ target_link_libraries(stargeo
 )
 
 
-add_executable(stigeo src/geo/stigeo.cxx)
-
+add_executable(stigeo
+	src/geo/stigeo.cxx
+	src/common/stiglob.cxx
+)
 target_link_libraries(stigeo
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
-	stiglob
 )
 
 
@@ -231,6 +234,7 @@ add_executable(evedisp
 	src/evedisp/ProgramOptions.cxx
 	src/geo/common.cxx
 	src/common/root_v6.cxx
+	src/common/stiglob.cxx
 )
 target_include_directories(evedisp PRIVATE ${TRACKML_INCLUDE_DIR})
 add_dependencies(evedisp trackml)
@@ -239,7 +243,6 @@ target_link_libraries(evedisp
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
-	stiglob
 )
 
 
@@ -249,11 +252,7 @@ add_executable(tgeo2shapes
 	src/geo/common.cxx
 	src/common/root_v6.cxx
 )
-
 target_link_libraries(tgeo2shapes ${ROOT_LIBRARIES} ${Boost_LIBRARIES})
-
-
-add_library( stiglob src/stiglob.cxx )
 
 
 # Installation section
