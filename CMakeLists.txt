@@ -15,6 +15,7 @@ if( ${ROOT_CXX_FLAGS} MATCHES "-m32" )
 	message(STATUS "Found -m32 option in $ROOT_CXX_FLAGS (root-config). Will add it to $CMAKE_CXX_FLAGS")
 	set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS FALSE)
 	set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32" )
+	set(ENV{PKG_CONFIG_PATH} "/usr/lib/pkgconfig:$ENV{PKG_CONFIG_PATH}")
 endif()
 
 find_package(STAR)
