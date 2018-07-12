@@ -66,12 +66,6 @@ root_generate_dictionary(gearootio_dict
 	LINKDEF gearootio/LinkDef.h
 )
 
-root_generate_dictionary(
-	AgUStep_dict
-	GeaRootIO/AgUStep.h
-	LINKDEF GeaRootIO/AgUStepLinkDef.h
-)
-
 root_generate_dictionary(stihify_dict
 	stihify/StiHifyEvent.h
 	stihify/StiHifyTreeMaker.h
@@ -110,8 +104,6 @@ add_library(gearootiolib
 	src/gearootio/TGeaEvent.cxx
 	gearootio_dict.cxx
 )
-
-add_library(AgUStep GeaRootIO/AgUStep.cxx AgUStep_dict.cxx)
 
 add_library(StMcAnalysisMaker
 	src/stihify/StMcAnalysisMaker.cxx
@@ -258,7 +250,7 @@ target_link_libraries(tgeo2shapes ${ROOT_LIBRARIES} ${Boost_LIBRARIES})
 # Installation section
 
 install(TARGETS
-	stirootiolib gearootiolib AgUStep stihifylib stiscanlib
+	stirootiolib gearootiolib stihifylib stiscanlib
 	StMcAnalysisMaker
 	DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL)
 
