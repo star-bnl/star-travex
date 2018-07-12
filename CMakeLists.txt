@@ -26,9 +26,6 @@ find_package(CURL)
 
 set(CMAKE_CXX_STANDARD 11)
 
-# Some external files on which this project depends
-file(COPY asps/rexe/TGeant3/TGiant3.h asps/rexe/TGeant3/StarMC.h DESTINATION inc/)
-
 
 include_directories(
 	${Boost_INCLUDE_DIR}
@@ -38,7 +35,6 @@ include_directories(
 	${STAR_INCLUDE_DIRS}
 	${STAR_VERTEX_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}/src
-	${CMAKE_CURRENT_BINARY_DIR}/inc
 	ext/travex/include
 )
 
