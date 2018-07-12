@@ -74,12 +74,6 @@ root_generate_dictionary(stiscan_dict
 	LINKDEF stiscan/StiScanLinkDef.h
 )
 
-root_generate_dictionary(
-	StMcAnalysisMaker_dict
-	stihify/StMcAnalysisMaker.h
-	LINKDEF stihify/StMcAnalysisMakerLinkDef.h
-)
-
 add_library(stirootiolib
 	src/stirootio/H2D.cxx
 	src/stirootio/H3D.cxx
@@ -99,11 +93,6 @@ add_library(stirootiolib
 add_library(gearootiolib
 	src/gearootio/TGeaEvent.cxx
 	gearootio_dict.cxx
-)
-
-add_library(StMcAnalysisMaker
-	src/stihify/StMcAnalysisMaker.cxx
-	StMcAnalysisMaker_dict.cxx
 )
 
 add_library(stihifylib
@@ -247,7 +236,6 @@ target_link_libraries(tgeo2shapes ${ROOT_LIBRARIES} ${Boost_LIBRARIES})
 
 install(TARGETS
 	stirootiolib gearootiolib stihifylib stiscanlib
-	StMcAnalysisMaker
 	DESTINATION "${STAR_ADDITIONAL_INSTALL_PREFIX}/lib" OPTIONAL)
 
 install(TARGETS stiscan stihify vtxhist vtxreco evedisp
