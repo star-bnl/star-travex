@@ -12,12 +12,14 @@ addons:
       - kubuntu-backports
       - boost-latest
     packages:
-      - gcc-4.8
-      - g++-4.8
+      - gcc-5
+      - g++-5
       - libc6-dev-i386
+      - libgfortran-4.9-dev
       - cmake
       - libmysqlclient-dev
       - libxml2-dev
+      - libgl2ps-dev
       - liblog4cxx10
       - liblog4cxx10-dev
       - libboost-regex1.55-dev
@@ -26,39 +28,37 @@ addons:
 
 git:
   depth: 1
-  submodules: false
 
 branches:
   only:
     - master
 
-before_install:
-  - git submodule update --init --depth=50 --recursive
-
 # Make sure cmake picks up the compiler we want
 install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
 
 before_script:
     # Install desired version of ROOT
-  - wget http://root.cern.ch/download/root_v5.34.30.source.tar.gz -P /tmp/
-  - tar -xzf /tmp/root_v5.34.30.source.tar.gz
-  - wget http://root.cern.ch/download/root_v5.34.30.Linux-ubuntu12-x86_64-gcc4.6.tar.gz -P /tmp/
-  - tar -xzf /tmp/root_v5.34.30.Linux-ubuntu12-x86_64-gcc4.6.tar.gz
+  - wget https://root.cern.ch/download/root_v6.14.00.Linux-ubuntu14-x86_64-gcc4.8.tar.gz -P /tmp/
+  - tar -xzf /tmp/root_v6.14.00.Linux-ubuntu14-x86_64-gcc4.8.tar.gz
   - source ./root/bin/thisroot.sh
   - root-config --libs
   - root-config --cflags
-    # Move some ROOT header files to common include directory
-  - rsync -auv root/math/mathmore/inc/Math root/include/
+    # Install dependencies
+  - wget http://star-bnl.github.io/star-vertex/star-cvs_dev_1103613b_x86_64.tgz -P /tmp/
+  - tar -xzf /tmp/star-cvs_dev_1103613b_x86_64.tgz
 
 script:
   - mkdir build/ && cd build/ && pwd
-  - cmake -D CMAKE_INSTALL_PREFIX=./ -D CMAKE_BUILD_TYPE=Release ../
-  - make -j4 && make install && make clean
-  - pwd && ls -la ./ && ls -la lib/ && ls -la bin/ && ls -la inc/
-  - export PATH=$PATH:./bin
-  - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./lib
-  - ./bin/stiscan --help
-  - ./bin/stihify --help
-  - ./bin/vtxhist --help
-  - ./bin/vtxreco --help
+  - cmake -DSTAR_ROOT=star-cvs_dev_1103613b_x86_64 -DCMAKE_INSTALL_PREFIX=./ -D_GLIBCXX_USE_CXX11_ABI=0 ../
+  - make VERBOSE=1 # && make install && make clean
+  - pwd && ls -la ./ # && ls -la lib/ && ls -la bin/
+#  - export PATH=$PATH:./bin
+#  - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./lib
+  - ./stiscan --help
+  - ./stihify --help
+  - ./vtxhist --help
+  - ./vtxreco --help
+  - ./stargeo --help
+  - ./evedisp --help
+  - ./tgeo2shapes --help
