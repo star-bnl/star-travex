@@ -26,6 +26,9 @@ find_package(CURL)
 
 set(CMAKE_CXX_STANDARD 11)
 
+include(cmake/ExternalProject_star-vertex.cmake)
+include(cmake/ExternalProject_trackml.cmake)
+include(cmake/ExternalProject_travex.cmake)
 
 include_directories(
 	${Boost_INCLUDE_DIR}
@@ -33,15 +36,11 @@ include_directories(
 	${MYSQL_INCLUDE_DIRS}
 	${LIBXML2_INCLUDE_DIR}
 	${STAR_INCLUDE_DIRS}
+	${TRAVEX_INCLUDE_DIR}
 	${STAR_VERTEX_INCLUDE_DIR}
 	${CMAKE_CURRENT_SOURCE_DIR}/src
-	ext/travex/include
 )
 
-include(cmake/ExternalProject_star-vertex.cmake)
-include(cmake/ExternalProject_trackml.cmake)
-
-add_subdirectory(ext/travex)
 
 root_generate_dictionary(stirootio_dict
 	stirootio/H2D.h
@@ -122,8 +121,9 @@ add_executable(stiscan
 	src/stiscan/stiscan.cxx
 	src/common/stiglob.cxx
 )
+add_dependencies(stiscan travex)
 target_link_libraries(stiscan
-	travex
+	${TRAVEX_LIBRARIES}
 	stiscanlib gearootiolib stirootiolib
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
@@ -135,8 +135,9 @@ add_executable(stihify
 	src/stihify/stihify.cxx
 	src/common/stiglob.cxx
 )
+add_dependencies(stihify travex)
 target_link_libraries(stihify
-	travex
+	${TRAVEX_LIBRARIES}
 	stihifylib stirootiolib
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
@@ -154,11 +155,11 @@ add_executable(vtxhist
 	src/common/stiglob.cxx
 )
 target_include_directories(vtxhist PRIVATE ${STAR_VERTEX_INCLUDE_DIR})
-add_dependencies(vtxhist star-vertex)
+add_dependencies(vtxhist star-vertex travex)
 set(star_libraries_except_vertex ${STAR_LIBRARIES})
 list(FILTER star_libraries_except_vertex EXCLUDE REGEX StGenericVertexMaker)
 target_link_libraries(vtxhist
-	travex
+	${TRAVEX_LIBRARIES}
 	${STAR_VERTEX_LIBRARIES}
 	${star_libraries_except_vertex} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
@@ -171,8 +172,9 @@ add_executable(vtxreco
 	src/vtxeval/VtxRecoProgramOptions.cxx
 	src/common/stiglob.cxx
 )
+add_dependencies(vtxreco travex)
 target_link_libraries(vtxreco
-	travex
+	${TRAVEX_LIBRARIES}
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}
 	${Boost_LIBRARIES}
 	${CURL_LIBRARIES} ${MYSQL_LIBRARIES} ${LIBXML2_LIBRARIES}
