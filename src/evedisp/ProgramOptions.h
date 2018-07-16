@@ -8,8 +8,10 @@
 #include <boost/program_options/variables_map.hpp>
 
 
-// A shorthand for a long namespace
-namespace po = boost::program_options;
+namespace {
+   // A shorthand for a long namespace
+   namespace po = boost::program_options;
+}
 
 
 /**
