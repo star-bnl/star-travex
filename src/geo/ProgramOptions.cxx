@@ -1,6 +1,7 @@
 #include <exception>
 #include <iostream>
 #include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
 #include <boost/program_options/parsers.hpp>
 
 #include "geo/ProgramOptions.h"
