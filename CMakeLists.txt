@@ -121,7 +121,7 @@ add_executable(stiscan
 	src/stiscan/stiscan.cxx
 	src/common/stiglob.cxx
 )
-add_dependencies(stiscan travex)
+add_dependencies(stiscan travex-proj)
 target_link_libraries(stiscan
 	${TRAVEX_LIBRARIES}
 	stiscanlib gearootiolib stirootiolib
@@ -135,7 +135,7 @@ add_executable(stihify
 	src/stihify/stihify.cxx
 	src/common/stiglob.cxx
 )
-add_dependencies(stihify travex)
+add_dependencies(stihify travex-proj)
 target_link_libraries(stihify
 	${TRAVEX_LIBRARIES}
 	stihifylib stirootiolib
@@ -155,7 +155,7 @@ add_executable(vtxhist
 	src/common/stiglob.cxx
 )
 target_include_directories(vtxhist PRIVATE ${STAR_VERTEX_INCLUDE_DIR})
-add_dependencies(vtxhist star-vertex travex)
+add_dependencies(vtxhist star-vertex travex-proj)
 set(star_libraries_except_vertex ${STAR_LIBRARIES})
 list(FILTER star_libraries_except_vertex EXCLUDE REGEX StGenericVertexMaker)
 target_link_libraries(vtxhist
@@ -172,7 +172,7 @@ add_executable(vtxreco
 	src/vtxeval/VtxRecoProgramOptions.cxx
 	src/common/stiglob.cxx
 )
-add_dependencies(vtxreco travex)
+add_dependencies(vtxreco travex-proj)
 target_link_libraries(vtxreco
 	${TRAVEX_LIBRARIES}
 	${STAR_LIBRARIES} ${ROOT_LIBRARIES}

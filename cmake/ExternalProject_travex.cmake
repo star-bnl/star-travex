@@ -1,7 +1,7 @@
 include(ExternalProject)
 
 ExternalProject_Add(
-	travex
+	travex-proj
 	PREFIX "external/"
 	GIT_REPOSITORY "https://github.com/plexoos/travex.git"
 	GIT_TAG "master"
@@ -12,10 +12,10 @@ ExternalProject_Add(
 	CMAKE_ARGS -DBOOST_ROOT=${BOOST_ROOT}
 )
 
-set(TRAVEX_INCLUDE_DIR "${CMAKE_BINARY_DIR}/external/src/travex/include")
+set(TRAVEX_INCLUDE_DIR "${CMAKE_BINARY_DIR}/external/src/travex-proj/include")
 set(TRAVEX_LIBRARIES travex)
 
-set(_dir "${CMAKE_BINARY_DIR}/external/src/travex-build")
+set(_dir "${CMAKE_BINARY_DIR}/external/src/travex-proj-build")
 set(_pfx "${CMAKE_SHARED_LIBRARY_PREFIX}")
 set(_sfx "${CMAKE_SHARED_LIBRARY_SUFFIX}")
 
