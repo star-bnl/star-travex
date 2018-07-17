@@ -1,9 +1,6 @@
 sudo: false
-
 language: cpp
-
-compiler:
-  - gcc
+compiler: gcc
 
 addons:
   apt:
@@ -29,13 +26,9 @@ addons:
 git:
   depth: 1
 
-branches:
-  only:
-    - master
-
 # Make sure cmake picks up the compiler we want
 install:
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
+  - export CXX="g++-5" CC="gcc-5"
 
 before_script:
     # Install desired version of ROOT
@@ -44,17 +37,16 @@ before_script:
   - source ./root/bin/thisroot.sh
   - root-config --libs
   - root-config --cflags
-    # Install dependencies
+    # Install STAR libraries
   - wget http://star-bnl.github.io/star-vertex/star-cvs_dev_1103613b_x86_64.tgz -P /tmp/
   - tar -xzf /tmp/star-cvs_dev_1103613b_x86_64.tgz
+  - export STAR_ROOT_DIR="$PWD/star-cvs_dev_1103613b_x86_64"
 
 script:
   - mkdir build/ && cd build/ && pwd
-  - cmake -DSTAR_ROOT=star-cvs_dev_1103613b_x86_64 -DCMAKE_INSTALL_PREFIX=./ -D_GLIBCXX_USE_CXX11_ABI=0 ../
-  - make VERBOSE=1 # && make install && make clean
-  - pwd && ls -la ./ # && ls -la lib/ && ls -la bin/
-#  - export PATH=$PATH:./bin
-#  - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./lib
+  - cmake -DSTAR_ROOT=$STAR_ROOT_DIR ../
+  - make -j2
+  - pwd && ls -la ./
   - ./stiscan --help
   - ./stihify --help
   - ./vtxhist --help
