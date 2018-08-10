@@ -1,0 +1,558 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <title>vtxeval: Plots</title>
+ 
+   <link rel="stylesheet" type="text/css" href="../css/main.css">
+ 
+   <script src="//code.jquery.com/jquery-2.2.4.min.js"></script>
+   <script src="../common/common.js"></script>
+   <script src="../common/toc.js"></script>
+   <script src="../common/plot_jsroot.js"></script>
+ 
+   <script>
+	function plotHistsFromPrefix() {
+     var query = window.location.search.substring(1);
+     var urlParams = $.deparam(query, true);
+
+	  var path;
+	  var files;
+
+	  if (urlParams.pfx) {
+	  	path  = "https://star-bnl.github.io/star-travex-data/";
+	  	files = [urlParams.pfx + "/file_vtxreco_vtxhist.root"];
+	  }
+
+     var str = JSON.stringify(urlParams, null, 2);
+	  //alert(str);
+	  plotHists(path, files);
+	}
+   </script>
+
+   <script src="https://root.cern.ch/js/latest/scripts/JSRootCore.js?io&onload=plotHistsFromPrefix"></script>
+</head>
+
+<body>
+
+<div id="header"></div>
+
+
+<div id="main_text_body">
+<!-- {{{ -->
+
+
+<div class="count" id="generated-toc"></div>
+
+<p>&nbsp;</p>
+
+
+<h1 id="vertex_finder" class="count">Vertex Finder</h1>
+<!-- {{{ -->
+
+
+
+<h2 id="h_event" class="count">Event Histograms</h2>
+<!-- {{{ -->
+<div id="div:h_event" class="section">
+
+
+<p>
+<table class="simple00 cntr">
+
+<tr>
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="event/hNumTracksPerEvent"></div>
+   <div class="thumbcaption">
+   Total number of tracks in event
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="event/hNumTracksPerEventPrimary"></div>
+   <div class="thumbcaption">
+   Total number of primary tracks in event
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="event/hNumVertices"></div>
+   <div class="thumbcaption">
+   Total number of vertices
+   </div>
+
+<tr>
+   <td>&nbsp;
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="event/McRecMulAny_eff"></div>
+   <div class="thumbcaption">
+   Primary vertex reconstruction efficiency
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="event/McRecMulGood_eff"></div>
+   <div class="thumbcaption">
+   Reconstruction efficiency for the maximum rank vertex
+   </div>
+
+</table>
+
+
+</div>
+<!-- }}} -->
+
+
+
+<h2 id="h_vertex_mc" class="count">Simulated Vertex (matching reco vertex)</h2>
+<!-- {{{ -->
+<div id="div:h_vertex_mc" class="section">
+
+
+<p>
+<table class="simple00 cntr">
+
+<tr>
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hMcVertexX"></div>
+   <div class="thumbcaption">
+   Vertex position X
+   </div>
+
+   <td>&nbsp;
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hMcVertexZvX"></div>
+   <div class="thumbcaption">
+   Vertex position Z vs X
+   </div>
+
+<tr>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hMcVertexXvY"></div>
+   <div class="thumbcaption">
+   Vertex position X vs Y
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hMcVertexY"></div>
+   <div class="thumbcaption">
+   Vertex position Y
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hMcVertexZvY"></div>
+   <div class="thumbcaption">
+   Vertex position Z vs Y
+   </div>
+
+<tr>
+   <td>&nbsp;
+
+   <td>&nbsp;
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hMcVertexZ"></div>
+   <div class="thumbcaption">
+   Vertex position Z
+   </div>
+
+</table>
+
+
+</div>
+<!-- }}} -->
+
+
+
+<h2 id="h_vertex_reco" class="count">Reconstructed Vertex</h2>
+<!-- {{{ -->
+<div id="div:h_vertex_reco" class="section">
+
+
+<p>
+<table class="simple00 cntr">
+
+<tr>
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hVertexX"></div>
+   <div class="thumbcaption">
+   Vertex position X
+   </div>
+
+   <td>&nbsp;
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hVertexZvX"></div>
+   <div class="thumbcaption">
+   Vertex position Z vs X
+   </div>
+
+<tr>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hVertexXvY"></div>
+   <div class="thumbcaption">
+   Vertex position X vs Y
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hVertexY"></div>
+   <div class="thumbcaption">
+   Vertex position Y
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hVertexZvY"></div>
+   <div class="thumbcaption">
+   Vertex position Z vs Y
+   </div>
+
+<tr>
+   <td>&nbsp;
+
+   <td>&nbsp;
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hVertexZ"></div>
+   <div class="thumbcaption">
+   Vertex position Z
+   </div>
+
+<tr>
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hVertexErrorX"></div>
+   <div class="thumbcaption">
+   Vertex position error X
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hVertexErrorY"></div>
+   <div class="thumbcaption">
+   Vertex position error Y
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hVertexErrorZ"></div>
+   <div class="thumbcaption">
+   Vertex position error Z
+   </div>
+
+</table>
+
+
+</div>
+<!-- }}} -->
+
+
+
+<h2 id="h_vertex_reco_hft" class="count">Reconstructed Vertex (HFT tracks)</h2>
+<!-- {{{ -->
+<div id="div:h_vertex_reco_hft" class="section">
+
+
+<p>
+<table class="simple00 cntr">
+
+<tr>
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hVertexX"></div>
+   <div class="thumbcaption">
+   Vertex position X
+   </div>
+
+   <td>&nbsp;
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hVertexZvX"></div>
+   <div class="thumbcaption">
+   Vertex position Z vs X
+   </div>
+
+<tr>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hVertexXvY"></div>
+   <div class="thumbcaption">
+   Vertex position X vs Y
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hVertexY"></div>
+   <div class="thumbcaption">
+   Vertex position Y
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hVertexZvY"></div>
+   <div class="thumbcaption">
+   Vertex position Z vs Y
+   </div>
+
+<tr>
+   <td>&nbsp;
+
+   <td>&nbsp;
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hVertexZ"></div>
+   <div class="thumbcaption">
+   Vertex position Z
+   </div>
+
+<tr>
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hVertexErrorX"></div>
+   <div class="thumbcaption">
+   Vertex position error X
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hVertexErrorY"></div>
+   <div class="thumbcaption">
+   Vertex position error Y
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hVertexErrorZ"></div>
+   <div class="thumbcaption">
+   Vertex position error Z
+   </div>
+
+</table>
+
+
+</div>
+<!-- }}} -->
+
+
+
+<h2 id="h_vertex_mc_reco" class="count">Reco vs Simu Vertex</h2>
+<!-- {{{ -->
+<div id="div:h_vertex_mc_reco" class="section">
+
+
+<p>
+<table class="simple00 cntr">
+
+<tr>
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hVertexPullX"></div>
+   <div class="thumbcaption">
+   Vertex pull distribuition in X
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hVertexPullY"></div>
+   <div class="thumbcaption">
+   Vertex pull distribuition in Y
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hVertexPullZ"></div>
+   <div class="thumbcaption">
+   Vertex pull distribuition in Z
+   </div>
+
+<tr>
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hMcRecoVertexDeltaX"></div>
+   <div class="thumbcaption">
+   Delta X: Simu - Reco
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hMcRecoVertexDeltaY"></div>
+   <div class="thumbcaption">
+   Delta Y: Simu - Reco
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hMcRecoVertexDeltaZ"></div>
+   <div class="thumbcaption">
+   Delta Z: Simu - Reco
+   </div>
+
+<tr>
+   <td>&nbsp;
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex/hMcRecoVertexDelta"></div>
+   <div class="thumbcaption">
+   Distance: Simu - Reco
+   </div>
+
+   <td>&nbsp;
+
+</table>
+
+
+</div>
+<!-- }}} -->
+
+
+
+<h2 id="h_vertex_mc_reco_hft" class="count">Reco vs Simu Vertex (HFT tracks)</h2>
+<!-- {{{ -->
+<div id="div:h_vertex_mc_reco_hft" class="section">
+
+
+<p>
+<table class="simple00 cntr">
+
+<tr>
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hVertexPullX"></div>
+   <div class="thumbcaption">
+   Vertex pull distribuition in X
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hVertexPullY"></div>
+   <div class="thumbcaption">
+   Vertex pull distribuition in Y
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hVertexPullZ"></div>
+   <div class="thumbcaption">
+   Vertex pull distribuition in Z
+   </div>
+
+<tr>
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hMcRecoVertexDeltaX"></div>
+   <div class="thumbcaption">
+   Delta X: Simu - Reco
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hMcRecoVertexDeltaY"></div>
+   <div class="thumbcaption">
+   Delta Y: Simu - Reco
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hMcRecoVertexDeltaZ"></div>
+   <div class="thumbcaption">
+   Delta Z: Simu - Reco
+   </div>
+
+<tr>
+   <td>&nbsp;
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_hft/hMcRecoVertexDelta"></div>
+   <div class="thumbcaption">
+   Distance: Simu - Reco
+   </div>
+
+   <td>&nbsp;
+
+</table>
+
+
+</div>
+<!-- }}} -->
+
+
+
+<h2 id="h_vertex_max_rank" class="count">Max Rank Reconstructed Vertex</h2>
+<!-- {{{ -->
+<div id="div:h_vertex_max_rank" class="section">
+
+
+<p>
+<table class="simple00 cntr">
+
+<tr>
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hVertexX"></div>
+   <div class="thumbcaption">
+   Vertex position X
+   </div>
+
+   <td>&nbsp;
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hVertexZvX"></div>
+   <div class="thumbcaption">
+   Vertex position Z vs X
+   </div>
+
+<tr>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hVertexXvY"></div>
+   <div class="thumbcaption">
+   Vertex position X vs Y
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hVertexY"></div>
+   <div class="thumbcaption">
+   Vertex position Y
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hVertexZvY"></div>
+   <div class="thumbcaption">
+   Vertex position Z vs Y
+   </div>
+
+<tr>
+   <td>&nbsp;
+
+   <td>&nbsp;
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hVertexZ"></div>
+   <div class="thumbcaption">
+   Vertex position Z
+   </div>
+
+<tr>
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hVertexErrorX"></div>
+   <div class="thumbcaption">
+   Vertex position error X
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hVertexErrorY"></div>
+   <div class="thumbcaption">
+   Vertex position error Y
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hVertexErrorZ"></div>
+   <div class="thumbcaption">
+   Vertex position error Z
+   </div>
+
+</table>
+
+
+</div>
+<!-- }}} -->
+
+
+
+<h2 id="h_vertex_mc_reco_max_rank" class="count">Max Rank Reco vs Simu Vertex</h2>
+<!-- {{{ -->
+<div id="div:h_vertex_mc_reco_max_rank" class="section">
+
+
+<p>
+<table class="simple00 cntr">
+
+<tr>
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hVertexPullX"></div>
+   <div class="thumbcaption">
+   Vertex pull distribuition in X
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hVertexPullY"></div>
+   <div class="thumbcaption">
+   Vertex pull distribuition in Y
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hVertexPullZ"></div>
+   <div class="thumbcaption">
+   Vertex pull distribuition in Z
+   </div>
+
+<tr>
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hMcRecoVertexDeltaX"></div>
+   <div class="thumbcaption">
+   Delta X: Simu - Reco
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hMcRecoVertexDeltaY"></div>
+   <div class="thumbcaption">
+   Delta Y: Simu - Reco
+   </div>
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hMcRecoVertexDeltaZ"></div>
+   <div class="thumbcaption">
+   Delta Z: Simu - Reco
+   </div>
+
+<tr>
+   <td>&nbsp;
+
+   <td><div class="canvas_jsroot" style="width: 500px; height: 250px" id="vertex_maxrank/hMcRecoVertexDelta"></div>
+   <div class="thumbcaption">
+   Distance: Simu - Reco
+   </div>
+
+   <td>&nbsp;
+
+</table>
+
+
+</div>
+<!-- }}} -->
+
+
+</div>
+<!-- }}} -->
+
+
+
+</div> <!--main_text_body-->
+<!-- }}} -->
+
+
+<div id="footer"></div>
+
+</body>
+
+</html>
