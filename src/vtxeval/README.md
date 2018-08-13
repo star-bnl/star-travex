@@ -13,8 +13,8 @@ reconstruction:
     $ cmake -D CMAKE_INSTALL_PREFIX=../build-install \
             -D BOOST_ROOT=$OPTSTAR \
             -D CMAKE_BUILD_TYPE=RelWithDebInfo ../
-    $ make -j4 star-vertex
-    $ make install
+    $ cmake --build ./ -- -j4 star-vertex
+    $ cmake --build ./ -- install
 
 Once the binaries are built `vtxreco` can be used to reconstruct vertices from
 either a ROOT file or a text file with a list of ROOT files containing `muDST`
